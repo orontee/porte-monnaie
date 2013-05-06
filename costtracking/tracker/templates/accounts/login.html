@@ -1,0 +1,21 @@
+{% extends "tracker/base.html" %}
+{% load i18n %}
+{% block content %}
+{% if form.errors %}
+<p class="errornote">
+  {% blocktrans %}Your username and password didn't match. Please try again.{% endblocktrans %}
+</p>
+{% endif %}
+<div id="content-main">
+  <div id="login-main">
+     <form  id="login-form"
+	    method="post" action={% url "login" %}>{% csrf_token %}
+       {{ form.as_p }}
+       <input type="submit" value={% trans "log in"|capfirst %}/>
+     </form>
+  </div>
+  <script type="text/javascript">
+    document.getElementById('id_username').focus()
+  </script>
+</div>
+{% endblock %}
