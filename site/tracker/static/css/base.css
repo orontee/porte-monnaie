@@ -33,6 +33,10 @@ table {
     border-collapse:collapse;
 }
 
+h2 {
+    display: none;
+}
+
 a {
     text-decoration: none;
 }
