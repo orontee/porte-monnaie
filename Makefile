@@ -11,9 +11,21 @@ manager = python manage.py
 
 lang = fr
 
-PHONY: collect createdb compile-messages setup syncdb update-messages
+.PHONY: collect createdb compile-messages setup syncdb update-messages
 
-setup: createusers
+# User targets
+
+setup: createusers compile-messages
+
+install: collect
+
+help:
+	@echo "The main targets are:"
+	@echo "  setup      To finalize the project environment"
+	@echo "  install    To install the website"
+	@echo "  uninstall  To uninstall the website"
+
+# Internal targets
 
 createdb:
 	-createdb $(dbname)
@@ -25,24 +37,6 @@ syncdb: createdb
 createusers: syncdb
 	# cd $(projdir); \
 	# $(manager) createsuperuser --username=$(superuser) --email=$(superuser_mail)
-
-install: collect
-
-collect:
-	cd $(projdir); \
-	$(manager) collectstatic --noinput
-
-# TODO Configure STATIC_ROOT before running that target
-
-# removedb:
-
-# distclean:
-
-# clean:
-
-# uninstall:
-
-# help:
 
 update-messages:
 	for app in $(apps); do \
@@ -57,3 +51,10 @@ compile-messages:
 		django-admin.py compilemessages -l $(lang); \
 		popd &> /dev/null; \
 	done
+
+collect:
+	cd $(projdir); \
+	$(manager) collectstatic --noinput
+
+# TODO Configure STATIC_ROOT before running that target
+
