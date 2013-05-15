@@ -1,0 +1,13 @@
+{% extends "tracker/base.html" %}
+{% load i18n %}
+{% block usertools %}{% endblock %}
+{% block content %}
+<p>
+  {% trans "Thanks for spending some quality time with us today!" %}
+</p>
+<p>
+  <a id="login-again" href={% url "tracker:home" %}>
+    {% trans "log in again"|capfirst %}
+  </a>
+</p>
+{% endblock %}

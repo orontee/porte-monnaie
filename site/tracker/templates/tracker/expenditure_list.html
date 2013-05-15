@@ -1,0 +1,16 @@
+{% extends "tracker/base.html" %}
+{% load i18n table %}
+{% block content %}<h2>{% trans "expenditures"|capfirst %}</h2>
+<a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>
+{% if expenditures %}<table id="expenditures-table">
+  {% table_header field_names %}
+  <tbody>
+    {% for exp in expenditures %}{% table_row exp field_names %}{% endfor %}
+  </tbody>
+</table>{% else %}<p>No expenditures yet!</p>{% endif %}{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript">
+  document.getElementById('add-expenditure').focus();
+</script>
+{% endblock %}

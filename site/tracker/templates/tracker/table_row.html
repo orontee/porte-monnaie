@@ -1,0 +1,6 @@
+<tr>{% for data in datas %}
+  <td title="{{ data.value }}"{% if data.class %} class="{{ data.class }}"{% endif %}>
+    {{ data.value }}
+  </td>{% endfor %}
+</tr>
+  

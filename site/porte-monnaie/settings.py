@@ -1,4 +1,4 @@
-# Django settings for costtracking project.
+# Django settings for porte-monnaie project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'costtracking',
+        'NAME': 'porte-monnaie',
         'USER': 'matthias',
         'PASSWORD': '',
         'HOST': '', 
@@ -101,10 +101,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'costtracking.urls'
+ROOT_URLCONF = 'porte-monnaie.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'costtracking.wsgi.application'
+WSGI_APPLICATION = 'porte-monnaie.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -154,3 +154,7 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_REDIRECT_URL = '/tracker/expenditures'
+LOGIN_URL = '/tracker/login'
+

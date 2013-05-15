@@ -1,0 +1,8 @@
+<thead>
+  <tr>{% for data in datas %}
+    <th title="{{ data.help_text }}" class="{{ data.name }}">
+      {{ data.verbose_name }}
+    </th>{% endfor %}
+  </tr>
+</thead>
+  

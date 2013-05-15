@@ -1,0 +1,84 @@
+div#header {
+    background: lightgreen;
+    border-radius: 5px;
+    padding: 5px;
+    position: relative;
+    height: 40pt;
+}
+
+span#branding {
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+span#quote {
+    font-size: 10pt;
+    font-style: italic;
+    padding: 5px;
+}
+
+div#user-tools {
+    font-size: 10pt;
+    padding: 5px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+input[type="submit"] {
+    display: none;
+}
+
+table {
+    border-collapse:collapse;
+}
+
+a {
+    text-decoration: none;
+}
+
+td,
+th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+th {
+    background: lightgray;
+}
+
+td.text,
+td.email,
+td.url {
+    text-align: left;
+}
+
+td.number {
+    text-align: right;
+}
+
+td.bool {
+    text-align: center;
+}
+
+td.datetime {
+    text-align: right;
+}
+
+#expenditures-table {
+    width: 90%;
+}
+
+th.date,
+th.amount,
+th.author {
+    width: 20%;
+}
+
+td.author {
+    text-align: center;
+}
+
+#expenditure-form span.helptext {
+    display: none;
+}
