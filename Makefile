@@ -17,7 +17,9 @@ lang = fr
 
 setup: createusers compile-messages
 
-install: collect
+install: setup collect
+
+uninstall: dropdb
 
 help:
 	@echo "The main targets are:"
@@ -30,13 +32,19 @@ help:
 createdb:
 	-createdb $(dbname)
 
+dropdb:
+	-dropdb $(dbname)
+
 syncdb: createdb
 	cd $(projdir); \
-	$(manager) syncdb --no-input
+	$(manager) syncdb --noinput
 
 createusers: syncdb
-	# cd $(projdir); \
-	# $(manager) createsuperuser --username=$(superuser) --email=$(superuser_mail)
+	cd $(projdir); \
+	$(manager) createuser matthias orontee@gmail.com matthias \
+				  --first=Matthias --last=Meulien; \
+	$(manager) createuser laurence laurence.turridano@gmail.com laurence \
+				  --first=Laurence --last=Turridano;
 
 update-messages:
 	for app in $(apps); do \
