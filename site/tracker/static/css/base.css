@@ -69,7 +69,8 @@ td.url {
     text-align: left;
 }
 
-td.number {
+td.integer,
+td.float {
     text-align: right;
 }
 

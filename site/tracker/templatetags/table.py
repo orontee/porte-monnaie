@@ -12,16 +12,18 @@ def get_css_class(field):
                 'IPAddressField', 'GenericIPAddressField',
                 'SlugField'):
         return 'text'
-    elif name in ('AutoField', 'BigIntegerField', 'DecimalField',
-                  'FloatField', 'IntegerField', 'SmallIntegerField',
+    elif name in ('AutoField', 'BigIntegerField',
+                  'IntegerField', 'SmallIntegerField',
                   'PositiveIntegerField', 'PositiveSmallIntegerField'):
-        return 'number'
+        return 'integer'
+    elif name in ('DecimalField', 'FloatField'):
+        return 'float'
     elif name in ('BooleanField', 'NullBooleanField'):
         return 'bool'
     elif name in ('DateField', 'DateTimeField', 'TimeField'):
         return 'datetime'
     elif name == 'CommaSeparatedIntegerField':
-        return 'numbers'
+        return 'integers'
     elif name == 'EmailField':
         return 'email'
     elif name == 'URLField':
@@ -47,7 +49,10 @@ def do_table_row(obj, field_names):
             css = ' '.join([c for c in styles if c is not None])
             dct.update({'class': css})                        
             datas.append(dct)
-            # TODO Format according to field type
+            if "float" in styles:
+                dct.update({'floatformat': 2})
+            elif "text" in styles:
+                dct.update({'capfirst': True})                
     return {'datas': datas}
 
 
