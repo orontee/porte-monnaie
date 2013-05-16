@@ -38,7 +38,7 @@ body {
 }
 
 div#content {
-    margin: 8px;
+    margin: 10px;
 }
 
 table {
@@ -82,7 +82,7 @@ td.datetime {
 }
 
 #expenditures-table {
-    width: 90%;
+    width: 100%;
 }
 
 th.date,
