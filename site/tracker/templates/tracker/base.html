@@ -10,19 +10,21 @@
   </head>
   <body>
     <div id="header">
-      <span id="branding">
-	{% block header %}{{ "porte-monnaie"|capfirst }}{% endblock %}
-      </span><br>
-      <span id="quote">{% blocktrans %}Love without counting{% endblocktrans %}</span>
-      <div id="user-tools">
-	{% block usertools %}{% trans "Welcome," %} <strong>{% filter force_escape %}{% firstof user.first_name user.username|capfirst %}.{% endfilter %}</strong>
-	{% block userlinks %}
-	<a id ="change-password" href={% url "tracker:password_change" %}>
-	  {% trans "change password"|capfirst %}
-	</a> /
-	<a id="logout" href={% url "tracker:logout" %}>
-	  {% trans "log out"|capfirst %}
-	</a>{% endblock %}{% endblock %}
+      <div id="header-content">
+	<span id="branding">
+	  {% block header %}{{ "porte-monnaie"|capfirst }}{% endblock %}
+	</span><br>
+	<span id="quote">{% blocktrans %}Love without counting{% endblocktrans %}</span>
+	<div id="user-tools">
+	  {% block usertools %}{% trans "Welcome," %} <strong>{% filter force_escape %}{% firstof user.first_name user.username|capfirst %}.{% endfilter %}</strong>
+	  {% block userlinks %}
+	  <a id ="change-password" href={% url "tracker:password_change" %}>
+	    {% trans "change password"|capfirst %}
+	  </a> /
+	  <a id="logout" href={% url "tracker:logout" %}>
+	    {% trans "log out"|capfirst %}
+	  </a>{% endblock %}{% endblock %}
+	</div>
       </div>
     </div>
     <div id="content">

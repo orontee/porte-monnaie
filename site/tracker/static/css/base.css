@@ -1,9 +1,12 @@
 div#header {
     background: lightgreen;
-    border-radius: 5px;
-    padding: 5px;
-    position: relative;
     height: 40pt;
+    padding: 5px;    
+}
+
+div#header-content {
+    font-family: sans-serif;
+    position: relative;
 }
 
 span#branding {
@@ -12,6 +15,7 @@ span#branding {
 }
 
 span#quote {
+    font-family: serif;
     font-size: 10pt;
     font-style: italic;
     padding: 5px;
@@ -21,12 +25,20 @@ div#user-tools {
     font-size: 10pt;
     padding: 5px;
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 0px;
+    right: 0px;
 }
 
 input[type="submit"] {
     display: none;
+}
+
+body {
+    margin: 0px;
+}
+
+div#content {
+    margin: 8px;
 }
 
 table {
