@@ -1,0 +1,14 @@
+<thead>
+  <tr>{% for data in header_datas %}
+    <th title="{{ data.help_text|capfirst }}" class="{{ data.name }}">
+      {{ data.verbose_name|capfirst }}
+    </th>{% endfor %}
+  </tr>
+</thead>
+<tbody>{% for row in row_datas %}
+  <tr>{% for data in row %}
+    <td title="{{ data.value }}"{% if data.class %} class="{{ data.class }}"{% endif %}>
+      {{ data.value }}
+    </td>{% endfor %}
+  </tr>{% endfor %}
+</tbody>

@@ -63,37 +63,27 @@ th {
     background: lightgray;
 }
 
-td.text,
-td.email,
-td.url {
-    text-align: left;
-}
-
-td.integer,
-td.float {
-    text-align: right;
-}
-
-td.bool {
-    text-align: center;
-}
-
-td.datetime {
-    text-align: right;
-}
 
 #expenditures-table {
     width: 100%;
 }
 
-th.date,
-th.amount,
-th.author {
-    width: 20%;
+#expenditures-table td.date{
+    text-align: left;
 }
 
-td.author {
+#expenditures-table td.amount {
+    text-align: right;
+}
+
+#expenditures-table td.author {
     text-align: center;
+}
+
+#expenditures-table th.date,
+#expenditures-table th.amount,
+#expenditures-table th.author {
+    width: 20%;
 }
 
 #expenditure-form span.helptext {

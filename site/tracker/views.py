@@ -3,7 +3,8 @@
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import (ListView, CreateView)
+from django.views.generic import (ListView, CreateView,
+                                  MonthArchiveView)
 from tracker.models import Expenditure
     
 
@@ -35,5 +36,19 @@ class ExpenditureList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ExpenditureList, self).get_context_data(**kwargs)
+        context['field_names'] = self.field_names
+        return context
+
+        
+class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
+    """List of expenditures in a month.
+    """
+    model = Expenditure
+    context_object_name = 'expenditures'
+    field_names = ['date', 'amount', 'author', 'description']
+    date_field = 'date'
+
+    def get_context_data(self, **kwargs):
+        context = super(ExpenditureMonthList, self).get_context_data(**kwargs)
         context['field_names'] = self.field_names
         return context

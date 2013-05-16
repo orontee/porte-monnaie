@@ -9,7 +9,9 @@ from django.views.generic.base import RedirectView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.forms import (AuthenticationForm,
                                        PasswordChangeForm)
-from tracker.views import (ExpenditureAdd, ExpenditureList)
+from tracker.views import (ExpenditureAdd,
+                           ExpenditureList,
+                           ExpenditureMonthList)
 
 urlpatterns = patterns('tracker.views',
                        url(r'^$', RedirectView.as_view(
@@ -22,7 +24,9 @@ urlpatterns += patterns('tracker.views',
                            name='add'),
                        url(r'^expenditures/$',
                            ExpenditureList.as_view(),
-                           name='list'))
+                           name='list'),
+                        url(r'^expenditures/archive/$',
+                            ExpenditureMonthList.as_view()))
 
 urlpatterns += patterns('',
                         url(r'^login/$', 'django.contrib.auth.views.login', 
