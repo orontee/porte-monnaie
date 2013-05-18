@@ -29,16 +29,48 @@ div#user-tools {
     right: 0px;
 }
 
+div#content {
+    position: relative;
+    margin: 10px;
+}
+
+
+div#navigation {
+    font-family: sans-serif;
+    font-size: 10pt;
+    width: 100%;
+    height: 15px;
+}
+
+div#navigation div.left {
+    float: left;
+    text-align: left;
+    width: 25%;
+}
+
+div#navigation div.center {
+    float: left;
+    text-align: center;
+    width: 50%;    
+}
+
+div#navigation div.right {
+    float: left;
+    text-align: right;
+    width: 25%;
+}
+
+div#main {
+    position: absolute;
+    left: 0;
+}
+
 input[type="submit"] {
     display: none;
 }
 
 body {
     margin: 0px;
-}
-
-div#content {
-    margin: 10px;
 }
 
 table {
@@ -66,6 +98,13 @@ th {
 
 #expenditures-table {
     width: 100%;
+}
+
+#expenditures-table caption {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 10pt;
+    text-align: left;
 }
 
 #expenditures-table td.date{

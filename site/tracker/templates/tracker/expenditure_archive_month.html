@@ -1,12 +1,47 @@
 {% extends "tracker/base.html" %}
-{% load i18n table %}
-{% block content %}<h2>{% blocktrans %}Expenditures of {{ month }}{% endblocktrans %}</h2>
-{% if expenditures %}<p>
+{% load i18n tracker_extras table %}
+{% block content %}
+{% is_current_month month as is_current %}
+<div id="navigation">
+  <div class="left">
+    <a href={% url "tracker:archive" %}
+       title='{% trans "View previous month expenditures" %}'>
+      {% trans "previous"|capfirst %}
+    </a>
+  </div>{% if not is_current %}
+  <div class="center">
+    <a href={% url "tracker:list" %}
+       title='{% trans "View current month expenditures" %}'>
+      {% trans "current"|capfirst %}
+    </a>
+  </div>
+  <div  class="right">
+    <a href={% url "tracker:archive" %}
+       title='{% trans "View next month expenditures" %}'>
+      {% trans "next"|capfirst %}
+    </a>
+  </div>{% endif %}
+</div>
+<div id="main">{% if expenditures %}{% if is_current %}
+  <p>
+    <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>
+  </p>
+  <p>
+    {% blocktrans with date=month|date:"E Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
+  </p>{% else %}
+  <p>
+    {% blocktrans with date=month|date:"E Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
+{% endif %}
+  </p>
   <table id="expenditures-table">
-    {% table_header field_names %}
-    <tbody>
-      {% for exp in expenditures %}{% table_row exp field_names %}{% endfor %}
-    </tbody>
+    {% table expenditures field_names %}
   </table>
-</p>{% else %}<p>{% blocktrans %}No expenditures yet!{% endblocktrans %}
-</p>{% endif %}{% endblock %}
+  {% else %}
+  <p>
+    {% blocktrans with date=month|date:"E Y" %}No expenditures found for {{ date }}
+!{% endblocktrans %}{% if is_current %}
+<a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>{% endif %}
+  </p>
+</div>
+{% endif %}
+{% endblock %}

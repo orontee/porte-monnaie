@@ -4,13 +4,13 @@ All the url names defined here are accessible from the tracker
 namespace.
 """
 
+from datetime import datetime
 from django.conf.urls import (patterns, url)
 from django.views.generic.base import RedirectView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.forms import (AuthenticationForm,
                                        PasswordChangeForm)
 from tracker.views import (ExpenditureAdd,
-                           ExpenditureList,
                            ExpenditureMonthList)
 
 urlpatterns = patterns('tracker.views',
@@ -23,10 +23,14 @@ urlpatterns += patterns('tracker.views',
                            ExpenditureAdd.as_view(),
                            name='add'),
                        url(r'^expenditures/$',
-                           ExpenditureList.as_view(),
+                           ExpenditureMonthList.as_view(
+                               **dict(zip(['month', 'year'],
+                                          '{0:%b},{0:%Y}'.format(
+                                              datetime.today()).split(',')))),
                            name='list'),
                         url(r'^expenditures/archive/$',
-                            ExpenditureMonthList.as_view()))
+                            ExpenditureMonthList.as_view(),
+                            name='archive'))
 
 urlpatterns += patterns('',
                         url(r'^login/$', 'django.contrib.auth.views.login', 

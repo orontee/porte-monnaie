@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: porte-monnaie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-16 01:50+0200\n"
+"POT-Creation-Date: 2013-05-18 16:55+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -98,25 +98,79 @@ msgstr "Le mot de passe a bien été changé"
 msgid "Password change"
 msgstr "Changement de mot de passe"
 
-#: templates/accounts/password_change_form.html:14
+#: templates/accounts/password_change_form.html:12
 msgid "change"
 msgstr "changer"
 
-#: templates/tracker/base.html:16
+#: templates/tracker/base.html:17
 msgid "Love without counting"
 msgstr "Aimer sans compter"
 
-#: templates/tracker/base.html:18
+#: templates/tracker/base.html:19
 msgid "Welcome,"
 msgstr "Bienvenue,"
 
-#: templates/tracker/base.html:21
+#: templates/tracker/base.html:22
 msgid "change password"
 msgstr "changer de mot de passe"
 
-#: templates/tracker/base.html:24
+#: templates/tracker/base.html:25
 msgid "log out"
 msgstr "quitter"
+
+#: templates/tracker/expenditure_archive_month.html:8
+msgid "View previous month expenditures"
+msgstr "Voir les dépenses du mois précédent"
+
+#: templates/tracker/expenditure_archive_month.html:9
+msgid "previous"
+msgstr "mois précédent"
+
+#: templates/tracker/expenditure_archive_month.html:14
+msgid "View current month expenditures"
+msgstr "Voir les dépenses du mois suivant"
+
+#: templates/tracker/expenditure_archive_month.html:15
+msgid "current"
+msgstr "mois en cours"
+
+#: templates/tracker/expenditure_archive_month.html:20
+msgid "View next month expenditures"
+msgstr "Voir les dépenses du mois précédent"
+
+#: templates/tracker/expenditure_archive_month.html:21
+msgid "next"
+msgstr "mois suivant"
+
+#: templates/tracker/expenditure_archive_month.html:27
+#: templates/tracker/expenditure_archive_month.html:43
+msgid "Add a new expenditure..."
+msgstr "Ajouter une dépense..."
+
+#: templates/tracker/expenditure_archive_month.html:30
+#, python-format
+msgid ""
+"In %(date)s, the current amount of expenditures is equal to %(total)s€; You "
+"authored %(user)s€."
+msgstr ""
+"Au mois de %(date)s, le montant total des dépenses s'élève à %(total)s€, "
+"dont %(user)s€ à votre initiative."
+
+#: templates/tracker/expenditure_archive_month.html:33
+#, python-format
+msgid ""
+"In %(date)s, the total amount of expenditures was equal to %(total)s€; You "
+"authored %(user)s€."
+msgstr ""
+"Au mois de %(date)s, le montant total des dépenses a été de %(total)s€, dont "
+"%(user)s€ à votre initiative."
+
+#: templates/tracker/expenditure_archive_month.html:41
+#, python-format
+msgid ""
+"No expenditures found for %(date)s\n"
+"!"
+msgstr "Pas encore de dépenses pour le mois de %(date)s&nbsp;!"
 
 #: templates/tracker/expenditure_form.html:4
 msgid "new expenditure"
@@ -130,18 +184,8 @@ msgstr "plus de détails..."
 msgid "submit"
 msgstr "envoyer"
 
-#: templates/tracker/expenditure_list.html:3
-msgid "expenditures"
-msgstr "dépenses"
+#~ msgid "expenditures"
+#~ msgstr "dépenses"
 
-#: templates/tracker/expenditure_list.html:4
-msgid "Add a new expenditure..."
-msgstr "Ajouter une dépense..."
-
-#: templates/tracker/expenditure_list.html:10
-msgid "No expenditures yet!"
-msgstr "Pas encore de dépenses&nbsp;?"
-
-#: templates/tracker/expenditure_list.html:12
-msgid "Go ahead..."
-msgstr "En avant..."
+#~ msgid "Go ahead..."
+#~ msgstr "En avant..."

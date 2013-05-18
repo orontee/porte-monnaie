@@ -2,6 +2,7 @@
 """
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import Sum
 from django.utils.decorators import method_decorator
 from django.views.generic import (ListView, CreateView,
                                   MonthArchiveView)
@@ -25,30 +26,25 @@ class ExpenditureAdd(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(ExpenditureAdd, self).form_valid(form)
-    
 
-class ExpenditureList(LoginRequiredMixin, ListView):
-    """List of expenditures.
-    """
-    model = Expenditure
-    context_object_name = 'expenditures'
-    field_names = ['date', 'amount', 'author', 'description']
 
-    def get_context_data(self, **kwargs):
-        context = super(ExpenditureList, self).get_context_data(**kwargs)
-        context['field_names'] = self.field_names
-        return context
-
-        
 class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
     """List of expenditures in a month.
     """
     model = Expenditure
     context_object_name = 'expenditures'
-    field_names = ['date', 'amount', 'author', 'description']
     date_field = 'date'
+    allow_empty = True
+    field_names = ['date', 'amount', 'author', 'description']
 
     def get_context_data(self, **kwargs):
         context = super(ExpenditureMonthList, self).get_context_data(**kwargs)
         context['field_names'] = self.field_names
+
+        user = self.request.user if self.request else None
+        if user:
+            qs = context['object_list']
+            context.update(qs.aggregate(total_amount=Sum('amount')))
+            context.update(qs.filter(author_id__exact=user.id)
+                           .aggregate(user_amount=Sum('amount')))
         return context
