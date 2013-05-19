@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: porte-monnaie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-18 16:55+0200\n"
+"POT-Creation-Date: 2013-05-19 21:45+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -128,7 +128,7 @@ msgstr "mois précédent"
 
 #: templates/tracker/expenditure_archive_month.html:14
 msgid "View current month expenditures"
-msgstr "Voir les dépenses du mois suivant"
+msgstr "Voir les dépenses du mois en cours"
 
 #: templates/tracker/expenditure_archive_month.html:15
 msgid "current"
@@ -136,7 +136,7 @@ msgstr "mois en cours"
 
 #: templates/tracker/expenditure_archive_month.html:20
 msgid "View next month expenditures"
-msgstr "Voir les dépenses du mois précédent"
+msgstr "Voir les dépenses du mois suivant"
 
 #: templates/tracker/expenditure_archive_month.html:21
 msgid "next"
@@ -170,7 +170,7 @@ msgstr ""
 msgid ""
 "No expenditures found for %(date)s\n"
 "!"
-msgstr "Pas encore de dépenses pour le mois de %(date)s&nbsp;!"
+msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
 
 #: templates/tracker/expenditure_form.html:4
 msgid "new expenditure"
