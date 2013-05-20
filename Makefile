@@ -15,13 +15,11 @@ manager = python manage.py
 
 lang = fr
 
-public_files = public/django.fcgi public/.htaccess
-
 # User targets
 
 setup: createusers compile-messages
 
-install: setup $(public_files) collect
+install: setup $(projdir)/public/django.fcgi $(projdir)public/.htaccess collect
 
 uninstall: dropdb dropuser
 	-rm -fr $(projname)/public
