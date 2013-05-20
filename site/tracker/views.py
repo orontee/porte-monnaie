@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Sum
 from django.utils.decorators import method_decorator
-from django.views.generic import (ListView, CreateView,
+from django.views.generic import (CreateView,
                                   MonthArchiveView)
 from tracker.models import Expenditure
     
@@ -36,6 +36,7 @@ class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
     date_field = 'date'
     allow_empty = True
     field_names = ['date', 'amount', 'author', 'description']
+    month_format = '%m'
 
     def get_context_data(self, **kwargs):
         context = super(ExpenditureMonthList, self).get_context_data(**kwargs)

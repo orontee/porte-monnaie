@@ -3,6 +3,7 @@
 
 from datetime import datetime
 from django import template
+from django.core.urlresolvers import reverse
 
 register = template.Library()
 
@@ -14,3 +15,11 @@ def check_date_month(date):
         return datetime.today().month == date.month
     except AttributeError:
         return False
+
+@register.simple_tag(name='archive_url')
+def do_archive_url(date):
+    """Return the archive url for the given date.
+    """
+    return '{0}?month={1}&year={2}'.format(reverse('tracker:archive'),
+                                           '{0:%m}'.format(date),
+                                           '{0:%Y}'.format(date))

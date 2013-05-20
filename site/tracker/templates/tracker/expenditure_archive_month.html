@@ -4,7 +4,7 @@
 {% is_current_month month as is_current %}
 <div id="navigation">
   <div class="left">
-    <a href={% url "tracker:archive" %}
+    <a href='{% archive_url previous_month %}'
        title='{% trans "View previous month expenditures" %}'>
       {% trans "previous"|capfirst %}
     </a>
@@ -16,7 +16,7 @@
     </a>
   </div>
   <div  class="right">
-    <a href={% url "tracker:archive" %}
+    <a href='{% archive_url next_month %}'
        title='{% trans "View next month expenditures" %}'>
       {% trans "next"|capfirst %}
     </a>

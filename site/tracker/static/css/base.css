@@ -74,6 +74,7 @@ body {
 }
 
 table {
+    font-size: 10pt;
     border-collapse:collapse;
 }
 

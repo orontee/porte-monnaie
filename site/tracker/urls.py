@@ -25,7 +25,7 @@ urlpatterns += patterns('tracker.views',
                        url(r'^expenditures/$',
                            ExpenditureMonthList.as_view(
                                **dict(zip(['month', 'year'],
-                                          '{0:%b},{0:%Y}'.format(
+                                          '{0:%m},{0:%Y}'.format(
                                               datetime.today()).split(',')))),
                            name='list'),
                         url(r'^expenditures/archive/$',
