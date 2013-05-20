@@ -9,7 +9,7 @@ apps += $(projdir)/tracker
 
 dbname = $(projname)_data
 dbuser = $(projname)
-dbhost = postgresql1.alwaysdata.com
+dbhost = localhost
 
 manager = python manage.py
 
@@ -19,9 +19,9 @@ lang = fr
 
 setup: createusers compile-messages
 
-install: setup $(projdir)/public/django.fcgi $(projdir)public/.htaccess collect
+install: setup $(projdir)/public/django.fcgi $(projdir)/public/.htaccess collect
 
-uninstall: dropdb dropuser
+uninstall: 
 	-rm -fr $(projname)/public
 
 help:
@@ -29,6 +29,8 @@ help:
 	@echo "  setup      To finalize the project environment"
 	@echo "  install    To install the website"
 	@echo "  uninstall  To uninstall the website"
+	@echo "  createdb   To create the site database"
+	@echo "  dropdb 	  To drop the site database"
 
 # Internal targets
 
@@ -44,7 +46,7 @@ dropdb:
 	-dropdb $(dbname) -U $(dbuser) -h $(dbhost)
 	-dropuser $(dbuser) -h $(dbhost)
 
-syncdb: createdb
+syncdb: 
 	cd $(projdir); \
 	$(manager) syncdb --noinput
 
