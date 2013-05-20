@@ -1,7 +1,4 @@
 # TODO Be consistent; Choose between django-admin.py and manage.py
-
-# TODO Configure STATIC_ROOT before running that target
-
 # TODO Check that django-manage.py is in path when necessary
 
 projname = porte-monnaie
@@ -10,21 +7,23 @@ projdir = site
 apps = $(projdir)/$(projname)
 apps += $(projdir)/tracker
 
-dbname = $(projname)
+dbname = $(projname)_data
+dbuser = $(projname)
 
 manager = python manage.py
 
 lang = fr
 
-.PHONY: collect createdb compile-messages setup syncdb update-messages
+public_files = public/django.fcgi public/.htaccess
 
 # User targets
 
 setup: createusers compile-messages
 
-install: setup collect
+install: setup $(public_files) collect
 
-uninstall: dropdb
+uninstall: dropdb dropuser
+	-rm -fr $(projname)/public
 
 help:
 	@echo "The main targets are:"
@@ -34,11 +33,17 @@ help:
 
 # Internal targets
 
-createdb:
-	-createdb $(dbname)
+.PHONY: createdb dropdb syncdb setup \
+	compile-messages update-messages \
+	collect
+
+createdb: 
+	-createuser -d $(dbuser)
+	-createdb $(dbname) -U $(dbuser)
 
 dropdb:
-	-dropdb $(dbname)
+	-dropdb $(dbname) -U $(dbuser)
+	-dropuser $(dbuser)
 
 syncdb: createdb
 	cd $(projdir); \
@@ -72,3 +77,10 @@ compile-messages:
 collect:
 	cd $(projdir); \
 	$(manager) collectstatic --noinput
+
+$(projdir)/public:
+	[ -x $@ ] || mkdir $@
+	touch	$@
+
+$(projdir)/public/%: share/% $(projdir)/public
+	cp $< $(projdir)/public/
