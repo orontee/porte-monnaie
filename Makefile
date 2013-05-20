@@ -9,6 +9,7 @@ apps += $(projdir)/tracker
 
 dbname = $(projname)_data
 dbuser = $(projname)
+dbhost = postgresql1.alwaysdata.com
 
 manager = python manage.py
 
@@ -38,12 +39,12 @@ help:
 	collect
 
 createdb: 
-	-createuser -d $(dbuser)
-	-createdb $(dbname) -U $(dbuser)
+	-createuser -d $(dbuser) -h $(dbhost)
+	-createdb $(dbname) -U $(dbuser) -h $(dbhost)
 
 dropdb:
-	-dropdb $(dbname) -U $(dbuser)
-	-dropuser $(dbuser)
+	-dropdb $(dbname) -U $(dbuser) -h $(dbhost)
+	-dropuser $(dbuser) -h $(dbhost)
 
 syncdb: createdb
 	cd $(projdir); \
