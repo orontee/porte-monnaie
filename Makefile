@@ -4,6 +4,8 @@
 projname = porte-monnaie
 projdir = site
 
+publicdir = $(projdir)/$(projname)/public
+
 apps = $(projdir)/$(projname)
 apps += $(projdir)/tracker
 
@@ -19,7 +21,7 @@ lang = fr
 
 setup: createusers compile-messages
 
-install: setup $(projdir)/public/django.fcgi $(projdir)/public/.htaccess collect
+install: setup $(publicdir)/django.fcgi $(publicdir)/.htaccess collect
 
 uninstall: 
 	-rm -fr $(projname)/public
@@ -79,9 +81,13 @@ collect:
 	cd $(projdir); \
 	$(manager) collectstatic --noinput
 
-$(projdir)/public:
+$(publicdir):
 	[ -x $@ ] || mkdir $@
 	touch	$@
 
-$(projdir)/public/%: share/% $(projdir)/public
-	cp $< $(projdir)/public/
+$(publicdir)/django.fcgi: share/django.fcgi $(publicdir)
+	cp $< $(publicdir)/
+	chmod +x $@
+
+$(publicdir)/%: share/% $(publicdir)
+	cp $< $(publicdir)/
