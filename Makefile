@@ -1,3 +1,9 @@
+# TODO Be consistent; Choose between django-admin.py and manage.py
+
+# TODO Configure STATIC_ROOT before running that target
+
+# TODO Check that django-manage.py is in path when necessary
+
 projname = porte-monnaie
 projdir = site
 
@@ -7,7 +13,6 @@ apps += $(projdir)/tracker
 dbname = $(projname)
 
 manager = python manage.py
-# TODO Be consistent; Choose between django-admin.py and manage.py
 
 lang = fr
 
@@ -48,21 +53,22 @@ createusers: syncdb
 
 update-messages:
 	for app in $(apps); do \
-		pushd $$app &> /dev/null; \
-		django-admin.py makemessages -l $(lang); \
-		popd &> /dev/null; \
+		[ -x $$app/locale ] && ( \
+			pushd $$app &> /dev/null; \
+			django-admin.py makemessages -l $(lang); \
+			popd &> /dev/null \
+		); \
 	done
 
 compile-messages:
 	for app in $(apps); do \
-		pushd $$app &> /dev/null; \
-		django-admin.py compilemessages -l $(lang); \
-		popd &> /dev/null; \
+		[ -x $$app/locale ] && ( \
+			pushd $$app &> /dev/null; \
+			django-admin.py compilemessages -l $(lang); \
+			popd &> /dev/null \
+		); \
 	done
 
 collect:
 	cd $(projdir); \
 	$(manager) collectstatic --noinput
-
-# TODO Configure STATIC_ROOT before running that target
-
