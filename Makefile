@@ -77,13 +77,17 @@ compile-messages:
 		); \
 	done
 
-collect:
+collect: $(publicdir)/static
 	cd $(projdir); \
 	$(manager) collectstatic --noinput
 
 $(publicdir):
 	[ -x $@ ] || mkdir $@
 	touch	$@
+
+$(publicdir)/%: $(publicdir)
+	[ -x $@ ] || mkdir $@
+	touch $@
 
 $(publicdir)/django.fcgi: share/django.fcgi $(publicdir)
 	cp $< $(publicdir)/
