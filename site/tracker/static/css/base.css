@@ -65,9 +65,9 @@ div#main {
     left: 0;
 }
 
-input[type="submit"] {
-    display: none;
-}
+/* input[type="submit"] { */
+/*     display: none; */
+/* } */
 
 body {
     margin: 0px;
