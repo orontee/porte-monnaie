@@ -10,7 +10,7 @@
        action={% url "tracker:login" %}
        method="post">{% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" value={% trans "log in"|capfirst %}/>
+  <input type="submit" value={% trans "log in"|capfirst %}>
 </form>
 {% endblock %} 
 {% block scripts %}
