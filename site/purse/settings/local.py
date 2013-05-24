@@ -1,9 +1,9 @@
 """The settings file used when working on the project locally.
 """
 
-from .base import *
 import os
 import tempfile
+from purse.settings.base import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -33,7 +33,7 @@ LOGGING.update({
             'level': 'ERROR',
             'propagate': True,
         },
-        'porte-monnaie': {
+        'purse': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG'
         }

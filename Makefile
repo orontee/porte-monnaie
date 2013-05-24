@@ -1,7 +1,4 @@
-# TODO Be consistent; Choose between django-admin.py and manage.py
-# TODO Check that django-manage.py is in path when necessary
-
-projname = porte-monnaie
+projname = purse
 projdir = site
 
 publicdir = $(projdir)/$(projname)/public
@@ -9,11 +6,11 @@ publicdir = $(projdir)/$(projname)/public
 apps = $(projdir)/$(projname)
 apps += $(projdir)/tracker
 
-dbname = $(projname)_data
-dbuser = $(projname)
+dbname = porte-monnaie_data
+dbuser = porte-monnaie
 dbhost = localhost
 
-manager = python manage.py
+manager = django-admin.py
 
 lang = fr
 

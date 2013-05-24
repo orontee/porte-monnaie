@@ -1,7 +1,7 @@
 """The settings file used by the live production server. 
 """
 
-from .base import *
+from purse.settings.base import *
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
