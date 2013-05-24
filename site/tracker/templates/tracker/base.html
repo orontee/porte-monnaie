@@ -10,13 +10,15 @@
   </head>
   <body>
     <div id="header">
+      <div id="branding">
+	{% block header %}{{ "porte-monnaie"|capfirst }}{% endblock %}
+      </div>
       <div id="header-content">
-	<span id="branding">
-	  {% block header %}{{ "porte-monnaie"|capfirst }}{% endblock %}
-	</span><br>
-	<span id="quote">{% blocktrans %}Love without counting{% endblocktrans %}</span>
+	<div id="quote">
+	  {% blocktrans %}Love without counting{% endblocktrans %}
+	</div>
 	<div id="user-tools">
-	  {% block usertools %}{% trans "Welcome," %} <strong>{% filter force_escape %}{% firstof user.first_name user.username|capfirst %}.{% endfilter %}</strong>
+	  {% block usertools %}{% trans "Welcome," %} <strong>{% filter force_escape %}{% firstof user.first_name user.username %}.{% endfilter %}</strong>
 	  {% block userlinks %}
 	  <a id ="change-password" href={% url "tracker:password_change" %}>
 	    {% trans "change password"|capfirst %}

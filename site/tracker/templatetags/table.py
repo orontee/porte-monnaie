@@ -5,27 +5,29 @@ from django import template
 
 register = template.Library()
 
-@register.inclusion_tag('tracker/table.html', name='table')
-def do_table(object_list, field_names):
-    hdatas, rdatas = [], []
-    fields = object_list.model._meta.fields
+
+@register.inclusion_tag('tracker/header.html',
+                        name='table_header',
+                        takes_context=True)
+def do_header(context, field_names):
+    """Include a template for a table header build from the given fields.
+
+    The columns order is the same as the one in field_names.
+    """
+    datas = []
+    fields = context['object_list'].model._meta.fields
     for field in fields:
         if field.name in field_names:
-            hdatas.append({'name': field.name,
+            datas.append({'name': field.name,
                            'verbose_name': field.verbose_name,
                            'help_text': field.help_text})
-    hdatas.sort(key=lambda f: field_names.index(f['name']))
-    for obj in object_list:
-        data = []
-        for name in field_names:
-            try:            
-                dct = {'value': getattr(obj, name),
-                       'class': name}
-            except AttributeError:
-                pass
-            else:
-                data.append(dct)
-        rdatas.append(data)
-    return {'header_datas': hdatas,
-            'row_datas': rdatas}
-    
+    datas.sort(key=lambda f: field_names.index(f['name']))
+    return {'header_datas': datas}
+
+
+@register.simple_tag(name='value')
+def do_getattr(obj, name):
+    """Return the attribute of obj named name, or None if obj has no such
+    attribute.
+    """
+    return getattr(obj, name, None)

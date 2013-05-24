@@ -10,7 +10,7 @@
       method="post">{% csrf_token %}
   {{ form.as_p }}
   <!-- <a href="javascript:">{% trans "more..."|capfirst %}</a><br> -->
-  <input type="submit" value={% trans "submit"|capfirst %}>
+  <input type="submit" value={% trans "add"|capfirst %}>
 </form>
 {% endblock %}
 {% block scripts %}

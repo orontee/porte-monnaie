@@ -1,6 +1,5 @@
 div#header {
     background: lightgreen;
-    height: 40pt;
     padding: 5px;    
 }
 
@@ -9,12 +8,12 @@ div#header-content {
     position: relative;
 }
 
-span#branding {
+div#branding {
     font-size: 20pt;
     font-weight: bold;
 }
 
-span#quote {
+div#quote {
     font-family: serif;
     font-size: 10pt;
     font-style: italic;
@@ -24,9 +23,6 @@ span#quote {
 div#user-tools {
     font-size: 10pt;
     padding: 5px;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
 }
 
 div#content {
