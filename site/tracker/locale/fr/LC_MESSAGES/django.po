@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: porte-monnaie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-20 13:37+0200\n"
+"POT-Creation-Date: 2013-05-25 13:08+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -102,19 +102,19 @@ msgstr "Changement de mot de passe"
 msgid "change"
 msgstr "changer"
 
-#: templates/tracker/base.html:17
+#: templates/tracker/base.html:18
 msgid "Love without counting"
 msgstr "Aimer sans compter"
 
-#: templates/tracker/base.html:19
+#: templates/tracker/base.html:21
 msgid "Welcome,"
 msgstr "Bienvenue,"
 
-#: templates/tracker/base.html:22
+#: templates/tracker/base.html:24
 msgid "change password"
 msgstr "changer de mot de passe"
 
-#: templates/tracker/base.html:25
+#: templates/tracker/base.html:27
 msgid "log out"
 msgstr "quitter"
 
@@ -143,7 +143,7 @@ msgid "next"
 msgstr "mois suivant"
 
 #: templates/tracker/expenditure_archive_month.html:27
-#: templates/tracker/expenditure_archive_month.html:43
+#: templates/tracker/expenditure_archive_month.html:59
 msgid "Add a new expenditure..."
 msgstr "Ajouter une dépense..."
 
@@ -162,10 +162,10 @@ msgid ""
 "In %(date)s, the total amount of expenditures was equal to %(total)s€; You "
 "authored %(user)s€."
 msgstr ""
-"Au mois de %(date)s, le montant total des dépenses a été de %(total)s€, dont "
+"Au mois de %(date)s, le montant total des dépenses a été de %(total)s€ dont "
 "%(user)s€ à votre initiative."
 
-#: templates/tracker/expenditure_archive_month.html:41
+#: templates/tracker/expenditure_archive_month.html:57
 #, python-format
 msgid ""
 "No expenditures found for %(date)s\n"
@@ -181,8 +181,11 @@ msgid "more..."
 msgstr "plus de détails..."
 
 #: templates/tracker/expenditure_form.html:13
-msgid "submit"
-msgstr "envoyer"
+msgid "add"
+msgstr "ajouter"
+
+#~ msgid "submit"
+#~ msgstr "envoyer"
 
 #~ msgid "expenditures"
 #~ msgstr "dépenses"
