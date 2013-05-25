@@ -1,6 +1,7 @@
 """The settings file used by the live production server. 
 """
 
+import os.path
 from purse.settings.base import *
 
 DEBUG = False
@@ -19,4 +20,4 @@ DATABASES = {
 
 ALLOWED_HOSTS = ['*']
 
-STATIC_ROOT = os.path.join(PROJECT_PATH, '/public/static/')
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'public/static/')

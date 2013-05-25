@@ -82,10 +82,6 @@ $(publicdir):
 	[ -x $@ ] || mkdir $@
 	touch	$@
 
-$(publicdir)/%: $(publicdir)
-	[ -x $@ ] || mkdir $@
-	touch $@
-
 $(publicdir)/django.fcgi: share/django.fcgi $(publicdir)
 	cp $< $(publicdir)/
 	chmod +x $@
