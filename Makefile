@@ -47,14 +47,14 @@ dropdb:
 
 syncdb: 
 	cd $(projdir); \
-	$(manager) syncdb --noinput
+	$(manager) syncdb --noinput --pythonpath=.
 
 createusers: syncdb
 	cd $(projdir); \
 	$(manager) createuser matthias orontee@gmail.com matthias \
-				  --first=Matthias --last=Meulien; \
+				  --first=Matthias --last=Meulien --pythonpath=.; \
 	$(manager) createuser laurence laurence.turridano@gmail.com laurence \
-				  --first=Laurence --last=Turridano;
+				  --first=Laurence --last=Turridano --pythonpath=.;
 
 update-messages:
 	for app in $(apps); do \
@@ -76,7 +76,7 @@ compile-messages:
 
 collect: $(publicdir)/static
 	cd $(projdir); \
-	$(manager) collectstatic --noinput
+	$(manager) collectstatic --noinput --pythonpath=.
 
 $(publicdir):
 	[ -x $@ ] || mkdir $@
