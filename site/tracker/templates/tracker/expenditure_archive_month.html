@@ -37,16 +37,16 @@
     {% table_header field_names %}
     <tbody>{% for obj in object_list %}
       <tr>
-	<td title="{{ obj.date }}" class="{{ date }}">
+	<td title="{{ obj.date }}" class="date">
 	  {{ obj.date }}
 	</td>
-	<td title="{{ obj.amount }}" class="{{ amount }}">
+	<td title="{{ obj.amount }}" class="amount">
 	  {{ obj.amount|floatformat:2 }}
 	</td>{% with user=obj.author %}
-	<td title="{% firstof user.first_name user.username %}" class="{{ author }}">
+	<td title="{% firstof user.first_name user.username %}" class="author">
 	  {% firstof user.first_name user.username %}
 	</td>{% endwith %}
-	<td title="{{ obj.description }}" class="{{ description }}">
+	<td title="{{ obj.description }}" class="description">
 	  {{ obj.description|capfirst }}
 	</td>
       </tr>{% endfor %}
