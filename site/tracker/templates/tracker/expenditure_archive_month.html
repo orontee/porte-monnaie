@@ -31,8 +31,8 @@
   </p>{% else %}
   <p>
     {% blocktrans with date=month|date:"E Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
-{% endif %}
   </p>
+  {% endif %}
   <table id="expenditures-table">
     {% table_header field_names %}
     <tbody>{% for obj in object_list %}
@@ -54,10 +54,8 @@
   </table>
   {% else %}
   <p>
-    {% blocktrans with date=month|date:"E Y" %}No expenditures found for {{ date }}
-!{% endblocktrans %}{% if is_current %}
+    {% blocktrans with date=month|date:"E Y" %}No expenditures found for {{ date }}!{% endblocktrans %}{% if is_current %}
 <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>{% endif %}
   </p>
-</div>
-{% endif %}
+{% endif %}</div>
 {% endblock %}

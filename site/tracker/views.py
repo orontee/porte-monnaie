@@ -37,6 +37,7 @@ class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
     allow_empty = True
     field_names = ['date', 'amount', 'author', 'description']
     month_format = '%m'
+    paginate_by = True
 
     def get_context_data(self, **kwargs):
         context = super(ExpenditureMonthList, self).get_context_data(**kwargs)
@@ -46,6 +47,7 @@ class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
         if user:
             qs = context['object_list']
             context.update(qs.aggregate(total_amount=Sum('amount')))
-            context.update(qs.filter(author_id__exact=user.id)
-                           .aggregate(user_amount=Sum('amount')))
+            # context.update(qs.filter(author_id__exact=user.id)
+            #                .aggregate(user_amount=Sum('amount')))
+            context.update({'user_amount': 100})
         return context

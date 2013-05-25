@@ -20,6 +20,8 @@ def check_date_month(date):
 def do_archive_url(date):
     """Return the archive url for the given date.
     """
-    return '{0}?month={1}&year={2}'.format(reverse('tracker:archive'),
-                                           '{0:%m}'.format(date),
-                                           '{0:%Y}'.format(date))
+    template = '{0}?month={1}&year={2}&page={3}'
+    return template.format(reverse('tracker:archive'),
+                           '{0:%m}'.format(date),
+                           '{0:%Y}'.format(date),
+                           1)
