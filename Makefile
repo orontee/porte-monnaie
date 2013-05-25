@@ -60,7 +60,7 @@ update-messages:
 	for app in $(apps); do \
 		[ -x $$app/locale ] && ( \
 			pushd $$app &> /dev/null; \
-			django-admin.py makemessages -l $(lang); \
+			django-admin.py makemessages -l $(lang) --pythonpath=..; \
 			popd &> /dev/null \
 		); \
 	done
@@ -69,7 +69,7 @@ compile-messages:
 	for app in $(apps); do \
 		[ -x $$app/locale ] && ( \
 			pushd $$app &> /dev/null; \
-			django-admin.py compilemessages -l $(lang); \
+			django-admin.py compilemessages -l $(lang) --pythonpath=..; \
 			popd &> /dev/null \
 		); \
 	done
