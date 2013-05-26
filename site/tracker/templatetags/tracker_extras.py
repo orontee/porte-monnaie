@@ -4,6 +4,7 @@
 from datetime import datetime
 from django import template
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 register = template.Library()
 
@@ -32,13 +33,13 @@ def do_archive_url(date, page=1):
 @register.simple_tag(name='pagination',
                      takes_context=True)
 def do_pagination(context):
-    """Include a template for the pagination.
+    """Build the pagination anchors.
     """
     try:
         is_paginated = context['is_paginated']
         paginator = context['paginator']
         page = context['page_obj']
-        date = context['month']  # ??
+        date = context['month']
     except KeyError:
         return ""
         # TODO Raise a user exception to signify a wrong use of the
@@ -48,26 +49,30 @@ def do_pagination(context):
             return ""
         delta = 2
         elements = []
-        template = '<a href=\'{url}\' class=\'page-number\'>{number}</a>'
+        template = '<a href=\'{url}\' class=\'page-number\' ' \
+                   'title=\'{msg}\'>' \
+                   '{number}</a>'
+        msg = _('Jump to page {0}')
+        def add_element(i):
+            elements.append(template.format(url=do_archive_url(date, i),
+                                            msg=msg.format(i),
+                                            number=i))
         hidden = min(page.number - delta - 1, delta) + 1
         for i in range(1, hidden):
-            elements.append(template.format(url=do_archive_url(date, i),
-                                            number=i))
+            add_element(i)
         if page.number - delta - 1 > delta:
             elements.append('...')
         visible = max(page.number - delta, 1)
         for i in range(visible, page.number):
-            elements.append(template.format(url=do_archive_url(date, i),
-                                            number=i))
-        elements.append(str(page.number))
+            add_element(i)
+        elements.append(
+            '<span class=\'current-page\'>{0}</span>'.format(page.number))
         hidden = min(page.number + delta + 1, paginator.num_pages + 1)
         for i in range(page.number + 1, hidden):
-            elements.append(template.format(url=do_archive_url(date, i),
-                                            number=i))
+            add_element(i)
         if page.number + delta < paginator.num_pages - delta:
             elements.append('...')
         visible = max(hidden, paginator.num_pages - delta + 1)
         for i in range(visible, paginator.num_pages + 1):
-            elements.append(template.format(url=do_archive_url(date, i),
-                                            number=i))
+            add_element(i)
         return ' '.join(elements)

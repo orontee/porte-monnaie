@@ -88,7 +88,7 @@ th {
     padding: 5px;
 }
 
-th {
+th, tfoot {
     background: lightgray;
 }
 
@@ -124,4 +124,8 @@ th {
 
 #expenditure-form span.helptext {
     display: none;
+}
+
+.current-page {
+    font-weight: bold;
 }

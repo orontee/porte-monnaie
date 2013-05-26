@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-26 23:12+0200\n"
+"POT-Creation-Date: 2013-05-26 23:38+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -143,7 +143,7 @@ msgid "next month"
 msgstr "mois suivant"
 
 #: templates/tracker/expenditure_archive_month.html:28
-#: templates/tracker/expenditure_archive_month.html:60
+#: templates/tracker/expenditure_archive_month.html:66
 msgid "Add a new expenditure..."
 msgstr "Ajouter une dépense..."
 
@@ -165,7 +165,11 @@ msgstr ""
 "Au mois de %(date)s, le montant total des dépenses a été de %(total)s€ dont "
 "%(user)s€ à votre initiative."
 
-#: templates/tracker/expenditure_archive_month.html:59
+#: templates/tracker/expenditure_archive_month.html:42
+msgid "page:"
+msgstr "page&nbsp;:"
+
+#: templates/tracker/expenditure_archive_month.html:65
 #, python-format
 msgid "No expenditures found for %(date)s!"
 msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
@@ -181,3 +185,7 @@ msgstr "plus de détails..."
 #: templates/tracker/expenditure_form.html:13
 msgid "add"
 msgstr "ajouter"
+
+#: templatetags/tracker_extras.py:57
+msgid "Jump to page {0}"
+msgstr "Aller à la page {0}"

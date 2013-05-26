@@ -36,6 +36,13 @@
   {% endif %}
   <table id="expenditures-table">
     {% table_header field_names %}
+    <tfoot>
+      <tr>
+	<td colspan=4>
+	  {% trans "page:"|capfirst %} {% pagination %}
+	</td>
+      </tr>
+    </tfoot>
     <tbody>{% for obj in object_list %}
       <tr>
 	<td title="{{ obj.date }}" class="date">
@@ -53,7 +60,6 @@
       </tr>{% endfor %}
     </tbody>
   </table>
-  {% pagination %}
   {% else %}
   <p>
     {% blocktrans with date=month|date:"E Y" %}No expenditures found for {{ date }}!{% endblocktrans %}{% if is_current %}
