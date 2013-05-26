@@ -2,3 +2,4 @@
 *~
 *.mo
 site/porte-monnaie/public
+*_flymake*
