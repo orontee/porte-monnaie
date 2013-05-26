@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 register = template.Library()
 
+
 @register.assignment_tag(name='is_current_month')
 def check_date_month(date):
     """True iff the given `date` belongs to current month.
@@ -15,6 +16,7 @@ def check_date_month(date):
         return datetime.today().month == date.month
     except AttributeError:
         return False
+
 
 @register.simple_tag(name='archive_url')
 def do_archive_url(date, page=1):
@@ -25,6 +27,7 @@ def do_archive_url(date, page=1):
                            '{0:%m}'.format(date),
                            '{0:%Y}'.format(date),
                            page)
+
 
 @register.simple_tag(name='pagination',
                      takes_context=True)

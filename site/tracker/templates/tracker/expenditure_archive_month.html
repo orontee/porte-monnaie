@@ -2,6 +2,7 @@
 {% load i18n tracker_extras table %}
 {% block content %}
 {% is_current_month month as is_current %}
+{% is_current_month next_month as is_next_current %}
 <div id="navigation">
   <div class="left">
     <a href='{% archive_url previous_month %}'
@@ -14,18 +15,18 @@
        title='{% trans "View current month expenditures" %}'>
       {% trans "current"|capfirst %}
     </a>
-  </div>
+  </div>{% if not is_next_current %}
   <div  class="right">
     <a href='{% archive_url next_month %}'
        title='{% trans "View next month expenditures" %}'>
       {% trans "next"|capfirst %}
     </a>
-  </div>{% endif %}
+  </div>{% endif %}{% endif %}
 </div>
-<div id="main">{% if expenditures %}{% if is_current %}
+<div id="main">
   <p>
     <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>
-  </p>
+  </p>{% if expenditures %}{% if is_current %}
   <p>
     {% blocktrans with date=month|date:"E Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
   </p>{% else %}
