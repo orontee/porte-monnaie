@@ -46,7 +46,7 @@ def do_pagination(context):
         # tag
     else:
         if is_paginated is False:
-            return ""
+            return '<span class=\'current-page\'>{0}</span>'.format(1)
         delta = 2
         elements = []
         template = '<a href=\'{url}\' class=\'page-number\' ' \
