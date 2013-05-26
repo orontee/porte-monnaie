@@ -52,6 +52,7 @@
       </tr>{% endfor %}
     </tbody>
   </table>
+  {% pagination %}
   {% else %}
   <p>
     {% blocktrans with date=month|date:"E Y" %}No expenditures found for {{ date }}!{% endblocktrans %}{% if is_current %}
