@@ -7,19 +7,19 @@
   <div class="left">
     <a href='{% archive_url previous_month %}'
        title='{% trans "View previous month expenditures" %}'>
-      {% trans "previous"|capfirst %}
+      {% trans "previous month"|capfirst %}
     </a>
   </div>{% if not is_current %}
   <div class="center">
     <a href={% url "tracker:list" %}
        title='{% trans "View current month expenditures" %}'>
-      {% trans "current"|capfirst %}
+      {% trans "current month"|capfirst %}
     </a>
   </div>{% if not is_next_current %}
   <div  class="right">
     <a href='{% archive_url next_month %}'
        title='{% trans "View next month expenditures" %}'>
-      {% trans "next"|capfirst %}
+      {% trans "next month"|capfirst %}
     </a>
   </div>{% endif %}{% endif %}
 </div>
