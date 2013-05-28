@@ -33,7 +33,7 @@ class ExpenditureAdd(LoginRequiredMixin, CreateView):
         future = int(form.cleaned_data['occurrences']) - 1
         for delta in range(future):
             self.object.pk = None
-            month = (self.object.date.month + 1) % 12 \
+            month = self.object.date.month + 1 \
                     if self.object.date.month < 12 else 1
             year = self.object.date.year + 1 \
                    if month == 1 else self.object.date.year
