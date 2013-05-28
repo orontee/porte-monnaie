@@ -19,7 +19,7 @@ LOGGING.update({
             'level':'DEBUG',
             'class' : 'logging.FileHandler',
             'formatter': 'verbose',
-            'filename': os.path.join(tempfile.gettempdir(), 'attsmanager.log')
+            'filename': os.path.join(tempfile.gettempdir(), 'purse.log')
         },
         'mail_admins': {
             'level': 'ERROR',
