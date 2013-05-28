@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-26 23:38+0200\n"
+"POT-Creation-Date: 2013-05-29 01:14+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -17,6 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: forms.py:5
+msgid "unique"
+msgstr ""
+
+#: forms.py:6
+msgid "next four months"
+msgstr "quatre prochains mois"
+
+#: forms.py:7
+msgid "next five months"
+msgstr "cinq prochains mois"
+
+#: forms.py:8
+msgid "next six months"
+msgstr "six prochains mois"
+
+#: forms.py:9
+msgid "forthcoming year"
+msgstr "année à venir"
+
+#: forms.py:16
+msgid "Occurrences"
+msgstr ""
+
+#: forms.py:18
+msgid "The number of occurrences of the expenditure"
+msgstr "Nombre d'occurrences de la dépense"
 
 #: models.py:13
 msgid "amount"
@@ -178,14 +206,14 @@ msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
 msgid "new expenditure"
 msgstr "ajouter une dépense"
 
-#: templates/tracker/expenditure_form.html:12
+#: templates/tracker/expenditure_form.html:22
 msgid "more..."
-msgstr "plus de détails..."
+msgstr "plus..."
 
-#: templates/tracker/expenditure_form.html:13
+#: templates/tracker/expenditure_form.html:36
 msgid "add"
 msgstr "ajouter"
 
-#: templatetags/tracker_extras.py:57
+#: templatetags/tracker_extras.py:54
 msgid "Jump to page {0}"
 msgstr "Aller à la page {0}"

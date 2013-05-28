@@ -24,7 +24,8 @@ def do_archive_url(date, page=1):
     """Return the archive url for the given date.
     """
     template = '{0}?month={1}&year={2}&page={3}'
-    return template.format(reverse('tracker:archive'),
+    url = reverse('tracker:archive')
+    return template.format(url,
                            '{0:%m}'.format(date),
                            '{0:%Y}'.format(date),
                            page)

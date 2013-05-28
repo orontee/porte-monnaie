@@ -8,8 +8,31 @@
 <form id="expenditure-form"
       action={% url "tracker:add" %} 
       method="post">{% csrf_token %}
-  {{ form.as_p }}
-  <!-- <a href="javascript:">{% trans "more..."|capfirst %}</a><br> -->
+  {% for field in form.visible_fields|slice:":3" %}
+  {{ field.errors }}
+  <p>
+    {{ field.label_tag }}: {{ field }}
+    <span class="helptext">
+      {{ field.help_text }}
+    </span>
+  </p>
+  {% endfor %}
+  <div id="form-details">
+    <a id="show-details-anchor" href="javascript:showDetails()">
+      {% trans "more..."|capfirst %}
+    </a>
+    <div id="form-details-content" style="display: none;">
+      {% for field in form.visible_fields|slice:"3:" %}
+      {{ field.errors }}
+      <p>
+	{{ field.label_tag }}: {{ field }}
+	<span class="helptext">
+	  {{ field.help_text }}
+	</span>
+      </p>
+      {% endfor %}
+    </div>
+  </div>
   <input type="submit" value={% trans "add"|capfirst %}>
 </form>
 {% endblock %}
@@ -17,7 +40,10 @@
 {{ block.super }}
 <script type="text/javascript">
   document.getElementById('id_amount').focus();
-  // TODO Set the title attribute of the label and input nodes with
-  // the innerHTML of the span nodes...
+
+  function showDetails() {
+     document.getElementById('form-details-content').style.display = 'inline';
+     document.getElementById('show-details-anchor').style.display = 'none';
+  }
 </script>
 {% endblock %}

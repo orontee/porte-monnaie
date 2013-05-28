@@ -7,8 +7,8 @@ from django.utils.decorators import method_decorator
 from django.views.generic import (CreateView,
                                   MonthArchiveView)
 from tracker.models import Expenditure
+from tracker.forms import ExpenditureForm
     
-
 class LoginRequiredMixin(object):
     """Makes sure that a user is logged in before a request is performed.
     """
@@ -21,11 +21,26 @@ class ExpenditureAdd(LoginRequiredMixin, CreateView):
     """View to add an expenditure.
     """
     model = Expenditure
+    form_class = ExpenditureForm
     success_url = reverse_lazy('tracker:list')
+
+    def post(self, request, *args, **kwargs):
+        return super(ExpenditureAdd, self).post(request, *args, **kwargs)        
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super(ExpenditureAdd, self).form_valid(form)
+        response = super(ExpenditureAdd, self).form_valid(form)
+        future = int(form.cleaned_data['occurrences']) - 1
+        for delta in range(future):
+            self.object.pk = None
+            month = (self.object.date.month + 1) % 12 \
+                    if self.object.date.month < 12 else 1
+            year = self.object.date.year + 1 \
+                   if month == 1 else self.object.date.year
+            self.object.date = self.object.date.replace(month=month,
+                                                        year=year)
+            self.object.save()
+        return response
 
 
 class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
