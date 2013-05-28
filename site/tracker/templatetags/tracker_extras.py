@@ -49,9 +49,7 @@ def do_pagination(context):
             return '<span class=\'current-page\'>{0}</span>'.format(1)
         delta = 2
         elements = []
-        template = '<a href=\'{url}\' class=\'page-number\' ' \
-                   'title=\'{msg}\'>' \
-                   '{number}</a>'
+        template = u"""<a href='{url}' class='page-number' title='{msg}'>{number}</a>"""
         msg = _('Jump to page {0}')
         def add_element(i):
             elements.append(template.format(url=do_archive_url(date, i),
