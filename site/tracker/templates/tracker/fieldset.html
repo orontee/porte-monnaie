@@ -1,0 +1,14 @@
+<fieldset>
+  {% for field in form.visible_fields %}
+  <p>
+    <label for="id_{{ field.name }}">{{ field.label }}</label>{{ field }}
+    {% if field.errors %}
+    <span class="error">{% for error in field.errors %}
+      {{ error }} {% endfor %}</span>
+    {% endif %}<br>
+    <span class="helptext">
+      {{ field.help_text }}
+    </span>
+  </p>
+  {% endfor %}
+</fieldset>

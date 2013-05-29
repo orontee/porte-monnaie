@@ -88,7 +88,7 @@ th {
     padding: 5px;
 }
 
-th, tfoot {
+th {
     background: lightgray;
 }
 
@@ -122,8 +122,26 @@ th, tfoot {
     width: 20%;
 }
 
-#expenditure-form span.helptext {
+span.helptext {
     display: none;
+}
+
+fieldset p {
+    clear: both;
+}
+
+label {
+    text-align: right;
+    /* font-weight: bold; */
+    width: 25%;
+    float: left;
+    padding: 0 1em 0 0;
+}
+
+.error {
+    font-size: 10pt;
+    font-weight: bold;
+    color: #8b008b;
 }
 
 .current-page {

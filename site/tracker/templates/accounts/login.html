@@ -9,7 +9,7 @@
 <form  id="login-form"
        action={% url "tracker:login" %}
        method="post">{% csrf_token %}
-  {{ form.as_p }}
+  {% include "tracker/fieldset.html" %}
   <input type="submit" value={% trans "log in"|capfirst %}>
 </form>
 {% endblock %} 

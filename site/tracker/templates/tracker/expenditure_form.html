@@ -8,31 +8,7 @@
 <form id="expenditure-form"
       action={% url "tracker:add" %} 
       method="post">{% csrf_token %}
-  {% for field in form.visible_fields|slice:":3" %}
-  {{ field.errors }}
-  <p>
-    {{ field.label_tag }}: {{ field }}
-    <span class="helptext">
-      {{ field.help_text }}
-    </span>
-  </p>
-  {% endfor %}
-  <div id="form-details">
-    <a id="show-details-anchor" href="javascript:showDetails()">
-      {% trans "more..."|capfirst %}
-    </a>
-    <div id="form-details-content" style="display: none;">
-      {% for field in form.visible_fields|slice:"3:" %}
-      {{ field.errors }}
-      <p>
-	{{ field.label_tag }}: {{ field }}
-	<span class="helptext">
-	  {{ field.help_text }}
-	</span>
-      </p>
-      {% endfor %}
-    </div>
-  </div>
+  {% include "tracker/fieldset.html" %}
   <input type="submit" value={% trans "add"|capfirst %}>
 </form>
 {% endblock %}
@@ -40,10 +16,5 @@
 {{ block.super }}
 <script type="text/javascript">
   document.getElementById('id_amount').focus();
-
-  function showDetails() {
-     document.getElementById('form-details-content').style.display = 'inline';
-     document.getElementById('show-details-anchor').style.display = 'none';
-  }
 </script>
 {% endblock %}
