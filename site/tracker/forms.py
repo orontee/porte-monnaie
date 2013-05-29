@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.forms import (ModelForm, ChoiceField)
 from tracker.models import Expenditure
 from django.utils.translation import ugettext_lazy as _
@@ -19,6 +20,14 @@ class ExpenditureForm(ModelForm):
                               help_text=
                               _('The number of occurrences of the expenditure'))
     other_dates = []
+
+    def clean_amount(self):
+        """"""
+        data = self.cleaned_data['amount']
+        if data == 0:
+            msg = _('The amount must be non-zero.')
+            raise ValidationError(msg)
+        return data
 
     def clean(self):
         """Form-wide cleaning. 
