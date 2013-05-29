@@ -48,13 +48,13 @@
 	<td title="{{ obj.date }}" class="date">
 	  {{ obj.date }}
 	</td>
-	<td title="{{ obj.amount }}" class="amount">
+	<td title="{{ obj.amount|floatformat:2 }}" class="amount">
 	  {{ obj.amount|floatformat:2 }}
 	</td>{% with user=obj.author %}
 	<td title="{% firstof user.first_name user.username %}" class="author">
 	  {% firstof user.first_name user.username %}
 	</td>{% endwith %}
-	<td title="{{ obj.description }}" class="description">
+	<td title="{{ obj.description|capfirst }}" class="description">
 	  {{ obj.description|capfirst }}
 	</td>
       </tr>{% endfor %}
