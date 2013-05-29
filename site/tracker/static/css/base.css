@@ -88,7 +88,7 @@ th {
     padding: 5px;
 }
 
-th {
+th, tfoot {
     background: lightgray;
 }
 
@@ -126,19 +126,25 @@ span.helptext {
     display: none;
 }
 
+fieldset {
+    border: none;
+}
+
 fieldset p {
     clear: both;
 }
 
 label {
     text-align: right;
-    /* font-weight: bold; */
+    font-weight: bold;
+    font-size: 10pt;
+    font-family: sans-serif;
     width: 25%;
     float: left;
     padding: 0 1em 0 0;
 }
 
-.error {
+.errors {
     font-size: 10pt;
     font-weight: bold;
     color: #8b008b;
