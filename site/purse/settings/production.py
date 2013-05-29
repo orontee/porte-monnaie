@@ -1,4 +1,4 @@
-"""The settings file used by the live production server. 
+"""The settings file used by the live production server.
 """
 
 import os.path
@@ -13,7 +13,7 @@ DATABASES = {
         'NAME': 'porte-monnaie_data',
         'USER': 'porte-monnaie',
         'PASSWORD': '',
-        'HOST': 'postgresql1.alwaysdata.com', 
+        'HOST': 'postgresql1.alwaysdata.com',
         'PORT': '',
     }
 }

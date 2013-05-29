@@ -19,8 +19,8 @@ def do_header(context, field_names):
     for field in fields:
         if field.name in field_names:
             datas.append({'name': field.name,
-                           'verbose_name': field.verbose_name,
-                           'help_text': field.help_text})
+                          'verbose_name': field.verbose_name,
+                          'help_text': field.help_text})
     datas.sort(key=lambda f: field_names.index(f['name']))
     return {'header_datas': datas}
 

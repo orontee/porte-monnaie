@@ -20,7 +20,7 @@ DATABASES = {
         'NAME': 'porte-monnaie_data',
         'USER': 'porte-monnaie',
         'PASSWORD': '',
-        'HOST': '', 
+        'HOST': '',
         'PORT': '',
     }
 }
@@ -83,7 +83,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -93,7 +93,7 @@ SECRET_KEY = os.environ['PORTE_MONNAIE_SECRET_KEY']
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -142,11 +142,11 @@ LOGGING = {
     'formatters': {
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s:%(lineno)d %(process)d %(thread)d %(message)s'
-            },
+        },
         'simple': {
             'format': '%(levelname)s %(message)s'
-            },
         },
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
@@ -170,4 +170,3 @@ LOGGING = {
 
 LOGIN_REDIRECT_URL = '/tracker/expenditures'
 LOGIN_URL = '/tracker/login'
-

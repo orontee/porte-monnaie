@@ -8,7 +8,8 @@ from django.views.generic import (CreateView,
                                   MonthArchiveView)
 from tracker.models import Expenditure
 from tracker.forms import ExpenditureForm
-    
+
+
 class LoginRequiredMixin(object):
     """Makes sure that a user is logged in before a request is performed.
     """
@@ -24,21 +25,14 @@ class ExpenditureAdd(LoginRequiredMixin, CreateView):
     form_class = ExpenditureForm
     success_url = reverse_lazy('tracker:list')
 
-    def post(self, request, *args, **kwargs):
-        return super(ExpenditureAdd, self).post(request, *args, **kwargs)        
-
     def form_valid(self, form):
+        """If the form is valid, save the associated model instances.
+        """
         form.instance.author = self.request.user
         response = super(ExpenditureAdd, self).form_valid(form)
-        future = int(form.cleaned_data['occurrences']) - 1
-        for delta in range(future):
+        for date in form.other_dates:
             self.object.pk = None
-            month = self.object.date.month + 1 \
-                    if self.object.date.month < 12 else 1
-            year = self.object.date.year + 1 \
-                   if month == 1 else self.object.date.year
-            self.object.date = self.object.date.replace(month=month,
-                                                        year=year)
+            self.object.date = date
             self.object.save()
         return response
 
@@ -55,6 +49,9 @@ class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
     paginate_by = 15
 
     def get_context_data(self, **kwargs):
+        """Extend the context with the field names to build tables and various
+        data computed from the expenditures amounts.
+        """
         context = super(ExpenditureMonthList, self).get_context_data(**kwargs)
         context['field_names'] = self.field_names
         user = self.request.user if self.request else None

@@ -5,9 +5,9 @@ from django.db.models import (AutoField, DateField, DateTimeField,
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
+
 class Expenditure(Model):
-    """
-    Class representing expenditures.
+    """Class representing expenditures.
     """
     id = AutoField(primary_key=True, editable=False)
     amount = FloatField(_('amount'),
@@ -29,12 +29,11 @@ class Expenditure(Model):
                              editable=False)
     timestamp = DateTimeField(_('timestamp'),
                               auto_now=True,
+                              editable=False,
                               help_text=_('timestamp of the expenditure input'))
 
     class Meta(object):
-        """
-        Expenditure metadata.
+        """Expenditure metadata.
         """
         ordering = ['-date', '-timestamp', 'author']
         get_latest_by = 'date'
-    

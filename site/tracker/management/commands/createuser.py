@@ -28,4 +28,4 @@ class Command(BaseCommand):
             user.save()
             print('User {0} created'.format(args[0]))
         else:
-            print('User {0} already exists'.format(args[0]))    
+            print('User {0} already exists'.format(args[0]))
