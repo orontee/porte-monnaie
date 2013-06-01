@@ -28,13 +28,14 @@
     <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>
   </p>{% if expenditures %}{% if is_current %}
   <p>
-    {% blocktrans with date=month|date:"E Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
+    {% blocktrans with date=month|date:"F Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
   </p>{% else %}
   <p>
-    {% blocktrans with date=month|date:"E Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
+    {% blocktrans with date=month|date:"F Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
   </p>
   {% endif %}
   <table id="expenditures-table">
+    <caption>{% blocktrans with date=month|date:"F Y" %}Expenditures of {{ date }}.{% endblocktrans %}
     {% table_header field_names %}
     <tfoot>
       <tr>
@@ -62,7 +63,7 @@
   </table>
   {% else %}
   <p>
-    {% blocktrans with date=month|date:"E Y" %}No expenditures found for {{ date }}!{% endblocktrans %}{% if is_current %}
+    {% blocktrans with date=month|date:"F Y" %}No expenditures found for {{ date }}!{% endblocktrans %}{% if is_current %}
 <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>{% endif %}
   </p>
 {% endif %}</div>
