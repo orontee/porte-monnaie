@@ -32,6 +32,10 @@
     <div id="content">
       {% block content %}{% endblock %}
     </div>
-    {% block scripts %}{% endblock %}
+    {% block scripts %}
+    <script type="text/javascript">
+      var Tracker = new Object();
+    </script>
+    {% endblock %}
   </body>
 </html>

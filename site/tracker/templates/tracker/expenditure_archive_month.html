@@ -3,29 +3,43 @@
 {% block content %}
 {% is_current_month month as is_current %}
 {% is_current_month next_month as is_next_current %}
-<div id="navigation">
-  <div class="left">
-    <a href='{% archive_url previous_month %}'
-       title='{% trans "View previous month expenditures" %}'>
-      {% trans "previous month"|capfirst %}
-    </a>
-  </div>{% if not is_current %}
-  <div class="center">
-    <a href={% url "tracker:list" %}
-       title='{% trans "View current month expenditures" %}'>
-      {% trans "current month"|capfirst %}
-    </a>
-  </div>{% if not is_next_current %}
-  <div  class="right">
-    <a href='{% archive_url next_month %}'
-       title='{% trans "View next month expenditures" %}'>
-      {% trans "next month"|capfirst %}
-    </a>
-  </div>{% endif %}{% endif %}
-</div>
 <div id="main">
+  <ul id="toolbar">
+    <li>
+      <a href="#" 
+	 onclick="Tracker.toggle_menu('browse_menu')" 
+	 onmouseover="Tracker.toggle_menu('browse_menu')">
+	{% trans "browse"|capfirst %}
+      </a>
+      <ul id="browse_menu" class="menu">
+	<li>
+	  <a href='{% archive_url previous_month %}'
+	     title='{% trans "View previous month expenditures" %}'>
+	    {% trans "previous month"|capfirst %}
+	  </a>
+	</li>{% if not is_current %}
+	<li>
+	  <a href={% url "tracker:list" %}
+	     title='{% trans "View current month expenditures" %}'>
+	    {% trans "current month"|capfirst %}
+	  </a>
+	</li>
+	<li>
+	  {% if not is_next_current %}
+	  <a href='{% archive_url next_month %}'
+	     title='{% trans "View next month expenditures" %}'>
+	    {% trans "next month"|capfirst %}
+	  </a>
+	</li>{% endif %}{% endif %}
+      </ul>
+    </li>
+    <li>
+      <a id="add-expenditure" href={% url "tracker:add" %}>
+	{% trans "add..."|capfirst %}
+      </a>
+    </li>
+  </ul>
   <p>
-    <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>
   </p>{% if expenditures %}{% if is_current %}
   <p>
     {% blocktrans with date=month|date:"F Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
@@ -67,4 +81,20 @@
 <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>{% endif %}
   </p>
 {% endif %}</div>
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript">
+    document.getElementById('add-expenditure').focus();
+    Tracker.toggle_menu = function(id) {
+        var node = document.getElementById(id);
+        if (node) {
+            if (node.style.visibility == 'hidden') {
+                node.style.visibility = 'visible';
+            } else {
+                node.style.visibility = 'hidden';
+            }
+        }
+    }
+</script>
 {% endblock %}

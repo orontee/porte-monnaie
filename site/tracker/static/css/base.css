@@ -30,30 +30,68 @@ div#content {
     margin: 10px;
 }
 
-
-div#navigation {
-    font-family: sans-serif;
+#toolbar {
+    list-style: none;
+    font-family: sans-serif;    
+    font-weight: bold;
     font-size: 10pt;
+    margin: 0px 0px 5px 0px;
+    padding: 0px;
+    float: left;
     width: 100%;
-    height: 15px;
 }
 
-div#navigation div.left {
+#toolbar li {
     float: left;
-    text-align: left;
-    width: 25%;
+    margin-right: 10px;
+    position: relative;
 }
 
-div#navigation div.center {
-    float: left;
-    text-align: center;
-    width: 50%;    
+#toolbar a {
+    display: block;
+    padding: 5px;
+    background: white;
+    text-decoration: none;
 }
 
-div#navigation div.right {
-    float: left;
-    text-align: right;
-    width: 25%;
+#toolbar a:hover {
+    background: white;
+    text-decoration: underline;
+}
+
+#toolbar ul {
+    background: white;
+    background: rgba(0,0,0,0);
+    list-style: none;
+    position: absolute;
+    left: -9999px;
+}
+
+#toolbar ul li {
+    padding: 0px;
+    float: none;
+}
+#toolbar ul a {
+    white-space: nowrap;
+}
+
+#toolbar li:hover ul {
+    left: 0;
+}
+
+#toolbar li:hover a { 
+    background: white;
+    text-decoration: underline;
+}
+
+#toolbar li:hover ul a {
+    background: white;    
+    text-decoration: none;
+}
+
+#toolbar li:hover ul li a:hover {
+    background: white;
+    text-decoration: underline;    
 }
 
 div#main {
@@ -80,6 +118,11 @@ h2 {
 a {
     text-decoration: none;
 }
+
+a:hover {
+    text-decoration: underline;
+}
+
 
 td,
 th {
