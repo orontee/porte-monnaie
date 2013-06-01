@@ -1,4 +1,6 @@
-. ~/.virtualenvs/site-account/bin/activate
+#!/usr/bin/bash
+
+source ~/.virtualenvs/site-account/bin/activate
 
 export DJANGO_SETTINGS_MODULE='purse.settings.local'
 export PORTE_MONNAIE_SECRET_KEY='public fake key'
