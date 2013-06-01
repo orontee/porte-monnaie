@@ -61,10 +61,12 @@ div#content {
 
 #toolbar ul {
     background: white;
-    background: rgba(0,0,0,0);
     list-style: none;
     position: absolute;
     left: -9999px;
+    opacity: 0.9;
+    padding: 0px;
+    border: 1px gray solid;    
 }
 
 #toolbar ul li {
