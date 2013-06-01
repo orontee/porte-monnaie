@@ -44,14 +44,14 @@ class ExpenditureForm(ModelForm):
                 month = start.month + 1 if start.month < 12 else 1
                 year = start.year + 1 if month == 1 else start.year
                 try:
-                    date = start.replace(month=month, year=year)
+                    start = start.replace(month=month, year=year)
                 except ValueError:
                     msg = _('All expenditures must occur on valid dates.')
                     self._errors["occurrences"] = self.error_class([msg])
                     del cleaned_data['occurrences']
                     break
                 else:
-                    self.other_dates.append(date)
+                    self.other_dates.append(start)
         return cleaned_data
 
     class Meta(object):
