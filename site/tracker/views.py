@@ -47,6 +47,7 @@ class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
     field_names = ['date', 'amount', 'author', 'description']
     month_format = '%m'
     paginate_by = 15
+    allow_future = True
 
     def get_context_data(self, **kwargs):
         """Extend the context with the field names to build tables and various
