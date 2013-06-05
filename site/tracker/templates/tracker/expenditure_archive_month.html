@@ -60,7 +60,7 @@
       </tr>
     </tfoot>
     <tbody>{% for obj in object_list %}
-      <tr>
+      <tr class={% cycle "odd" "even" %}>
 	<td title="{{ obj.date|date:'DATE_FORMAT' }}" class="date">
 	  {{ obj.date|naturalday:"l j" }}
 	</td>
