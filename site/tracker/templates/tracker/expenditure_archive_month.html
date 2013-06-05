@@ -59,8 +59,8 @@
     </tfoot>
     <tbody>{% for obj in object_list %}
       <tr>
-	<td title="{{ obj.date }}" class="date">
-	  {{ obj.date }}
+	<td title="{{ obj.date|date:'l j F Y' }}" class="date">
+	  {{ obj.date|date:"l j" }}
 	</td>
 	<td title="{{ obj.amount|floatformat:2 }}" class="amount">
 	  {{ obj.amount|floatformat:2 }}
