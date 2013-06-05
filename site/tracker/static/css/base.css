@@ -175,6 +175,11 @@ caption {
 
 span.helptext {
     display: none;
+    /* 
+     * color: gray;
+     * font-style: italic;
+     * font-size: 10pt;
+     */
 }
 
 fieldset {
