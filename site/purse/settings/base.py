@@ -37,7 +37,14 @@ TIME_ZONE = 'Europe/Paris'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGE_CODE = 'fr-FR'
+
+DECIMAL_SEPARATOR = ','
+USE_THOUSAND_SEPARATOR = '\xa0'
+NUMBER_GROUPING = 3
+
+# REMARK Dirty hack. I don't know why the conf/locale/fr/formats.py is
+# not taken into account when rendering templates
 
 SITE_ID = 1
 
@@ -128,6 +135,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'django.contrib.humanize',
     'tracker'
 )
 

@@ -1,5 +1,5 @@
 {% extends "tracker/base.html" %}
-{% load i18n tracker_extras table %}
+{% load i18n tracker_extras table humanize %}
 {% block content %}
 {% is_current_month month as is_current %}
 {% is_current_month next_month as is_next_current %}
@@ -7,7 +7,8 @@
   <ul id="toolbar">
     <li>
       <a href="#" 
-	 onclick="Tracker.toggle_menu('browse_menu')">
+	 onclick="Tracker.toggle_menu('browse_menu')"
+	 title='{% trans "Browse other months expenditures" %}'>
 	{% trans "browse"|capfirst %}
       </a>
       <ul id="browse_menu" class="menu">
@@ -33,22 +34,23 @@
       </ul>
     </li>
     <li>
-      <a id="add-expenditure" href={% url "tracker:add" %}>
-	{% trans "add..."|capfirst %}
+      <a id="add-expenditure" href={% url "tracker:add" %}
+	 title='{% trans "Add a new expenditure" %}'>
+	{% trans "add"|capfirst %}
       </a>
     </li>
   </ul>
   <p>
   </p>{% if expenditures %}{% if is_current %}
   <p>
-    {% blocktrans with date=month|date:"F Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
+    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total }}€; You authored {{ user }}€.{% endblocktrans %}
   </p>{% else %}
   <p>
-    {% blocktrans with date=month|date:"F Y" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total}}€; You authored {{ user }}€.{% endblocktrans %}
+    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total }}€; You authored {{ user }}€.{% endblocktrans %}
   </p>
   {% endif %}
   <table id="expenditures-table">
-    <caption>{% blocktrans with date=month|date:"F Y" %}Expenditures of {{ date }}.{% endblocktrans %}
+    <caption>{% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}Expenditures of {{ date }}.{% endblocktrans %}
     {% table_header field_names %}
     <tfoot>
       <tr>
@@ -59,8 +61,8 @@
     </tfoot>
     <tbody>{% for obj in object_list %}
       <tr>
-	<td title="{{ obj.date|date:'l j F Y' }}" class="date">
-	  {{ obj.date|date:"l j" }}
+	<td title="{{ obj.date|date:'DATE_FORMAT' }}" class="date">
+	  {{ obj.date|naturalday:"l j" }}
 	</td>
 	<td title="{{ obj.amount|floatformat:2 }}" class="amount">
 	  {{ obj.amount|floatformat:2 }}
@@ -76,7 +78,7 @@
   </table>
   {% else %}
   <p>
-    {% blocktrans with date=month|date:"F Y" %}No expenditures found for {{ date }}!{% endblocktrans %}{% if is_current %}
+    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}No expenditures found for {{ date }}!{% endblocktrans %}{% if is_current %}
 <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>{% endif %}
   </p>
 {% endif %}</div>

@@ -21,6 +21,13 @@ class ExpenditureForm(ModelForm):
                               _('The number of occurrences of the expenditure'))
     other_dates = []
 
+    def __init__(self, *args, **kwargs):
+        super(ExpenditureForm, self).__init__(*args, **kwargs)
+        self.fields['amount'].localize = True
+
+        # REMARK Django 1.6 will provide the localized_fields
+        # attribute
+        
     def clean_amount(self):
         """"""
         data = self.cleaned_data['amount']
@@ -53,7 +60,7 @@ class ExpenditureForm(ModelForm):
                 else:
                     self.other_dates.append(start)
         return cleaned_data
-
+        
     class Meta(object):
         """The data associated to the expenditure form.
         """
