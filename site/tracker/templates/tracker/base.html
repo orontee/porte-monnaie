@@ -9,28 +9,38 @@
     </style>
   </head>
   <body>
-    <div id="header">
-      <div id="branding">
-	{% block header %}{{ "porte-monnaie"|capfirst }}{% endblock %}
-      </div>
-      <div id="header-content">
-	<div id="quote">
-	  {% blocktrans %}Love without counting{% endblocktrans %}
+    <div id="app-layout">
+      <div id="header" class="small">
+	<div id="branding">
+	  {% block header %}{{ "porte-monnaie"|capfirst }}{% endblock %}
 	</div>
-	<div id="user-tools">
-	  {% block usertools %}{% trans "Welcome," %} <strong>{% filter force_escape %}{% firstof user.first_name user.username %}.{% endfilter %}</strong>
-	  {% block userlinks %}
-	  <a id ="change-password" href={% url "tracker:password_change" %}>
-	    {% trans "change password"|capfirst %}
-	  </a> /
-	  <a id="logout" href={% url "tracker:logout" %}>
-	    {% trans "log out"|capfirst %}
-	  </a>{% endblock %}{% endblock %}
+	<div id="header-content">
+	  <div id="quote">
+	    {% blocktrans %}Love without counting{% endblocktrans %}
+	  </div>
+	  <div id="user-tools">
+	    {% block usertools %}{% trans "Welcome," %} <strong>{% filter force_escape %}{% firstof user.first_name user.username %}.{% endfilter %}</strong>
+	    {% block userlinks %}
+	    <a id ="change-password" href={% url "tracker:password_change" %}>
+	      {% trans "change password"|capfirst %}
+	    </a> /
+	    <a id="logout" href={% url "tracker:logout" %}>
+	      {% trans "log out"|capfirst %}
+	    </a>{% endblock %}{% endblock %}
+	  </div>
 	</div>
       </div>
-    </div>
-    <div id="content">
-      {% block content %}{% endblock %}
+      <div id="content">
+	{% block content %}{% endblock %}
+      </div>
+      <div id="footer" class="small">
+	{% block footer %}<p class="left">
+	  copyright © Matthias Meulien 2013
+	</p>
+	<p class="right">
+	  {% blocktrans with link="<a href='https://www.djangoproject.com/'>Django</a>"%}Powered by {{ link }}{% endblocktrans %}
+	</p>{% endblock %}
+      </div>
     </div>
     {% block scripts %}
     <script type="text/javascript">

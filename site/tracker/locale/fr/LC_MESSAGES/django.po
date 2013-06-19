@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-06 01:01+0200\n"
+"POT-Creation-Date: 2013-06-20 01:14+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -146,21 +146,26 @@ msgstr "Changement de mot de passe"
 msgid "change"
 msgstr "changer"
 
-#: templates/tracker/base.html:18
+#: templates/tracker/base.html:19
 msgid "Love without counting"
 msgstr "Aimer sans compter"
 
-#: templates/tracker/base.html:21
+#: templates/tracker/base.html:22
 msgid "Welcome,"
 msgstr "Bienvenue,"
 
-#: templates/tracker/base.html:24
+#: templates/tracker/base.html:25
 msgid "change password"
 msgstr "changer de mot de passe"
 
-#: templates/tracker/base.html:27
+#: templates/tracker/base.html:28
 msgid "log out"
 msgstr "quitter"
+
+#: templates/tracker/base.html:41
+#, python-format
+msgid "Powered by %(link)s"
+msgstr "Propulsé par %(link)s"
 
 #: templates/tracker/expenditure_archive_month.html:11
 msgid "Browse other months expenditures"

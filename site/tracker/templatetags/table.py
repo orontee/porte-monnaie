@@ -25,6 +25,14 @@ def do_header(context, field_names):
     return {'header_datas': datas}
 
 
+@register.inclusion_tag('tracker/footer.html',
+                        name='table_footer',
+                        takes_context=True)
+def do_footer(context, field_names):
+    """Include a template for a table footer build from the given fields.
+    """
+    return context.update({'column_count': len(field_names)})
+    
 @register.simple_tag(name='value')
 def do_getattr(obj, name):
     """Return the attribute of obj named name, or None if obj has no such
