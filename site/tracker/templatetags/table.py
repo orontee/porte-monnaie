@@ -2,6 +2,7 @@
 """
 
 from django import template
+from tracker.templatetags.tracker_extras import do_pagination
 
 register = template.Library()
 
@@ -31,8 +32,11 @@ def do_header(context, field_names):
 def do_footer(context, field_names):
     """Include a template for a table footer build from the given fields.
     """
-    return context.update({'column_count': len(field_names)})
-    
+    pagination = do_pagination(context)
+    return context.update({'column_count': len(field_names),
+                           'pagination': pagination})
+
+
 @register.simple_tag(name='value')
 def do_getattr(obj, name):
     """Return the attribute of obj named name, or None if obj has no such

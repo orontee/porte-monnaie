@@ -52,13 +52,7 @@
   <table id="expenditures-table">
     <caption class="small">{% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}Expenditures of {{ date }}.{% endblocktrans %}</caption>
     {% table_header field_names %}
-    <tfoot class="small">
-      <tr>
-	<td colspan=4>
-	  {% trans 'page:'|capfirst %} {% pagination %}
-	</td>
-      </tr>
-    </tfoot>
+    {% table_footer field_names %}
     <tbody>{% for obj in object_list %}
       <tr class={% cycle "odd" "even" %}>
 	<td title="{{ obj.date|date:'DATE_FORMAT' }}" class="date">

@@ -1,7 +1,7 @@
-<tfoot class="small">
+{% load i18n tracker_extras %}<tfoot class="small">
   <tr>
     <td colspan={{ column_count }}>
-      {% trans 'page:'|capfirst %} {% pagination %}
+      {% trans 'page:'|capfirst %} {{ pagination|safe }}
     </td>
   </tr>
 </tfoot>
