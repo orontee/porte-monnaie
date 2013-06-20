@@ -4,39 +4,39 @@
 {% is_current_month month as is_current %}
 {% is_current_month next_month as is_next_current %}
 <div id="main">
-  <ul id="toolbar" class="left small">
-    <li class="left">
+  <ul id="toolbar" class="left small menu-container">
+    <li class="left menu-drop-down">
       <a href="#" 
-	 onclick="Tracker.toggle_menu('browse_menu')"
-	 title='{% trans "Browse other months expenditures" %}'>
-	{% trans "browse"|capfirst %}
+	 onclick="Tracker.toggle_menu('browse-menu')"
+	 title="{% trans 'Browse other months expenditures' %}">
+	{% trans 'browse'|capfirst %}
       </a>
-      <ul id="browse_menu" class="menu">
+      <ul id="browse-menu" class="menu">
 	<li class="left">
-	  <a href='{% archive_url previous_month %}'
-	     title='{% trans "View previous month expenditures" %}'>
-	    {% trans "previous month"|capfirst %}
+	  <a href="{% archive_url previous_month %}"
+	     title="{% trans 'View previous month expenditures' %}">
+	    {% trans 'previous month'|capfirst %}
 	  </a>
 	</li>{% if not is_current %}
 	<li class="left">
-	  <a href={% url "tracker:list" %}
-	     title='{% trans "View current month expenditures" %}'>
-	    {% trans "current month"|capfirst %}
+	  <a href="{% url 'tracker:list' %}"
+	     title="{% trans 'View current month expenditures' %}">
+	    {% trans 'current month'|capfirst %}
 	  </a>
 	</li>
 	<li class="left">
 	  {% if not is_next_current %}
-	  <a href='{% archive_url next_month %}'
-	     title='{% trans "View next month expenditures" %}'>
-	    {% trans "next month"|capfirst %}
+	  <a href="{% archive_url next_month %}"
+	     title="{% trans 'View next month expenditures' %}">
+	    {% trans 'next month'|capfirst %}
 	  </a>
 	</li>{% endif %}{% endif %}
       </ul>
     </li>
     <li class="left">
-      <a id="add-expenditure" href={% url "tracker:add" %}
-	 title='{% trans "Add a new expenditure" %}'>
-	{% trans "add"|capfirst %}
+      <a id="add-expenditure" href="{% url 'tracker:add' %}"
+	 title="{% trans 'Add a new expenditure' %}">
+	{% trans 'add'|capfirst %}
       </a>
     </li>
   </ul>
@@ -55,7 +55,7 @@
     <tfoot class="small">
       <tr>
 	<td colspan=4>
-	  {% trans "page:"|capfirst %} {% pagination %}
+	  {% trans 'page:'|capfirst %} {% pagination %}
 	</td>
       </tr>
     </tfoot>
@@ -79,7 +79,7 @@
   {% else %}
   <p>
     {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}No expenditures found for {{ date }}!{% endblocktrans %}{% if is_current %}
-    <a id="add-expenditure" href={% url "tracker:add" %}>{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>{% endif %}
+    <a id="add-expenditure" href="{% url 'tracker:add' %}">{% blocktrans %}Add a new expenditure...{% endblocktrans %}</a>{% endif %}
   </p>
   {% endif %}
 </div>{% endblock %}
@@ -87,15 +87,5 @@
 {{ block.super }}
 <script type="text/javascript">
     document.getElementById('add-expenditure').focus();
-    Tracker.toggle_menu = function(id) {
-        var node = document.getElementById(id);
-        if (node) {
-            if (node.style.visibility == 'hidden') {
-                node.style.visibility = 'visible';
-            } else {
-                node.style.visibility = 'hidden';
-            }
-        }
-    }
 </script>
 {% endblock %}

@@ -9,6 +9,7 @@ html, body {
     color: rgb(241, 241, 241);
     border-bottom: 1px solid rgb(229, 229, 229);
     padding: 5px 10px 0 10px;
+    height: 90px;
 }
 
 #header-content {
@@ -55,33 +56,51 @@ html, body {
     height: 40px;
 }
 
-#toolbar {
+#footer p.left {
+    padding: 0 0 0 10px;
+}
+
+#footer p.right {
+    padding: 0 10px 0 0;
+}
+
+.menu-container {
     list-style: none;
-    font-family: sans-serif;
-    font-weight: bold;
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
-#toolbar li {
-    margin-right: 10px;
-    position: relative;
+#toolbar {
+    padding: 0 0 10px;
 }
 
-#toolbar a {
+#user-button {
+    padding: 0;
+}
+
+.menu-container {
+    font-family: sans-serif;
+}
+
+.menu-container a {
+    /* background: white; */
+    font-weight: bold;    
     display: block;
-    padding: 5px;
-    background: white;
     text-decoration: none;
+    margin-right: 10px;    
 }
 
-#toolbar a:hover {
-    background: white;
+.menu-container a:hover {
+    /* background: white; */
     text-decoration: underline;
 }
 
-#toolbar ul {
+.menu-container li {
+    position: relative;
+}
+
+ul.menu {
     background: white;
     list-style: none;
     position: absolute;
@@ -89,32 +108,34 @@ html, body {
     opacity: 0.9;
     padding: 0;
     border: 1px gray solid;
+    z-index: 10;
 }
 
-#toolbar ul li {
+ul.menu li {
     padding: 0;
     float: none;
 }
-#toolbar ul a {
+ul.menu a {
     white-space: nowrap;
+    padding: 5px;
 }
 
-#toolbar li:hover ul {
+li.menu-drop-down:hover ul {
     left: 0;
 }
 
-#toolbar li:hover a {
-    background: white;
+li.menu-drop-down:hover a {
+    /* background: white; */
     text-decoration: underline;
 }
 
-#toolbar li:hover ul a {
-    background: white;
+li.menu-drop-down:hover ul a {
+    /* background: white; */
     text-decoration: none;
 }
 
-#toolbar li:hover ul li a:hover {
-    background: white;
+li.menu-drop-down:hover ul li a:hover {
+    /* background: white; */
     text-decoration: underline;
 }
 
@@ -223,12 +244,10 @@ label {
 
 .left {
     float: left;
-    padding-left: 10px;
 }
 
 .right {
     float: right;
-    padding-right: 10px;
 }
 
 .small {

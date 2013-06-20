@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block usertools %}{% endblock %}
 {% block content %}
-<h2>{% trans "Login" %}</h2>
+<h2>{% trans 'Login' %}</h2>
 {% if form.errors %}<p class="errornote">
   {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
 </p>{% endif %}
@@ -11,7 +11,7 @@
        method="post">{% csrf_token %}
   {% include "tracker/form_errors.html" %}
   {% include "tracker/fieldset.html" %}
-  <input type="submit" value={% trans "log in"|capfirst %}>
+  <input type="submit" value="{% trans 'log in'|capfirst %}">
 </form>
 {% endblock %} 
 {% block scripts %}

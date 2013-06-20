@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     {% block title %}<title>{{ "porte-monnaie"|capfirst }}</title>{% endblock %}
+    <script type="text/javascript" src="{% static 'js/tracker.js' %}"></script>
     <style>
       @import "{% static 'css/base.css' %}";
     </style>
@@ -19,14 +20,29 @@
 	    {% blocktrans %}Love without counting{% endblocktrans %}
 	  </div>
 	  <div id="user-tools">
-	    {% block usertools %}{% trans "Welcome," %} <strong>{% filter force_escape %}{% firstof user.first_name user.username %}.{% endfilter %}</strong>
-	    {% block userlinks %}
-	    <a id ="change-password" href={% url "tracker:password_change" %}>
-	      {% trans "change password"|capfirst %}
-	    </a> /
-	    <a id="logout" href={% url "tracker:logout" %}>
-	      {% trans "log out"|capfirst %}
-	    </a>{% endblock %}{% endblock %}
+	    {% block usertools %}
+	    <ul class="menu-container">
+	      <li class="left">{% trans 'Welcome,' %}&nbsp;</li>
+	      <li id="user-button" class="left menu-drop-down">
+		<a href="#" 
+		   onclick="Tracker.toggle_menu('user_menu')" 
+		   title="{% trans 'Manage user account' %}">
+		  {% filter force_escape %}{% firstof user.first_name user.username %}.{% endfilter %}
+		</a>
+		<ul id="user-menu" class="menu">
+		  <li class="left">
+		    <a href="{% url 'tracker:password_change' %}">
+		      {% trans 'change password'|capfirst %}
+		    </a>
+		  </li>
+		  <li class="left">
+		    <a id="logout" href="{% url 'tracker:logout' %}">
+		      {% trans 'log out'|capfirst %}
+		    </a>
+		  </li>
+		</ul>
+	      </li>
+	    </ul>{% endblock %}
 	  </div>
 	</div>
       </div>
@@ -42,10 +58,6 @@
 	</p>{% endblock %}
       </div>
     </div>
-    {% block scripts %}
-    <script type="text/javascript">
-      var Tracker = new Object();
-    </script>
-    {% endblock %}
+    {% block scripts %}{% endblock %}
   </body>
 </html>
