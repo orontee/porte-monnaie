@@ -73,18 +73,18 @@ html, body {
 
 #toolbar {
     padding: 0 0 10px;
+    font-family: sans-serif;
 }
 
 #user-button {
     padding: 0;
 }
 
-.menu-container {
-    font-family: sans-serif;
+#user-button > a {
+    color: white;
 }
 
 .menu-container a {
-    /* background: white; */
     font-weight: bold;    
     display: block;
     text-decoration: none;
@@ -92,7 +92,6 @@ html, body {
 }
 
 .menu-container a:hover {
-    /* background: white; */
     text-decoration: underline;
 }
 
