@@ -9,6 +9,7 @@
           {% trans 'rows per page:'|capfirst %}
         </label>
         <select name="paginate_by"
+		title="{% trans 'Modify the number of rows per page' %}"
 		onchange="this.form.submit()">{% for val in page_choices %}
           <option value="{{ val }}"{% if val == per_page %} selected=true{% endif %}>{{ val }}</option>{% endfor %}
         </select>{% for k,v in params.items %}{% if k != 'paginate_by' %}

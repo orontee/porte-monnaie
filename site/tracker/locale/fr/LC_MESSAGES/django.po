@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-20 03:20+0200\n"
+"POT-Creation-Date: 2013-06-28 01:26+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -235,23 +235,30 @@ msgstr ""
 msgid "Expenditures of %(date)s."
 msgstr "Dépenses du mois de %(date)s."
 
-#: templates/tracker/expenditure_archive_month.html:58
-#: templates/tracker/footer.html:4
-msgid "page:"
-msgstr "page&nbsp;:"
-
-#: templates/tracker/expenditure_archive_month.html:81
+#: templates/tracker/expenditure_archive_month.html:75
 #, python-format
 msgid "No expenditures found for %(date)s!"
 msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
 
-#: templates/tracker/expenditure_archive_month.html:82
+#: templates/tracker/expenditure_archive_month.html:76
 msgid "Add a new expenditure..."
 msgstr "Ajouter une dépense..."
 
 #: templates/tracker/expenditure_form.html:4
 msgid "new expenditure"
 msgstr "nouvelle dépense"
+
+#: templates/tracker/footer.html:4
+msgid "page:"
+msgstr "page&nbsp;:"
+
+#: templates/tracker/footer.html:9
+msgid "rows per page:"
+msgstr "lignes par page&nbsp;:"
+
+#: templates/tracker/footer.html:12
+msgid "Modify the number of rows per page"
+msgstr "Modifier le nombre de lignes par page"
 
 #: templatetags/tracker_extras.py:54
 msgid "Jump to page {0}"
