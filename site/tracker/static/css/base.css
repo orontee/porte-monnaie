@@ -195,10 +195,6 @@ caption {
     text-align: right;
 }
 
-#expenditures-table td.author {
-    text-align: center;
-}
-
 #expenditures-table th.date,
 #expenditures-table th.amount,
 #expenditures-table th.author {
