@@ -27,7 +27,7 @@ class ExpenditureForm(ModelForm):
 
         # REMARK Django 1.6 will provide the localized_fields
         # attribute
-        
+
     def clean_amount(self):
         """"""
         data = self.cleaned_data['amount']
@@ -37,7 +37,7 @@ class ExpenditureForm(ModelForm):
         return data
 
     def clean(self):
-        """Form-wide cleaning. 
+        """Form-wide cleaning.
 
         The usual cleaning is extended by the generation of dates from
         the field named date by increasing its month as many times as
@@ -60,7 +60,7 @@ class ExpenditureForm(ModelForm):
                 else:
                     self.other_dates.append(start)
         return cleaned_data
-        
+
     class Meta(object):
         """The data associated to the expenditure form.
         """

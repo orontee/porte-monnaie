@@ -1,7 +1,20 @@
 {% load i18n tracker_extras %}<tfoot class="small">
   <tr>
-    <td colspan={{ column_count }}>
+    <td colspan={{ column_count|add:-1 }}>
       {% trans 'page:'|capfirst %} {{ pagination|safe }}
+    </td>
+    <td>
+      <form method="get" action="{% url 'tracker:archive' %}" class="right">
+        <label>
+          {% trans 'rows per page:'|capfirst %}
+        </label>
+        <select name="paginate_by"
+		onchange="this.form.submit()">{% for val in page_choices %}
+          <option value="{{ val }}"{% if val == per_page %} selected=true{% endif %}>{{ val }}</option>{% endfor %}
+        </select>{% for k,v in params.items %}{% if k != 'paginate_by' %}
+        <input type="hidden" 
+	       name="{{ k }}" value="{{ v }}"/>{% endif %}{% endfor %}
+      </form>
     </td>
   </tr>
 </tfoot>

@@ -6,7 +6,7 @@
   {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
 </p>{% endif %}
 <form id="expenditure-form"
-      action={% url "tracker:add" %} 
+      action="{% url 'tracker:add' %}" 
       method="post">{% csrf_token %}
   {% include "tracker/form_errors.html" %}
   {% include "tracker/fieldset.html" %}

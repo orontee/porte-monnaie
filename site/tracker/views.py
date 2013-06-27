@@ -46,8 +46,24 @@ class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
     allow_empty = True
     field_names = ['date', 'amount', 'author', 'description']
     month_format = '%m'
-    paginate_by = 15
     allow_future = True
+    paginate_by = 15
+
+    def get_paginate_by(self, queryset):
+        """Returns the number of items to paginate by, or None for no
+        pagination.
+
+        Query parameters are search first.
+        """
+        if 'paginate_by' in self.request.GET:
+            try:
+                paginate_by = int(self.request.GET['paginate_by'])
+            except ValueError:
+                paginate_by = self.paginate_by
+                # REMARK No pagination is not supported
+        else:
+            paginate_by = self.paginate_by
+        return paginate_by
 
     def get_context_data(self, **kwargs):
         """Extend the context with the field names to build tables and various
@@ -61,4 +77,6 @@ class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
             context.update(qs.aggregate(total_amount=Sum('amount')))
             context.update(qs.filter(author_id__exact=user.id)
                            .aggregate(user_amount=Sum('amount')))
+        context['params'] = {'month': self.get_month(),
+                             'year': self.get_year()}
         return context

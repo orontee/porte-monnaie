@@ -33,13 +33,24 @@ def do_footer(context, field_names):
     """Include a template for a table footer build from the given fields.
     """
     pagination = do_pagination(context)
-    return context.update({'column_count': len(field_names),
-                           'pagination': pagination})
+    page_choices = context.get('page_choices', [15, 25, 50])
+    # TODO Add a choice for all pages
+    # TODO No default here, better raise an exception
+    try:
+        paginator = context['paginator']
+    except KeyError:
+        paginator = None
+    per_page = paginator.per_page if paginator else None
+    return {'column_count': len(field_names),
+            'pagination': pagination,
+            'per_page': per_page,
+            'page_choices': page_choices,
+            'params': context['params']}
 
 
-@register.simple_tag(name='value')
-def do_getattr(obj, name):
-    """Return the attribute of obj named name, or None if obj has no such
-    attribute.
-    """
-    return getattr(obj, name, None)
+# @register.simple_tag(name='value')
+# def do_getattr(obj, name):
+#     """Return the attribute of obj named name, or None if obj has no such
+#     attribute.
+#     """
+#     return getattr(obj, name, None)
