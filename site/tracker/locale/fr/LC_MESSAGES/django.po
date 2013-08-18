@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-28 01:26+0200\n"
+"POT-Creation-Date: 2013-08-18 16:49+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -252,14 +252,15 @@ msgstr "nouvelle dépense"
 msgid "page:"
 msgstr "page&nbsp;:"
 
-#: templates/tracker/footer.html:9
+#: templates/tracker/footer.html:11
 msgid "rows per page:"
 msgstr "lignes par page&nbsp;:"
 
-#: templates/tracker/footer.html:12
+#: templates/tracker/footer.html:14
 msgid "Modify the number of rows per page"
 msgstr "Modifier le nombre de lignes par page"
 
-#: templatetags/tracker_extras.py:54
+#: templatetags/tracker_extras.py:82
+#, python-brace-format
 msgid "Jump to page {0}"
 msgstr "Aller à la page {0}"
