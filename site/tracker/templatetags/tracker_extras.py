@@ -41,7 +41,7 @@ def do_next_month_url(context):
     """
     return do_archive_url(context['next_month'], 1,
                           context.get('paginator', None))
-    
+
 
 def do_archive_url(date, page=1, paginator=None):
     """Return the archive url for the given date.
