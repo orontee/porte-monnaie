@@ -136,15 +136,15 @@ msgstr "Changement de mot de passe réussi"
 
 #: templates/accounts/password_change_done.html:4
 msgid "Your password was changed."
-msgstr "Le mot de passe a bien été changé"
+msgstr "Le mot de passe a bien été changé."
 
 #: templates/accounts/password_change_form.html:4
 msgid "Password change"
 msgstr "Changement de mot de passe"
 
 #: templates/accounts/password_change_form.html:12
-msgid "changed"
-msgstr "changé"
+msgid "change"
+msgstr "changer"
 
 #: templates/tracker/base.html:20
 msgid "Love without counting"
