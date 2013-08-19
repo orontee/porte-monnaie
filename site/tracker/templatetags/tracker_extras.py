@@ -82,7 +82,8 @@ def do_pagination(context):
         msg = _('Jump to page {0}')
 
         def add_element(i):
-            elements.append(template.format(url=do_archive_url(date, i, paginator),
+            elements.append(template.format(url=do_archive_url(date, i,
+                                                               paginator),
                                             msg=msg.format(i),
                                             number=i))
         hidden = min(page.number - delta - 1, delta) + 1

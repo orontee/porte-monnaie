@@ -1,11 +1,11 @@
 {% extends "tracker/base.html" %}
 {% load i18n static %}
 {% block content %}
-<h2>{% trans 'password change'|capfirst %}</h2>
+<h2>{% trans 'edit'|capfirst %}</h2>
 {% if form.errors %}<p class="errornote">
   {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
 </p>{% endif %}
-<form id="change-password-form"
+<form id="user-change-form"
       action="" 
       method="post">{% csrf_token %}
   {% include "tracker/fieldset.html" %}
@@ -13,6 +13,6 @@
 </form>{% endblock %}
 {% block scripts %}
 <script type="text/javascript">
-  document.getElementById('id_old_password').focus();
+  document.getElementById('id_username').focus();
 </script>
 {% endblock %}

@@ -31,6 +31,11 @@
 		</a>
 		<ul id="user-menu" class="menu">
 		  <li class="left">
+		    <a href="{% url 'tracker:user_change' %}">
+		      {% trans 'edit'|capfirst %}
+		    </a>
+		  </li>
+		  <li class="left">
 		    <a href="{% url 'tracker:password_change' %}">
 		      {% trans 'change password'|capfirst %}
 		    </a>

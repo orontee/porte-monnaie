@@ -5,9 +5,11 @@ from django.core.urlresolvers import reverse_lazy
 from django.db.models import Sum
 from django.utils.decorators import method_decorator
 from django.views.generic import (CreateView,
-                                  MonthArchiveView)
+                                  MonthArchiveView,
+                                  UpdateView)
+from django.contrib.auth import get_user_model
 from tracker.models import Expenditure
-from tracker.forms import ExpenditureForm
+from tracker.forms import (ExpenditureForm, UserChangeForm)
 
 
 class LoginRequiredMixin(object):
@@ -16,6 +18,20 @@ class LoginRequiredMixin(object):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+
+class UserChange(LoginRequiredMixin, UpdateView):
+    """View to modify user data.
+    """
+    model = get_user_model()
+    template_name = 'accounts/user_change_form.html'
+    form_class = UserChangeForm
+    success_url = reverse_lazy('tracker:list')
+
+    def get_object(self, queryset=None):
+        """Returns the user data.
+        """
+        return self.request.user if self.request else None
 
 
 class ExpenditureAdd(LoginRequiredMixin, CreateView):

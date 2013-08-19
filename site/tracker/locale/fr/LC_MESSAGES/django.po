@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-18 16:49+0200\n"
+"POT-Creation-Date: 2013-08-19 23:48+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -18,47 +18,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:6
+#: forms.py:19
 msgid "unique"
 msgstr ""
 
-#: forms.py:7
+#: forms.py:20
 msgid "next two months"
 msgstr "deux prochains mois"
 
-#: forms.py:8
+#: forms.py:21
 msgid "next three months"
 msgstr "trois prochains mois"
 
-#: forms.py:9
+#: forms.py:22
 msgid "next four months"
 msgstr "quatre prochains mois"
 
-#: forms.py:10
+#: forms.py:23
 msgid "next five months"
 msgstr "cinq prochains mois"
 
-#: forms.py:11
+#: forms.py:24
 msgid "next six months"
 msgstr "six prochains mois"
 
-#: forms.py:12
+#: forms.py:25
 msgid "forthcoming year"
 msgstr "année à venir"
 
-#: forms.py:19
+#: forms.py:32
 msgid "Occurrences"
 msgstr ""
 
-#: forms.py:21
-msgid "The number of occurrences of the expenditure"
-msgstr "Nombre d'occurrences de la dépense"
-
-#: forms.py:35
+#: forms.py:46
 msgid "The amount must be non-zero."
 msgstr "Le montant ne peut être nul."
 
-#: forms.py:56
+#: forms.py:67
 msgid "All expenditures must occur on valid dates."
 msgstr "Toutes les dates doivent être valides."
 
@@ -66,45 +62,25 @@ msgstr "Toutes les dates doivent être valides."
 msgid "amount"
 msgstr "montant"
 
-#: models.py:15
-msgid "amount of the expenditure"
-msgstr "montant de la dépense"
-
-#: models.py:16
+#: models.py:14
 msgid "date"
 msgstr ""
 
-#: models.py:18
-msgid "date of the expenditure"
-msgstr "date de la dépense"
-
-#: models.py:19
+#: models.py:15
 msgid "description"
 msgstr ""
 
-#: models.py:22
-msgid "description, remark or whatever else related to the expenditure"
-msgstr "description, remarque ou autre chose lié à la dépense"
-
-#: models.py:25
+#: models.py:16
 msgid "author"
 msgstr "auteur"
 
-#: models.py:26
-msgid "author of the expenditure"
-msgstr "auteur de la dépense"
-
-#: models.py:27
+#: models.py:17
 msgid "valid"
 msgstr "valide"
 
-#: models.py:30
+#: models.py:18
 msgid "timestamp"
 msgstr "horodatage"
-
-#: models.py:33
-msgid "timestamp of the expenditure input"
-msgstr "date et heure de la saisie de la dépense"
 
 #: templates/accounts/logged_out.html:6
 msgid "Thanks for spending some quality time with us today!"
@@ -115,11 +91,12 @@ msgid "log in again"
 msgstr "se reconnecter"
 
 #: templates/accounts/login.html:5
-msgid "Login"
+msgid "login"
 msgstr ""
 
 #: templates/accounts/login.html:7
 #: templates/accounts/password_change_form.html:6
+#: templates/accounts/user_change_form.html:6
 #: templates/tracker/expenditure_form.html:6
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
@@ -131,18 +108,19 @@ msgid "log in"
 msgstr "connecter"
 
 #: templates/accounts/password_change_done.html:3
-msgid "Password change successful"
-msgstr "Changement de mot de passe réussi"
+msgid "password change successful"
+msgstr "changement de mot de passe réussi"
 
 #: templates/accounts/password_change_done.html:4
 msgid "Your password was changed."
 msgstr "Le mot de passe a bien été changé."
 
 #: templates/accounts/password_change_form.html:4
-msgid "Password change"
-msgstr "Changement de mot de passe"
+msgid "password change"
+msgstr "changement de mot de passe"
 
 #: templates/accounts/password_change_form.html:12
+#: templates/accounts/user_change_form.html:12
 msgid "change"
 msgstr "changer"
 
@@ -159,14 +137,18 @@ msgid "Manage user account"
 msgstr "Gestion du compte utilisateur"
 
 #: templates/tracker/base.html:35
+msgid "edit"
+msgstr "éditer"
+
+#: templates/tracker/base.html:40
 msgid "change password"
 msgstr "changer de mot de passe"
 
-#: templates/tracker/base.html:40
+#: templates/tracker/base.html:45
 msgid "log out"
 msgstr "quitter"
 
-#: templates/tracker/base.html:57
+#: templates/tracker/base.html:62
 #, python-format
 msgid "Powered by %(link)s"
 msgstr "Propulsé par %(link)s"
