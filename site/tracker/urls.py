@@ -46,13 +46,8 @@ urlpatterns += patterns('',
                             {'template_name':
                              'accounts/password_change_form.html',
                              'password_change_form': PasswordChangeForm,
-                             'post_change_redirect':
-                             '/tracker/password_change_done'},
+                             'post_change_redirect': '/tracker'},
                             name='password_change'),
-                        url(r'^password_change_done/$',
-                            'django.contrib.auth.views.password_change_done',
-                            {'template_name':
-                             'accounts/password_change_done.html'}),
                         url(r'^user_change/$',
                             UserChange.as_view(),
                             name='user_change'))
