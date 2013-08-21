@@ -14,24 +14,20 @@ manager = django-admin.py
 
 lang = fr
 
-# User targets
+setup: compile-messages
 
-setup: createusers compile-messages
-
-install: setup $(publicdir)/django.fcgi $(publicdir)/.htaccess collect
+install: setup $(publicdir)/django.fcgi $(publicdir)/.htaccess collect syncdb
 
 uninstall: 
-	-rm -fr $(projname)/public
+	-rm -fr $(publicdir)
 
 help:
 	@echo "The main targets are:"
-	@echo "  setup      To finalize the project environment"
-	@echo "  install    To install the website"
-	@echo "  uninstall  To uninstall the website"
-	@echo "  createdb   To create the site database"
-	@echo "  dropdb 	  To drop the site database"
-
-# Internal targets
+	@echo "  setup      Finalize the project environment"
+	@echo "  install    Install the website"
+	@echo "  uninstall  Uninstall the website"
+	@echo "  createdb   Create the site database"
+	@echo "  dropdb 	  Drop the site database"
 
 .PHONY: createdb dropdb syncdb setup \
 	compile-messages update-messages \
@@ -48,13 +44,6 @@ dropdb:
 syncdb: 
 	cd $(projdir); \
 	$(manager) syncdb --noinput --pythonpath=.
-
-createusers: syncdb
-	cd $(projdir); \
-	$(manager) createuser matthias orontee@gmail.com matthias \
-				  --first=Matthias --last=Meulien --pythonpath=.; \
-	$(manager) createuser laurence laurence.turridano@gmail.com laurence \
-				  --first=Laurence --last=Turridano --pythonpath=.;
 
 update-messages:
 	for app in $(apps); do \

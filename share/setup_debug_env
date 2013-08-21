@@ -1,10 +1,13 @@
 #!/usr/bin/bash
 
-source ~/.virtualenvs/site-account/bin/activate
+VIRTUALENV_PATH="$HOME/.virtualenvs/site-account"
+PYTHONPATH="$HOME/Projets/Site/porte-monnaie/site"
+
+source "$VIRTUALENV_PATH/bin/activate"
 
 export DJANGO_SETTINGS_MODULE='purse.settings.local'
 export PORTE_MONNAIE_SECRET_KEY='public fake key'
-export PYTHONPATH='site'
+export PYTHONPATH
 
 echo "To run the debug server, use:"
 echo "   django-admin.py runserver"
