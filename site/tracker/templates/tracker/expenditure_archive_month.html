@@ -43,12 +43,13 @@
   <p>
   </p>{% if expenditures %}{% if is_current %}
   <p>
-    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total }}€; You authored {{ user }}€.{% endblocktrans %}
-  </p>{% else %}
+    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total }}€.{% endblocktrans %}
+  {% else %}
   <p>
-    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 user=user_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total }}€; You authored {{ user }}€.{% endblocktrans %}
-  </p>
+    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total }}€.{% endblocktrans %}
   {% endif %}
+  {% if user_amount %}{% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}{% endif %}
+  </p>
   <table id="expenditures-table">
     <caption class="small">{% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}Expenditures of {{ date }}.{% endblocktrans %}</caption>
     {% table_header field_names %}
