@@ -13,12 +13,13 @@
     <div id="app-layout">
       <div id="header" class="small">
 	<div id="branding">
-	  {% block header %}{{ "porte-monnaie"|capfirst }}{% endblock %}
+	  {% block header %}<a id="branding-link"
+			       href="{% url 'tracker:home' %}"
+			       title="{% trans 'Love without counting' %}">
+	    {{ "porte-monnaie"|capfirst }}
+	  </a>{% endblock %}
 	</div>
 	<div id="header-content">
-	  <div id="quote">
-	    {% blocktrans %}Love without counting{% endblocktrans %}
-	  </div>
 	  <div id="user-tools">
 	    {% block usertools %}
 	    <ul class="menu-container">

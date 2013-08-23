@@ -9,7 +9,7 @@ html, body {
     color: rgb(241, 241, 241);
     border-bottom: 1px solid rgb(229, 229, 229);
     padding: 5px 10px 0 10px;
-    height: 90px;
+    height: 60px;
 }
 
 #header-content {
@@ -91,9 +91,11 @@ html, body {
     margin-right: 10px;    
 }
 
-.menu-container a:hover {
-    text-decoration: underline;
-}
+/* 
+ * .menu-container a:hover {
+ *     text-decoration: underline;
+ * }
+ */
 
 .menu-container li {
     position: relative;
@@ -123,20 +125,24 @@ li.menu-drop-down:hover ul {
     left: 0;
 }
 
-li.menu-drop-down:hover a {
-    /* background: white; */
-    text-decoration: underline;
-}
+/* 
+ * li.menu-drop-down:hover a {
+ *     /\* background: white; *\/
+ *     text-decoration: underline;
+ * }
+ */
 
 li.menu-drop-down:hover ul a {
     /* background: white; */
     text-decoration: none;
 }
 
-li.menu-drop-down:hover ul li a:hover {
-    /* background: white; */
-    text-decoration: underline;
-}
+/* 
+ * li.menu-drop-down:hover ul li a:hover {
+ *     /\* background: white; *\/
+ *     text-decoration: underline;
+ * }
+ */
 
 /* input[type="submit"] { */
 /*     display: none; */
@@ -160,9 +166,15 @@ a, a:visited {
     color: rgb(0, 0, 238);
 }
 
-a:hover {
-    text-decoration: underline;
+#branding a {
+    color: rgb(241, 241, 241);
 }
+
+/* 
+ * a:hover {
+ *     text-decoration: underline;
+ * }
+ */
 
 
 td, th {
