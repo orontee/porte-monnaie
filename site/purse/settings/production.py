@@ -21,3 +21,7 @@ DATABASES = {
 ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'public/static/')
+
+EMAIL_HOST = "smtp.alwaysdata.com"
+SERVER_EMAIL = "porte-monnaie@alwaysdata.com"
+DEFAULT_FROM_EMAIL = "porte-monnaie@alwaysdata.com"

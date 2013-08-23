@@ -178,3 +178,10 @@ LOGGING = {
 
 LOGIN_REDIRECT_URL = '/tracker/expenditures'
 LOGIN_URL = '/tracker/login'
+
+try:
+    EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+except KeyError:
+    pass
+EMAIL_SUBJECT_PREFIX = "[Porte-monnaie] "
