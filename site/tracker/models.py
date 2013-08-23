@@ -2,6 +2,7 @@ from datetime import date
 from django.db.models import (AutoField, DateField, DateTimeField,
                               FloatField, ForeignKey, NullBooleanField,
                               CharField, Model)
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
@@ -11,7 +12,7 @@ class Expenditure(Model):
     """
     id = AutoField(primary_key=True, editable=False)
     amount = FloatField(_('amount'), default=0)
-    date = DateField(_('date'), default=date.today())
+    date = DateField(_('date'), default=timezone.now().date())
     description = CharField(_('description'), max_length=80, blank=True)
     author = ForeignKey(User, editable=False, verbose_name=_('author'))
     valid = NullBooleanField(_('valid'), default=True, editable=False)
