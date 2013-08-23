@@ -1,20 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.forms import (ModelForm, ChoiceField)
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.forms import (UserChangeForm as OrigUserChangeForm)
 from tracker.models import Expenditure
-
-
-class UserChangeForm(OrigUserChangeForm):
-    """Form to change a user data.
-    """
-    def __init__(self, *args, **kwargs):
-        super(UserChangeForm, self).__init__(*args, **kwargs)
-        suppress = ('password', 'is_active', 'is_superuser', 'is_staff',
-                    'user_permissions', 'last_login', 'date_joined',
-                    'groups')
-        for k in suppress:
-            del self.fields[k]
 
 OCCURRENCES_CHOICES = (('1', _('unique')),
                        ('2', _('next two months')),
