@@ -1,10 +1,12 @@
 from datetime import date
+from django.contrib.auth import get_user_model
 from django.db.models import (AutoField, DateField, DateTimeField,
                               FloatField, ForeignKey, NullBooleanField,
                               CharField, Model)
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
+
+User = get_user_model()
 
 
 class Expenditure(Model):

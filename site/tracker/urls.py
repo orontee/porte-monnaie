@@ -48,9 +48,10 @@ urlpatterns += patterns('',
                             'post_change_redirect': '/'},
                            name='password_change'),
                        url(r'^user_change/$',
-                           UserChange.as_view(success_url='/'),
+                           UserChange.as_view(success_url='/tracker/creation_done.html'),
                            name='user_change'),
-                       url(r'^user_creation/$', UserCreation.as_view(),
+                        url(r'^user_creation/$', UserCreation.as_view(
+                            success_url='/tracker/'),
                            name='user_creation'),
                        url(r'^user_creation_done',
                            TemplateView.as_view(
