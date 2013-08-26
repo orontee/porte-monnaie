@@ -6,19 +6,19 @@ namespace.
 
 from datetime import datetime
 from django.conf.urls import (patterns, url)
-from django.views.generic.base import (RedirectView, TemplateView)
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic.base import (RedirectView, TemplateView)
 from django.contrib.auth.forms import (AuthenticationForm,
                                        PasswordChangeForm)
 from tracker.views import (ExpenditureAdd, ExpenditureMonthList)
-from register.views import (UserChange, UserCreation)
+from register.views import (UserChange, UserCreation, UserActivation)
 
-urlpatterns = patterns('tracker.views',
+urlpatterns = patterns('',
                        url(r'^$', RedirectView.as_view(
                            url=reverse_lazy('tracker:list')),
                            name='home'))
 
-urlpatterns += patterns('tracker.views',
+urlpatterns += patterns('',
                         url(r'^add_expenditure/$',
                             ExpenditureAdd.as_view(),
                             name='add'),
@@ -33,32 +33,30 @@ urlpatterns += patterns('tracker.views',
                             name='archive'))
 
 urlpatterns += patterns('',
-                       url(r'^login/$', 'django.contrib.auth.views.login',
-                           {'template_name': 'register/login.html',
-                            'authentication_form': AuthenticationForm},
-                           name='login'),
-                       url(r'^logout/$', 'django.contrib.auth.views.logout',
-                           {'template_name': 'register/logged_out.html'},
-                           name='logout'),
-                       url(r'^password_change/$',
-                           'django.contrib.auth.views.password_change',
-                           {'template_name':
-                            'register/password_change_form.html',
-                            'password_change_form': PasswordChangeForm,
-                            'post_change_redirect': '/'},
-                           name='password_change'),
-                       url(r'^user_change/$',
-                           UserChange.as_view(success_url='/tracker/creation_done.html'),
-                           name='user_change'),
+                        url(r'^login/$', 'django.contrib.auth.views.login',
+                            {'template_name': 'register/login.html',
+                             'authentication_form': AuthenticationForm},
+                            name='login'),
+                        url(r'^logout/$', 'django.contrib.auth.views.logout',
+                            {'template_name': 'register/logged_out.html'},
+                            name='logout'),
+                        url(r'^password_change/$',
+                            'django.contrib.auth.views.password_change',
+                            {'template_name':
+                             'register/password_change_form.html',
+                             'password_change_form': PasswordChangeForm,
+                             'post_change_redirect': '/'},
+                            name='password_change'),
+                        url(r'^user_change/$',
+                            UserChange.as_view(success_url='/tracker/creation_done.html'),
+                            name='user_change'),
+                        url(r'^user_creation_done',
+                            TemplateView.as_view(
+                                template_name='register/user_creation_done.html'),
+                            name='user_creation_done'),
                         url(r'^user_creation/$', UserCreation.as_view(
-                            success_url='/tracker/'),
-                           name='user_creation'),
-                       url(r'^user_creation_done',
-                           TemplateView.as_view(
-                               template_name='register/user_creation_done.html'),
-                           name='user_creation_done'),
-                       url(r'^user_activate_done',
-                           TemplateView.as_view(
-                               template_name='register/user_activate_done.html'),
-                           name='user_activation_done'))
-
+                            success_url=reverse_lazy('tracker:user_creation_done')),
+                            name='user_creation'),
+                        url(r'^user_activation/(?P<key>\w+)/$',
+                            UserActivation.as_view(),
+                            name='user_activation'))

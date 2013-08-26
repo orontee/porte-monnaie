@@ -13,6 +13,9 @@
   {% include "tracker/fieldset.html" %}
   <input type="submit" value="{% trans 'log in'|capfirst %}">
 </form>
+<p>
+  {% url 'tracker:user_creation' as the_url %}
+  {% blocktrans %}Not yet registered? Jump to the <a href="{{ the_url }}">registration page</a>.{% endblocktrans %}
 {% endblock %} 
 {% block scripts %}
 {{ block.super }}

@@ -14,11 +14,10 @@ class RegistrationManager(Manager):
 
     def activate_user(self, key):
         """Activate the account related to key.
+
+        May raise a ``Registration.DoesNotExist`` exception.
         """
-        try:
-            registration = self.get(key=key)
-        except self.model.DoesNotExist:
-            return False
+        registration = self.get(key=key)
         user = registration.user
         user.is_active = True
         user.save()

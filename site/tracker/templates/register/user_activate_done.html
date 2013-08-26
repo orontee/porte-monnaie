@@ -1,9 +1,8 @@
 {% extends "tracker/base.html" %}
 {% load i18n static %}{% block usertools %}{% endblock %}
 {% block content %}
-<h2>{% trans 'user activated'|capfirst %}</h2>
+<h2>{% trans 'account activated'|capfirst %}</h2>
 <p>
-  {% blocktrans %}Congratulations! The user account {{ user }} has
-  been activated.{% endblocktrans %}
+  {% blocktrans with username=user.username %}Congratulations! The user account {{ username }} has been activated.{% endblocktrans %}
 </p>
 {% endblock %}
