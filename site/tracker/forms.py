@@ -19,6 +19,9 @@ class ExpenditureForm(ModelForm):
                               label=_('Occurrences'))
     other_dates = []
 
+    class Meta:
+        model = Expenditure
+
     def __init__(self, *args, **kwargs):
         super(ExpenditureForm, self).__init__(*args, **kwargs)
         self.fields['amount'].localize = True
@@ -58,8 +61,3 @@ class ExpenditureForm(ModelForm):
                 else:
                     self.other_dates.append(start)
         return cleaned_data
-
-    class Meta:
-        """The data associated to the expenditure form.
-        """
-        model = Expenditure

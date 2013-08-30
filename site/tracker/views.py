@@ -1,7 +1,9 @@
 """Module defining the views.
 """
 from django.core.urlresolvers import reverse_lazy
+from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
+from django.http import HttpResponseRedirect
 from django.views.generic import (CreateView,
                                   MonthArchiveView,
                                   RedirectView,
@@ -25,13 +27,42 @@ class PurseCreation(LoginRequiredMixin, CreateView):
 
 
 class PurseUpdate(LoginRequiredMixin, UpdateView):
-    """View to create a purse.
+    """View to modify a purse.
     """
     model = Purse
     success_url = reverse_lazy('tracker:home')
 
-            
-class ExpenditureAdd(LoginRequiredMixin, CreateView):
+
+class WithPurseMixin(object):
+    """Provides an accessor to the user account default purse.
+
+    If the user does not belong to any purse, redirect to purse
+    creation page. Otherwise, if the user account default purse has
+    not been set, redirect to the user change page.
+
+    """
+    @property
+    def purse(self):
+        user = self.request.user
+        try:
+            purse = user.default_purse
+        except AttributeError:
+            raise ImproperlyConfigured("User model does not define a "
+                                       "purse attribute")
+        return purse
+
+    def dispatch(self, *args, **kwargs):
+        user = self.request.user
+        if not Purse.objects.filter(users__pk=user.pk).exists():
+            return HttpResponseRedirect(
+                reverse_lazy('tracker:purse_creation'))
+        if self.purse is None:
+            return HttpResponseRedirect(
+                reverse_lazy('tracker:user_change'))
+        return super(WithPurseMixin, self).dispatch(*args, **kwargs)
+           
+        
+class ExpenditureAdd(LoginRequiredMixin, WithPurseMixin, CreateView):
     """View to add expenditures.
     """
     model = Expenditure
@@ -50,7 +81,7 @@ class ExpenditureAdd(LoginRequiredMixin, CreateView):
         return response
 
 
-class ExpenditureMonthList(LoginRequiredMixin, MonthArchiveView):
+class ExpenditureMonthList(LoginRequiredMixin, WithPurseMixin, MonthArchiveView):
     """List of expenditures in a month.
     """
     model = Expenditure

@@ -2,7 +2,8 @@ from datetime import date
 from django.contrib.auth.models import AbstractUser
 from django.db.models import (AutoField, DateField, DateTimeField,
                               FloatField, ForeignKey, NullBooleanField,
-                              CharField, ManyToManyField, Model)
+                              CharField, ManyToManyField, Model,
+                              SET_NULL)
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -11,14 +12,15 @@ class User(AbstractUser):
     """Extend the ``User`` class with a ``Purse`` field.
     """
     default_purse = ForeignKey('Purse', verbose_name=_('default purse'),
-                               null=True, default=None)
+                               null=True, default=None,
+                               on_delete=SET_NULL)
 
 
 class Purse(Model):
     """Class representing purses.
     """
     id = AutoField(primary_key=True, editable=False)
-    name = CharField(_('name'), max_length=80)
+    name = CharField(_('purse name'), max_length=80)
     users = ManyToManyField(User)
     valid = NullBooleanField(_('valid'), default=True, editable=False)
     timestamp = DateTimeField(_('timestamp'), auto_now=True, editable=False)
@@ -41,6 +43,7 @@ class Expenditure(Model):
     date = DateField(_('date'), default=timezone.now().date())
     description = CharField(_('description'), max_length=80, blank=True)
     author = ForeignKey(User, editable=False, verbose_name=_('author'))
+    purse = ForeignKey(Purse, verbose_name=_('purse'))
     valid = NullBooleanField(_('valid'), default=True, editable=False)
     timestamp = DateTimeField(_('timestamp'), auto_now=True, editable=False)
     
