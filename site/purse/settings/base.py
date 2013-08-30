@@ -137,7 +137,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'django.contrib.humanize',
     'tracker',
-    'register'
+    'users'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -186,3 +186,5 @@ try:
 except KeyError:
     pass
 EMAIL_SUBJECT_PREFIX = "[Porte-monnaie] "
+
+AUTH_USER_MODEL = 'tracker.User'

@@ -42,16 +42,16 @@ class Registration(Model):
     objects = RegistrationManager()
 
     def __unicode__(self):
-        return 'Account registration: {0}'.format(self.user)
+        return u'Account registration: {0}'.format(self.user)
 
     def send(self):
         """Send an email to the user.
         """
         var = {'key': self.key,
                'username': self.user.username}
-        subject = render_to_string('register/email_subject.txt', var)
+        subject = render_to_string('users/email_subject.txt', var)
         subject = subject[:-1]
-        msg = render_to_string('register/email_msg.txt', var)
+        msg = render_to_string('users/email_msg.txt', var)
         self.user.email_user(subject, msg)
         
     class Meta:

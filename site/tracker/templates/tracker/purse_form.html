@@ -1,18 +1,21 @@
-{% extends "tracker/base.html" %}
-{% load i18n static %}{% block usertools %}{% endblock %}
+{% extends 'tracker/base.html' %}
+{% load i18n %}
 {% block content %}
-<h2>{% trans 'create'|capfirst %}</h2>
+<h2>{% trans 'new purse'|capfirst %}</h2>
 {% if form.errors %}<p class="errornote">
   {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
 </p>{% endif %}
-<form id="user-creation-form"
-      action="" 
+<form id="purse-form"
+      action="{% url 'tracker:purse_creation' %}" 
       method="post">{% csrf_token %}
+  {% include "tracker/form_errors.html" %}
   {% include "tracker/fieldset.html" %}
-  <input type="submit" value="{% trans 'create'|capfirst %}">
-</form>{% endblock %}
+  <input type="submit" value="{% trans 'save'|capfirst %}">
+</form>
+{% endblock %}
 {% block scripts %}
+{{ block.super }}
 <script type="text/javascript">
-  document.getElementById('id_username').focus();
+  document.getElementById('id_name').focus();
 </script>
 {% endblock %}

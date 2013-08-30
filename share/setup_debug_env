@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-VIRTUALENV_PATH="$HOME/.virtualenvs/site-account"
-PYTHONPATH="$HOME/Projets/Site/porte-monnaie/site"
+VIRTUALENV_PATH="$HOME/.virtualenvs/purse"
+PYTHONPATH="$HOME/Projets/Site/purse_project/site"
 
 source "$VIRTUALENV_PATH/bin/activate"
 

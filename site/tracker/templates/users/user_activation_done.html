@@ -1,0 +1,8 @@
+{% extends 'tracker/base.html' %}
+{% load i18n static %}{% block usertools %}{% endblock %}
+{% block content %}
+<h2>{% trans 'account activated'|capfirst %}</h2>
+<p>
+  {% blocktrans with username=key_user.username %}Congratulations! The user account {{ username }} has been activated.{% endblocktrans %} <a href={% url 'tracker:login' %}>{% trans 'Go to the login page' %}</a>.
+</p>
+{% endblock %}

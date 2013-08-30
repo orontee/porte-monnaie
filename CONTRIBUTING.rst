@@ -10,16 +10,19 @@ Setting up a development environment
 2. Create and checkout a new branch.
 
 3. Create a virtual environment satisfying the dependancies listed in
-   the file `requirements.txt`.
+   the file `requirements.txt`::
+
+     purse_project$ virtualenv2 ~/.virtualenvs/purse
+     purse_project$ source ~/.virtualenvs/purse/bin/activate
+     (purse) purse_project$ pip install -r requirements.txt
+     ...
  
-4. Adapt the script `share/setup_debug_env` to your setup then enter
-   the virtual environment::
+4. Adapt the script `share/setup_debug_env` to your setup. Then to
+   enter the virtual environment, just enter the following command::
 
-     $ source share/setup_debug_env
+     purse_project$ source share/setup_debug_env
+     ...
 
-   To run the debug server, use::
-
-     $ django-admin.py runserver
 
 Translations
 ------------

@@ -1,28 +1,42 @@
 """Module defining the views.
 """
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Sum
-from django.utils.decorators import method_decorator
-from django.views.generic import (CreateView, MonthArchiveView)
-from tracker.models import Expenditure
+from django.views.generic import (CreateView,
+                                  MonthArchiveView,
+                                  RedirectView,
+                                  UpdateView)
+from tracker.models import (Expenditure, Purse)
 from tracker.forms import ExpenditureForm
+from users.views.mixins import LoginRequiredMixin
 
 
-class LoginRequiredMixin(object):
-    """Makes sure that a user is logged in before a request is performed.
+class HomeView(RedirectView):
+    """Home view.
     """
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+    url = reverse_lazy('tracker:list')
 
 
+class PurseCreation(LoginRequiredMixin, CreateView):
+    """View to create a purse.
+    """
+    model = Purse
+    success_url = reverse_lazy('tracker:home')
+
+
+class PurseUpdate(LoginRequiredMixin, UpdateView):
+    """View to create a purse.
+    """
+    model = Purse
+    success_url = reverse_lazy('tracker:home')
+
+            
 class ExpenditureAdd(LoginRequiredMixin, CreateView):
-    """View to add an expenditure.
+    """View to add expenditures.
     """
     model = Expenditure
     form_class = ExpenditureForm
-    success_url = reverse_lazy('tracker:list')
+    success_url = reverse_lazy('tracker:home')
 
     def form_valid(self, form):
         """If the form is valid, save the associated model instances.

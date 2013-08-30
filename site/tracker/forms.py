@@ -59,7 +59,7 @@ class ExpenditureForm(ModelForm):
                     self.other_dates.append(start)
         return cleaned_data
 
-    class Meta(object):
+    class Meta:
         """The data associated to the expenditure form.
         """
         model = Expenditure
