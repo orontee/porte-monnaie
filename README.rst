@@ -27,9 +27,4 @@ Installation
 
      $ make install
 
-5. Create some users::
-
-     $ cd site
-     site$ django-admin.py createuser USERNAME EMAIL PASSWORD --pythonpath=.
-
 That's all!
