@@ -6,10 +6,13 @@
     </label><br>
     {{ field }}
     {% if field.errors %}
-    <span class="errors">{% for error in field.errors %}
-      {{ error }} {% endfor %}
+    <span class="errors">
+      {% for error in field.errors %}
+      {{ error }}
+      {% endfor %}
     </span>
-    {% endif %}<br>
+    {% endif %}
+    <br>
     <span class="helptext">
       {{ field.help_text|capfirst }}
     </span>

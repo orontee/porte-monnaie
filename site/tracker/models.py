@@ -1,4 +1,7 @@
 from datetime import date
+from django.utils import six
+from django.utils.functional import lazy
+from django.utils.safestring import mark_safe
 from django.contrib.auth.models import AbstractUser
 from django.db.models import (AutoField, DateField, DateTimeField,
                               FloatField, ForeignKey, NullBooleanField,
@@ -6,6 +9,11 @@ from django.db.models import (AutoField, DateField, DateTimeField,
                               SET_NULL)
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
+mark_safe_lazy = lazy(mark_safe, six.text_type)
+
+dp_help_msg = _('You can <a href={0}>modify the selected purse'
+                '</a> or <a href={1}>create a new one</a>.')
 
 
 class User(AbstractUser):
@@ -27,7 +35,7 @@ class Purse(Model):
 
     def __unicode__(self):
         return u'Purse: {0}'.format(self.id)
-    
+
     class Meta(object):
         """Purse metadata.
         """
@@ -46,10 +54,10 @@ class Expenditure(Model):
     purse = ForeignKey(Purse, verbose_name=_('purse'))
     valid = NullBooleanField(_('valid'), default=True, editable=False)
     timestamp = DateTimeField(_('timestamp'), auto_now=True, editable=False)
-    
+
     def __unicode__(self):
         return u'Expenditure: {0}'.format(self.id)
-    
+
     class Meta(object):
         """Expenditure metadata.
         """

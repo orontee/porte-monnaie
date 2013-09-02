@@ -15,7 +15,7 @@ class UserCreation(CreateView):
     """View to create a user account.
     """
     model = User
-    template_name  = 'users/user_form.html'
+    template_name = 'users/user_form.html'
     form_class = UserCreationForm
     success_url = reverse_lazy('users:user_creation_done')
 
@@ -49,9 +49,9 @@ class UserActivation(TemplateView):
             user = None
         context.update({'key_user': user})
         return context
-            
+
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         if not context.get('key_user', None):
-            return Http404            
+            return Http404
         return self.render_to_response(context)

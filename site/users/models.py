@@ -53,7 +53,7 @@ class Registration(Model):
         subject = subject[:-1]
         msg = render_to_string('users/email_msg.txt', var)
         self.user.email_user(subject, msg)
-        
+
     class Meta:
         verbose_name = _('account registration')
         verbose_name_plural = _('account registrations')

@@ -21,8 +21,8 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('',
                         url(regex=r'^add_expenditure/$',
-                                view=ExpenditureAdd.as_view(),
-                                name='add'),
+                            view=ExpenditureAdd.as_view(),
+                            name='add'),
                         url(regex=r'^expenditures/$',
                             view=ExpenditureMonthList.as_view(
                                 **dict(zip(['month', 'year'],
@@ -65,7 +65,8 @@ urlpatterns += patterns('',
                             {'template_name':
                              'users/password_change_form.html',
                              'password_change_form': PasswordChangeForm,
-                             'post_change_redirect': reverse_lazy('tracker:home')},
+                             'post_change_redirect':
+                             reverse_lazy('tracker:home')},
                             name='password_change'),
                         url(regex=r'^user_creation_done',
                             view=TemplateView.as_view(

@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.forms import (ModelForm, ChoiceField)
 from django.utils.translation import ugettext_lazy as _
-from tracker.models import Expenditure
+from tracker.models import (Expenditure, Purse)
 
 OCCURRENCES_CHOICES = (('1', _('unique')),
                        ('2', _('next two months')),
@@ -19,7 +19,7 @@ class ExpenditureForm(ModelForm):
                               label=_('Occurrences'))
     other_dates = []
 
-    class Meta:
+    class Meta(object):
         model = Expenditure
 
     def __init__(self, *args, **kwargs):

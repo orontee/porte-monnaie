@@ -1,5 +1,6 @@
 """Module defining the views.
 """
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
@@ -12,6 +13,8 @@ from tracker.models import (Expenditure, Purse)
 from tracker.forms import ExpenditureForm
 from users.views.mixins import LoginRequiredMixin
 
+User = get_user_model()
+
 
 class HomeView(RedirectView):
     """Home view.
@@ -19,21 +22,38 @@ class HomeView(RedirectView):
     url = reverse_lazy('tracker:list')
 
 
-class PurseCreation(LoginRequiredMixin, CreateView):
+class OtherUsersMixin(object):
+    """Set choices for the ``users`` attribute with the list of user
+    acounts but the logged in account.
+    """
+    def get_form(self, form_class):
+        try:
+            form = super(OtherUsersMixin, self).get_form(form_class)
+            users = User.objects.exclude(pk=self.request.user.pk)
+        except AttributeError:
+            raise ImproperlyConfigured("OtherUsersMixin requires the mixins "
+                                       "LoginRequiredMixin and FormMixin")
+        else:
+            f = form.fields.get('users')
+            f.choices = [(u.id, u.username) for u in users]
+            return form
+
+
+class PurseCreation(LoginRequiredMixin, OtherUsersMixin, CreateView):
     """View to create a purse.
     """
     model = Purse
     success_url = reverse_lazy('tracker:home')
 
 
-class PurseUpdate(LoginRequiredMixin, UpdateView):
+class PurseUpdate(LoginRequiredMixin, OtherUsersMixin, UpdateView):
     """View to modify a purse.
     """
     model = Purse
     success_url = reverse_lazy('tracker:home')
 
 
-class WithPurseMixin(object):
+class DefaultPurseMixin(object):
     """Provides an accessor to the user account default purse.
 
     If the user does not belong to any purse, redirect to purse
@@ -43,13 +63,19 @@ class WithPurseMixin(object):
     """
     @property
     def purse(self):
-        user = self.request.user
         try:
-            purse = user.default_purse
+            user = self.request.user
         except AttributeError:
-            raise ImproperlyConfigured("User model does not define a "
-                                       "purse attribute")
-        return purse
+            raise ImproperlyConfigured("DefaultPurseMixin requires the mixin"
+                                       "LoginRequiredMixin")
+        else:
+            try:
+                purse = user.default_purse
+            except AttributeError:
+                raise ImproperlyConfigured("User model does not define a "
+                                           "purse attribute")
+            else:
+                return purse
 
     def dispatch(self, *args, **kwargs):
         user = self.request.user
@@ -59,10 +85,12 @@ class WithPurseMixin(object):
         if self.purse is None:
             return HttpResponseRedirect(
                 reverse_lazy('tracker:user_change'))
-        return super(WithPurseMixin, self).dispatch(*args, **kwargs)
-           
-        
-class ExpenditureAdd(LoginRequiredMixin, WithPurseMixin, CreateView):
+        return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
+
+
+class ExpenditureAdd(LoginRequiredMixin,
+                     DefaultPurseMixin,
+                     CreateView):
     """View to add expenditures.
     """
     model = Expenditure
@@ -81,7 +109,9 @@ class ExpenditureAdd(LoginRequiredMixin, WithPurseMixin, CreateView):
         return response
 
 
-class ExpenditureMonthList(LoginRequiredMixin, WithPurseMixin, MonthArchiveView):
+class ExpenditureMonthList(LoginRequiredMixin,
+                           DefaultPurseMixin,
+                           MonthArchiveView):
     """List of expenditures in a month.
     """
     model = Expenditure
