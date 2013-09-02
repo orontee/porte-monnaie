@@ -53,6 +53,23 @@ class PurseUpdate(LoginRequiredMixin, OtherUsersMixin, UpdateView):
     success_url = reverse_lazy('tracker:home')
 
 
+class UserPurseMixin(object):
+    """Set choices for the ``purse`` attribute with the list of logged in
+    account purses.
+    """
+    def get_form(self, form_class):
+        try:
+            form = super(UserPurseMixin, self).get_form(form_class)
+            purses = self.request.user.purse_set.all()
+        except AttributeError:
+            raise ImproperlyConfigured("UserPurseMixin requires the mixin"
+                                       "LoginRequiredMixin and FormMixin")
+        else:
+            f = form.fields.get('purse')
+            f.choices = [(p.id, p.name) for p in purses]
+            return form
+
+
 class DefaultPurseMixin(object):
     """Provides an accessor to the user account default purse.
 
@@ -90,6 +107,7 @@ class DefaultPurseMixin(object):
 
 class ExpenditureAdd(LoginRequiredMixin,
                      DefaultPurseMixin,
+                     UserPurseMixin,
                      CreateView):
     """View to add expenditures.
     """
