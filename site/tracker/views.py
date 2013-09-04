@@ -6,6 +6,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
 from django.views.generic import (CreateView,
+                                  ListView,
                                   MonthArchiveView,
                                   RedirectView,
                                   UpdateView)
@@ -14,6 +15,40 @@ from tracker.forms import ExpenditureForm
 from users.views.mixins import LoginRequiredMixin
 
 User = get_user_model()
+
+
+class FieldNamesMixin(object):
+    """Extends a view context with the ``field_names`` attribute.
+    """
+    def get_context_data(self, **kwargs):
+        context = super(FieldNamesMixin, self).get_context_data(**kwargs)
+        try:
+            context['field_names'] = self.field_names
+        except AttributeError:
+            raise ImproperlyConfigured("field_names attribute "
+                                       "required by FieldNamesMixin")
+        return context
+
+
+
+class QueryPaginationMixin(object):
+    """Returns the number of items to paginate by, or None for no
+    pagination.
+
+    Query parameters are search first.
+    """
+    paginate_by = 15
+
+    def get_paginate_by(self, queryset):
+        if 'paginate_by' in self.request.GET:
+            try:
+                paginate_by = int(self.request.GET['paginate_by'])
+            except ValueError:
+                paginate_by = self.paginate_by
+                # REMARK No pagination is not supported
+        else:
+            paginate_by = self.paginate_by
+        return paginate_by
 
 
 class HomeView(RedirectView):
@@ -39,18 +74,32 @@ class OtherUsersMixin(object):
             return form
 
 
-class PurseCreation(LoginRequiredMixin, OtherUsersMixin, CreateView):
+class PurseCreation(LoginRequiredMixin, CreateView):
     """View to create a purse.
     """
     model = Purse
     success_url = reverse_lazy('tracker:home')
 
 
-class PurseUpdate(LoginRequiredMixin, OtherUsersMixin, UpdateView):
+class PurseUpdate(LoginRequiredMixin, UpdateView):
     """View to modify a purse.
     """
     model = Purse
     success_url = reverse_lazy('tracker:home')
+
+
+class PurseList(LoginRequiredMixin,
+                FieldNamesMixin,
+                QueryPaginationMixin,
+                ListView):
+    """List the logged in account purses.
+    """
+    model = Purse
+    context_object_name = 'purses'
+    field_names = ['name', 'users', 'description']
+
+    def get_queryset(self):
+        return self.request.user.purse_set.all()
 
 
 class UserPurseMixin(object):
@@ -137,6 +186,8 @@ class ExpenditureAdd(LoginRequiredMixin,
 
 class ExpenditureMonthList(LoginRequiredMixin,
                            DefaultPurseMixin,
+                           FieldNamesMixin,
+                           QueryPaginationMixin,
                            MonthArchiveView):
     """List of expenditures in a month.
     """
@@ -147,32 +198,19 @@ class ExpenditureMonthList(LoginRequiredMixin,
     field_names = ['date', 'amount', 'author', 'description']
     month_format = '%m'
     allow_future = True
-    paginate_by = 15
 
-    def get_paginate_by(self, queryset):
-        """Returns the number of items to paginate by, or None for no
-        pagination.
-
-        Query parameters are search first.
-        """
-        if 'paginate_by' in self.request.GET:
-            try:
-                paginate_by = int(self.request.GET['paginate_by'])
-            except ValueError:
-                paginate_by = self.paginate_by
-                # REMARK No pagination is not supported
-        else:
-            paginate_by = self.paginate_by
-        return paginate_by
+    def get_queryset(self):
+        qs = super(ExpenditureMonthList, self).get_queryset()
+        qs = qs.filter(purse=self.purse)
+        return qs
 
     def get_context_data(self, **kwargs):
-        """Extends the context with view's specific data.'
+        """Extends the context with view's specific data.
 
         Table field names and various data computed from the
         expenditures amounts are added.
         """
         context = super(ExpenditureMonthList, self).get_context_data(**kwargs)
-        context['field_names'] = self.field_names
         user = self.request.user if self.request else None
         if user:
             qs = self.object_list.all()

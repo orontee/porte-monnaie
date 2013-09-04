@@ -21,6 +21,9 @@
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript">
-  document.getElementById('id_first_name).focus();
+  var elt = document.getElementById('id_first_name') || document.getElementById('id_username');
+  if (elt) {
+  elt.focus();
+  }
 </script>
 {% endblock %}

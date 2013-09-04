@@ -6,12 +6,14 @@
     </td>
     <td>
       <form method="get" action="{% url 'tracker:archive' %}" class="right">
+	{% if params %}
 	{% for k,v in params.items %}
 	{% if k != 'paginate_by' %}
         <input type="hidden" 
 	       name="{{ k }}" value="{{ v }}"/>
 	{% endif %}
 	{% endfor %}
+	{% endif %}
         <label>
           {% trans 'rows per page:'|capfirst %}
         </label>

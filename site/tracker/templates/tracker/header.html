@@ -1,7 +1,7 @@
 <thead class="small">
   <tr>
     {% for data in header_datas %}
-    <th title="{{ data.help_text|capfirst }}" class="{{ data.name }}">
+    <th class="{{ data.name }}">
       {{ data.verbose_name|capfirst }}
     </th>
     {% endfor %}

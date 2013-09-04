@@ -1,0 +1,62 @@
+{% extends 'tracker/base.html' %}
+{% load i18n table %}
+{% block content %}
+<div id="main">
+  <ul id="toolbar" class="left small menu-container">
+    <li class="left">
+      <a id="create-purse" href="{% url 'tracker:purse_creation' %}"
+  	 title="{% trans 'Create a new purse' %}">
+  	{% trans 'create'|capfirst %}
+      </a>
+    </li>
+  </ul>
+  <p>
+    {% blocktrans %}
+    Here are the purses you belong to.
+    {% endblocktrans %}
+  </p>
+  {% if purses %}
+  <table id="purses-table">
+    <caption class="small">
+      {% trans 'Purses' %}
+    </caption>
+    {% table_header field_names %}
+    {% table_footer field_names %}
+    <tbody>
+      {% for p in purses %}
+      <tr class={% cycle 'odd' 'even' %}>
+	<td title="{{ p.name }}">
+	  {{ p.name }}
+	</td>
+	<td title="{{ p.users }}">
+	  {% for u in p.users.all %}
+	  {{ u.username }},
+	  {% endfor %}
+	</td>
+	<td title="{{ p.description }}">
+	  {{ p.description }}
+	</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>
+    {% blocktrans %}
+    {% endblocktrans %}
+    No purses found!
+    <a href="{% url 'tracker:purse_creation' %}">
+      {% blocktrans %}
+      Create a new purse...
+      {% endblocktrans %}
+    </a>
+  </p>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript">
+    document.getElementById('create-purse').focus();
+</script>
+{% endblock %}

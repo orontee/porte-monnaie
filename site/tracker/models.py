@@ -30,7 +30,7 @@ class Purse(Model):
     id = AutoField(primary_key=True, editable=False)
     name = CharField(_('purse name'), max_length=80)
     users = ManyToManyField(User)
-    valid = NullBooleanField(_('valid'), default=True, editable=False)
+    description = CharField(_('description'), max_length=80, blank=True)
     timestamp = DateTimeField(_('timestamp'), auto_now=True, editable=False)
 
     def __unicode__(self):

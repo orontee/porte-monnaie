@@ -11,7 +11,8 @@ from django.contrib.auth.forms import (AuthenticationForm,
                                        PasswordChangeForm)
 from django.views.generic import TemplateView
 from tracker.views import (ExpenditureAdd, ExpenditureMonthList,
-                           HomeView, PurseCreation, PurseUpdate)
+                           HomeView,
+                           PurseCreation, PurseUpdate, PurseList)
 from users.views.base import (UserCreation, UserChange, UserActivation)
 
 urlpatterns = patterns('',
@@ -39,7 +40,10 @@ urlpatterns += patterns('',
                             name='purse_creation'),
                         url(regex=r'^purses/update/(?P<pk>\d+)/$',
                             view=PurseUpdate.as_view(),
-                            name='purse_update'))
+                            name='purse_update'),
+                        url(regex='^purses/$',
+                            view=PurseList.as_view(),
+                            name='purse_list'))
 
 urlpatterns += patterns('',
                         url(regex=r'^user_change/$',
