@@ -21,6 +21,7 @@ class ExpenditureForm(ModelForm):
 
     class Meta(object):
         model = Expenditure
+        fields = ['amount', 'date', 'description', 'purse']
 
     def __init__(self, *args, **kwargs):
         super(ExpenditureForm, self).__init__(*args, **kwargs)

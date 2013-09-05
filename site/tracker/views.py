@@ -13,6 +13,7 @@ from django.views.generic import (CreateView,
 from tracker.models import (Expenditure, Purse)
 from tracker.forms import ExpenditureForm
 from users.views.mixins import LoginRequiredMixin
+from users.views.base import UserChange as UserChangeOrig
 
 User = get_user_model()
 
@@ -103,9 +104,12 @@ class PurseList(LoginRequiredMixin,
 
 
 class UserPurseMixin(object):
-    """Set choices for the ``purse`` attribute with the list of logged in
-    account purses.
+    """Set choices for the attribute whose name is ``purse_field_name``.
+
+    The value set is the list of purses of the logged account.
     """
+    purse_field_name = 'purse'
+
     def get_form(self, form_class):
         try:
             form = super(UserPurseMixin, self).get_form(form_class)
@@ -114,9 +118,13 @@ class UserPurseMixin(object):
             raise ImproperlyConfigured("UserPurseMixin requires the mixin"
                                        "LoginRequiredMixin and FormMixin")
         else:
-            f = form.fields.get('purse')
+            f = form.fields.get(self.purse_field_name)
             f.choices = [(p.id, p.name) for p in purses]
             return form
+
+
+class UserChange(UserPurseMixin, UserChangeOrig):
+    purse_field_name = 'default_purse'
 
 
 class DefaultPurseMixin(object):

@@ -12,8 +12,9 @@ from django.contrib.auth.forms import (AuthenticationForm,
 from django.views.generic import TemplateView
 from tracker.views import (ExpenditureAdd, ExpenditureMonthList,
                            HomeView,
-                           PurseCreation, PurseUpdate, PurseList)
-from users.views.base import (UserCreation, UserChange, UserActivation)
+                           PurseCreation, PurseUpdate, PurseList,
+                           UserChange)
+from users.views.base import (UserCreation, UserActivation)
 
 urlpatterns = patterns('',
                        url(regex=r'^$',
