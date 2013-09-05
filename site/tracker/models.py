@@ -36,6 +36,13 @@ class Purse(Model):
     def __unicode__(self):
         return u'Purse: {0}'.format(self.id)
 
+    def usernames(self):
+        """Return the comma separated list of usernames sorted.
+        """
+        names = [u.username for u in self.users.all()]
+        names.sort()
+        return ', '.join(names)
+
     class Meta(object):
         """Purse metadata.
         """

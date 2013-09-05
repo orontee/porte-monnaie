@@ -11,52 +11,50 @@
     </li>
   </ul>
   <p>
+    {% if purses %}
     {% blocktrans %}
     Here are the purses you belong to.
     {% endblocktrans %}
-  </p>
-  {% if purses %}
-  <table id="purses-table">
-    <caption class="small">
-      {% trans 'Purses' %}
-    </caption>
-    {% table_header field_names %}
-    {% table_footer field_names %}
-    <tbody>
-      {% for p in purses %}
-      <tr class={% cycle 'odd' 'even' %}>
-	<td title="{{ p.name }}">
-	  {{ p.name }}
-	</td>
-	<td title="{{ p.users }}">
-	  {% for u in p.users.all %}
-	  {{ u.username }},
-	  {% endfor %}
-	</td>
-	<td title="{{ p.description }}">
-	  {{ p.description }}
-	</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <p>
+    <table id="purses-table">
+      <caption class="small">
+	{% trans 'Purses' %}
+      </caption>
+      {% table_header field_names %}
+      {% table_footer field_names %}
+      <tbody>
+	{% for p in purses %}
+	<tr class={% cycle 'odd' 'even' %}>
+	  <td title="{{ p.name }}">
+	    <a href="{% url 'tracker:purse_update' pk=p.id %}">
+	      {{ p.name }}
+	    </a>
+	  </td>
+	  <td title="{{ usernames }}">
+	    {{ p.usernames }}
+	  </td>
+	  <td title="{{ p.description }}">
+	    {{ p.description }}
+	  </td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+    {% else %}
     {% blocktrans %}
     {% endblocktrans %}
-    No purses found!
+    You don't belong to any purse right now!
     <a href="{% url 'tracker:purse_creation' %}">
       {% blocktrans %}
       Create a new purse...
       {% endblocktrans %}
     </a>
+    {% endif %}
   </p>
-  {% endif %}
 </div>
 {% endblock %}
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-    document.getElementById('create-purse').focus();
+  document.getElementById('create-purse').focus();
 </script>
 {% endblock %}
