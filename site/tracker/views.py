@@ -88,6 +88,14 @@ class PurseUpdate(LoginRequiredMixin, UpdateView):
     model = Purse
     success_url = reverse_lazy('tracker:home')
 
+    def dispatch(self, *args, **kwargs):
+        """Check that the logged in account belongs to the requested purse.
+        """
+        obj = self.get_object()
+        if not obj.users.filter(pk=self.request.user.pk).exists():
+            return HttpResponseRedirect(reverse_lazy('tracker:logout'))
+        return super(PurseUpdate, self).dispatch(*args, **kwargs)
+
 
 class PurseList(LoginRequiredMixin,
                 FieldNamesMixin,
