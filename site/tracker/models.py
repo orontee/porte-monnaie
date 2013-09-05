@@ -39,7 +39,7 @@ class Purse(Model):
     def usernames(self):
         """Return the comma separated list of usernames sorted.
         """
-        names = [u.username for u in self.users.all()]
+        names = [u.first_name or u.username for u in self.users.all()]
         names.sort()
         return ', '.join(names)
 
