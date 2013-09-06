@@ -12,7 +12,7 @@
 </p>
 {% endif %}
 <form id="expenditure-form"
-      action="{% url 'tracker:add' %}" 
+      action=""
       method="post">{% csrf_token %}
   {% include "tracker/form_errors.html" %}
   {% include "tracker/fieldset.html" %}

@@ -27,7 +27,6 @@ class User(AbstractUser):
 class Purse(Model):
     """Class representing purses.
     """
-    id = AutoField(primary_key=True, editable=False)
     name = CharField(_('purse name'), max_length=80)
     users = ManyToManyField(User)
     description = CharField(_('description'), max_length=80, blank=True)
@@ -53,7 +52,6 @@ class Purse(Model):
 class Expenditure(Model):
     """Class representing expenditures.
     """
-    id = AutoField(primary_key=True, editable=False)
     amount = FloatField(_('amount'), default=0)
     date = DateField(_('date'), default=timezone.now().date())
     description = CharField(_('description'), max_length=80, blank=True)
