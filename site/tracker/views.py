@@ -58,23 +58,6 @@ class HomeView(RedirectView):
     url = reverse_lazy('tracker:list')
 
 
-class OtherUsersMixin(object):
-    """Set choices for the ``users`` attribute with the list of user
-    acounts but the logged in account.
-    """
-    def get_form(self, form_class):
-        try:
-            form = super(OtherUsersMixin, self).get_form(form_class)
-            users = User.objects.exclude(pk=self.request.user.pk)
-        except AttributeError:
-            raise ImproperlyConfigured("OtherUsersMixin requires the mixins "
-                                       "LoginRequiredMixin and FormMixin")
-        else:
-            f = form.fields.get('users')
-            f.choices = [(u.id, u.username) for u in users]
-            return form
-
-
 class PurseCreation(LoginRequiredMixin, CreateView):
     """View to create a purse.
     """
