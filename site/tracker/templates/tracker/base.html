@@ -26,6 +26,7 @@
 	<div id="header-content">
 	  <div id="user-tools">
 	    {% block usertools %}
+	    {% if user.username %}
 	    <ul class="menu-container">
 	      <li class="left">{% trans 'Welcome,' %}&nbsp;
 	      </li>
@@ -62,6 +63,7 @@
 		</ul>
 	      </li>
 	    </ul>
+	    {% endif %}
 	    {% endblock %}
 	  </div>
 	</div>
