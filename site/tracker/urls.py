@@ -4,13 +4,13 @@ All the url names defined here are accessible from the tracker
 namespace.
 """
 
-from datetime import datetime
 from django.conf.urls import (patterns, url)
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.forms import (AuthenticationForm,
                                        PasswordChangeForm)
 from django.views.generic import TemplateView
 from tracker.views import (ExpenditureAdd, ExpenditureMonthList,
+                           ExpenditureHome,
                            HomeView,
                            PurseCreation, PurseUpdate, PurseList,
                            UserChange)
@@ -22,18 +22,15 @@ urlpatterns = patterns('',
                            name='home'))
 
 urlpatterns += patterns('',
-                        url(regex=r'^add_expenditure/$',
+                        url(regex=r'^expenditures/add/$',
                             view=ExpenditureAdd.as_view(),
                             name='add'),
-                        url(regex=r'^expenditures/$',
-                            view=ExpenditureMonthList.as_view(
-                                **dict(zip(['month', 'year'],
-                                           '{0:%m},{0:%Y}'.format(
-                                               datetime.today()).split(',')))),
-                            name='list'),
-                        url(regex=r'^expenditures/archive/$',
+                        url(regex=r'^expenditures/(?P<year>\d+)/(?P<month>\d+)/$',
                             view=ExpenditureMonthList.as_view(),
-                            name='archive'))
+                            name='archive'),
+                        url(regex=r'^expenditures/',
+                            view=ExpenditureHome.as_view(),
+                            name='list'))
 
 urlpatterns += patterns('',
                         url(regex=r'^purses/create/$',

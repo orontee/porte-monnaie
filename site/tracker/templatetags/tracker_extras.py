@@ -3,6 +3,7 @@
 
 from datetime import datetime
 from django import template
+from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
@@ -23,39 +24,40 @@ def check_date_month(date):
 def do_previous_month_url(context):
     """Return the archive url for the previous month.
     """
-    return do_archive_url(context['previous_month'], 1,
-                          context.get('paginator', None))
-
-
-@register.simple_tag(name='current_month_url', takes_context=True)
-def do_current_month_url(context):
-    """Return the archive url for the current month.
-    """
-    return do_archive_url(datetime.today(), 1,
-                          context.get('paginator', None))
+    return do_archive_url(context['previous_month'])
 
 
 @register.simple_tag(name='next_month_url', takes_context=True)
 def do_next_month_url(context):
     """Return the archive url for the next month.
     """
-    return do_archive_url(context['next_month'], 1,
-                          context.get('paginator', None))
+    return do_archive_url(context['next_month'])
 
 
-def do_archive_url(date, page=1, paginator=None):
+@register.simple_tag(name='current_month_url', takes_context=True)
+def do_current_month_url(context):
+    """Return the archive url for the current month.
+    """
+    return do_archive_url(datetime.today())
+
+
+def do_archive_url(date):
     """Return the archive url for the given date.
     """
-    url = reverse('tracker:archive')
-    template = '{0}?month={1}&year={2}&page={3}'
+    kwargs = {'month': '{0:%m}'.format(date),
+              'year': '{0:%Y}'.format(date)}
+    return reverse('tracker:archive', kwargs = kwargs)
+
+
+def add_page_query(url, page=1, paginator=None):
+    """Add page query to the given url.
+    """
+    template = '{0}?page={1}'
     paginate_by = None
     if paginator is not None:
         paginate_by = paginator.per_page
-        template += '&paginate_by={4}'
-    return template.format(url,
-                           '{0:%m}'.format(date),
-                           '{0:%Y}'.format(date),
-                           page, paginate_by)
+        template += '&paginate_by={2}'
+    return template.format(url, page, paginate_by)
 
 
 @register.simple_tag(name='pagination',
@@ -67,11 +69,10 @@ def do_pagination(context):
         is_paginated = context['is_paginated']
         paginator = context['paginator']
         page = context['page_obj']
-        date = context['month']
+        url = context['path_info']
     except KeyError:
-        return ""
-        # TODO Raise a user exception to signify a wrong use of the
-        # tag
+        raise ImproperlyConfigured("The pagination tag must be used with "
+                                   "the QueryPaginationMixin mixin")
     else:
         this_page = '<span class=\'current-page\'>{0}</span>'
         if is_paginated is False:
@@ -80,9 +81,8 @@ def do_pagination(context):
         elements = []
         template = u"""<a href='{url}' class='page-number' title='{msg}'>{number}</a>"""
         msg = _('Jump to page {0}')
-
         def add_element(i):
-            elements.append(template.format(url=do_archive_url(date, i,
+            elements.append(template.format(url=add_page_query(url, i,
                                                                paginator),
                                             msg=msg.format(i),
                                             number=i))

@@ -5,7 +5,7 @@
       {% trans 'page:'|capfirst %} {{ pagination|safe }}
     </td>
     <td>
-      <form method="get" action="{% url 'tracker:archive' %}" class="right">
+      <form method="get" action="" class="right">
 	{% if params %}
 	{% for k,v in params.items %}
 	{% if k != 'paginate_by' %}

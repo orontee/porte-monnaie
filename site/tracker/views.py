@@ -1,5 +1,7 @@
-"""Module defining the views.
+"""Module defining the expenditures related views.
 """
+
+from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
@@ -50,6 +52,11 @@ class QueryPaginationMixin(object):
         else:
             paginate_by = self.paginate_by
         return paginate_by
+
+    def get_context_data(self, **kwargs):
+        context = super(QueryPaginationMixin, self).get_context_data(**kwargs)
+        context.update({'path_info': self.request.path_info})
+        return context
 
 
 class HomeView(RedirectView):
@@ -219,3 +226,12 @@ class ExpenditureMonthList(LoginRequiredMixin,
         context['params'] = {'month': self.get_month(),
                              'year': self.get_year()}
         return context
+
+
+class ExpenditureHome(RedirectView):
+    """Start page when browsing expenditures.
+    """
+    url = reverse_lazy('tracker:archive',
+                       kwargs=dict(zip(['month', 'year'],
+                                       '{0:%m},{0:%Y}'.format(
+                                           datetime.today()).split(','))))
