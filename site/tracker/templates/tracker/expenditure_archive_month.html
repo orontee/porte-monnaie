@@ -46,25 +46,17 @@
   {% if expenditures %}
   <p>
     {% if is_current %}
-    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 %}
-    In {{ date }}, the current amount of expenditures is equal to {{ total }}€.
-    {% endblocktrans %}
+    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 %}In {{ date }}, the current amount of expenditures is equal to {{ total }}€.{% endblocktrans %}
     {% else %}
-    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 %}
-    In {{ date }}, the total amount of expenditures was equal to {{ total }}€.
-    {% endblocktrans %}
+    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" total=total_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total }}€.{% endblocktrans %}
     {% endif %}
     {% if user_amount %}
-    {% blocktrans with user=user_amount|floatformat:2 %}
-    You authored {{ user }}€.
-    {% endblocktrans %}
+    {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
     {% endif %}
   </p>
   <table id="expenditures-table">
     <caption class="small">
-      {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}
-      Expenditures of {{ date }}.
-      {% endblocktrans %}
+      {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}Expenditures of {{ date }}.{% endblocktrans %}
     </caption>
     {% table_header field_names %}
     {% table_footer field_names %}
@@ -89,14 +81,10 @@
   </table>
   {% else %}
   <p>
-    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}
-    No expenditures found for {{ date }}!
-    {% endblocktrans %}
+    {% blocktrans with date=month|date:"YEAR_MONTH_FORMAT" %}No expenditures found for {{ date }}!{% endblocktrans %}
     {% if is_current %}
     <a href="{% url 'tracker:add' %}">
-      {% blocktrans %}
-      Add a new expenditure...
-      {% endblocktrans %}
+      {% blocktrans %}Add a new expenditure...{% endblocktrans %}
     </a>
     {% endif %}
   </p>

@@ -12,9 +12,6 @@ from django.utils.translation import ugettext_lazy as _
 
 mark_safe_lazy = lazy(mark_safe, six.text_type)
 
-dp_help_msg = _('You can <a href={0}>modify the selected purse'
-                '</a> or <a href={1}>create a new one</a>.')
-
 
 class User(AbstractUser):
     """Extend the ``User`` class with a ``Purse`` field.

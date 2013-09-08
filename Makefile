@@ -5,6 +5,7 @@ publicdir = $(projdir)/$(projname)/public
 
 apps = $(projdir)/$(projname)
 apps += $(projdir)/tracker
+apps += $(projdir)/users
 
 dbname = porte-monnaie_data
 dbuser = porte-monnaie

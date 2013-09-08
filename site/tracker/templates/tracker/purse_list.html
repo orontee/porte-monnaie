@@ -12,9 +12,7 @@
   </ul>
   <p>
     {% if purses %}
-    {% blocktrans %}
-    Here are the purses you belong to.
-    {% endblocktrans %}
+    {% blocktrans %}Here are the purses you belong to.{% endblocktrans %}
     <table id="purses-table">
       <caption class="small">
 	{% trans 'Purses' %}
@@ -40,13 +38,9 @@
       </tbody>
     </table>
     {% else %}
-    {% blocktrans %}
-    {% endblocktrans %}
-    You don't belong to any purse right now!
+    {% blocktrans %}You don't belong to any purse right now!{% endblocktrans %}
     <a href="{% url 'tracker:purse_creation' %}">
-      {% blocktrans %}
-      Create a new purse...
-      {% endblocktrans %}
+      {% blocktrans %}Create a new purse...{% endblocktrans %}
     </a>
     {% endif %}
   </p>
