@@ -10,14 +10,14 @@ Installation
 1. Make sure that the host satisfies the dependancies listed in the
    file `requirements.txt`.
 
-2. Set the environment variable `DJANGO_SETTINGS_MODULE`; For example,
-   add to the file `.bash_profile` the following line::
+2. Some Django settings are inherited from the environment: You must
+   set the following environment variables `DJANGO_SETTINGS_MODULE`,
+   `DJANGO_SECRET_KEY`, `DJANGO_ADMIN_NAME`, `DJANGO_ADMIN_EMAIL`,
+   `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD`.
+
+   For example, add to the file `.bash_profile` the following line::
 
      export DJANGO_SETTINGS_MODULE='purse.settings.production'
-
-   The Django variable `SECRET_KEY` is automatically inherited from
-   the environment variable `PORTE_MONNAIE_SECRET_KEY`. Thus you also
-   have to set that variable.
 
 3. Create the database::
 

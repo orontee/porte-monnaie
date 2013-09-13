@@ -9,7 +9,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Matthias Meulien', 'orontee@gmail.com'),
+    (os.environ['DJANGO_ADMIN_NAME'], os.environ['DJANGO_ADMIN_EMAIL']),
 )
 
 MANAGERS = ADMINS
@@ -94,7 +94,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = os.environ['PORTE_MONNAIE_SECRET_KEY']
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -181,10 +181,10 @@ LOGIN_REDIRECT_URL = '/tracker/expenditures'
 LOGIN_URL = '/tracker/login'
 
 try:
-    EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-    EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 except KeyError:
     pass
-EMAIL_SUBJECT_PREFIX = "[Porte-monnaie] "
+EMAIL_SUBJECT_PREFIX = '[Porte-monnaie] '
 
 AUTH_USER_MODEL = 'tracker.User'
