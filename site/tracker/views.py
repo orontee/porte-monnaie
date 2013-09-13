@@ -162,7 +162,6 @@ class DefaultPurseMixin(object):
 
 class ExpenditureAdd(LoginRequiredMixin,
                      DefaultPurseMixin,
-                     UserPurseMixin,
                      CreateView):
     """View to add expenditures.
     """
@@ -170,18 +169,11 @@ class ExpenditureAdd(LoginRequiredMixin,
     form_class = ExpenditureForm
     success_url = reverse_lazy('tracker:home')
 
-    def get_initial(self):
-        """Initialize the ``purse`` form field with the user account default
-        purse.
-        """
-        initial = super(ExpenditureAdd, self).get_initial()
-        initial.update({'purse': self.purse.id})
-        return initial
-
     def form_valid(self, form):
         """If the form is valid, save the associated model instances.
         """
         form.instance.author = self.request.user
+        form.instance.purse = self.purse
         response = super(ExpenditureAdd, self).form_valid(form)
         for date in form.other_dates:
             self.object.pk = None
