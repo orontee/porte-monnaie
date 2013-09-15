@@ -1,9 +1,8 @@
-from datetime import date
 from django.utils import six
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import AbstractUser
-from django.db.models import (AutoField, DateField, DateTimeField,
+from django.db.models import (DateField, DateTimeField,
                               FloatField, ForeignKey, NullBooleanField,
                               CharField, ManyToManyField, Model,
                               SET_NULL)
