@@ -196,17 +196,21 @@ caption {
     text-align: left;
 }
 
-#expenditures-table td.date{
+td.date{
     text-align: left;
 }
 
-#expenditures-table td.amount {
+td.amount,
+td.average,
+td.delta,
+td.count {
     text-align: right;
 }
 
-#expenditures-table th.date,
-#expenditures-table th.amount,
-#expenditures-table th.author {
+th.date,
+th.amount,
+th.month
+th.author {
     width: 20%;
 }
 

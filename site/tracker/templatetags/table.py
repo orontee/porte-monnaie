@@ -3,6 +3,7 @@
 
 from django import template
 from tracker.templatetags.tracker_extras import do_pagination
+from django.core.exceptions import ImproperlyConfigured
 
 register = template.Library()
 
@@ -36,28 +37,21 @@ def do_header(context, field_names):
 @register.inclusion_tag('tracker/footer.html',
                         name='table_footer',
                         takes_context=True)
-def do_footer(context, field_names):
-    """Include a template for a table footer build from the given fields.
+def do_footer(context, field_names=None):
+    """Include a template for a table footer.
     """
-    pagination = do_pagination(context)
-    page_choices = context.get('page_choices', [15, 25, 50])
-    # TODO Add a choice for all pages
-    # TODO No default here, better raise an exception
-    try:
-        paginator = context['paginator']
-    except KeyError:
-        paginator = None
-    per_page = paginator.per_page if paginator else None
-    return {'column_count': len(field_names),
-            'pagination': pagination,
-            'per_page': per_page,
-            'page_choices': page_choices,
-            'params': context.get('params', None)}
-
-
-# @register.simple_tag(name='value')
-# def do_getattr(obj, name):
-#     """Return the attribute of obj named name, or None if obj has no such
-#     attribute.
-#     """
-#     return getattr(obj, name, None)
+    if not field_names:
+        try:
+            field_names = context['field_names']
+        except KeyError:
+            raise ImproperlyConfigured("Context or tag must set field names")
+    dct = {'column_count': len(field_names),
+           'params': context.get('params', None)}
+    paginator = context.get('paginator', None)
+    if not paginator:
+        raise ImproperlyConfigured("Expecting a paginator in context")
+    dct.update({'pagination': do_pagination(context),
+                'per_page': paginator.per_page,
+                'page_choices': context.get(
+                    'page_choices', [15, 25, 50])})
+    return dct

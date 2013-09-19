@@ -10,6 +10,7 @@ from django.contrib.auth.forms import (AuthenticationForm,
                                        PasswordChangeForm)
 from django.views.generic import TemplateView
 from tracker.views import (ExpenditureAdd, ExpenditureMonthList,
+                           ExpenditureYearList,
                            ExpenditureHome,
                            HomeView,
                            PurseCreation, PurseUpdate, PurseList,
@@ -28,7 +29,10 @@ urlpatterns += patterns('',
                         url(regex=r'^expenditures/(?P<year>\d+)/(?P<month>\d+)/$',
                             view=ExpenditureMonthList.as_view(),
                             name='archive'),
-                        url(regex=r'^expenditures/',
+                        url(regex=r'^expenditures/(?P<year>\d+)/$',
+                            view=ExpenditureYearList.as_view(),
+                            name='summary'),
+                        url(regex=r'^expenditures/$',
                             view=ExpenditureHome.as_view(),
                             name='list'))
 

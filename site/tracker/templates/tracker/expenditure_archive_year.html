@@ -1,0 +1,93 @@
+{% extends 'tracker/base.html' %}
+{% load i18n tracker_extras table humanize %}
+{% block content %}
+<div id="main">
+  <ul id="toolbar" class="left small menu-container">
+    <li class="left menu-drop-down">
+      <a href="#" 
+	 onclick="Tracker.toggle_menu('browse-menu')"
+	 title="{% trans 'Browse other months expenditures' %}">
+	{% trans 'browse'|capfirst %}
+      </a>
+      <ul id="browse-menu" class="menu">
+      </ul>
+    </li>
+    <li class="left">
+      <a id="add-expenditure" href="{% url 'tracker:add' %}"
+	 title="{% trans 'Add a new expenditure' %}">
+	{% trans 'add'|capfirst %}
+      </a>
+    </li>
+  </ul>
+  {% if amounts %}
+  <table id="expenditures-table" class="left">
+    <caption class="small">
+      {% blocktrans with date=year|date:'Y' %}Expenditures of {{ date }}.{% endblocktrans %}
+    </caption>
+    <thead class="small">
+      <tr>
+	<th class="month">
+	  {% trans 'month'|capfirst %}
+	</th>
+	<th class="amount">
+	  {% trans 'amount'|capfirst %}
+	</th>
+	<th class="average">
+	  {% trans 'average'|capfirst %}
+	</th>
+	<th class="delta">
+	  {% trans 'delta'|capfirst %}
+	</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr class="total">
+	<td>
+	  {% trans 'totals'|capfirst %}
+	</td>
+	<td title="{{ totals.amount|floatformat:2 }}" class="amount">
+	  {{ totals.amount|floatformat:2 }}
+	</td>
+	<td title="{{ totals.average|floatformat:2 }}" class="average">
+	  {{ totals.average|floatformat:2 }}
+	</td>
+	<td title="{{ totals.delta|floatformat:2 }}" class="delta">
+	  {{ totals.delta|floatformat:2 }}
+	</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      {% for a in amounts %}
+      <tr class={% cycle 'odd' 'even' %}>
+	<td title="{{ a.month|date:'F'|capfirst }}">
+	  {{ a.month|date:'F'|capfirst }}
+	</td>
+	<td title="{{ a.amount|floatformat:2 }}" class="amount">
+	  {{ a.amount|floatformat:2 }}
+	</td>
+	<td title="{{ a.average|floatformat:2 }}" class="average">
+	  {{ a.average|floatformat:2 }}
+	</td>
+	<td title="{{ a.delta|floatformat:2 }}" class="delta">
+	  {{ a.delta|floatformat:2 }}
+	</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>
+    {% blocktrans with date=year|date:'Y' %}No expenditures found in {{ date }}!{% endblocktrans %}
+    <a href="{% url 'tracker:add' %}">
+      {% blocktrans %}Add a new expenditure...{% endblocktrans %}
+    </a>
+  </p>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript">
+    document.getElementById('add-expenditure').focus();
+</script>
+{% endblock %}

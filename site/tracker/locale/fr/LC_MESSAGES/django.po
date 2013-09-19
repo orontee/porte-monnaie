@@ -201,7 +201,7 @@ msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
 
 #: templates/tracker/expenditure_archive_month.html:87
 msgid "Add a new expenditure..."
-msgstr "Ajouter une dépense"
+msgstr "Ajouter une dépense..."
 
 #: templates/tracker/expenditure_form.html:4
 msgid "new expenditure"

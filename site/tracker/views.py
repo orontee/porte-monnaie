@@ -5,15 +5,17 @@ from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
-from django.db.models import Sum
+from django.db.models import (Sum, Count)
 from django.http import HttpResponseRedirect
 from django.views.generic import (CreateView,
                                   ListView,
                                   MonthArchiveView,
                                   RedirectView,
-                                  UpdateView)
+                                  UpdateView,
+                                  YearArchiveView)
 from tracker.models import (Expenditure, Purse)
 from tracker.forms import ExpenditureForm
+from tracker.utils import dictfetchall
 from users.views.mixins import LoginRequiredMixin
 from users.views.base import UserChange as UserChangeOrig
 
@@ -219,6 +221,49 @@ class ExpenditureMonthList(LoginRequiredMixin,
                              'year': self.get_year()}
         return context
 
+
+class ExpenditureYearList(LoginRequiredMixin,
+                          DefaultPurseMixin,
+                          FieldNamesMixin,
+                          YearArchiveView):
+    """Summary of expenditures in a year.
+    """
+    model = Expenditure
+    make_object_list = True
+    context_object_name = 'expenditures'
+    field_names = ['date', 'amount', 'author', 'description']
+    date_field = 'date'
+    allow_future = True
+
+    def get_context_data(self, **kwargs):
+        """"""
+        context = super(ExpenditureYearList, self).get_context_data(**kwargs)
+        users = self.purse.users.count()
+        from django.db import connection
+        cursor = connection.cursor()
+        cursor.execute('SELECT t.*, t.average - t.amount AS delta FROM '
+                       '(SELECT date_trunc(\'month\', date) AS month, '
+                       'SUM(CASE WHEN author_id=%s THEN amount ELSE 0 END)'
+                       ' AS amount, '
+                       'SUM(amount)/%s AS average, '
+                       'COUNT(id) AS count '
+                       'FROM tracker_expenditure '
+                       'WHERE EXTRACT(YEAR FROM date)=%s AND purse_id=%s '
+                       'GROUP BY month ORDER BY month) AS t;',
+                       [self.request.user.id,
+                        users,
+                        self.get_year(),
+                        self.purse.id])
+        values = dictfetchall(cursor)
+        flat = [[d['amount'] for d in values],
+                [d['average'] for d in values],
+                [d['delta'] for d in values]]
+        context.update({'amounts': values,
+                        'totals':{'amount': sum(flat[0]),
+                                  'average': sum(flat[1]),
+                                  'delta': sum(flat[2])}})
+        return context
+            
 
 class ExpenditureHome(RedirectView):
     """Start page when browsing expenditures.
