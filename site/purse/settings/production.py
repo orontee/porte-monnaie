@@ -1,6 +1,7 @@
 """The settings file used by the live production server.
 """
 
+import os
 import os.path
 from purse.settings.base import *
 
