@@ -158,6 +158,10 @@ tr.even {
     background: rgb(241, 241, 241);
 }
 
+tr.total {
+    font-weight: bold;
+}
+
 h2 {
     display: none;
 }

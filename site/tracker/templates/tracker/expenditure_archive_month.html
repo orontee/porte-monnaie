@@ -54,7 +54,7 @@
     {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
     {% endif %}
   </p>
-  <table id="expenditures-table" class="left">
+  <table id="expenditures-table">
     <caption class="small">
       {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}Expenditures of {{ date }}.{% endblocktrans %}
     </caption>

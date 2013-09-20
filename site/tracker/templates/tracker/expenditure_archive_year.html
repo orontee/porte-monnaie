@@ -20,7 +20,8 @@
     </li>
   </ul>
   {% if amounts %}
-  <table id="expenditures-table" class="left">
+  <p>Text coming...
+  <table id="expenditures-table">
     <caption class="small">
       {% blocktrans with date=year|date:'Y' %}Expenditures of {{ date }}.{% endblocktrans %}
     </caption>
@@ -40,22 +41,6 @@
 	</th>
       </tr>
     </thead>
-    <tfoot>
-      <tr class="total">
-	<td>
-	  {% trans 'totals'|capfirst %}
-	</td>
-	<td title="{{ totals.amount|floatformat:2 }}" class="amount">
-	  {{ totals.amount|floatformat:2 }}
-	</td>
-	<td title="{{ totals.average|floatformat:2 }}" class="average">
-	  {{ totals.average|floatformat:2 }}
-	</td>
-	<td title="{{ totals.delta|floatformat:2 }}" class="delta">
-	  {{ totals.delta|floatformat:2 }}
-	</td>
-      </tr>
-    </tfoot>
     <tbody>
       {% for a in amounts %}
       <tr class={% cycle 'odd' 'even' %}>
@@ -73,6 +58,20 @@
 	</td>
       </tr>
       {% endfor %}
+      <tr class="total">
+	<td>
+	  {% trans 'totals'|capfirst %}
+	</td>
+	<td title="{{ totals.amount|floatformat:2 }}" class="amount">
+	  {{ totals.amount|floatformat:2 }}
+	</td>
+	<td title="{{ totals.average|floatformat:2 }}" class="average">
+	  {{ totals.average|floatformat:2 }}
+	</td>
+	<td title="{{ totals.delta|floatformat:2 }}" class="delta">
+	  {{ totals.delta|floatformat:2 }}
+	</td>
+      </tr>
     </tbody>
   </table>
   {% else %}
