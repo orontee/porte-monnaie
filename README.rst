@@ -13,7 +13,8 @@ Installation
 2. Some Django settings are inherited from the environment: You must
    set the following environment variables `DJANGO_SETTINGS_MODULE`,
    `DJANGO_SECRET_KEY`, `DJANGO_ADMIN_NAME`, `DJANGO_ADMIN_EMAIL`,
-   `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD`.
+   `DJANGO_DATABASE`, `EMAIL_HOST`, `EMAIL_HOST_USER` and
+   `EMAIL_HOST_PASSWORD`.
 
    For example, add to the file `.bash_profile` the following line::
 

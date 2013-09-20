@@ -13,7 +13,7 @@ DATABASES = {
         'NAME': 'porte-monnaie_data',
         'USER': 'porte-monnaie',
         'PASSWORD': '',
-        'HOST': 'postgresql1.alwaysdata.com',
+        'HOST': os.environ['DJANGO_DATABASE_HOST'],
         'PORT': '',
     }
 }
@@ -22,6 +22,6 @@ ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'public/static/')
 
-EMAIL_HOST = "smtp.alwaysdata.com"
-SERVER_EMAIL = "porte-monnaie@alwaysdata.com"
-DEFAULT_FROM_EMAIL = "porte-monnaie@alwaysdata.com"
+EMAIL_HOST = os.environ['EMAIL_HOST']
+SERVER_EMAIL = os.environ['DJANGO_ADMIN_EMAIL']
+DEFAULT_FROM_EMAIL = SERVER_EMAIL
