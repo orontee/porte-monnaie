@@ -1,7 +1,7 @@
 """A module for extra template tags.
 """
 
-from datetime import datetime
+import datetime
 from django import template
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
@@ -15,7 +15,7 @@ def check_date_month(date):
     """`True` if and only if the `date` belongs to current month.
     """
     try:
-        return datetime.today().month == date.month
+        return datetime.date.today().month == date.month
     except AttributeError:
         return False
 
@@ -25,7 +25,7 @@ def check_date_year(date):
     """`True` if and only if `date` belongs to current year.
     """
     try:
-        return datetime.today().year == date.year
+        return datetime.date.today().year == date.year
     except AttributeError:
         return False
 
@@ -44,18 +44,27 @@ def do_next_month_url(context):
     return do_archive_url(context['next_month'])
 
 
-@register.simple_tag(name='current_month_url', takes_context=True)
-def do_current_month_url(context):
+@register.simple_tag(name='current_month_url')
+def do_current_month_url():
     """Return the archive url for the current month.
     """
-    return do_archive_url(datetime.today())
+    return do_archive_url(datetime.date.today())
 
 
-@register.simple_tag(name='current_year_url', takes_context=True)
-def do_current_year_url(context):
+@register.simple_tag(name='month_url')
+def do_month_url(month):
+    """Return the archive url for the given month.
+    """
+    return do_archive_url(datetime.date(datetime.date.today().year,
+                                        month, 1))
+    
+    
+    
+@register.simple_tag(name='current_year_url')
+def do_current_year_url():
     """Return the summary url for the current year.
     """
-    return do_summary_url(datetime.today())
+    return do_summary_url(datetime.date.today())
 
 
 def do_archive_url(date):

@@ -57,7 +57,9 @@
       {% for a in amounts %}
       <tr class={% cycle 'odd' 'even' %}>
 	<td title="{{ a.month|date:'F'|capfirst }}">
-	  {{ a.month|date:'F'|capfirst }}
+	  <a href="{% url 'tracker:archive' year=year.year month=a.month.month %}">
+	    {{ a.month|date:'F'|capfirst }}
+	  </a>
 	</td>
 	<td title="{{ a.amount|floatformat:2 }}" class="amount">
 	  {{ a.amount|floatformat:2 }}
