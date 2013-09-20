@@ -12,10 +12,20 @@ register = template.Library()
 
 @register.assignment_tag(name='is_current_month')
 def check_date_month(date):
-    """True iff the given `date` belongs to current month.
+    """`True` if and only if the `date` belongs to current month.
     """
     try:
         return datetime.today().month == date.month
+    except AttributeError:
+        return False
+
+
+@register.assignment_tag(name='is_current_year')
+def check_date_year(date):
+    """`True` if and only if `date` belongs to current year.
+    """
+    try:
+        return datetime.today().year == date.year
     except AttributeError:
         return False
 
@@ -41,12 +51,26 @@ def do_current_month_url(context):
     return do_archive_url(datetime.today())
 
 
+@register.simple_tag(name='current_year_url', takes_context=True)
+def do_current_year_url(context):
+    """Return the summary url for the current year.
+    """
+    return do_summary_url(datetime.today())
+
+
 def do_archive_url(date):
     """Return the archive url for the given date.
     """
     kwargs = {'month': '{0:%m}'.format(date),
               'year': '{0:%Y}'.format(date)}
     return reverse('tracker:archive', kwargs = kwargs)
+
+
+def do_summary_url(date):
+    """Return the summary url for the given date.
+    """
+    kwargs = {'year': '{0:%Y}'.format(date)}
+    return reverse('tracker:summary', kwargs = kwargs)
 
 
 def add_page_query(url, page=1, paginator=None):

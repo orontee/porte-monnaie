@@ -1,6 +1,7 @@
 {% extends 'tracker/base.html' %}
 {% load i18n tracker_extras table humanize %}
 {% block content %}
+{% is_current_year year as is_current %}
 <div id="main">
   <ul id="toolbar" class="left small menu-container">
     <li class="left menu-drop-down">
@@ -10,6 +11,11 @@
 	{% trans 'browse'|capfirst %}
       </a>
       <ul id="browse-menu" class="menu">
+	<li class="left">
+	  <a href="{% current_month_url %}">
+	    {% trans 'current month'|capfirst %}
+	  </a>
+	</li>
       </ul>
     </li>
     <li class="left">
@@ -20,7 +26,13 @@
     </li>
   </ul>
   {% if amounts %}
-  <p>Text coming...
+  <p>
+    {% if is_current %}
+    {% blocktrans %}The following table outlines your expenditures for the current year.{% endblocktrans %}
+    {% else %}
+    {% blocktrans with date=year|date:'Y' %}The following table outlines your expenditures for {{ date }}.{% endblocktrans %}
+    {% endif %}
+  </p>
   <table id="expenditures-table">
     <caption class="small">
       {% blocktrans with date=year|date:'Y' %}Expenditures of {{ date }}.{% endblocktrans %}
