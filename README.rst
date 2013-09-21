@@ -20,6 +20,9 @@ Installation
 
      export DJANGO_SETTINGS_MODULE='purse.settings.production'
 
+   If your site is using Fast CGI, you'll also have to set those
+   variables in the file `share/django.fcgi`.
+
 3. Create the database::
 
      $ make createdb
