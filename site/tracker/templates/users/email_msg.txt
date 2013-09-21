@@ -1,2 +1,2 @@
 {% load i18n %}{% url 'tracker:user_activation' key as the_url %}
-{% blocktrans %}Thanks for your interest in Porte-monnaie! To activate the account `{{ username }}', please visit the following page: http://porte-monnaie.alwaysdata.net{{ the_url }}.{% endblocktrans %}
+{% blocktrans %}Thanks for your interest in Porte-monnaie! To activate the account `{{ username }}', please visit the following page: http://aimersanscompter.fr{{ the_url }}.{% endblocktrans %}
