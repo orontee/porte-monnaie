@@ -45,12 +45,14 @@
 	<th class="amount">
 	  {% trans 'amount'|capfirst %}
 	</th>
+	{% if shared_purse %}
 	<th class="average">
 	  {% trans 'average'|capfirst %}
 	</th>
 	<th class="delta">
 	  {% trans 'delta'|capfirst %}
 	</th>
+	{% endif %}
       </tr>
     </thead>
     <tbody>
@@ -64,12 +66,14 @@
 	<td title="{{ a.amount|floatformat:2 }}" class="amount">
 	  {{ a.amount|floatformat:2 }}
 	</td>
+	{% if shared_purse %}
 	<td title="{{ a.average|floatformat:2 }}" class="average">
 	  {{ a.average|floatformat:2 }}
 	</td>
 	<td title="{{ a.delta|floatformat:2 }}" class="delta">
 	  {{ a.delta|floatformat:2 }}
 	</td>
+	{% endif %}
       </tr>
       {% endfor %}
       <tr class="total">
@@ -79,12 +83,14 @@
 	<td title="{{ totals.amount|floatformat:2 }}" class="amount">
 	  {{ totals.amount|floatformat:2 }}
 	</td>
+	{% if shared_purse %}
 	<td title="{{ totals.average|floatformat:2 }}" class="average">
 	  {{ totals.average|floatformat:2 }}
 	</td>
 	<td title="{{ totals.delta|floatformat:2 }}" class="delta">
 	  {{ totals.delta|floatformat:2 }}
 	</td>
+	{% endif %}
       </tr>
     </tbody>
   </table>
