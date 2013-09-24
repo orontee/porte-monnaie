@@ -55,7 +55,7 @@
     {% else %}
     {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' total=total_amount|floatformat:2 %}In {{ date }}, the total amount of expenditures was equal to {{ total }}€.{% endblocktrans %}
     {% endif %}
-    {% if user_amount %}
+    {% if user_amount and shared_purse %}
     {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
     {% endif %}
   </p>

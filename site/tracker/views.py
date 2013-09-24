@@ -133,7 +133,6 @@ class DefaultPurseMixin(object):
     If the user does not belong to any purse, redirect to purse
     creation page. Otherwise, if the user account default purse has
     not been set, redirect to the user change page.
-
     """
     @property
     def purse(self):
@@ -160,6 +159,13 @@ class DefaultPurseMixin(object):
             return HttpResponseRedirect(
                 reverse_lazy('tracker:user_change'))
         return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        """
+        """
+        context = super(DefaultPurseMixin, self).get_context_data(**kwargs)
+        context.update({'shared_purse': self.purse.users.count() > 1})
+        return context
 
 
 class ExpenditureAdd(LoginRequiredMixin,
