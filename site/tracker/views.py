@@ -200,9 +200,9 @@ class ExpenditureMonthList(LoginRequiredMixin,
     model = Expenditure
     context_object_name = 'expenditures'
     date_field = 'date'
-    allow_empty = True
     field_names = ['date', 'amount', 'author', 'description']
     month_format = '%m'
+    allow_empty = True
     allow_future = True
 
     def get_queryset(self):
@@ -239,6 +239,7 @@ class ExpenditureYearList(LoginRequiredMixin,
     context_object_name = 'expenditures'
     field_names = ['date', 'amount', 'author', 'description']
     date_field = 'date'
+    allow_empty = True
     allow_future = True
 
     def get_context_data(self, **kwargs):
