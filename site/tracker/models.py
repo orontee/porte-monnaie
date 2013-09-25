@@ -1,11 +1,13 @@
+import datetime
 from django.utils import six
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import AbstractUser
 from django.db.models import (DateField, DateTimeField,
-                              FloatField, ForeignKey, NullBooleanField,
+                              FloatField, ForeignKey, IntegerField,
+                              NullBooleanField,
                               CharField, ManyToManyField, Model,
-                              SET_NULL)
+                              SET_NULL, Manager)
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -26,7 +28,7 @@ class Purse(Model):
     name = CharField(_('purse name'), max_length=80)
     users = ManyToManyField(User)
     description = CharField(_('description'), max_length=80, blank=True)
-    timestamp = DateTimeField(_('timestamp'), auto_now=True, editable=False)
+    timestamp = DateTimeField(_('timestamp'), auto_now=True)
 
     def __unicode__(self):
         return u'Purse: {0}'.format(self.id)
@@ -54,7 +56,9 @@ class Expenditure(Model):
     author = ForeignKey(User, editable=False, verbose_name=_('author'))
     purse = ForeignKey(Purse, verbose_name=_('purse'))
     valid = NullBooleanField(_('valid'), default=True, editable=False)
-    timestamp = DateTimeField(_('timestamp'), auto_now=True, editable=False)
+    timestamp = DateTimeField(_('timestamp'), auto_now=True)
+
+    # REMARK Should be named created_at and use auto_now_add
 
     def __unicode__(self):
         return u'Expenditure: {0}'.format(self.id)
@@ -62,5 +66,66 @@ class Expenditure(Model):
     class Meta(object):
         """Expenditure metadata.
         """
-        ordering = ['-date', '-timestamp', 'author']
+        ordering = ('-date', '-timestamp', 'author')
         get_latest_by = 'date'
+
+
+class TagManager(Manager):
+    """Custom manager for tags.
+    """
+    def update_from(self, e, stats):
+        """Update tags from the given expenditure.
+
+        Raise an ``AttributeError`` exception in case ``e`` hasn't the
+        needed ``purse``, ``desc`` and ``timestamp`` attributes.
+
+        """
+        purse = e.purse
+        desc = e.description
+        qs = Tag.objects.filter(purse__id__exact=purse.id)\
+                        .order_by('last_use')
+        names = [n.lower() for n in desc.split()]
+        for n in names:
+            try:
+                t = qs.get(name=n)    
+            except Tag.DoesNotExist:
+                t = Tag(name=n, purse=purse, weight=1, last_use=e.timestamp)
+                stats[0] += 1
+            else:
+                if t.last_use < e.timestamp:
+                    t.weight += 1
+                    t.last_use = e.timestamp
+                    stats[1] += 1
+            t.save()
+        return stats
+
+    def get_names_for(self, purse, limit=15):
+        """Return the names of the tags associated to ``purse``.
+
+        The tags are ordered by weight. It returns at most ``limit``
+        results in case ``limit`` is not ``None``.
+
+        """
+        qs = purse.tag_set.only('name').order_by('-weight')
+        if limit is not None:
+            qs = qs[:limit]
+        return qs.values_list('name', flat=True)
+ 
+        
+class Tag(Model):
+    """Class representing tags.
+    """
+    name = CharField(_('name'), max_length=80, db_index=True)
+    purse = ForeignKey(Purse, verbose_name=_('purse'))
+    weight = IntegerField(_('weight'))
+    last_use = DateTimeField(_('last use'))
+    objects = TagManager()
+    
+    def __unicode__(self):
+        return u'Tag: {0}'.format(self.id)
+
+    class Meta(object):
+        """Tag metadata.
+        """
+        ordering = ('-weight',)
+            

@@ -5,7 +5,7 @@ from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
-from django.db.models import (Sum, Count)
+from django.db.models import Sum
 from django.http import HttpResponseRedirect
 from django.views.generic import (CreateView,
                                   ListView,
