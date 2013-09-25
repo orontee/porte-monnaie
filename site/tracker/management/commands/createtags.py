@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from optparse import make_option
 from tracker.models import (Expenditure, Tag)
 
+
 class Command(BaseCommand):
     """Create or update tags.
     """

@@ -57,9 +57,8 @@ def do_month_url(month):
     """
     return do_archive_url(datetime.date(datetime.date.today().year,
                                         month, 1))
-    
-    
-    
+
+
 @register.simple_tag(name='current_year_url')
 def do_current_year_url():
     """Return the summary url for the current year.
@@ -72,14 +71,14 @@ def do_archive_url(date):
     """
     kwargs = {'month': '{0:%m}'.format(date),
               'year': '{0:%Y}'.format(date)}
-    return reverse('tracker:archive', kwargs = kwargs)
+    return reverse('tracker:archive', kwargs=kwargs)
 
 
 def do_summary_url(date):
     """Return the summary url for the given date.
     """
     kwargs = {'year': '{0:%Y}'.format(date)}
-    return reverse('tracker:summary', kwargs = kwargs)
+    return reverse('tracker:summary', kwargs=kwargs)
 
 
 def add_page_query(url, page=1, paginator=None):
@@ -114,6 +113,7 @@ def do_pagination(context):
         elements = []
         template = u"""<a href='{url}' class='page-number' title='{msg}'>{number}</a>"""
         msg = _('Jump to page {0}')
+
         def add_element(i):
             elements.append(template.format(url=add_page_query(url, i,
                                                                paginator),

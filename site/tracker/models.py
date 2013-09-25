@@ -87,7 +87,7 @@ class TagManager(Manager):
         names = [n.lower() for n in desc.split()]
         for n in names:
             try:
-                t = qs.get(name=n)    
+                t = qs.get(name=n)
             except Tag.DoesNotExist:
                 t = Tag(name=n, purse=purse, weight=1, last_use=e.timestamp)
                 stats[0] += 1
@@ -110,8 +110,8 @@ class TagManager(Manager):
         if limit is not None:
             qs = qs[:limit]
         return qs.values_list('name', flat=True)
- 
-        
+
+
 class Tag(Model):
     """Class representing tags.
     """
@@ -120,7 +120,7 @@ class Tag(Model):
     weight = IntegerField(_('weight'))
     last_use = DateTimeField(_('last use'))
     objects = TagManager()
-    
+
     def __unicode__(self):
         return u'Tag: {0}'.format(self.id)
 
@@ -128,4 +128,3 @@ class Tag(Model):
         """Tag metadata.
         """
         ordering = ('-weight',)
-            

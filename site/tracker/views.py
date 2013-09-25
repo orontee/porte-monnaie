@@ -35,7 +35,6 @@ class FieldNamesMixin(object):
         return context
 
 
-
 class QueryPaginationMixin(object):
     """Returns the number of items to paginate by, or None for no
     pagination.
@@ -266,11 +265,11 @@ class ExpenditureYearList(LoginRequiredMixin,
                 [d['average'] for d in values],
                 [d['delta'] for d in values]]
         context.update({'amounts': values,
-                        'totals':{'amount': sum(flat[0]),
-                                  'average': sum(flat[1]),
-                                  'delta': sum(flat[2])}})
+                        'totals': {'amount': sum(flat[0]),
+                                   'average': sum(flat[1]),
+                                   'delta': sum(flat[2])}})
         return context
-            
+
 
 class ExpenditureHome(RedirectView):
     """Start page when browsing expenditures.
