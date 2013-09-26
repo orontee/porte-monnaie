@@ -5,7 +5,8 @@
 {% if form.errors %}
 <p class="errornote">
   {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
-</p>{% endif %}
+</p>
+{% endif %}
 <form id="purse-form"
       action=""
       method="post">{% csrf_token %}
@@ -17,6 +18,6 @@
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-  document.getElementById('id_name').focus();
+  Tracker.focus('id_name');
 </script>
 {% endblock %}

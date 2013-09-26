@@ -10,3 +10,10 @@ Tracker.toggle_menu = function(id) {
         }
     }
 };
+
+Tracker.focus = function(id) {
+    var node = document.getElementById(id);
+    if (node) {
+        node.focus();
+    }
+};

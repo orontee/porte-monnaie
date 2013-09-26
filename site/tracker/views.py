@@ -13,7 +13,7 @@ from django.views.generic import (CreateView,
                                   RedirectView,
                                   UpdateView,
                                   YearArchiveView)
-from tracker.models import (Expenditure, Purse)
+from tracker.models import (Expenditure, Purse, Tag)
 from tracker.forms import ExpenditureForm
 from tracker.utils import dictfetchall
 from users.views.mixins import LoginRequiredMixin
@@ -160,15 +160,29 @@ class DefaultPurseMixin(object):
         return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        """
-        """
         context = super(DefaultPurseMixin, self).get_context_data(**kwargs)
         context.update({'shared_purse': self.purse.users.count() > 1})
         return context
 
 
+class TagNamesMixin(object):
+    """Extend a view context with the list of tags associated to a given
+    purse.
+    """
+    def get_context_data(self, **kwargs):
+        context = super(TagNamesMixin, self).get_context_data(**kwargs)
+        try:
+            purse = self.purse 
+        except AttributeError:
+            raise ImproperlyConfigured("purse attribute required"
+                                       "by TagNamesMixin")
+        context.update({'tagnames': Tag.objects.get_names_for(purse)})
+        return context
+    
+
 class ExpenditureAdd(LoginRequiredMixin,
                      DefaultPurseMixin,
+                     TagNamesMixin,
                      CreateView):
     """View to add expenditures.
     """

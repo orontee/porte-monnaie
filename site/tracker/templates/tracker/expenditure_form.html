@@ -12,12 +12,19 @@
       method="post">{% csrf_token %}
   {% include "tracker/form_errors.html" %}
   {% include "tracker/fieldset.html" %}
+  <div class="tags">
+    {% for name in tagnames %}
+    <span class="tag">
+      {{ name }}
+    </span>
+    {% endfor %}
+  </div>
   <input type="submit" value="{% trans 'add'|capfirst %}">
 </form>
 {% endblock %}
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-  document.getElementById('id_amount').focus();
+  Tracker.focus('id_amount');
 </script>
 {% endblock %}
