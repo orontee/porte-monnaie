@@ -11,14 +11,34 @@
       action=""
       method="post">{% csrf_token %}
   {% include "tracker/form_errors.html" %}
-  {% include "tracker/fieldset.html" %}
-  <div class="tags">
-    {% for name in tagnames %}
-    <span class="tag">
-      {{ name }}
-    </span>
-    {% endfor %}
-  </div>
+  <fieldset>
+    {% for field in form.visible_fields %}
+    <p>
+      <label for="id_{{ field.name }}">
+	{{ field.label }}
+      </label>
+      <br>
+      {{ field }}
+      {% if field.errors %}
+      <span class="errors">
+	{% for error in field.errors %}
+	{{ error }}
+	{% endfor %}
+      </span>
+      {% endif %}
+      <br>
+      <span class="helptext">
+	{{ field.help_text|capfirst }}
+      </span>
+      {% if field.name == "description" and tagnames|length > 10 %}
+      <div class="tags">
+	{% for name in tagnames %}
+	<a class="tag" href="#">{{ name }}</a>
+	{% endfor %}
+      </div>
+      {% endif %}
+      {% endfor %}
+  </fieldset>
   <input type="submit" value="{% trans 'add'|capfirst %}">
 </form>
 {% endblock %}
@@ -26,5 +46,6 @@
 {{ block.super }}
 <script type="text/javascript">
   Tracker.focus('id_amount');
+  Tracker.listenToTags('id_description');
 </script>
 {% endblock %}
