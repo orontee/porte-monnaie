@@ -1,14 +1,14 @@
-import datetime
-from django.utils import six
-from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
 from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.db.models import (DateField, DateTimeField,
                               FloatField, ForeignKey, IntegerField,
-                              NullBooleanField,
+                              BooleanField,
                               CharField, ManyToManyField, Model,
                               SET_NULL, Manager)
-from django.utils import timezone
+from django.utils import (six, timezone)
+from django.utils.functional import lazy
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 mark_safe_lazy = lazy(mark_safe, six.text_type)
@@ -55,7 +55,7 @@ class Expenditure(Model):
     description = CharField(_('description'), max_length=80, blank=True)
     author = ForeignKey(User, editable=False, verbose_name=_('author'))
     purse = ForeignKey(Purse, verbose_name=_('purse'))
-    valid = NullBooleanField(_('valid'), default=True, editable=False)
+    generated = BooleanField(_('generated'), default=False, editable=False)
     timestamp = DateTimeField(_('timestamp'), auto_now=True)
 
     # REMARK Should be named created_at and use auto_now_add
@@ -72,34 +72,46 @@ class Expenditure(Model):
 
 class TagManager(Manager):
     """Custom manager for tags.
+
+    Tags of length less than ``min_len`` are excluded. To allow tags
+    of any length, set ``min_len`` to ``None``.
     """
-    def update_from(self, e, stats):
+    min_len = 2
+
+    def update_from(self, e, stats=None):
         """Update tags from the given expenditure.
 
         Raise an ``AttributeError`` exception in case ``e`` hasn't the
-        needed ``purse``, ``desc`` and ``timestamp`` attributes.
+        needed ``purse``, ``desc``, ``generated`` and ``timestamp``
+        attributes.
 
+        No treatment is done for generated expenditures.
         """
-        purse = e.purse
-        desc = e.description
-        qs = Tag.objects.filter(purse__id__exact=purse.id)\
-                        .order_by('last_use')
-        names = [n.lower() for n in desc.split()]
-        for n in names:
-            try:
-                t = qs.get(name=n)
-            except Tag.DoesNotExist:
-                t = Tag(name=n, purse=purse, weight=1, last_use=e.timestamp)
-                stats[0] += 1
-            else:
-                if t.last_use < e.timestamp:
-                    t.weight += 1
-                    t.last_use = e.timestamp
-                    stats[1] += 1
-            t.save()
+        if not e.generated:
+            purse = e.purse
+            desc = e.description
+            qs = Tag.objects.filter(purse__id__exact=purse.id)\
+                            .order_by('last_use')
+            names = [n.lower() for n in desc.split()
+                     if not self.min_len or len(n) > self.min_len]
+            for n in names:
+                try:
+                    t = qs.get(name=n)
+                except Tag.DoesNotExist:
+                    t = Tag(name=n, purse=purse, weight=1,
+                            last_use=e.timestamp)
+                    if stats:
+                        stats[0] += 1
+                else:
+                    if t.last_use < e.timestamp:
+                        t.weight += 1
+                        t.last_use = e.timestamp
+                        if stats:
+                            stats[1] += 1
+                t.save()
         return stats
 
-    def get_names_for(self, purse, limit=15):
+    def get_names_for(self, purse, limit=20):
         """Return the names of the tags associated to ``purse``.
 
         The tags are ordered by weight. It returns at most ``limit``
@@ -128,3 +140,11 @@ class Tag(Model):
         """Tag metadata.
         """
         ordering = ('-weight',)
+
+
+@receiver(post_save, sender=Expenditure)
+def update_tags(sender, instance, created, raw, **kwargs):
+    """Update tags from the saved expenditure.
+    """
+    if not raw:
+        Tag.objects.update_from(instance)

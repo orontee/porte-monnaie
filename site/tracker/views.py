@@ -172,13 +172,13 @@ class TagNamesMixin(object):
     def get_context_data(self, **kwargs):
         context = super(TagNamesMixin, self).get_context_data(**kwargs)
         try:
-            purse = self.purse 
+            purse = self.purse
         except AttributeError:
             raise ImproperlyConfigured("purse attribute required"
                                        "by TagNamesMixin")
         context.update({'tagnames': Tag.objects.get_names_for(purse)})
         return context
-    
+
 
 class ExpenditureAdd(LoginRequiredMixin,
                      DefaultPurseMixin,

@@ -32,7 +32,7 @@
 	      </li>
 	      <li id="user-button" class="left menu-drop-down">
 		<a href="#" 
-		   onclick="Tracker.toggle_menu('user_menu')" 
+		   onclick="Tracker.toggleMenu('user_menu')"
 		   title="{% trans 'Manage user account' %}">
 		  {% filter force_escape %}
 		  {% firstof user.first_name user.username %}.
