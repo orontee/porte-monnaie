@@ -64,6 +64,10 @@ html, body {
     padding: 0 10px 0 0;
 }
 
+.tags {
+    width: 200px;
+}
+
 .tag {
     font-size: 10pt;
 }
