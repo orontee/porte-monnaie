@@ -199,6 +199,7 @@ class ExpenditureAdd(LoginRequiredMixin,
         for date in form.other_dates:
             self.object.pk = None
             self.object.date = date
+            self.object.generated = True
             self.object.save()
         return response
 
