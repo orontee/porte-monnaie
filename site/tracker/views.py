@@ -219,7 +219,6 @@ class ExpenditureAdd(LoginRequiredMixin,
 
 
 class ExpenditureUpdate(LoginRequiredMixin,
-                        DefaultPurseMixin,
                         ObjectPurseMixin,
                         TagNamesMixin,
                         UpdateView):
