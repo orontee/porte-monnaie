@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import (HttpResponseRedirect, Http404)
-from django.utils import timezone
 from django.views.generic import (CreateView,
                                   ListView,
                                   MonthArchiveView,
@@ -236,7 +235,7 @@ class ExpenditureUpdate(LoginRequiredMixin,
         obj = self.get_object()
         if obj.author != user or not obj.is_editable():
             raise Http404()
-        return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
+        return super(ExpenditureUpdate, self).dispatch(*args, **kwargs)
 
 
 class ExpenditureMonthList(LoginRequiredMixin,
