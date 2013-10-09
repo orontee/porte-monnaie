@@ -28,7 +28,7 @@ class Purse(Model):
     name = CharField(_('purse name'), max_length=80)
     users = ManyToManyField(User)
     description = CharField(_('description'), max_length=80, blank=True)
-    timestamp = DateTimeField(_('timestamp'), auto_now=True)
+    created = DateTimeField(_('created'), auto_now_add=True)
 
     def __unicode__(self):
         return u'Purse: {0}'.format(self.id)
@@ -43,12 +43,15 @@ class Purse(Model):
     class Meta(object):
         """Purse metadata.
         """
-        ordering = ['name', '-timestamp']
-        get_latest_by = 'timestamp'
+        ordering = ['name', '-created']
+        get_latest_by = 'created'
 
 
 class Expenditure(Model):
     """Class representing expenditures.
+
+    The attribute ``edit_delay`` controls the number of days from an
+    expenditure creation to when it won't be editable anymore.
     """
     amount = FloatField(_('amount'), default=0)
     date = DateField(_('date'), default=timezone.now().date())
@@ -56,17 +59,22 @@ class Expenditure(Model):
     author = ForeignKey(User, editable=False, verbose_name=_('author'))
     purse = ForeignKey(Purse, verbose_name=_('purse'))
     generated = BooleanField(_('generated'), default=False, editable=False)
-    timestamp = DateTimeField(_('timestamp'), auto_now=True)
+    created = DateTimeField(_('created'), auto_now_add=True)
 
-    # REMARK Should be named created_at and use auto_now_add
+    edit_delay = 2
 
     def __unicode__(self):
         return u'Expenditure: {0}'.format(self.id)
 
+    def is_editable(self):
+        """Check whether it is an editable expenditure or not.
+        """
+        return (timezone.now() - self.created).days <= self.edit_delay
+
     class Meta(object):
         """Expenditure metadata.
         """
-        ordering = ('-date', '-timestamp', 'author')
+        ordering = ('-date', '-created', 'author')
         get_latest_by = 'date'
 
 
@@ -82,7 +90,7 @@ class TagManager(Manager):
         """Update tags from the given expenditure.
 
         Raise an ``AttributeError`` exception in case ``e`` hasn't the
-        needed ``purse``, ``desc``, ``generated`` and ``timestamp``
+        needed ``purse``, ``desc``, ``generated`` and ``created``
         attributes.
 
         No treatment is done for generated expenditures.
@@ -99,13 +107,13 @@ class TagManager(Manager):
                     t = qs.get(name=n)
                 except Tag.DoesNotExist:
                     t = Tag(name=n, purse=purse, weight=1,
-                            last_use=e.timestamp)
+                            last_use=e.created)
                     if stats:
                         stats[0] += 1
                 else:
-                    if t.last_use < e.timestamp:
+                    if t.last_use < e.created:
                         t.weight += 1
-                        t.last_use = e.timestamp
+                        t.last_use = e.created
                         if stats:
                             stats[1] += 1
                 t.save()

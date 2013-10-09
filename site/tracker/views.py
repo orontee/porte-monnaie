@@ -6,7 +6,8 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
-from django.http import HttpResponseRedirect
+from django.http import (HttpResponseRedirect, Http404)
+from django.utils import timezone
 from django.views.generic import (CreateView,
                                   ListView,
                                   MonthArchiveView,
@@ -165,6 +166,20 @@ class DefaultPurseMixin(object):
         return context
 
 
+class ObjectPurseMixin(object):
+    """Extend a view with a property referring to the object purse.
+    """
+    @property
+    def purse(self):
+        try:
+            purse = self.object.purse
+        except AttributeError:
+            raise ImproperlyConfigured("object attribute required "
+                                       "ObjectPurseMixin")
+        else:
+            return purse
+
+
 class TagNamesMixin(object):
     """Extend a view context with the list of tags associated to a given
     purse.
@@ -174,7 +189,7 @@ class TagNamesMixin(object):
         try:
             purse = self.purse
         except AttributeError:
-            raise ImproperlyConfigured("purse attribute required"
+            raise ImproperlyConfigured("purse attribute required "
                                        "by TagNamesMixin")
         context.update({'tagnames': Tag.objects.get_names_for(purse)})
         return context
@@ -202,6 +217,26 @@ class ExpenditureAdd(LoginRequiredMixin,
             self.object.generated = True
             self.object.save()
         return response
+
+
+class ExpenditureUpdate(LoginRequiredMixin,
+                        DefaultPurseMixin,
+                        ObjectPurseMixin,
+                        TagNamesMixin,
+                        UpdateView):
+    """View to update expenditures.
+    """
+    model = Expenditure
+    form_class = ExpenditureForm
+    success_url = reverse_lazy('tracker:home')
+    edit_delay = 2
+
+    def dispatch(self, *args, **kwargs):
+        user = self.request.user
+        obj = self.get_object()
+        if obj.author != user or not obj.is_editable():
+            raise Http404()
+        return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
 
 
 class ExpenditureMonthList(LoginRequiredMixin,
@@ -239,13 +274,14 @@ class ExpenditureMonthList(LoginRequiredMixin,
                            .aggregate(user_amount=Sum('amount')))
         context['params'] = {'month': self.get_month(),
                              'year': self.get_year()}
+        context['edit_delay'] = Expenditure.edit_delay
         return context
 
 
-class ExpenditureYearList(LoginRequiredMixin,
-                          DefaultPurseMixin,
-                          FieldNamesMixin,
-                          YearArchiveView):
+class ExpenditureYearSummary(LoginRequiredMixin,
+                             DefaultPurseMixin,
+                             FieldNamesMixin,
+                             YearArchiveView):
     """Summary of expenditures in a year.
     """
     model = Expenditure
@@ -258,7 +294,7 @@ class ExpenditureYearList(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         """"""
-        context = super(ExpenditureYearList, self).get_context_data(**kwargs)
+        context = super(ExpenditureYearSummary, self).get_context_data(**kwargs)
         users = self.purse.users.count()
         from django.db import connection
         cursor = connection.cursor()
