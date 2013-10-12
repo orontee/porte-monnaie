@@ -40,6 +40,11 @@
       {% endfor %}
   </fieldset>
   <input type="submit" value="{% trans 'save'|capfirst %}">
+  {% if expenditure %}
+  {% trans 'or' %} <a href="{% url 'tracker:delete' expenditure.pk %}">
+    {% trans 'delete' %}
+  </a>
+  {% endif %}
 </form>
 {% endblock %}
 {% block scripts %}
