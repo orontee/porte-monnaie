@@ -1,0 +1,8 @@
+{% extends 'tracker/base.html' %}
+{% load i18n %}
+{% block content %}
+<h2>{% trans 'Page not found' %}</h2>
+<p>
+  {% blocktrans %}We're sorry, but the requested page could not be found.{% endblocktrans %}
+</p>
+{% endblock %}

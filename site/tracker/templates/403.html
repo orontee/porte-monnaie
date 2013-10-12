@@ -1,0 +1,8 @@
+{% extends 'tracker/base.html' %}
+{% load i18n %}
+{% block content %}
+<h2>{% trans 'Permission denied' %}</h2>
+<p>
+  {% blocktrans %}You are not allowed to access the requested page.{% endblocktrans %}
+</p>
+{% endblock %}
