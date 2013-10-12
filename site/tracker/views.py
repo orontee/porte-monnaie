@@ -93,7 +93,7 @@ class PurseList(LoginRequiredMixin,
                 FieldNamesMixin,
                 QueryPaginationMixin,
                 ListView):
-    """List the logged in account purses.
+    """List the purses of the logged in account.
     """
     model = Purse
     context_object_name = 'purses'
@@ -180,6 +180,39 @@ class ObjectPurseMixin(object):
             return purse
 
 
+class ObjectOwnerMixin(object):
+    """Check that the logged in account is the owner of ``object``.
+
+    To be used with SingleObjectMixin or
+    SingleObjectTemplateResponseMixin.
+    """
+    owner_field = "author"
+
+    def dispatch(self, *args, **kwargs):
+        user = self.request.user
+        obj = self.get_object()
+        if not getattr(obj, self.owner_field, None) == user:
+            raise Http404()
+        return super(ObjectOwnerMixin, self).dispatch(*args, **kwargs)
+
+
+class EditableObjectMixin(object):
+    """Check that ``object`` is editable.
+
+    To be used with SingleObjectMixin or
+    SingleObjectTemplateResponseMixin.
+    """
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        try:
+            if not obj.is_editable():
+                raise Http404()
+        except AttributeError:
+            raise ImproperlyConfigured("is_editable attribute required "
+                                       "by EditableObjectMixin")
+        return super(EditableObjectMixin, self).dispatch(*args, **kwargs)
+
+
 class TagNamesMixin(object):
     """Extend a view context with the list of tags associated to a given
     purse.
@@ -220,7 +253,8 @@ class ExpenditureAdd(LoginRequiredMixin,
 
 
 class ExpenditureDelete(LoginRequiredMixin,
-                        ObjectPurseMixin,
+                        ObjectOwnerMixin,
+                        EditableObjectMixin,
                         DeleteView):
     """View to delete expenditures.
     """
@@ -231,6 +265,8 @@ class ExpenditureDelete(LoginRequiredMixin,
 
 class ExpenditureUpdate(LoginRequiredMixin,
                         ObjectPurseMixin,
+                        ObjectOwnerMixin,
+                        EditableObjectMixin,
                         TagNamesMixin,
                         UpdateView):
     """View to update expenditures.
@@ -239,14 +275,6 @@ class ExpenditureUpdate(LoginRequiredMixin,
     context_object_name = 'expenditure'
     form_class = ExpenditureForm
     success_url = reverse_lazy('tracker:home')
-
-
-    def dispatch(self, *args, **kwargs):
-        user = self.request.user
-        obj = self.get_object()
-        if obj.author != user or not obj.is_editable():
-            raise Http404()
-        return super(ExpenditureUpdate, self).dispatch(*args, **kwargs)
 
 
 class ExpenditureMonthList(LoginRequiredMixin,
