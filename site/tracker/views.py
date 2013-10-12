@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import (HttpResponseRedirect,
-                         HttpResponseForbidden)
+                         Http404)
 from django.views.generic import (CreateView,
                                   DeleteView,
                                   ListView,
@@ -193,7 +193,7 @@ class ObjectOwnerMixin(object):
         user = self.request.user
         obj = self.get_object()
         if not getattr(obj, self.owner_field, None) == user:
-            return HttpResponseForbidden()
+            raise Http404()
         return super(ObjectOwnerMixin, self).dispatch(*args, **kwargs)
 
 
@@ -207,7 +207,7 @@ class EditableObjectMixin(object):
         obj = self.get_object()
         try:
             if not obj.is_editable():
-                return HttpResponseForbidden()
+                raise Http404()
         except AttributeError:
             raise ImproperlyConfigured("is_editable attribute required "
                                        "by EditableObjectMixin")
