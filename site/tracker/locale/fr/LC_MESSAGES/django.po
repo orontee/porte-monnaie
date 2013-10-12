@@ -119,8 +119,8 @@ msgid "Page not found"
 msgstr "Page non trouvée"
 
 #: templates/404.html:6
-msgid "Nous sommes désolé mais la page demandée n'a pu être trouvée."
-msgstr ""
+msgid "We're sorry, but the requested page could not be found."
+msgstr "Nous sommes désolé mais la page demandée n'a pu être trouvée."
 
 #: templates/500.html:4
 msgid "Server error"
@@ -131,8 +131,7 @@ msgid ""
 "There's been an error. It's been reported to the site administrators and "
 "should be fixed shortly. Thanks for your patience."
 msgstr ""
-"Une erreur est survenue. L'administrateur du site a été informé et devrait "
-"corriger rapidement. Merci pour votre patience."
+"Une erreur est survenue. L'administrateur du site a été informé et devrait corriger rapidement. Merci pour votre patience."
 
 #: templates/tracker/base.html:21
 msgid "Love without counting"
@@ -320,7 +319,7 @@ msgstr[1] "Veuillez corriger les erreurs ci-dessous."
 #: templates/tracker/expenditure_confirm_delete.html:15
 #: templates/tracker/expenditure_form.html:45
 msgid "delete"
-msgstr ""
+msgstr "supprimer"
 
 #: templates/tracker/expenditure_form.html:4
 msgid "edit expenditure"
