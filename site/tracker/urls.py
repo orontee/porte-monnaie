@@ -4,6 +4,7 @@ All the url names defined here are accessible from the tracker
 namespace.
 """
 
+from django.conf import settings
 from django.conf.urls import (patterns, url)
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.forms import (AuthenticationForm,
@@ -90,3 +91,9 @@ urlpatterns += patterns('',
                         url(regex=r'^user_activation/(?P<key>\w+)/$',
                             view=UserActivation.as_view(),
                             name='user_activation'))
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+                            (r'^500/$', 'django.views.defaults.server_error'),
+                            (r'^404/$', 'django.views.defaults.page_not_found'),
+                            (r'^403/$', 'django.views.defaults.permission_denied'))
