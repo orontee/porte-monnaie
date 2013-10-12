@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-10 01:29+0200\n"
+"POT-Creation-Date: 2013-10-13 01:14+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -92,19 +92,47 @@ msgstr "porte-monnaie"
 
 #: models.py:61
 msgid "generated"
-msgstr ""
+msgstr "généré"
 
 #: models.py:138
 msgid "name"
-msgstr ""
+msgstr "nom"
 
 #: models.py:140
 msgid "weight"
-msgstr ""
+msgstr "poids"
 
 #: models.py:141
 msgid "last use"
+msgstr "dernière utilisation"
+
+#: templates/403.html:4
+msgid "Permission denied"
+msgstr "Accès refusé"
+
+#: templates/403.html:6
+msgid "You are not allowed to access the requested page."
+msgstr "Vous n'êtes pas autorisé à accéder à la page demandée."
+
+#: templates/404.html:4
+msgid "Page not found"
+msgstr "Page non trouvée"
+
+#: templates/404.html:6
+msgid "Nous sommes désolé mais la page demandée n'a pu être trouvée."
 msgstr ""
+
+#: templates/500.html:4
+msgid "Server error"
+msgstr "Erreur du serveur"
+
+#: templates/500.html:6
+msgid ""
+"There's been an error. It's been reported to the site administrators and "
+"should be fixed shortly. Thanks for your patience."
+msgstr ""
+"Une erreur est survenue. L'administrateur du site a été informé et devrait "
+"corriger rapidement. Merci pour votre patience."
 
 #: templates/tracker/base.html:21
 msgid "Love without counting"
@@ -220,11 +248,10 @@ msgstr "Dépenses de %(date)s."
 msgid "Your expenditures can be updated the day of their creation"
 msgid_plural ""
 "Your expenditures can be updated for %(days)s days after their creation"
-msgstr[0] ""
-"Vos dépenses peuvent être mises à jour le jour de leur création"
+msgstr[0] "Vos dépenses peuvent être modifiées le jour de leur création"
 msgstr[1] ""
-"Vos dépenses peuvent être mises à jour pendant %(days)s jours après "
-"leur création"
+"Vos dépenses peuvent être modifiées pendant %(days)s jours à partir de leur "
+"création"
 
 #: templates/tracker/expenditure_archive_month.html:97
 #, python-format
@@ -267,10 +294,20 @@ msgstr "totaux"
 msgid "No expenditures found in %(date)s!"
 msgstr "Pas de dépenses en %(date)s&nbsp;!"
 
-#: templates/tracker/expenditure_form.html:4
-msgid "new expenditure"
-msgstr "nouvelle dépense"
+#: templates/tracker/expenditure_confirm_delete.html:4
+msgid "expenditure deletion"
+msgstr "suppression d'une dépense"
 
+#: templates/tracker/expenditure_confirm_delete.html:5
+#, python-format
+msgid ""
+"Confirm the deletion of the %(amount)s€ expenditure described as follows: <q>"
+"%(description)s</q>."
+msgstr ""
+"Confirmez la suppression de la dépense de %(amount)s€ avec la description: <q>"
+"%(description)s</q>."
+
+#: templates/tracker/expenditure_confirm_delete.html:8
 #: templates/tracker/expenditure_form.html:7
 #: templates/tracker/purse_form.html:7 templates/users/login.html:7
 #: templates/users/password_change_form.html:6
@@ -280,12 +317,25 @@ msgid_plural "Please correct the errors below."
 msgstr[0] "Veuillez corriger l'erreur ci-dessous."
 msgstr[1] "Veuillez corriger les erreurs ci-dessous."
 
+#: templates/tracker/expenditure_confirm_delete.html:15
+#: templates/tracker/expenditure_form.html:45
+msgid "delete"
+msgstr ""
+
+#: templates/tracker/expenditure_form.html:4
+msgid "edit expenditure"
+msgstr "édition d'une dépense"
+
 #: templates/tracker/expenditure_form.html:42
 #: templates/tracker/purse_form.html:15
 #: templates/users/password_change_form.html:12
 #: templates/users/user_form.html:15
 msgid "save"
 msgstr "enregistrer"
+
+#: templates/tracker/expenditure_form.html:44
+msgid "or"
+msgstr "ou"
 
 #: templates/tracker/footer.html:5
 msgid "page:"
