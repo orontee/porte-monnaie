@@ -8,6 +8,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import (HttpResponseRedirect, Http404)
 from django.views.generic import (CreateView,
+                                  DeleteView,
                                   ListView,
                                   MonthArchiveView,
                                   RedirectView,
@@ -218,6 +219,16 @@ class ExpenditureAdd(LoginRequiredMixin,
         return response
 
 
+class ExpenditureDelete(LoginRequiredMixin,
+                        ObjectPurseMixin,
+                        DeleteView):
+    """View to delete expenditures.
+    """
+    model = Expenditure
+    context_object_name = 'expenditure'
+    success_url = reverse_lazy('tracker:home')
+
+
 class ExpenditureUpdate(LoginRequiredMixin,
                         ObjectPurseMixin,
                         TagNamesMixin,
@@ -225,9 +236,10 @@ class ExpenditureUpdate(LoginRequiredMixin,
     """View to update expenditures.
     """
     model = Expenditure
+    context_object_name = 'expenditure'
     form_class = ExpenditureForm
     success_url = reverse_lazy('tracker:home')
-    edit_delay = 2
+
 
     def dispatch(self, *args, **kwargs):
         user = self.request.user

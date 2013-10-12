@@ -166,6 +166,20 @@ table {
     width: 100%;
 }
 
+:lang(fr) > q {
+    quotes: '«' '»' '"' '"';
+}
+
+:lang(fr) > q:before {
+    content: open-quote;
+    padding-right: 0.125em;
+}
+
+:lang(fr) > q:after {
+    content: close-quote;
+    padding-left: 0.125em;
+}
+
 tr.even {
     background: rgb(241, 241, 241);
 }
