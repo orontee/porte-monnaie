@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 <h2>{% trans 'expenditure deletion' %}</h2>
-<p>{% blocktrans with amount=expenditure.amount description=expenditure.description %}Confirm the deletion of the {{ amount }}€ expenditure described as follows: <q>{{ description }}</q>.{% endblocktrans %}
+<p>{% blocktrans with amount=expenditure.amount|floatformat:2 description=expenditure.description %}Confirm the deletion of the {{ amount }}€ expenditure described as follows: <q>{{ description }}</q>.{% endblocktrans %}
 {% if form.errors %}
 <p class="errornote">
   {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
