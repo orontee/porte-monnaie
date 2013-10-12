@@ -207,7 +207,7 @@ class EditableObjectMixin(object):
         obj = self.get_object()
         try:
             if not obj.is_editable():
-                raise HttpResponseForbidden()
+                return HttpResponseForbidden()
         except AttributeError:
             raise ImproperlyConfigured("is_editable attribute required "
                                        "by EditableObjectMixin")
