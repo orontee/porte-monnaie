@@ -26,7 +26,7 @@ class Purse(Model):
     """Class representing purses.
     """
     name = CharField(_('purse name'), max_length=80)
-    users = ManyToManyField(User)
+    users = ManyToManyField(User, verbose_name=_('users'))
     description = CharField(_('description'), max_length=80, blank=True)
     created = DateTimeField(_('created'), auto_now_add=True)
 
