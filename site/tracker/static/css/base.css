@@ -73,7 +73,7 @@ html, body {
 }
 
 a.tag:hover {
-    font-weight: bold;
+    text-decoration: underline;
 }
 
 .menu-container {
