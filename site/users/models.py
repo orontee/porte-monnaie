@@ -1,8 +1,10 @@
 import hashlib
 import random
 from django.contrib.auth import get_user_model
-from django.db.models import (CharField, ForeignKey, Manager, Model)
+from django.db.models import (CharField, DateTimeField,
+                              ForeignKey, Manager, Model)
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 User = get_user_model()
@@ -11,17 +13,19 @@ User = get_user_model()
 class RegistrationManager(Manager):
     """Manager of the ``Registration`` model.
     """
-
     def activate_user(self, key):
         """Activate the account related to key.
 
         May raise a ``Registration.DoesNotExist`` exception.
         """
-        registration = self.get(key=key)
-        user = registration.user
-        user.is_active = True
-        user.save()
-        registration.delete()
+        reg = self.get(key=key)
+        user = reg.user
+        if reg.is_valid():
+            user.is_active = True
+            user.save()
+        else:
+            user = None
+        reg.delete()
         return user
 
     def create_registration(self, user):
@@ -38,7 +42,8 @@ class Registration(Model):
     """
     user = ForeignKey(User)
     key = CharField(_('key'), max_length=40)
-
+    created = DateTimeField(_('created'), auto_now_add=True)
+    validity_delay = 30
     objects = RegistrationManager()
 
     def __unicode__(self):
@@ -54,6 +59,13 @@ class Registration(Model):
         msg = render_to_string('users/email_msg.txt', var)
         self.user.email_user(subject, msg)
 
-    class Meta:
+    def is_valid(self):
+        """Check whether it is a valid exception.
+        """
+        elapsed = (timezone.now() - self.created).days
+        return elapsed <= self.validity_delay
+
+    class Meta(object):
         verbose_name = _('account registration')
         verbose_name_plural = _('account registrations')
+
