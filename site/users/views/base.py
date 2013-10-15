@@ -53,5 +53,5 @@ class UserActivation(TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         if not context.get('key_user', None):
-            return Http404
+            raise Http404()
         return self.render_to_response(context)
