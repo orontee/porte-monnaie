@@ -33,7 +33,7 @@
       {% if field.name == "description" and tagnames|length > 10 %}
       <div class="tags">
 	{% for name in tagnames %}
-	<a class="tag" href="#">{{ name }}</a>
+	<a class="tag">{{ name }}</a>
 	{% endfor %}
       </div>
       {% endif %}
