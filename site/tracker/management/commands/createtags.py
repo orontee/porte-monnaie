@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Create or update tags'
 
     def handle(self, *args, **options):
-        qs = Expenditure.objects.order_by('timestamp')
+        qs = Expenditure.objects.order_by('created')
         stats = [0, 0]
         for e in qs:
             Tag.objects.update_from(e, stats)
