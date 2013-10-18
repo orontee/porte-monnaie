@@ -1,9 +1,9 @@
 var Tracker = {};
 
-Tracker.toggleMenu = function(id) {
+Tracker.toggleMenu = function(id){
     var node = document.getElementById(id);
-    if (node) {
-        if (node.style.visibility == 'hidden') {
+    if (node){
+        if (node.style.visibility == 'hidden'){
             node.style.visibility = 'visible';
         } else {
             node.style.visibility = 'hidden';
@@ -11,29 +11,27 @@ Tracker.toggleMenu = function(id) {
     }
 };
 
-Tracker.focus = function(id) {
+Tracker.focus = function(id){
     var node = document.getElementById(id);
-    if (node) {
+    if (node){
         node.focus();
     }
 };
 
-Tracker.listenToTags = function(id) {
+Tracker.listenToTags = function(id){
     var target = document.getElementById(id);
-    if (target) {
-        var nodes = document.getElementsByClassName('tag');
-        for (var i = 0; i < nodes.length; i++) {
-            var node = nodes[i];
-            node.onclick = function(n) {
-                return function() {
-                    var value = target.value.trimRight();
-                    if (value.length) {
-                        target.value = value + ' ' + n.innerHTML.trim();
-                    } else {
-                        target.value = n.innerHTML.trim();
-                    }
-                };
-            }(node);
+    var nodes = document.getElementsByClassName('tag');
+    var listener = function(event){
+        var name = event.target.innerHTML.trim();
+        var value = target.value.trimRight();
+        if (value.length){
+            target.value = value + ' ' + name;
+        } else {
+            target.value = name;
         }
+    };
+    for (var i = 0; i < nodes.length; i++){
+        var node = nodes[i];
+        node.addEventListener("click", listener);
     }
 };
