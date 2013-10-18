@@ -129,7 +129,7 @@ class TagManager(Manager):
         qs = purse.tag_set.only('name').order_by('-weight')
         if limit is not None:
             qs = qs[:limit]
-        return qs.values_list('name', flat=True)
+        return sorted(qs.values_list('name', flat=True))
 
 
 class Tag(Model):
