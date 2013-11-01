@@ -6,8 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
-from django.http import (HttpResponseRedirect,
-                         Http404)
+from django.http import HttpResponseRedirect
 from django.views.generic import (CreateView,
                                   DeleteView,
                                   ListView,
@@ -18,48 +17,15 @@ from django.views.generic import (CreateView,
 from tracker.models import (Expenditure, Purse, Tag)
 from tracker.forms import ExpenditureForm
 from tracker.utils import dictfetchall
+from tracker.views.mixins import (FieldNamesMixin,
+                                  QueryPaginationMixin,
+                                  QueryFilterMixin,
+                                  ObjectOwnerMixin,
+                                  EditableObjectMixin)
 from users.views.mixins import LoginRequiredMixin
 from users.views.base import UserChange as UserChangeOrig
 
 User = get_user_model()
-
-
-class FieldNamesMixin(object):
-    """Extends a view context with the ``field_names`` attribute.
-    """
-    def get_context_data(self, **kwargs):
-        context = super(FieldNamesMixin, self).get_context_data(**kwargs)
-        try:
-            context['field_names'] = self.field_names
-        except AttributeError:
-            raise ImproperlyConfigured("field_names attribute "
-                                       "required by FieldNamesMixin")
-        return context
-
-
-class QueryPaginationMixin(object):
-    """Returns the number of items to paginate by, or None for no
-    pagination.
-
-    Query parameters are search first.
-    """
-    paginate_by = 15
-
-    def get_paginate_by(self, queryset):
-        if 'paginate_by' in self.request.GET:
-            try:
-                paginate_by = int(self.request.GET['paginate_by'])
-            except ValueError:
-                paginate_by = self.paginate_by
-                # REMARK No pagination is not supported
-        else:
-            paginate_by = self.paginate_by
-        return paginate_by
-
-    def get_context_data(self, **kwargs):
-        context = super(QueryPaginationMixin, self).get_context_data(**kwargs)
-        context.update({'path_info': self.request.path_info})
-        return context
 
 
 class HomeView(RedirectView):
@@ -181,39 +147,6 @@ class ObjectPurseMixin(object):
             return purse
 
 
-class ObjectOwnerMixin(object):
-    """Check that the logged in account is the owner of ``object``.
-
-    To be used with SingleObjectMixin or
-    SingleObjectTemplateResponseMixin.
-    """
-    owner_field = "author"
-
-    def dispatch(self, *args, **kwargs):
-        user = self.request.user
-        obj = self.get_object()
-        if not getattr(obj, self.owner_field, None) == user:
-            raise Http404()
-        return super(ObjectOwnerMixin, self).dispatch(*args, **kwargs)
-
-
-class EditableObjectMixin(object):
-    """Check that ``object`` is editable.
-
-    To be used with SingleObjectMixin or
-    SingleObjectTemplateResponseMixin.
-    """
-    def dispatch(self, *args, **kwargs):
-        obj = self.get_object()
-        try:
-            if not obj.is_editable():
-                raise Http404()
-        except AttributeError:
-            raise ImproperlyConfigured("is_editable attribute required "
-                                       "by EditableObjectMixin")
-        return super(EditableObjectMixin, self).dispatch(*args, **kwargs)
-
-
 class TagNamesMixin(object):
     """Extend a view context with the list of tags associated to a given
     purse.
@@ -278,9 +211,47 @@ class ExpenditureUpdate(LoginRequiredMixin,
     success_url = reverse_lazy('tracker:home')
 
 
+class ExpenditureList(LoginRequiredMixin,
+                      DefaultPurseMixin,
+                      FieldNamesMixin,
+                      QueryPaginationMixin,
+                      ListView):
+    """List of latest expenditures.
+    """
+    model = Expenditure
+    context_object_name = 'expenditures'
+    field_names = ['date', 'amount', 'author', 'description']
+    allow_empty = True
+    allow_future = True
+
+    def get_queryset(self):
+        qs = super(ExpenditureList, self).get_queryset()
+        qs = qs.filter(purse=self.purse)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        """Extends the context with view's specific data.
+
+        Table field names and various data computed from the
+        expenditures amounts are added.
+        """
+        context = super(ExpenditureMonthList, self).get_context_data(**kwargs)
+        user = self.request.user if self.request else None
+        if user:
+            qs = self.object_list.all()
+            context.update(qs.aggregate(total_amount=Sum('amount')))
+            context.update(qs.filter(author_id__exact=user.id)
+                           .aggregate(user_amount=Sum('amount')))
+        context['params'] = {'month': self.get_month(),
+                             'year': self.get_year()}
+        context['edit_delay'] = Expenditure.edit_delay
+        return context
+
+
 class ExpenditureMonthList(LoginRequiredMixin,
                            DefaultPurseMixin,
                            FieldNamesMixin,
+                           QueryFilterMixin,
                            QueryPaginationMixin,
                            MonthArchiveView):
     """List of expenditures in a month.
@@ -314,6 +285,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
         context['params'] = {'month': self.get_month(),
                              'year': self.get_year()}
         context['edit_delay'] = Expenditure.edit_delay
+
         return context
 
 
@@ -333,7 +305,8 @@ class ExpenditureYearSummary(LoginRequiredMixin,
 
     def get_context_data(self, **kwargs):
         """"""
-        context = super(ExpenditureYearSummary, self).get_context_data(**kwargs)
+        context = super(ExpenditureYearSummary,
+                        self).get_context_data(**kwargs)
         users = self.purse.users.count()
         from django.db import connection
         cursor = connection.cursor()

@@ -111,7 +111,8 @@ def do_pagination(context):
             return this_page.format(1)
         delta = 2
         elements = []
-        template = u"""<a href='{url}' class='page-number' title='{msg}'>{number}</a>"""
+        template = u"""<a href='{url}' class='page-number'"""
+        template += u"""title='{msg}'>{number}</a>"""
         msg = _('Jump to page {0}')
 
         def add_element(i):

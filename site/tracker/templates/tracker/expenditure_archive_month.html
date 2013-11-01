@@ -59,6 +59,9 @@
     {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
     {% endif %}
   </p>
+<div class="right">
+  {% include 'tracker/filter.html' %}
+</div>
   <table id="expenditures-table">
     <caption class="small">
       {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}Expenditures of {{ date }}.{% endblocktrans %}
@@ -95,11 +98,6 @@
   {% else %}
   <p>
     {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}No expenditures found for {{ date }}!{% endblocktrans %}
-    {% if is_current %}
-    <a href="{% url 'tracker:add' %}">
-      {% blocktrans %}Add a new expenditure...{% endblocktrans %}
-    </a>
-    {% endif %}
   </p>
   {% endif %}
 </div>
