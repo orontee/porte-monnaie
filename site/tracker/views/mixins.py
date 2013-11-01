@@ -4,6 +4,7 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404
 from django.utils.translation import ungettext
+from django.utils.translation import ugettext_lazy as _
 
 
 class FieldNamesMixin(object):
@@ -55,20 +56,28 @@ class QueryFilterMixin(object):
     filter_ignore_case = True
     filter_attr = "description"
 
+    def has_filter(self):
+        """Check whether the query paramater named filter is non empty.
+        """
+        return ((len(self.request.GET['filter']) != 0)
+                if 'filter' in self.request.GET
+                else False)
+
     def get_filter_keywords(self):
         """Return the filter operands found in the query parameters.
         """
         return (self.request.GET['filter'].split(' ')
-                if 'filter' in self.request.GET
+                if self.has_filter()
                 else list())
 
     def get_context_data(self, **kwargs):
         """Extend the context data with the current filter.
         """
         context = super(QueryFilterMixin, self).get_context_data(**kwargs)
-        context.update({'filter': ' '.join(self.get_filter_keywords())})
-        kws = self.get_filter_keywords()
-        if len(kws):
+        context.update({'filter_description': _('Apply filter')})
+        if self.has_filter():
+            kws = self.get_filter_keywords()
+            context.update({'filter': ' '.join(kws)})
             last = kws[-1:][0]
             others = ', '.join(kws[:-1])
             text = ungettext('keyword %(last)s',

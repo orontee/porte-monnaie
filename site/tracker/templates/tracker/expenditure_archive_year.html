@@ -4,19 +4,10 @@
 {% is_current_year year as is_current %}
 <div id="main">
   <ul id="toolbar" class="left small menu-container">
-    <li class="left menu-drop-down">
-      <a href="#" 
-	 onclick="Tracker.toggleMenu('browse-menu')"
-	 title="{% trans 'Browse other months expenditures' %}">
+    <li class="left">
+      <a id="browse" href="{% current_month_url %}">
 	{% trans 'browse'|capfirst %}
       </a>
-      <ul id="browse-menu" class="menu">
-	<li class="left">
-	  <a href="{% current_month_url %}">
-	    {% trans 'current month'|capfirst %}
-	  </a>
-	</li>
-      </ul>
     </li>
     <li class="left">
       <a id="add-expenditure" href="{% url 'tracker:add' %}"

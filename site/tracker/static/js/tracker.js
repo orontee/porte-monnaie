@@ -32,6 +32,22 @@ Tracker.listenToTags = function(id){
     };
     for (var i = 0; i < nodes.length; i++){
         var node = nodes[i];
-        node.addEventListener("click", listener);
+        node.addEventListener('click', listener);
     }
+};
+
+Tracker.listenToFilter = function(id){
+    var node = document.getElementById(id);
+    var listener = function(event){
+        var kept = [];
+        var names = node.className.split(' ');
+        for (var i = 0; i < names.length; i++) {
+            if (names[i] !== 'description-active') {
+                kept.push(names[i]);
+            }
+        }
+        node.className = kept.join(' ');
+        node.value = '';
+    }
+    node.addEventListener('focus', listener);
 };

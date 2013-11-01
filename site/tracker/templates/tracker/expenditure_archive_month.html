@@ -5,48 +5,31 @@
 {% is_current_month next_month as is_next_current %}
 <div id="main">
   <ul id="toolbar" class="left small menu-container">
-    <li class="left menu-drop-down">
-      <a href="#" 
-	 onclick="Tracker.toggleMenu('browse-menu')"
-	 title="{% trans 'Browse other months expenditures' %}">
-	{% trans 'browse'|capfirst %}
-      </a>
-      <ul id="browse-menu" class="menu">
-	<li class="left">
-	  <a href="{% previous_month_url %}"
-	     title="{% trans 'View previous month expenditures' %}">
-	    {% trans 'previous month'|capfirst %}
-	  </a>
-	</li>
-	{% if not is_next_current %}
-	<li class="left">
-	  <a href="{% next_month_url %}"
-	     title="{% trans 'View next month expenditures' %}">
-	    {% trans 'next month'|capfirst %}
-	  </a>
-	</li>
-	{% endif %}
-	{% if not is_current %}
-	<li class="left">
-	  <a href="{% current_month_url %}"
-	     title="{% trans 'View current month expenditures' %}">
-	    {% trans 'current month'|capfirst %}
-	  </a>
-	</li>
-	{% endif %}
-	<li class="left">
-	  <a href="{% current_year_url %}">
-	    {% trans 'Yearly report'|capfirst %}
-	  </a>
-	</li>
-      </ul>
-    </li>
     <li class="left">
       <a id="add-expenditure" href="{% url 'tracker:add' %}"
 	 title="{% trans 'Add a new expenditure' %}">
 	{% trans 'add'|capfirst %}
       </a>
     </li>
+    <li class="left">
+      <a id="previous" href="{% previous_month_url %}"
+	 title="{% trans 'View previous month expenditures' %}">
+	{% trans 'previous'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="next" href="{% next_month_url %}"
+	 title="{% trans 'View next month expenditures' %}">
+	{% trans 'next'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="report" href="{% current_year_url %}"
+	 title="{% trans 'View yearly report' %}">
+	{% trans 'report'|capfirst %}
+      </a>
+    </li>
+    {% include 'tracker/filter.html' %}
   </ul>
   {% if expenditures %}
   <p>
@@ -59,9 +42,6 @@
     {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
     {% endif %}
   </p>
-<div class="right">
-  {% include 'tracker/filter.html' %}
-</div>
   <table id="expenditures-table">
     <caption class="small">
       {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}Expenditures of {{ date }}.{% endblocktrans %}
@@ -105,6 +85,11 @@
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-    Tracker.focus('add-expenditure');
+  {% if filter %}
+  Tracker.focus('id_filter');
+  {% else %}
+  Tracker.focus('add-expenditure');
+  Tracker.listenToFilter('id_filter');
+  {% endif %}
 </script>
 {% endblock %}

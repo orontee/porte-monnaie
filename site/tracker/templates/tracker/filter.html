@@ -1,6 +1,8 @@
 {% load i18n %}
 <form id="filter" action=""
       method="GET" class="small">
-  <input type="text" name="filter" value="{{ filter }}"
-	 title="{% trans 'Apply filter' %}"/>
+  <input id="id_filter" type="text" name="filter"
+	 class="small{% if not filter %} description-active{% endif %}"
+	 title="{% trans 'Apply filter' %}"
+	 value="{{ filter|default:filter_description }}" />
 </form>
