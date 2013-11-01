@@ -48,6 +48,7 @@ Tracker.listenToFilter = function(id){
         }
         node.className = kept.join(' ');
         node.value = '';
+        node.removeEventListener('focus', listener);
     }
     node.addEventListener('focus', listener);
 };
