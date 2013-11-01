@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-02 00:24+0100\n"
+"POT-Creation-Date: 2013-11-02 00:46+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -78,7 +78,7 @@ msgstr ""
 msgid "created"
 msgstr "crée le"
 
-#: models.py:56 templates/tracker/expenditure_archive_year.html:37
+#: models.py:56 templates/tracker/expenditure_archive_year.html:38
 msgid "amount"
 msgstr "montant"
 
@@ -176,12 +176,12 @@ msgid "Powered by %(link)s"
 msgstr "Propulsé par %(link)s"
 
 #: templates/tracker/expenditure_archive_month.html:10
-#: templates/tracker/expenditure_archive_year.html:14
+#: templates/tracker/expenditure_archive_year.html:15
 msgid "Add a new expenditure"
 msgstr "Ajouter une dépense"
 
 #: templates/tracker/expenditure_archive_month.html:11
-#: templates/tracker/expenditure_archive_year.html:15
+#: templates/tracker/expenditure_archive_year.html:16
 msgid "add"
 msgstr "ajouter"
 
@@ -227,7 +227,7 @@ msgid "You authored %(user)s€."
 msgstr "Dont %(user)s€ sont à votre initiative."
 
 #: templates/tracker/expenditure_archive_month.html:47
-#: templates/tracker/expenditure_archive_year.html:29
+#: templates/tracker/expenditure_archive_year.html:30
 #, python-format
 msgid "Expenditures of %(date)s."
 msgstr "Dépenses de %(date)s."
@@ -253,41 +253,45 @@ msgid "No expenditures found for %(date)s!"
 msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
 
 #: templates/tracker/expenditure_archive_year.html:9
+msgid "View current month expenditures"
+msgstr "Voir les dépenses du mois en cours"
+
+#: templates/tracker/expenditure_archive_year.html:10
 msgid "browse"
 msgstr "parcourir"
 
-#: templates/tracker/expenditure_archive_year.html:22
+#: templates/tracker/expenditure_archive_year.html:23
 msgid "The following table outlines your expenditures for the current year."
 msgstr ""
 "La table suivante donne un aperçu de vos dépenses au cours de cette année."
 
-#: templates/tracker/expenditure_archive_year.html:24
+#: templates/tracker/expenditure_archive_year.html:25
 #, python-format
 msgid "The following table outlines your expenditures for %(date)s."
 msgstr "La table suivante donne un aperçu de vos dépenses de %(date)s."
 
-#: templates/tracker/expenditure_archive_year.html:34
+#: templates/tracker/expenditure_archive_year.html:35
 msgid "month"
 msgstr "mois"
 
-#: templates/tracker/expenditure_archive_year.html:41
+#: templates/tracker/expenditure_archive_year.html:42
 msgid "average"
 msgstr "moyenne"
 
-#: templates/tracker/expenditure_archive_year.html:44
+#: templates/tracker/expenditure_archive_year.html:45
 msgid "delta"
 msgstr "écart"
 
-#: templates/tracker/expenditure_archive_year.html:72
+#: templates/tracker/expenditure_archive_year.html:73
 msgid "totals"
 msgstr "totaux"
 
-#: templates/tracker/expenditure_archive_year.html:90
+#: templates/tracker/expenditure_archive_year.html:91
 #, python-format
 msgid "No expenditures found in %(date)s!"
 msgstr "Pas de dépenses en %(date)s&nbsp;!"
 
-#: templates/tracker/expenditure_archive_year.html:92
+#: templates/tracker/expenditure_archive_year.html:93
 msgid "Add a new expenditure..."
 msgstr "Ajouter une dépense..."
 
@@ -473,9 +477,6 @@ msgstr[1] ""
 
 #~ msgid "next month"
 #~ msgstr "mois suivant"
-
-#~ msgid "View current month expenditures"
-#~ msgstr "Voir les dépenses du mois en cours"
 
 #~ msgid "current month"
 #~ msgstr "mois en cours"
