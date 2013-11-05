@@ -5,6 +5,6 @@
 	 class="small{% if not filter %} description-active{% endif %}"
 	 value="{{ filter|default:filter_description }}"/>
   <input type="submit"
-	 title="{% trans 'Apply filter' %}"
+	 title="{{ filter_description }}"
 	 value="{% trans 'filter'|capfirst %}">
 </form>
