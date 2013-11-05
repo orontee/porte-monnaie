@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-04 21:38+0100\n"
+"POT-Creation-Date: 2013-11-05 21:50+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -338,7 +338,7 @@ msgstr "enregistrer"
 msgid "or"
 msgstr "ou"
 
-#: templates/tracker/filter.html:8 views/mixins.py:77
+#: templates/tracker/filter.html:8 views/mixins.py:58
 msgid "Apply filter"
 msgstr "Appliquer le filtre"
 
@@ -469,7 +469,11 @@ msgstr ""
 msgid "Jump to page {0}"
 msgstr "Aller à la page {0}"
 
-#: views/mixins.py:83
+#: views/main.py:267
+msgid "Filter expenditures"
+msgstr "Filtrer les dépenses"
+
+#: views/mixins.py:84
 #, python-format
 msgid "keyword %(last)s"
 msgid_plural "keywords %(others)s and %(last)s"

@@ -17,6 +17,7 @@ from django.views.generic import (CreateView,
 from tracker.models import (Expenditure, Purse, Tag)
 from tracker.forms import ExpenditureForm
 from tracker.utils import dictfetchall
+from django.utils.translation import ugettext_lazy as _
 from tracker.views.mixins import (FieldNamesMixin,
                                   QueryPaginationMixin,
                                   QueryFilterMixin,
@@ -263,6 +264,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
     month_format = '%m'
     allow_empty = True
     allow_future = True
+    filter_description = _('Filter expenditures')
 
     def get_queryset(self):
         qs = super(ExpenditureMonthList, self).get_queryset()

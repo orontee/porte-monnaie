@@ -55,6 +55,7 @@ class QueryFilterMixin(object):
     """
     filter_ignore_case = True
     filter_attr = "description"
+    filter_description = _('Apply filter')
 
     def has_filter(self):
         """Check whether the query paramater named filter is non empty.
@@ -74,7 +75,7 @@ class QueryFilterMixin(object):
         """Extend the context data with the current filter.
         """
         context = super(QueryFilterMixin, self).get_context_data(**kwargs)
-        context.update({'filter_description': _('Apply filter')})
+        context.update({'filter_description': self.filter_description})
         if self.has_filter():
             kws = self.get_filter_keywords()
             context.update({'filter': ' '.join(kws)})
