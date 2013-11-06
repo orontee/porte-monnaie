@@ -5,15 +5,27 @@
 <div id="main">
   <ul id="toolbar" class="left small menu-container">
     <li class="left">
-      <a id="browse" href="{% current_month_url %}"
-	 title="{% trans 'View current month expenditures' %}">
-	{% trans 'browse'|capfirst %}
-      </a>
-    </li>
-    <li class="left">
       <a id="add-expenditure" href="{% url 'tracker:add' %}"
 	 title="{% trans 'Add a new expenditure' %}">
 	{% trans 'add'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="previous" href="{% previous_year_url %}"
+	 title="{% trans 'View previous report' %}">
+	{% trans 'previous'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="next" href="{% next_year_url %}"
+	 title="{% trans 'View next report' %}">
+	{% trans 'next'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="browse" href="{% current_month_url %}"
+	 title="{% trans 'View current month expenditures' %}">
+	{% trans 'browse'|capfirst %}
       </a>
     </li>
   </ul>
@@ -89,9 +101,6 @@
   {% else %}
   <p>
     {% blocktrans with date=year|date:'Y' %}No expenditures found in {{ date }}!{% endblocktrans %}
-    <a href="{% url 'tracker:add' %}">
-      {% blocktrans %}Add a new expenditure...{% endblocktrans %}
-    </a>
   </p>
   {% endif %}
 </div>

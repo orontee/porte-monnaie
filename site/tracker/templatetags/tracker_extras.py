@@ -59,6 +59,20 @@ def do_month_url(month):
                                         month, 1))
 
 
+@register.simple_tag(name='previous_year_url', takes_context=True)
+def do_previous_year_url(context):
+    """Return the archive url for the previous year.
+    """
+    return do_summary_url(context['previous_year'])
+
+
+@register.simple_tag(name='next_year_url', takes_context=True)
+def do_next_year_url(context):
+    """Return the archive url for the next year.
+    """
+    return do_summary_url(context['next_year'])
+
+
 @register.simple_tag(name='current_year_url')
 def do_current_year_url():
     """Return the summary url for the current year.
