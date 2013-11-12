@@ -74,7 +74,9 @@ class PurseList(LoginRequiredMixin,
 class UserPurseMixin(object):
     """Set choices for the attribute whose name is ``purse_field_name``.
 
-    The value set is the list of purses of the logged account.
+    The value set is the list of purses of the logged account. The
+    initial value rendered in an unbounded form is read from the
+    ``purse`` attribute if it exists.
     """
     purse_field_name = 'purse'
 
@@ -88,6 +90,10 @@ class UserPurseMixin(object):
         else:
             f = form.fields.get(self.purse_field_name)
             f.choices = [(p.id, p.name) for p in purses]
+            try:
+                f.initial = self.purse
+            except AttributeError:
+                pass
             return form
 
 
@@ -120,7 +126,8 @@ class DefaultPurseMixin(object):
 
     def dispatch(self, *args, **kwargs):
         user = self.request.user
-        if not Purse.objects.filter(users__pk=user.pk).exists():
+        purses = Purse.objects.filter(users__pk=user.pk)
+        if not purses.exists():
             return HttpResponseRedirect(
                 reverse_lazy('tracker:purse_creation'))
         if self.purse is None:
@@ -164,6 +171,7 @@ class TagNamesMixin(object):
 
 
 class ExpenditureAdd(LoginRequiredMixin,
+                     UserPurseMixin,
                      DefaultPurseMixin,
                      TagNamesMixin,
                      CreateView):
@@ -177,7 +185,7 @@ class ExpenditureAdd(LoginRequiredMixin,
         """If the form is valid, save the associated model instances.
         """
         form.instance.author = self.request.user
-        form.instance.purse = self.purse
+        form.instance.purse = form.instance.purse or self.purse
         response = super(ExpenditureAdd, self).form_valid(form)
         for date in form.other_dates:
             self.object.pk = None

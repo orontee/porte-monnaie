@@ -12,7 +12,7 @@ register = template.Library()
 
 @register.assignment_tag(name='is_current_month')
 def check_date_month(date):
-    """`True` if and only if the `date` belongs to current month.
+    """``True`` if and only if the ``date`` belongs to current month.
     """
     try:
         return datetime.date.today().month == date.month
@@ -22,7 +22,7 @@ def check_date_month(date):
 
 @register.assignment_tag(name='is_current_year')
 def check_date_year(date):
-    """`True` if and only if `date` belongs to current year.
+    """``True`` if and only if ``date`` belongs to current year.
     """
     try:
         return datetime.date.today().year == date.year
@@ -117,8 +117,8 @@ def do_pagination(context):
         page = context['page_obj']
         url = context['path_info']
     except KeyError:
-        raise ImproperlyConfigured("The pagination tag must be used with "
-                                   "the QueryPaginationMixin mixin")
+        raise ImproperlyConfigured('The pagination tag must be used with '
+                                   'the QueryPaginationMixin mixin')
     else:
         this_page = '<span class=\'current-page\'>{0}</span>'
         if is_paginated is False:
@@ -152,3 +152,22 @@ def do_pagination(context):
         for i in range(visible, paginator.num_pages + 1):
             add_element(i)
         return ' '.join(elements)
+
+@register.assignment_tag(name='check_purse_choice', takes_context=True)
+def check_purse_choice(context, field_name='purse'):
+    """Check whether the context form has a field named ``field_name``
+    with multiple choice.
+    """
+    try:
+        form = context['form']
+    except AttributeError:
+        raise ImproperlyConfigured('The has_purse_choice tag must be used with '
+                                   'the FormMixin mixin')
+    try:
+        choices = form.fields[field_name].choices
+    except KeyError:
+        choices = False
+    except AttributeError:
+        raise ImproperlyConfigured('The check_purse_choice tag expects a {0} '
+                                   'field with choices'.format(field_name))
+    return choices and len(choices) > 1

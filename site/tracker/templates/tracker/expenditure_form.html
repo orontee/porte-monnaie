@@ -11,34 +11,7 @@
       action=""
       method="post">{% csrf_token %}
   {% include "tracker/form_errors.html" %}
-  <fieldset>
-    {% for field in form.visible_fields %}
-    <p>
-      <label for="id_{{ field.name }}">
-	{{ field.label }}
-      </label>
-      <br>
-      {{ field }}
-      {% if field.errors %}
-      <span class="errors">
-	{% for error in field.errors %}
-	{{ error }}
-	{% endfor %}
-      </span>
-      {% endif %}
-      <br>
-      <span class="helptext">
-	{{ field.help_text|capfirst }}
-      </span>
-      {% if field.name == "description" and tagnames|length > 10 %}
-      <div class="tags">
-	{% for name in tagnames %}
-	<a class="tag">{{ name }}</a>
-	{% endfor %}
-      </div>
-      {% endif %}
-      {% endfor %}
-  </fieldset>
+  {% include "tracker/fieldset.html" %}
   <input type="submit" value="{% trans 'save'|capfirst %}">
   {% if expenditure %}
   {% trans 'or' %} <a href="{% url 'tracker:delete' expenditure.pk %}">
