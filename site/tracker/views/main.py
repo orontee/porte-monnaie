@@ -149,7 +149,7 @@ class ObjectPurseMixin(object):
         try:
             purse = self.object.purse
         except AttributeError:
-            raise ImproperlyConfigured("object attribute required "
+            raise ImproperlyConfigured("object attribute required by"
                                        "ObjectPurseMixin")
         else:
             return purse
@@ -207,6 +207,7 @@ class ExpenditureDelete(LoginRequiredMixin,
 
 
 class ExpenditureUpdate(LoginRequiredMixin,
+                        UserPurseMixin,
                         ObjectPurseMixin,
                         ObjectOwnerMixin,
                         EditableObjectMixin,
