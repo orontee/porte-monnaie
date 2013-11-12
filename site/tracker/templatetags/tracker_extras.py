@@ -3,6 +3,7 @@
 
 import datetime
 from django import template
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
@@ -171,3 +172,14 @@ def check_purse_choice(context, field_name='purse'):
         raise ImproperlyConfigured('The check_purse_choice tag expects a {0} '
                                    'field with choices'.format(field_name))
     return choices and len(choices) > 1
+
+@register.simple_tag(takes_context=True)
+def email_admin(context):
+    """Insert the email admin.
+    """
+    try:
+        name, email = settings.ADMINS[0]
+    except KeyError:
+        raise ImproperlyConfigured('The email_admin tag expects a non-empty '
+                                   'ADMINS setting')
+    return '<a href="mailto:{0}">{1}</a>'.format(email, name)
