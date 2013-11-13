@@ -30,7 +30,7 @@ class Purse(Model):
     description = CharField(_('description'), max_length=80, blank=True)
     created = DateTimeField(_('created'), auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Purse: {0}'.format(self.id)
 
     def usernames(self):
@@ -63,7 +63,7 @@ class Expenditure(Model):
 
     edit_delay = 2
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Expenditure: {0}'.format(self.id)
 
     def is_editable(self):
@@ -141,7 +141,7 @@ class Tag(Model):
     last_use = DateTimeField(_('last use'))
     objects = TagManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Tag: {0}'.format(self.id)
 
     class Meta(object):
