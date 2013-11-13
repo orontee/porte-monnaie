@@ -1,8 +1,5 @@
-{% load tracker_extras %}
 <fieldset>
-  {% check_purse_choice purse_field_name|default:"purse" as has_purse_choice %}
-  {% for field in form.visible_fields %}
-  {% if field.name != purse_field_name|default:"purse" or has_purse_choice %}
+  {% for field in form %}
   <p>
     <label for="id_{{ field.name }}">
       {{ field.label }}
@@ -20,12 +17,13 @@
       {{ field.help_text|capfirst }}
     </span>
     {% if tagnames and field.name == "description" and tagnames|length > 10 %}
-    <div class="tags">
-      {% for name in tagnames %}
-      <a class="tag">{{ name }}</a>
-      {% endfor %}
-    </div>
-    {% endif %}
+  </p>
+  <div class="tags">
+    {% for name in tagnames %}
+    <a class="tag">{{ name }}</a>
+    {% endfor %}
+  </div>
+  {% else %}
   </p>
   {% endif %}
   {% endfor %}

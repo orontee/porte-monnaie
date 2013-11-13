@@ -11,9 +11,7 @@
       action="" 
       method="post">
   {% csrf_token %}
-  {% with purse_field_name="default_purse" %}
   {% include "tracker/fieldset.html" %}
-  {% endwith %}
   <input type="submit" value="{% trans 'save'|capfirst %}">
 </form>
 {% endblock %}

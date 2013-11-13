@@ -94,7 +94,9 @@ class UserPurseMixin(object):
                 f.initial = self.purse
             except AttributeError:
                 pass
-            return form
+        return form
+
+    # TODO Do not save when the purse is not a user purse
 
 
 class UserChange(UserPurseMixin, UserChangeOrig):
@@ -120,7 +122,7 @@ class DefaultPurseMixin(object):
                 purse = user.default_purse
             except AttributeError:
                 raise ImproperlyConfigured("User model does not define a "
-                                           "purse attribute")
+                                           "purse_default attribute")
             else:
                 return purse
 
@@ -134,11 +136,6 @@ class DefaultPurseMixin(object):
             return HttpResponseRedirect(
                 reverse_lazy('tracker:user_change'))
         return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(DefaultPurseMixin, self).get_context_data(**kwargs)
-        context.update({'shared_purse': self.purse.users.count() > 1})
-        return context
 
 
 class ObjectPurseMixin(object):
@@ -171,7 +168,6 @@ class TagNamesMixin(object):
 
 
 class ExpenditureAdd(LoginRequiredMixin,
-                     UserPurseMixin,
                      DefaultPurseMixin,
                      TagNamesMixin,
                      CreateView):
@@ -185,7 +181,7 @@ class ExpenditureAdd(LoginRequiredMixin,
         """If the form is valid, save the associated model instances.
         """
         form.instance.author = self.request.user
-        form.instance.purse = form.instance.purse or self.purse
+        form.instance.purse = self.purse
         response = super(ExpenditureAdd, self).form_valid(form)
         for date in form.other_dates:
             self.object.pk = None

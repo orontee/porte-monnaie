@@ -154,25 +154,6 @@ def do_pagination(context):
             add_element(i)
         return ' '.join(elements)
 
-@register.assignment_tag(name='check_purse_choice', takes_context=True)
-def check_purse_choice(context, field_name='purse'):
-    """Check whether the context form has a field named ``field_name``
-    with multiple choice.
-    """
-    try:
-        form = context['form']
-    except AttributeError:
-        raise ImproperlyConfigured('The has_purse_choice tag must be used with '
-                                   'the FormMixin mixin')
-    try:
-        choices = form.fields[field_name].choices
-    except KeyError:
-        choices = False
-    except AttributeError:
-        raise ImproperlyConfigured('The check_purse_choice tag expects a {0} '
-                                   'field with choices'.format(field_name))
-    return choices and len(choices) > 1
-
 @register.simple_tag(takes_context=True)
 def email_admin(context):
     """Insert the email admin.
