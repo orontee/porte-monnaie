@@ -203,7 +203,6 @@ class ExpenditureDelete(LoginRequiredMixin,
 
 
 class ExpenditureUpdate(LoginRequiredMixin,
-                        UserPurseMixin,
                         ObjectPurseMixin,
                         ObjectOwnerMixin,
                         EditableObjectMixin,
