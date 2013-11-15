@@ -138,6 +138,11 @@ class DefaultPurseMixin(object):
         return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
 
 
+    def get_context_data(self, **kwargs):
+        context = super(DefaultPurseMixin, self).get_context_data(**kwargs)
+        context.update({'shared_purse': self.purse.users.count() > 1})
+        return context
+
 class ObjectPurseMixin(object):
     """Extend a view with a property referring to the object purse.
     """
