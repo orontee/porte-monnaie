@@ -44,9 +44,10 @@ class Registration(Model):
     key = CharField(_('key'), max_length=40)
     created = DateTimeField(_('created'), auto_now_add=True)
     validity_delay = 30
+
     objects = RegistrationManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return u'Account registration: {0}'.format(self.user)
 
     def send(self):
