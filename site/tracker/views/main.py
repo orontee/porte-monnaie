@@ -274,6 +274,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
     allow_empty = True
     allow_future = True
     filter_description = _('Filter expenditures')
+    template_name = 'tracker/expenditure_month_list.html'
 
     def get_queryset(self):
         qs = super(ExpenditureMonthList, self).get_queryset()
@@ -300,6 +301,49 @@ class ExpenditureMonthList(LoginRequiredMixin,
         return context
 
 
+class ExpenditureMonthStats(LoginRequiredMixin,
+                            DefaultPurseMixin,
+                            MonthArchiveView):
+    """Statisticts on expenditures in a month.
+    """
+    model = Expenditure
+    make_object_list = True
+    context_object_name = 'expenditures'
+    date_field = 'date'
+    month_format = '%m'
+    allow_empty = True
+    allow_future = True
+    template_name = 'tracker/expenditure_month_stats.html'
+
+    def get_context_data(self, **kwargs):
+        """Extend the view context with statistics on the month expenditures.
+        """
+        context = super(ExpenditureMonthStats,
+                        self).get_context_data(**kwargs)
+        from django.db import connection
+        cursor = connection.cursor()
+        cursor.execute('SELECT t.name, t.weight, '
+                       'sum(CASE WHEN e.author_id=%s THEN e.amount ELSE 0 END) AS amount, '
+                       'sum(e.amount) AS total '
+                       'FROM tracker_tag AS t '
+                       'LEFT JOIN tracker_expenditure AS e '
+                       'ON e.description ILIKE (%s || t.name || %s) '
+                       'WHERE t.purse_id=%s AND e.purse_id=%s '
+                       'AND EXTRACT(YEAR FROM e.date)=%s '
+                       'AND EXTRACT(MONTH FROM e.date)=%s '
+                       'GROUP BY t.name, t.weight '
+                       'ORDER BY amount DESC;',
+                       [self.request.user.id,
+                        '%', '%', self.purse.id, self.purse.id,
+                        self.get_year(),
+                        self.get_month()])
+        values = dictfetchall(cursor)
+        context.update({'amounts': values})
+        return context
+        
+# TODO Prefer mixins to archive views and remove reference to model
+
+
 class ExpenditureYearSummary(LoginRequiredMixin,
                              DefaultPurseMixin,
                              YearArchiveView):
@@ -311,6 +355,7 @@ class ExpenditureYearSummary(LoginRequiredMixin,
     date_field = 'date'
     allow_empty = True
     allow_future = True
+    template_name = 'tracker/expenditure_year_summary.html'
 
     def get_context_data(self, **kwargs):
         """"""

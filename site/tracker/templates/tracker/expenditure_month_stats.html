@@ -1,0 +1,78 @@
+{% extends 'tracker/base.html' %}
+{% load i18n tracker_extras table humanize %}
+{% block content %}
+{% is_current_month month as is_current %}
+<div id="main">
+  <ul id="toolbar" class="left small menu-container">
+    <li class="left">
+      <a id="add-expenditure" href="{% url 'tracker:add' %}"
+	 title="{% trans 'Add a new expenditure' %}">
+	{% trans 'add'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="browse" href="{% current_month_url %}"
+	 title="{% trans 'View current month expenditures' %}">
+	{% trans 'browse'|capfirst %}
+      </a>
+    </li>
+  </ul>
+  {% if amounts %}
+  <p>
+    {% if is_current %}
+    {% blocktrans %}The following table summarizes the expenditures of the current month.{% endblocktrans %}
+    {% else %}
+    {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}The following table summarizes the expenditures for {{ date }}.{% endblocktrans %}
+    {% endif %}
+  </p>
+  <table id="expenditures-table">
+    <caption class="small">
+      {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}Statistics for {{ date }}.{% endblocktrans %}
+    </caption>
+    <thead class="small">
+      <tr>
+	<th class="name">
+	  {% trans 'name'|capfirst %}
+	</th>
+	<th class="amount">
+	  {% trans 'amount'|capfirst %}
+	</th>
+	{% if shared_purse %}
+	<th class="total">
+	  {% trans 'total'|capfirst %}
+	</th>
+	{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in amounts %}
+      <tr class={% cycle 'odd' 'even' %}>
+	<td title="{{ a.name|capfirst }}">
+	    {{ a.name|capfirst }}
+	    <!-- TODO Make it an `a' element that filters the month list -->
+	</td>
+	<td title="{{ a.amount|floatformat:2 }}" class="amount">
+	  {{ a.amount|floatformat:2 }}
+	</td>
+	{% if shared_purse %}
+	<td title="{{ a.total|floatformat:2 }}" class="amount">
+	  {{ a.amount|floatformat:2 }}
+	</td>
+	{% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>
+    {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}No expenditures found for {{ date }}!{% endblocktrans %}
+  </p>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript">
+    Tracker.focus('add-expenditure');
+</script>
+{% endblock %}
