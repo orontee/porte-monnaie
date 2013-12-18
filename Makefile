@@ -64,7 +64,7 @@ compile-messages:
 		); \
 	done
 
-collect: $(publicdir)/static
+collect:
 	cd $(projdir); \
 	$(manager) collectstatic --noinput --pythonpath=.
 
@@ -72,9 +72,9 @@ $(publicdir):
 	[ -x $@ ] || mkdir $@
 	touch	$@
 
-$(publicdir)/django.fcgi: share/django.fcgi $(publicdir)
+$(publicdir)/django.fcgi: share/django.fcgi | $(publicdir)
 	cp $< $(publicdir)/
 	chmod +x $@
 
-$(publicdir)/%: share/% $(publicdir)
+$(publicdir)/%: share/% | $(publicdir)
 	cp $< $(publicdir)/
