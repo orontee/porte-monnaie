@@ -49,18 +49,18 @@ syncdb:
 update-messages:
 	for app in $(apps); do \
 		[ -x $$app/locale ] && ( \
-			pushd $$app &> /dev/null; \
+			cd $$app; \
 			django-admin.py makemessages -l $(lang) --pythonpath=..; \
-			popd &> /dev/null \
+			cd .. \
 		); \
 	done
 
 compile-messages:
 	for app in $(apps); do \
 		[ -x $$app/locale ] && ( \
-			pushd $$app &> /dev/null; \
+			cd $$app; \
 			django-admin.py compilemessages -l $(lang) --pythonpath=..; \
-			popd &> /dev/null \
+			cd .. \
 		); \
 	done
 
