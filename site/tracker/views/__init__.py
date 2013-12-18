@@ -2,6 +2,7 @@ from tracker.views.main import (ExpenditureAdd,
                                 ExpenditureDelete,
                                 ExpenditureUpdate,
                                 ExpenditureMonthList,
+                                ExpenditureMonthStats,
                                 ExpenditureYearSummary,
                                 ExpenditureHome,
                                 HomeView,
@@ -9,7 +10,8 @@ from tracker.views.main import (ExpenditureAdd,
                                 UserChange)
 
 __all__ = ("ExpenditureAdd", "ExpenditureDelete", "ExpenditureUpdate",
-           "ExpenditureMonthList", "ExpenditureYearSummary", "ExpenditureHome",
+           "ExpenditureMonthList", "ExpenditureMonthStats", "ExpenditureYearSummary",
+           "ExpenditureHome",
            "HomeView",
            "PurseCreation", "PurseUpdate", "PurseList",
            "UserChange")

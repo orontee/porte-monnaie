@@ -24,6 +24,12 @@
       </a>
     </li>
     <li class="left">
+      <a id="stats" href="{% url 'tracker:stats' params.year params.month %}"
+	 title="{% trans 'View month statistics' %}">
+	{% trans 'stats'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
       <a id="report" href="{% current_year_url %}"
 	 title="{% trans 'View yearly report' %}">
 	{% trans 'report'|capfirst %}
