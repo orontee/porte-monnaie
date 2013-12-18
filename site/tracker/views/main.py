@@ -303,10 +303,15 @@ class ExpenditureMonthList(LoginRequiredMixin,
 
 class ExpenditureYearSummary(LoginRequiredMixin,
                              DefaultPurseMixin,
-                             TemplateView):
+                             YearArchiveView):
     """Summary of expenditures in a year.
     """
-    template_name = 'tracker/expenditure_year_summary.html'
+    model = Expenditure
+    make_object_list = True
+    context_object_name = 'expenditures'
+    date_field = 'date'
+    allow_empty = True
+    allow_future = True
 
     def get_context_data(self, **kwargs):
         """Extend the view context with dates and amounts.
