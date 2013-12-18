@@ -274,6 +274,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
     allow_empty = True
     allow_future = True
     filter_description = _('Filter expenditures')
+    template_name = "tracker/expenditure_month_list.html"
 
     def get_queryset(self):
         qs = super(ExpenditureMonthList, self).get_queryset()
@@ -311,6 +312,7 @@ class ExpenditureYearSummary(LoginRequiredMixin,
     date_field = 'date'
     allow_empty = True
     allow_future = True
+    template_name = 'tracker/expenditure_year_summary.html'
 
     def get_context_data(self, **kwargs):
         """"""
