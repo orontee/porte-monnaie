@@ -302,14 +302,12 @@ class ExpenditureMonthList(LoginRequiredMixin,
 
 class ExpenditureYearSummary(LoginRequiredMixin,
                              DefaultPurseMixin,
-                             FieldNamesMixin,
                              YearArchiveView):
     """Summary of expenditures in a year.
     """
     model = Expenditure
     make_object_list = True
     context_object_name = 'expenditures'
-    field_names = ['date', 'amount', 'author', 'description']
     date_field = 'date'
     allow_empty = True
     allow_future = True
