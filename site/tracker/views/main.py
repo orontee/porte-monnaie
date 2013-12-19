@@ -368,11 +368,7 @@ class ExpenditureYearSummary(LoginRequiredMixin,
     """
     template_name = 'tracker/expenditure_year_summary.html'
 
-    def get_context_data(self, **kwargs):
-        """Extend the view context with dates and amounts.
-        """
-        context = super(ExpenditureYearSummary,
-                        self).get_context_data(**kwargs)
+    def get_date(self):
         try:
             year = int(self.kwargs['year'])
         except KeyError:
@@ -381,6 +377,14 @@ class ExpenditureYearSummary(LoginRequiredMixin,
             date = datetime.date(year=year, month=1, day=1)
         except ValueError:
             raise Http404(_("Invalid year string '{0}'").format(year))
+        return date
+    
+    def get_context_data(self, **kwargs):
+        """Extend the view context with dates and amounts.
+        """
+        context = super(ExpenditureYearSummary,
+                        self).get_context_data(**kwargs)
+        date = self.get_date()
         next_year = date.replace(year=date.year + 1, month=1, day=1)
         previous_year = date.replace(year=date.year - 1, month=1, day=1)
         context.update({'year': date,
