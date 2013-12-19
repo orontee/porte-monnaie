@@ -314,12 +314,13 @@ class ExpenditureMonthStats(LoginRequiredMixin,
     allow_empty = True
     allow_future = True
     template_name = 'tracker/expenditure_month_stats.html'
-
+        
     def get_context_data(self, **kwargs):
         """Extend the view context with statistics on the month expenditures.
         """
         context = super(ExpenditureMonthStats,
                         self).get_context_data(**kwargs)
+        
         from django.db import connection
         cursor = connection.cursor()
         cursor.execute('SELECT t.name, t.weight, '
@@ -327,14 +328,14 @@ class ExpenditureMonthStats(LoginRequiredMixin,
                        'sum(e.amount) AS total '
                        'FROM tracker_tag AS t '
                        'LEFT JOIN tracker_expenditure AS e '
-                       'ON e.description ILIKE (%s || t.name || %s) '
+                       'ON e.description::text ILIKE t.name::text '
                        'WHERE t.purse_id=%s AND e.purse_id=%s '
                        'AND EXTRACT(YEAR FROM e.date)=%s '
                        'AND EXTRACT(MONTH FROM e.date)=%s '
                        'GROUP BY t.name, t.weight '
                        'ORDER BY amount DESC;',
                        [self.request.user.id,
-                        '%', '%', self.purse.id, self.purse.id,
+                        self.purse.id, self.purse.id,
                         self.get_year(),
                         self.get_month()])
         values = dictfetchall(cursor)

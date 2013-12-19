@@ -31,7 +31,7 @@ class Purse(Model):
     created = DateTimeField(_('created'), auto_now_add=True)
 
     def __str__(self):
-        return u'Purse: {0}'.format(self.id)
+        return u'{0}'.format(self.id)
 
     def usernames(self):
         """Return the comma separated list of usernames sorted.
@@ -64,7 +64,7 @@ class Expenditure(Model):
     edit_delay = 2
 
     def __str__(self):
-        return u'Expenditure: {0}'.format(self.id)
+        return u'{0}'.format(self.id)
 
     def is_editable(self):
         """Check whether it is an editable expenditure or not.
@@ -142,7 +142,7 @@ class Tag(Model):
     objects = TagManager()
 
     def __str__(self):
-        return u'Tag: {0}'.format(self.id)
+        return u'{0}'.format(self.id)
 
     class Meta(object):
         """Tag metadata.
