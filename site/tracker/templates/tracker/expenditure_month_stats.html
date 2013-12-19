@@ -45,8 +45,9 @@
       {% for a in amounts %}
       <tr class={% cycle 'odd' 'even' %}>
 	<td title="{{ a.name|capfirst }}">
+	  <a href="{% url 'tracker:archive' year=month.year month=month.month %}?filter={{ a.name }}">
 	    {{ a.name|capfirst }}
-	    <!-- TODO Make it an `a' element that filters the month list -->
+	  </a>
 	</td>
 	<td title="{{ a.amount|floatformat:2 }}" class="amount">
 	  {{ a.amount|floatformat:2 }}
