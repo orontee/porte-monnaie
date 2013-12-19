@@ -16,18 +16,19 @@
 	{% trans 'browse'|capfirst %}
       </a>
     </li>
+    {% include 'tracker/filter.html' %}
   </ul>
-  {% if amounts %}
+  {% if tags %}
   <p>
     {% if is_current %}
-    {% blocktrans %}The following table summarizes the expenditures of the current month.{% endblocktrans %}
+    {% blocktrans %}The following table summarizes the expenditures tags of the current month.{% endblocktrans %}
     {% else %}
-    {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}The following table summarizes the expenditures for {{ date }}.{% endblocktrans %}
+    {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}The following table summarizes the expenditures tags for {{ date }}.{% endblocktrans %}
     {% endif %}
   </p>
   <table id="expenditures-table">
     <caption class="small">
-      {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}Statistics for {{ date }}.{% endblocktrans %}
+      {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}Tags for {{ date }}.{% endblocktrans %}
     </caption>
     <thead class="small">
       <tr>
@@ -37,13 +38,9 @@
 	<th class="amount">
 	  {% trans 'amount'|capfirst %}
 	</th>
-	{% if shared_purse %}
-	<th class="total">
-	  {% trans 'total'|capfirst %}
-	</th>
-	{% endif %}
       </tr>
     </thead>
+    {% table_footer field_names %}
     <tbody>
       {% for a in amounts %}
       <tr class={% cycle 'odd' 'even' %}>
@@ -54,18 +51,13 @@
 	<td title="{{ a.amount|floatformat:2 }}" class="amount">
 	  {{ a.amount|floatformat:2 }}
 	</td>
-	{% if shared_purse %}
-	<td title="{{ a.total|floatformat:2 }}" class="amount">
-	  {{ a.amount|floatformat:2 }}
-	</td>
-	{% endif %}
       </tr>
       {% endfor %}
     </tbody>
   </table>
   {% else %}
   <p>
-    {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}No expenditures found for {{ date }}!{% endblocktrans %}
+    {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}No tags found for {{ date }}!{% endblocktrans %}
   </p>
   {% endif %}
 </div>
@@ -73,6 +65,11 @@
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-    Tracker.focus('add-expenditure');
+  {% if filter %}
+  Tracker.focus('id_filter');
+  {% else %}
+  Tracker.focus('add-expenditure');
+  Tracker.listenToFilter('id_filter');
+  {% endif %}
 </script>
 {% endblock %}

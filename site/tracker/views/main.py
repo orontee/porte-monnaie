@@ -17,6 +17,7 @@ from django.views.generic import (CreateView,
 from tracker.models import (Expenditure, Purse, Tag)
 from tracker.forms import ExpenditureForm
 from tracker.utils import dictfetchall
+from django.utils.datastructures import SortedDict
 from django.utils.translation import ugettext_lazy as _
 from tracker.views.mixins import (FieldNamesMixin,
                                   QueryPaginationMixin,
@@ -303,46 +304,61 @@ class ExpenditureMonthList(LoginRequiredMixin,
 
 class ExpenditureMonthStats(LoginRequiredMixin,
                             DefaultPurseMixin,
-                            MonthArchiveView):
-    """Statisticts on expenditures in a month.
+                            FieldNamesMixin,
+                            QueryFilterMixin,
+                            QueryPaginationMixin,
+                            ListView):
+    """Statistics on expenditures in a month.
     """
-    model = Expenditure
-    make_object_list = True
-    context_object_name = 'expenditures'
-    date_field = 'date'
-    month_format = '%m'
+    model = Tag
+    context_object_name = 'tags'
+    field_names = ['name', 'amount']
     allow_empty = True
-    allow_future = True
+    filter_description = _('Filter tags')
+    filter_attr = 'name'
     template_name = 'tracker/expenditure_month_stats.html'
+
+    def get_date(self):
+        try:
+            year = int(self.kwargs['year'])
+        except KeyError:
+            raise Http404("No year specified")
+        try:
+            month = int(self.kwargs['month'])
+        except KeyError:
+            raise Http404("No month specified")
+        try:
+            date = datetime.date(year=year, month=month, day=1)
+        except ValueError:
+            raise Http404(_("Invalid date string '{0}' or '{1}'").format(year, month))
+        return date
+            
+    def get_queryset(self):
+        """Build query for tags of a given purse, with expenditures in a given
+        month.
+        """
+        qs = super(ExpenditureMonthStats, self).get_queryset()
+        qs = qs.filter(purse=self.purse)        
+        qs = qs.extra(where=["""UPPER("tracker_expenditure"."description"::text) """
+                             """LIKE UPPER('%%'||"tracker_tag"."name"||'%%')"""])
+        date = self.get_date()
+        qs = qs.filter(purse__expenditure__date__year=date.year,
+                       purse__expenditure__date__month=date.month)
+
+        return qs
         
     def get_context_data(self, **kwargs):
-        """Extend the view context with statistics on the month expenditures.
+        """Extend the view context with the month tags.
         """
         context = super(ExpenditureMonthStats,
                         self).get_context_data(**kwargs)
         
-        from django.db import connection
-        cursor = connection.cursor()
-        cursor.execute('SELECT t.name, t.weight, '
-                       'sum(CASE WHEN e.author_id=%s THEN e.amount ELSE 0 END) AS amount, '
-                       'sum(e.amount) AS total '
-                       'FROM tracker_tag AS t '
-                       'LEFT JOIN tracker_expenditure AS e '
-                       'ON e.description::text ILIKE t.name::text '
-                       'WHERE t.purse_id=%s AND e.purse_id=%s '
-                       'AND EXTRACT(YEAR FROM e.date)=%s '
-                       'AND EXTRACT(MONTH FROM e.date)=%s '
-                       'GROUP BY t.name, t.weight '
-                       'ORDER BY amount DESC;',
-                       [self.request.user.id,
-                        self.purse.id, self.purse.id,
-                        self.get_year(),
-                        self.get_month()])
-        values = dictfetchall(cursor)
-        context.update({'amounts': values})
+        date = self.get_date()
+        context.update({'month': date})
+        qs = context['object_list']
+        context['amounts'] = qs.values('name').annotate(amount=Sum('purse__expenditure__amount'))
+
         return context
-        
-# TODO Prefer mixins to archive views and remove reference to model
 
 
 class ExpenditureYearSummary(LoginRequiredMixin,
