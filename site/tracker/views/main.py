@@ -351,13 +351,13 @@ class ExpenditureMonthStats(LoginRequiredMixin,
         """Extend the view context with the month tags.
         """
         context = super(ExpenditureMonthStats,
-                        self).get_context_data(**kwargs)
-        
+                        self).get_context_data(**kwargs)       
         date = self.get_date()
         context.update({'month': date})
         qs = context['object_list']
-        context['amounts'] = qs.values('name').annotate(amount=Sum('purse__expenditure__amount'))
-
+        amounts = list(qs.values('name').annotate(amount=Sum('purse__expenditure__amount')))
+        amounts.sort(cmp=lambda x,y: -cmp(x['amount'], y['amount']))
+        context['amounts'] = amounts
         return context
 
 
