@@ -1,9 +1,9 @@
 var Tracker = {};
 
-if(typeof String.prototype.trimRight !== 'function') {
-  String.prototype.trimRight = function() {
-    return this.replace(/\s+$/g, '');
-  }
+if(typeof String.prototype.trimRight !== 'function'){
+    String.prototype.trimRight = function(){
+        return this.replace(/\s+$/g, ''); 
+    };
 }
 
 Tracker.toggleMenu = function(id){

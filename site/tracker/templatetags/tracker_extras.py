@@ -156,7 +156,7 @@ def do_pagination(context):
 
 @register.simple_tag(takes_context=True)
 def email_admin(context):
-    """Insert the email admin.
+    """Insert an anchor to mail to the first site admin.
     """
     try:
         name, email = settings.ADMINS[0]

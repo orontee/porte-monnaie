@@ -1,19 +1,19 @@
 """Module defining the expenditures related views.
 """
 
-from datetime import datetime
+import datetime
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
-from django.http import HttpResponseRedirect
+from django.http import (HttpResponseRedirect, Http404)
 from django.views.generic import (CreateView,
                                   DeleteView,
                                   ListView,
                                   MonthArchiveView,
                                   RedirectView,
                                   UpdateView,
-                                  YearArchiveView)
+                                  TemplateView)
 from tracker.models import (Expenditure, Purse, Tag)
 from tracker.forms import ExpenditureForm
 from tracker.utils import dictfetchall
@@ -346,21 +346,30 @@ class ExpenditureMonthStats(LoginRequiredMixin,
 
 class ExpenditureYearSummary(LoginRequiredMixin,
                              DefaultPurseMixin,
-                             YearArchiveView):
+                             TemplateView):
     """Summary of expenditures in a year.
     """
-    model = Expenditure
-    make_object_list = True
-    context_object_name = 'expenditures'
-    date_field = 'date'
-    allow_empty = True
-    allow_future = True
     template_name = 'tracker/expenditure_year_summary.html'
 
     def get_context_data(self, **kwargs):
-        """"""
+        """Extend the view context with dates and amounts.
+        """
         context = super(ExpenditureYearSummary,
                         self).get_context_data(**kwargs)
+        try:
+            year = int(self.kwargs['year'])
+        except KeyError:
+            raise Http404(_("No year specified"))
+        try:
+            date = datetime.date(year=year, month=1, day=1)
+        except ValueError:
+            raise Http404(_("Invalid year string '{0}'").format(year))
+        next_year = date.replace(year=date.year + 1, month=1, day=1)
+        previous_year = date.replace(year=date.year - 1, month=1, day=1)
+        context.update({'year': date,
+                        'next_year': next_year,
+                        'previous_year': previous_year})
+
         users = self.purse.users.count()
         from django.db import connection
         cursor = connection.cursor()
@@ -375,7 +384,7 @@ class ExpenditureYearSummary(LoginRequiredMixin,
                        'GROUP BY month ORDER BY month) AS t;',
                        [self.request.user.id,
                         users,
-                        self.get_year(),
+                        date.year,
                         self.purse.id])
         values = dictfetchall(cursor)
         flat = [[d['amount'] for d in values],
@@ -394,4 +403,4 @@ class ExpenditureHome(RedirectView):
     url = reverse_lazy('tracker:archive',
                        kwargs=dict(zip(['month', 'year'],
                                        '{0:%m},{0:%Y}'.format(
-                                           datetime.today()).split(','))))
+                                           datetime.datetime.today()).split(','))))

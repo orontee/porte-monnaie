@@ -49,22 +49,22 @@ syncdb:
 update-messages:
 	for app in $(apps); do \
 		[ -x $$app/locale ] && ( \
-			pushd $$app &> /dev/null; \
+			cd $$app; \
 			django-admin.py makemessages -l $(lang) --pythonpath=..; \
-			popd &> /dev/null \
+			cd .. \
 		); \
 	done
 
 compile-messages:
 	for app in $(apps); do \
 		[ -x $$app/locale ] && ( \
-			pushd $$app &> /dev/null; \
+			cd $$app; \
 			django-admin.py compilemessages -l $(lang) --pythonpath=..; \
-			popd &> /dev/null \
+			cd .. \
 		); \
 	done
 
-collect: $(publicdir)/static
+collect:
 	cd $(projdir); \
 	$(manager) collectstatic --noinput --pythonpath=.
 
@@ -72,9 +72,9 @@ $(publicdir):
 	[ -x $@ ] || mkdir $@
 	touch	$@
 
-$(publicdir)/django.fcgi: share/django.fcgi $(publicdir)
+$(publicdir)/django.fcgi: share/django.fcgi | $(publicdir)
 	cp $< $(publicdir)/
 	chmod +x $@
 
-$(publicdir)/%: share/% $(publicdir)
+$(publicdir)/%: share/% | $(publicdir)
 	cp $< $(publicdir)/
