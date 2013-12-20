@@ -22,19 +22,19 @@
 	{% trans 'next'|capfirst %}
       </a>
     </li>
-    <li class="left">
+    <li class="left first-choice">
       <a id="details" href="{% url 'tracker:archive' month.year month.month %}"
 	 title="{% trans 'View expenditures details' %}">
 	{% trans 'details'|capfirst %}
       </a>
     </li>
-    <li class="left">
+    <li class="left selected middle-choice">
       <a id="tags" href="{% url 'tracker:tags' month.year month.month %}"
-	 title="{% trans 'View month tags' %}" class="selected">
+	 title="{% trans 'View month tags' %}">
 	{% trans 'tags'|capfirst %}
       </a>
     </li>
-    <li class="left">
+    <li class="left last-choice">
       <a id="report" href="{% url 'tracker:summary' month.year %}"
 	 title="{% trans 'View yearly report' %}">
 	{% trans 'report'|capfirst %}
