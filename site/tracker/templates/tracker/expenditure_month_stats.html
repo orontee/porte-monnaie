@@ -58,7 +58,7 @@
   </table>
   {% else %}
   <p>
-    {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}No tags found for {{ date }}!{% endblocktrans %}
+    {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}No expenditures found in {{ date }}!{% endblocktrans %}
   </p>
   {% endif %}
 </div>

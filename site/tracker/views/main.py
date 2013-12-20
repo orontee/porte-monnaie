@@ -330,7 +330,7 @@ class ExpenditureMonthStats(LoginRequiredMixin,
         try:
             date = datetime.date(year=year, month=month, day=1)
         except ValueError:
-            raise Http404(_("Invalid date string '{0}' or '{1}'").format(year, month))
+            raise Http404("Invalid date string '{0}' or '{1}'".format(year, month))
         return date
             
     def get_queryset(self):
@@ -372,11 +372,11 @@ class ExpenditureYearSummary(LoginRequiredMixin,
         try:
             year = int(self.kwargs['year'])
         except KeyError:
-            raise Http404(_("No year specified"))
+            raise Http404("No year specified")
         try:
             date = datetime.date(year=year, month=1, day=1)
         except ValueError:
-            raise Http404(_("Invalid year string '{0}'").format(year))
+            raise Http404("Invalid year string '{0}'".format(year))
         return date
     
     def get_context_data(self, **kwargs):
