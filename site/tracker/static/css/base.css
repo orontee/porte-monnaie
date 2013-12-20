@@ -76,12 +76,6 @@ a.tag:hover {
     text-decoration: underline;
 }
 
-.selected {
-    background: rgb(241, 241, 241);
-    border: 1px solid rgb(229, 229, 229);
-    border-radius: 3px;
-}
-
 .menu-container {
     list-style: none;
     margin: 0;
@@ -111,6 +105,33 @@ a.tag:hover {
     font-weight: bold;    
     display: block;
     margin: 0 2px 0 2px;
+}
+
+#id_filter {
+    margin-left: 6px;
+}
+
+.first-choice {
+    border-top: 1px solid rgb(229, 229, 229);
+    border-bottom: 1px solid rgb(229, 229, 229);
+    border-left: 1px solid rgb(229, 229, 229);
+    border-radius: 0 0 3px 3px;
+}
+
+.middle-choice {
+    border-top: 1px solid rgb(229, 229, 229);
+    border-bottom: 1px solid rgb(229, 229, 229);
+    border-left: 1px solid rgb(229, 229, 229);
+    border-radius: 0;
+}
+
+.last-choice {
+    border: 1px solid rgb(229, 229, 229);
+    border-radius: 3px 3px 0 0;
+}
+
+.selected {
+    background: rgb(241, 241, 241);
 }
 
 /* 
