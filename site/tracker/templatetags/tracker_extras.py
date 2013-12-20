@@ -30,55 +30,11 @@ def check_date_year(date):
     except AttributeError:
         return False
 
-
-@register.simple_tag(name='previous_month_url', takes_context=True)
-def do_previous_month_url(context):
-    """Return the archive url for the previous month.
-    """
-    return do_archive_url(context['previous_month'])
-
-
-@register.simple_tag(name='next_month_url', takes_context=True)
-def do_next_month_url(context):
-    """Return the archive url for the next month.
-    """
-    return do_archive_url(context['next_month'])
-
-
 @register.simple_tag(name='current_month_url')
 def do_current_month_url():
     """Return the archive url for the current month.
     """
     return do_archive_url(datetime.date.today())
-
-
-@register.simple_tag(name='month_url')
-def do_month_url(month):
-    """Return the archive url for the given month.
-    """
-    return do_archive_url(datetime.date(datetime.date.today().year,
-                                        month, 1))
-
-
-@register.simple_tag(name='previous_year_url', takes_context=True)
-def do_previous_year_url(context):
-    """Return the archive url for the previous year.
-    """
-    return do_summary_url(context['previous_year'])
-
-
-@register.simple_tag(name='next_year_url', takes_context=True)
-def do_next_year_url(context):
-    """Return the archive url for the next year.
-    """
-    return do_summary_url(context['next_year'])
-
-
-@register.simple_tag(name='current_year_url')
-def do_current_year_url():
-    """Return the summary url for the current year.
-    """
-    return do_summary_url(datetime.date.today())
 
 
 def do_archive_url(date):
@@ -87,13 +43,6 @@ def do_archive_url(date):
     kwargs = {'month': '{0:%m}'.format(date),
               'year': '{0:%Y}'.format(date)}
     return reverse('tracker:archive', kwargs=kwargs)
-
-
-def do_summary_url(date):
-    """Return the summary url for the given date.
-    """
-    kwargs = {'year': '{0:%Y}'.format(date)}
-    return reverse('tracker:summary', kwargs=kwargs)
 
 
 def add_page_query(url, page=1, paginator=None):

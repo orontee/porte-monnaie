@@ -11,9 +11,27 @@
       </a>
     </li>
     <li class="left">
-      <a id="browse" href="{% current_month_url %}"
-	 title="{% trans 'View current month expenditures' %}">
-	{% trans 'browse'|capfirst %}
+      <a id="previous" href="{% url 'tracker:tags' previous_month.year previous_month.month %}"
+	 title="{% trans 'View previous month tags' %}">
+	{% trans 'previous'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="next" href="{% url 'tracker:tags' next_month.year next_month.month %}"
+	 title="{% trans 'View next month tags' %}">
+	{% trans 'next'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="details" href="{% url 'tracker:archive' month.year month.month %}"
+	 title="{% trans 'View expenditures details' %}">
+	{% trans 'details'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="report" href="{% url 'tracker:summary' month.year %}"
+	 title="{% trans 'View yearly report' %}">
+	{% trans 'report'|capfirst %}
       </a>
     </li>
     {% include 'tracker/filter.html' %}

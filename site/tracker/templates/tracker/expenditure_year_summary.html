@@ -11,13 +11,13 @@
       </a>
     </li>
     <li class="left">
-      <a id="previous" href="{% previous_year_url %}"
+      <a id="previous" href="{% url 'tracker:summary' previous_year.year %}"
 	 title="{% trans 'View previous report' %}">
 	{% trans 'previous'|capfirst %}
       </a>
     </li>
     <li class="left">
-      <a id="next" href="{% next_year_url %}"
+      <a id="next" href="{% url 'tracker:summary' next_year.year %}"
 	 title="{% trans 'View next report' %}">
 	{% trans 'next'|capfirst %}
       </a>
