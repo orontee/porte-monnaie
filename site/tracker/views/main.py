@@ -69,7 +69,9 @@ class PurseList(LoginRequiredMixin,
     field_names = ['name', 'users', 'description']
 
     def get_queryset(self):
-        return self.request.user.purse_set.all()
+        qs = super(PurseList, self).get_queryset()
+        qs = qs.filter(users=self.request.user)
+        return qs
 
 
 class UserPurseMixin(object):
