@@ -2,6 +2,7 @@
 {% load i18n tracker_extras table humanize %}
 {% block content %}
 {% is_current_year year as is_current %}
+{% current_date as now %}
 <div id="main">
   <ul id="toolbar" class="left small menu-container">
     <li class="left">
@@ -23,9 +24,21 @@
       </a>
     </li>
     <li class="left">
-      <a id="browse" href="{% current_month_url %}"
+      <a id="details" href="{% url 'tracker:archive' now.year now.month %}"
 	 title="{% trans 'View current month expenditures' %}">
-	{% trans 'browse'|capfirst %}
+	{% trans 'details'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="tags" href="{% url 'tracker:tags' now.year now.month %}"
+	 title="{% trans 'View current month tags' %}">
+	{% trans 'tags'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="report" href="{% url 'tracker:summary' year.year %}"
+	 title="{% trans 'View yearly report' %}" class="selected">
+	{% trans 'report'|capfirst %}
       </a>
     </li>
   </ul>

@@ -3,7 +3,7 @@
 {% block content %}
 {% is_current_month month as is_current %}
 <div id="main">
-  <ul id="toolbar" class="left small menu-container">
+  <ul id="toolbar" class="small left menu-container">
     <li class="left">
       <a id="add-expenditure" href="{% url 'tracker:add' %}"
 	 title="{% trans 'Add a new expenditure' %}">
@@ -26,6 +26,12 @@
       <a id="details" href="{% url 'tracker:archive' month.year month.month %}"
 	 title="{% trans 'View expenditures details' %}">
 	{% trans 'details'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
+      <a id="tags" href="{% url 'tracker:tags' month.year month.month %}"
+	 title="{% trans 'View month tags' %}" class="selected">
+	{% trans 'tags'|capfirst %}
       </a>
     </li>
     <li class="left">

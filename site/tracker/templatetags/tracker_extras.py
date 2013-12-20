@@ -30,19 +30,12 @@ def check_date_year(date):
     except AttributeError:
         return False
 
-@register.simple_tag(name='current_month_url')
-def do_current_month_url():
-    """Return the archive url for the current month.
-    """
-    return do_archive_url(datetime.date.today())
 
-
-def do_archive_url(date):
-    """Return the archive url for the given date.
+@register.assignment_tag(name='current_date')
+def do_current_date():
+    """Return the current date.
     """
-    kwargs = {'month': '{0:%m}'.format(date),
-              'year': '{0:%Y}'.format(date)}
-    return reverse('tracker:archive', kwargs=kwargs)
+    return datetime.date.today()
 
 
 def add_page_query(url, page=1, paginator=None):

@@ -76,6 +76,12 @@ a.tag:hover {
     text-decoration: underline;
 }
 
+.selected {
+    background: rgb(241, 241, 241);
+    border: 1px solid rgb(229, 229, 229);
+    border-radius: 3px;
+}
+
 .menu-container {
     list-style: none;
     margin: 0;
@@ -89,6 +95,10 @@ a.tag:hover {
     line-height: 2.0;
 }
 
+#toolbar li a {
+    padding: 0 3px 0 3px;
+}
+
 #user-button {
     padding: 0;
 }
@@ -100,8 +110,7 @@ a.tag:hover {
 .menu-container a {
     font-weight: bold;    
     display: block;
-    text-decoration: none;
-    margin-right: 10px;    
+    margin: 0 2px 0 2px;
 }
 
 /* 
