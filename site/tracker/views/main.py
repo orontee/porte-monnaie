@@ -346,7 +346,7 @@ class ExpenditureMonthTags(LoginRequiredMixin,
         date = self.get_date()
         qs = qs.filter(purse__expenditure__date__year=date.year,
                        purse__expenditure__date__month=date.month)
-
+        qs = qs.values('name').annotate(amount=Sum('purse__expenditure__amount'))
         return qs
         
     def get_context_data(self, **kwargs):
@@ -360,10 +360,9 @@ class ExpenditureMonthTags(LoginRequiredMixin,
         context.update({'month': date,
                         'next_month': next_month,
                         'previous_month': previous_month})
-
         
         qs = context['object_list']
-        amounts = list(qs.values('name').annotate(amount=Sum('purse__expenditure__amount')))
+        amounts = list(qs)
         amounts.sort(cmp=lambda x,y: -cmp(x['amount'], y['amount']))
         context['amounts'] = amounts
         return context
