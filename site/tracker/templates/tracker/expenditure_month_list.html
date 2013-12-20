@@ -24,6 +24,12 @@
       </a>
     </li>
     <li class="left">
+      <a id="details" href="{% url 'tracker:archive' month.year month.month %}"
+	 title="{% trans 'View expenditures details' %}" class="selected">
+	{% trans 'details'|capfirst %}
+      </a>
+    </li>
+    <li class="left">
       <a id="tags" href="{% url 'tracker:tags' month.year month.month %}"
 	 title="{% trans 'View month tags' %}">
 	{% trans 'tags'|capfirst %}
