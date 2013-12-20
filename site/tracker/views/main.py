@@ -310,7 +310,7 @@ class ExpenditureMonthTags(LoginRequiredMixin,
                            QueryFilterMixin,
                            QueryPaginationMixin,
                            ListView):
-    """Statistics on expenditures in a month.
+    """List of tags in a month.
     """
     model = Tag
     context_object_name = 'tags'
