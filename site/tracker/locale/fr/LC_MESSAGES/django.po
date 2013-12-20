@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-20 10:15+0100\n"
+"POT-Creation-Date: 2013-12-20 11:50+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -78,7 +78,7 @@ msgstr ""
 msgid "created"
 msgstr "crée le"
 
-#: .\models.py:56 .\templates\tracker\expenditure_month_stats.html:39
+#: .\models.py:56 .\templates\tracker\expenditure_month_tags.html:57
 #: .\templates\tracker\expenditure_year_summary.html:50
 msgid "amount"
 msgstr "montant"
@@ -99,7 +99,7 @@ msgstr "porte-monnaie"
 msgid "generated"
 msgstr "généré"
 
-#: .\models.py:138 .\templates\tracker\expenditure_month_stats.html:36
+#: .\models.py:138 .\templates\tracker\expenditure_month_tags.html:54
 msgid "name"
 msgstr "nom"
 
@@ -220,13 +220,13 @@ msgid "or"
 msgstr "ou"
 
 #: .\templates\tracker\expenditure_month_list.html:10
-#: .\templates\tracker\expenditure_month_stats.html:9
+#: .\templates\tracker\expenditure_month_tags.html:9
 #: .\templates\tracker\expenditure_year_summary.html:9
 msgid "Add a new expenditure"
 msgstr "Ajouter une dépense"
 
 #: .\templates\tracker\expenditure_month_list.html:11
-#: .\templates\tracker\expenditure_month_stats.html:10
+#: .\templates\tracker\expenditure_month_tags.html:10
 #: .\templates\tracker\expenditure_year_summary.html:10
 msgid "add"
 msgstr "ajouter"
@@ -236,6 +236,7 @@ msgid "View previous month expenditures"
 msgstr "Voir les dépenses du mois précédent"
 
 #: .\templates\tracker\expenditure_month_list.html:17
+#: .\templates\tracker\expenditure_month_tags.html:16
 #: .\templates\tracker\expenditure_year_summary.html:16
 msgid "previous"
 msgstr "précédent"
@@ -245,23 +246,26 @@ msgid "View next month expenditures"
 msgstr "Voir les dépenses du mois suivant"
 
 #: .\templates\tracker\expenditure_month_list.html:23
+#: .\templates\tracker\expenditure_month_tags.html:22
 #: .\templates\tracker\expenditure_year_summary.html:22
 msgid "next"
 msgstr "suivant"
 
 #: .\templates\tracker\expenditure_month_list.html:28
-msgid "View month statistics"
-msgstr ""
+msgid "View month tags"
+msgstr "Voir les étiquettes du mois"
 
 #: .\templates\tracker\expenditure_month_list.html:29
-msgid "stats"
-msgstr ""
+msgid "tags"
+msgstr "étiquettes"
 
 #: .\templates\tracker\expenditure_month_list.html:34
+#: .\templates\tracker\expenditure_month_tags.html:33
 msgid "View yearly report"
 msgstr "Afficher le bilan annuel"
 
 #: .\templates\tracker\expenditure_month_list.html:35
+#: .\templates\tracker\expenditure_month_tags.html:34
 msgid "report"
 msgstr "bilan"
 
@@ -308,36 +312,42 @@ msgstr "éditer"
 msgid "No expenditures found for %(date)s!"
 msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
 
-#: .\templates\tracker\expenditure_month_stats.html:15
-#: .\templates\tracker\expenditure_year_summary.html:27
-msgid "View current month expenditures"
-msgstr "Voir les dépenses du mois en cours"
+#: .\templates\tracker\expenditure_month_tags.html:15
+msgid "View previous month tags"
+msgstr "Voir les étiquettes du mois précédent"
 
-#: .\templates\tracker\expenditure_month_stats.html:16
-#: .\templates\tracker\expenditure_year_summary.html:28
-msgid "browse"
-msgstr "parcourir"
+#: .\templates\tracker\expenditure_month_tags.html:21
+msgid "View next month tags"
+msgstr "Voir les étiquettes du mois suivant"
 
-#: .\templates\tracker\expenditure_month_stats.html:24
+#: .\templates\tracker\expenditure_month_tags.html:27
+msgid "View expenditures details"
+msgstr "Voir le détail des dépenses"
+
+#: .\templates\tracker\expenditure_month_tags.html:28
+msgid "details"
+msgstr "détails"
+
+#: .\templates\tracker\expenditure_month_tags.html:42
 msgid ""
 "The following table summarizes the expenditures tags of the current month."
 msgstr ""
 "La table suivante donne un aperçu des étiquettes attachées aux dépenses du "
 "mois en cours."
 
-#: .\templates\tracker\expenditure_month_stats.html:26
+#: .\templates\tracker\expenditure_month_tags.html:44
 #, python-format
 msgid "The following table summarizes the expenditures tags for %(date)s."
 msgstr ""
 "La table suivante donne un aperçu des étiquettes attachées aux dépenses du "
 "mois de %(date)s."
 
-#: .\templates\tracker\expenditure_month_stats.html:31
+#: .\templates\tracker\expenditure_month_tags.html:49
 #, python-format
 msgid "Tags for %(date)s."
 msgstr "Étiquettes de %(date)s."
 
-#: .\templates\tracker\expenditure_month_stats.html:61
+#: .\templates\tracker\expenditure_month_tags.html:79
 #: .\templates\tracker\expenditure_year_summary.html:103
 #, python-format
 msgid "No expenditures found in %(date)s!"
@@ -350,6 +360,14 @@ msgstr "Afficher le précédent bilan"
 #: .\templates\tracker\expenditure_year_summary.html:21
 msgid "View next report"
 msgstr "Afficher le bilan suivant"
+
+#: .\templates\tracker\expenditure_year_summary.html:27
+msgid "View current month expenditures"
+msgstr "Voir les dépenses du mois en cours"
+
+#: .\templates\tracker\expenditure_year_summary.html:28
+msgid "browse"
+msgstr "parcourir"
 
 #: .\templates\tracker\expenditure_year_summary.html:35
 msgid "The following table outlines your expenditures for the current year."
@@ -505,11 +523,11 @@ msgstr ""
 msgid "Jump to page {0}"
 msgstr "Aller à la page {0}"
 
-#: .\views\main.py:277
+#: .\views\main.py:279
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 
-#: .\views\main.py:317
+#: .\views\main.py:319
 msgid "Filter tags"
 msgstr "Filtrer les étiquettes"
 

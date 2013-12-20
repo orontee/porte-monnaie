@@ -304,12 +304,12 @@ class ExpenditureMonthList(LoginRequiredMixin,
         return context
 
 
-class ExpenditureMonthStats(LoginRequiredMixin,
-                            DefaultPurseMixin,
-                            FieldNamesMixin,
-                            QueryFilterMixin,
-                            QueryPaginationMixin,
-                            ListView):
+class ExpenditureMonthTags(LoginRequiredMixin,
+                           DefaultPurseMixin,
+                           FieldNamesMixin,
+                           QueryFilterMixin,
+                           QueryPaginationMixin,
+                           ListView):
     """Statistics on expenditures in a month.
     """
     model = Tag
@@ -318,7 +318,7 @@ class ExpenditureMonthStats(LoginRequiredMixin,
     allow_empty = True
     filter_description = _('Filter tags')
     filter_attr = 'name'
-    template_name = 'tracker/expenditure_month_stats.html'
+    template_name = 'tracker/expenditure_month_tags.html'
 
     def get_date(self):
         try:
@@ -339,7 +339,7 @@ class ExpenditureMonthStats(LoginRequiredMixin,
         """Build query for tags of a given purse, with expenditures in a given
         month.
         """
-        qs = super(ExpenditureMonthStats, self).get_queryset()
+        qs = super(ExpenditureMonthTags, self).get_queryset()
         qs = qs.filter(purse=self.purse)        
         qs = qs.extra(where=["""UPPER("tracker_expenditure"."description"::text) """
                              """LIKE UPPER('%%'||"tracker_tag"."name"||'%%')"""])
@@ -352,10 +352,16 @@ class ExpenditureMonthStats(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         """Extend the view context with the month tags.
         """
-        context = super(ExpenditureMonthStats,
+        context = super(ExpenditureMonthTags,
                         self).get_context_data(**kwargs)       
         date = self.get_date()
-        context.update({'month': date})
+        previous_month = date.replace(year=date.year + (date.month - 2) / 12, month=(date.month - 2) % 12 + 1, day=1)
+        next_month = date.replace(year=date.year + date.month / 12, month=date.month % 12 + 1, day=1)
+        context.update({'month': date,
+                        'next_month': next_month,
+                        'previous_month': previous_month})
+
+        
         qs = context['object_list']
         amounts = list(qs.values('name').annotate(amount=Sum('purse__expenditure__amount')))
         amounts.sort(cmp=lambda x,y: -cmp(x['amount'], y['amount']))
