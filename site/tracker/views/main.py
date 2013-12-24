@@ -374,12 +374,6 @@ class ExpenditureYearSummary(LoginRequiredMixin,
                              TemplateView):
     """Summary of expenditures in a year.
     """
-    model = Expenditure
-    make_object_list = True
-    context_object_name = 'expenditures'
-    date_field = 'date'
-    allow_empty = True
-    allow_future = True
     template_name = 'tracker/expenditure_year_summary.html'
 
     def get_date(self):
