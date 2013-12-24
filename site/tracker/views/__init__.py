@@ -10,7 +10,8 @@ from tracker.views.main import (ExpenditureAdd,
                                 UserChange)
 
 __all__ = ("ExpenditureAdd", "ExpenditureDelete", "ExpenditureUpdate",
-           "ExpenditureMonthList", "ExpenditureMonthTags", "ExpenditureYearSummary",
+           "ExpenditureMonthList", "ExpenditureMonthTags",
+           "ExpenditureYearSummary",
            "ExpenditureHome",
            "HomeView",
            "PurseCreation", "PurseUpdate", "PurseList",

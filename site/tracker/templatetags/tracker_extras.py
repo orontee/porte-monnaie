@@ -96,6 +96,7 @@ def do_pagination(context):
             add_element(i)
         return ' '.join(elements)
 
+
 @register.simple_tag(takes_context=True)
 def email_admin(context):
     """Insert an anchor to mail to the first site admin.

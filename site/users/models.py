@@ -69,4 +69,3 @@ class Registration(Model):
     class Meta(object):
         verbose_name = _('account registration')
         verbose_name_plural = _('account registrations')
-

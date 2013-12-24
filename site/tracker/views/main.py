@@ -140,11 +140,11 @@ class DefaultPurseMixin(object):
                 reverse_lazy('tracker:user_change'))
         return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
 
-
     def get_context_data(self, **kwargs):
         context = super(DefaultPurseMixin, self).get_context_data(**kwargs)
         context.update({'shared_purse': self.purse.users.count() > 1})
         return context
+
 
 class ObjectPurseMixin(object):
     """Extend a view with a property referring to the object purse.
@@ -332,45 +332,46 @@ class ExpenditureMonthTags(LoginRequiredMixin,
         try:
             date = datetime.date(year=year, month=month, day=1)
         except ValueError:
-            raise Http404("Invalid date string '{0}' or '{1}'".format(year, month))
+            raise Http404("Invalid date string '{0}' or '{1}'".format(year,
+                                                                      month))
         return date
-            
+
     def get_queryset(self):
         """Build query for tags of a given purse, with expenditures in a given
         month.
         """
         qs = super(ExpenditureMonthTags, self).get_queryset()
-        qs = qs.filter(purse=self.purse)        
-        qs = qs.extra(where=["""UPPER("tracker_expenditure"."description"::text) """
-                             """LIKE UPPER('%%'||"tracker_tag"."name"||'%%')"""])
+        qs = qs.filter(purse=self.purse)
+        wst = ("""UPPER("tracker_expenditure"."description"::text) """
+               """LIKE UPPER('%%'||"tracker_tag"."name"||'%%')""")
+        qs = qs.extra(where=[wst])
         date = self.get_date()
         qs = qs.filter(purse__expenditure__date__year=date.year,
                        purse__expenditure__date__month=date.month)
-        qs = qs.values('name').annotate(amount=Sum('purse__expenditure__amount'))
+        qs = qs.values('name').annotate(amount=Sum(
+            'purse__expenditure__amount'))
+        qs = qs.order_by('-amount')
         return qs
-        
+
     def get_context_data(self, **kwargs):
-        """Extend the view context with the month tags.
+        """Extend the view context with dates.
         """
         context = super(ExpenditureMonthTags,
-                        self).get_context_data(**kwargs)       
+                        self).get_context_data(**kwargs)
         date = self.get_date()
-        previous_month = date.replace(year=date.year + (date.month - 2) / 12, month=(date.month - 2) % 12 + 1, day=1)
-        next_month = date.replace(year=date.year + date.month / 12, month=date.month % 12 + 1, day=1)
+        previous_month = date.replace(year=date.year + (date.month - 2) / 12,
+                                      month=(date.month - 2) % 12 + 1, day=1)
+        next_month = date.replace(year=date.year + date.month / 12,
+                                  month=date.month % 12 + 1, day=1)
         context.update({'month': date,
                         'next_month': next_month,
                         'previous_month': previous_month})
-        
-        qs = context['object_list']
-        amounts = list(qs)
-        amounts.sort(cmp=lambda x,y: -cmp(x['amount'], y['amount']))
-        context['amounts'] = amounts
         return context
 
 
 class ExpenditureYearSummary(LoginRequiredMixin,
                              DefaultPurseMixin,
-                             YearArchiveView):
+                             TemplateView):
     """Summary of expenditures in a year.
     """
     model = Expenditure
@@ -391,7 +392,7 @@ class ExpenditureYearSummary(LoginRequiredMixin,
         except ValueError:
             raise Http404("Invalid year string '{0}'".format(year))
         return date
-    
+
     def get_context_data(self, **kwargs):
         """Extend the view context with dates and amounts.
         """
@@ -437,4 +438,5 @@ class ExpenditureHome(RedirectView):
     url = reverse_lazy('tracker:archive',
                        kwargs=dict(zip(['month', 'year'],
                                        '{0:%m},{0:%Y}'.format(
-                                           datetime.datetime.today()).split(','))))
+                                           datetime.datetime.today())
+                                       .split(','))))
