@@ -265,13 +265,13 @@ msgstr "détails"
 #: .\templates\tracker\expenditure_month_list.html:34
 #: .\templates\tracker\expenditure_month_tags.html:33
 msgid "View month tags"
-msgstr "Voir les étiquettes"
+msgstr "Voir les mots clés"
 
 #: .\templates\tracker\expenditure_month_list.html:35
 #: .\templates\tracker\expenditure_month_tags.html:34
 #: .\templates\tracker\expenditure_year_summary.html:35
 msgid "tags"
-msgstr "étiquettes"
+msgstr "mots clés"
 
 #: .\templates\tracker\expenditure_month_list.html:40
 #: .\templates\tracker\expenditure_month_tags.html:39
@@ -330,30 +330,30 @@ msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
 
 #: .\templates\tracker\expenditure_month_tags.html:15
 msgid "View previous month tags"
-msgstr "Voir les étiquettes du mois précédent"
+msgstr "Voir les mots clés du mois précédent"
 
 #: .\templates\tracker\expenditure_month_tags.html:21
 msgid "View next month tags"
-msgstr "Voir les étiquettes du mois suivant"
+msgstr "Voir les mots clés du mois suivant"
 
 #: .\templates\tracker\expenditure_month_tags.html:48
 msgid ""
 "The following table summarizes the expenditures tags of the current month."
 msgstr ""
-"La table suivante donne un aperçu des étiquettes attachées aux dépenses du "
+"La table suivante donne un aperçu des mots clés associés aux dépenses du "
 "mois en cours."
 
 #: .\templates\tracker\expenditure_month_tags.html:50
 #, python-format
 msgid "The following table summarizes the expenditures tags for %(date)s."
 msgstr ""
-"La table suivante donne un aperçu des étiquettes attachées aux dépenses du "
+"La table suivante donne un aperçu des mots clés associés aux dépenses du "
 "mois de %(date)s."
 
 #: .\templates\tracker\expenditure_month_tags.html:55
 #, python-format
 msgid "Tags for %(date)s."
-msgstr "Étiquettes de %(date)s."
+msgstr "Mots clés de %(date)s."
 
 #: .\templates\tracker\expenditure_month_tags.html:85
 #: .\templates\tracker\expenditure_year_summary.html:116
@@ -375,7 +375,7 @@ msgstr "Voir les dépenses du mois en cours"
 
 #: .\templates\tracker\expenditure_year_summary.html:34
 msgid "View current month tags"
-msgstr "Voir les étiquettes du mois en cours"
+msgstr "Voir les mots clés du mois en cours"
 
 #: .\templates\tracker\expenditure_year_summary.html:48
 msgid "The following table outlines your expenditures for the current year."
@@ -537,7 +537,7 @@ msgstr "Filtrer les dépenses"
 
 #: .\views\main.py:319
 msgid "Filter tags"
-msgstr "Filtrer les étiquettes"
+msgstr "Filtrer les mots clés"
 
 #: .\views\mixins.py:84
 #, python-format
