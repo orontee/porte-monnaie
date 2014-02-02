@@ -63,13 +63,13 @@ def do_pagination(context):
         raise ImproperlyConfigured('The pagination tag must be used with '
                                    'the QueryPaginationMixin mixin')
     else:
-        this_page = '<span class=\'current-page\'>{0}</span>'
+        this_page = '<span class="current-page">{0}</span>'
         if is_paginated is False:
             return this_page.format(1)
         delta = 2
         elements = []
-        template = u"""<a href='{url}' class='page-number'"""
-        template += u"""title='{msg}'>{number}</a>"""
+        template = u"""<a href="{url}" class="page-number" """
+        template += u"""title="{msg}">{number}</a>"""
         msg = _('Jump to page {0}')
 
         def add_element(i):
