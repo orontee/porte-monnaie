@@ -1,48 +1,48 @@
 {% extends 'tracker/base.html' %}
 {% load i18n tracker_extras table humanize %}
-{% block content %}
 {% is_current_month month as is_current %}
-{% is_current_month next_month as is_next_current %}
+
+{% block add %}
+<li>
+  <a id="add-expenditure" href="{% url 'tracker:add' %}"
+     title="{% trans 'Add a new expenditure' %}">
+    {% trans 'add'|capfirst %}
+  </a>
+</li>
+{% endblock add %}
+
+{% block navigate %}
+<li>
+  <a id="previous" 
+     href="{% url 'tracker:archive' previous_month.year previous_month.month %}"
+     title="{% trans 'View previous month expenditures' %}">
+    {% trans 'previous'|capfirst %}
+  </a>
+</li>
+<li>
+  <a id="next" 
+     href="{% url 'tracker:archive' next_month.year next_month.month %}"
+     title="{% trans 'View next month expenditures' %}">
+    {% trans 'next'|capfirst %}
+  </a>
+</li>
+{% endblock navigate %}
+
+{% block filter %}
+{% include 'tracker/nav_filter.html' %}
+{% endblock filter %}
+
+{% block parameters %}
+<ul class="nav navbar-nav navbar-right">
+  {% include 'tracker/nav_parameters.html' %}
+</ul>
+{% endblock parameters %}
+
+{% block content %}
+<div class="page-header">
+  <h2>{{ month|date:'YEAR_MONTH_FORMAT'|capfirst }}</h2>
+</div>
 <div id="main">
-  <ul id="toolbar" class="left small menu-container">
-    <li class="left">
-      <a id="add-expenditure" href="{% url 'tracker:add' %}"
-	 title="{% trans 'Add a new expenditure' %}">
-	{% trans 'add'|capfirst %}
-      </a>
-    </li>
-    <li class="left">
-      <a id="previous" href="{% url 'tracker:archive' previous_month.year previous_month.month %}"
-	 title="{% trans 'View previous month expenditures' %}">
-	{% trans 'previous'|capfirst %}
-      </a>
-    </li>
-    <li class="left">
-      <a id="next" href="{% url 'tracker:archive' next_month.year next_month.month %}"
-	 title="{% trans 'View next month expenditures' %}">
-	{% trans 'next'|capfirst %}
-      </a>
-    </li>
-    <li class="left selected first-choice">
-      <a id="details" href="{% url 'tracker:archive' month.year month.month %}"
-	 title="{% trans 'View expenditures details' %}">
-	{% trans 'details'|capfirst %}
-      </a>
-    </li>
-    <li class="left middle-choice">
-      <a id="tags" href="{% url 'tracker:tags' month.year month.month %}"
-	 title="{% trans 'View month tags' %}">
-	{% trans 'tags'|capfirst %}
-      </a>
-    </li>
-    <li class="left last-choice">
-      <a id="report" href="{% url 'tracker:summary' month.year %}"
-	 title="{% trans 'View yearly report' %}">
-	{% trans 'report'|capfirst %}
-      </a>
-    </li>
-    {% include 'tracker/filter.html' %}
-  </ul>
   {% if expenditures %}
   <p>
     {% if is_current %}
@@ -54,46 +54,45 @@
     {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
     {% endif %}
   </p>
-  <table id="expenditures-table">
-    <caption class="small">
-      {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}Expenditures of {{ date }}.{% endblocktrans %}
-    </caption>
-    {% table_header field_names %}
-    {% table_footer field_names %}
-    <tbody>
-      {% for e in expenditures %}
-      <tr class={% cycle 'odd' 'even' %}>
-	<td title="{{ e.date|date:'DATE_FORMAT' }}" class="date">
-	  {{ e.date|naturalday:'l j' }}
-	</td>
-	<td title="{{ e.amount|floatformat:2 }}" class="amount">
-	  {{ e.amount|floatformat:2 }}
-	</td>
-	{% with user=e.author %}
-	<td title="{% firstof user.first_name user.username %}" class="author">
-	  {% firstof user.first_name user.username %}
-	</td>
-	{% endwith %}
-	<td title="{{ e.description|capfirst }}" class="description">
-	  {{ e.description|capfirst }}
-	  {% if user.username == e.author.username and e.is_editable %}
-	  <a href="{% url 'tracker:update' e.pk %}" class="right small"
-	     title="{% blocktrans count days=edit_delay %}Your expenditures can be updated the day of their creation{% plural %}Your expenditures can be updated for {{ days }} days after their creation{% endblocktrans %}">
-	    {% trans 'edit' %}
-	  </a>
-	  {% endif %}
-	</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
+      {% table_header field_names %}
+      <tbody>
+	{% for e in expenditures %}
+	<tr>
+	  <td title="{{ e.date|date:'DATE_FORMAT' }}" class="date">
+	    {{ e.date|naturalday:'l j' }}
+	  </td>
+	  <td title="{{ e.amount|floatformat:2 }}" class="amount">
+	    {{ e.amount|floatformat:2 }}
+	  </td>
+	  {% with user=e.author %}
+	  <td title="{% firstof user.first_name user.username %}" class="author">
+	    {% firstof user.first_name user.username %}
+	  </td>
+	  {% endwith %}
+	  <td title="{{ e.description|capfirst }}" class="description">
+	    {{ e.description|capfirst }}
+	    {% if user.username == e.author.username and e.is_editable %}
+	    <a href="{% url 'tracker:update' e.pk %}" class="right small"
+	       title="{% blocktrans count days=edit_delay %}Your expenditures can be updated the day of their creation{% plural %}Your expenditures can be updated for {{ days }} days after their creation{% endblocktrans %}">
+	      {% trans 'edit' %}
+	    </a>
+	    {% endif %}
+	  </td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+    {% pagination %}
+  </div>
   {% else %}
   <p>
     {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}No expenditures found for {{ date }}!{% endblocktrans %}
   </p>
   {% endif %}
 </div>
-{% endblock %}
+{% endblock content %}
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
@@ -104,4 +103,4 @@
   Tracker.listenToFilter('id_filter');
   {% endif %}
 </script>
-{% endblock %}
+{% endblock scripts %}

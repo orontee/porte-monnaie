@@ -1,30 +1,26 @@
-<fieldset>
-  {% for field in form %}
-  <p>
-    <label for="id_{{ field.name }}">
-      {{ field.label }}
-    </label><br>
-    {{ field }}
-    {% if field.errors %}
-    <span class="errors">
-      {% for error in field.errors %}
-      {{ error }}
-      {% endfor %}
-    </span>
-    {% endif %}
-    <br>
-    <span class="helptext">
-      {{ field.help_text|capfirst }}
-    </span>
-    {% if tagnames and field.name == "description" and tagnames|length > 10 %}
-  </p>
-  <div class="tags">
-    {% for name in tagnames %}
-    <a class="tag">{{ name }}</a>
+{% for field in form %}
+<div class="form-group">
+  <label for="id_{{ field.name }}">
+    {{ field.label }}
+  </label>
+  {{ field }}
+  {% if field.errors %}
+  <span class="errors">
+    {% for error in field.errors %}
+    {{ error }}
     {% endfor %}
-  </div>
-  {% else %}
-  </p>
+  </span>
   {% endif %}
-  {% endfor %}
-</fieldset>
+  <br>
+  <p class="help-block">
+    {{ field.help_text|capfirst }}
+  </span>
+</div>
+<!-- {% if tagnames and field.name == "description" and tagnames|length > 10 %} -->
+<!-- <div class="tags"> -->
+<!--   {% for name in tagnames %} -->
+<!--   <a class="tag">{{ name }}</a> -->
+<!--   {% endfor %} -->
+<!-- </div> -->
+<!-- {% endif %} -->
+{% endfor %}

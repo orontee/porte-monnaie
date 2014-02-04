@@ -1,87 +1,64 @@
-{% load i18n tracker_extras static %}<!DOCTYPE html>
-<html lang={{ LANGUAGE_CODE }}>
+{% load i18n tracker_extras static %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block title %}
-    <title>{{ "porte-monnaie"|capfirst }}</title>
+    <title>{{ 'porte-monnaie'|capfirst }}</title>
     {% endblock %}
-    <script type="text/javascript" src="{% static 'js/tracker.js' %}"></script>
-    <style>
-      @import "{% static 'css/base.css' %}";
-    </style>
+    <link rel="stylesheet" 
+	  href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link href="{% static 'css/base.css' %}" 
+	  rel="stylesheet">
   </head>
   <body>
-    <div id="app-layout">
-      <div id="header" class="small">
-	<div id="branding">
-	  {% block header %}
-	  <a id="branding-link"
-	     href="{% url 'tracker:home' %}"
-	     title="{% trans 'Love without counting' %}">
-	    {{ "porte-monnaie"|capfirst }}
-	  </a>
-	  {% endblock %}
-	</div>
-	<div id="header-content">
-	  <div id="user-tools">
-	    {% block usertools %}
-	    {% if user.username %}
-	    <ul class="menu-container">
-	      <li class="left">{% trans 'Welcome,' %}&nbsp;
-	      </li>
-	      <li id="user-button" class="left menu-drop-down">
-		<a href="#" 
-		   onclick="Tracker.toggleMenu('user_menu')"
-		   title="{% trans 'Manage user account' %}">
-		  {% filter force_escape %}
-		  {% firstof user.first_name user.username %}.
-		  {% endfilter %}
-		</a>
-		<ul id="user-menu" class="menu">
-		  <li class="left">
-		    <a href="{% url 'tracker:user_change' %}">
-		      {% trans 'edit user data'|capfirst %}
-		    </a>
-		  </li>
-		  <li class="left">
-		    <a href="{% url 'tracker:password_change' %}">
-		      {% trans 'change password'|capfirst %}
-		    </a>
-		  </li>
-		  <li class="left">
-		    <a id="list-purses" href="{% url 'tracker:purse_list' %}"
-		       title="{% trans 'manage user purses' %}">
-		      {% trans 'manage purses'|capfirst %}
-		    </a>
-		  </li>
-		  <li class="left">
-		    <a id="logout" href="{% url 'tracker:logout' %}">
-		      {% trans 'log out'|capfirst %}
-		    </a>
-		  </li>
-		</ul>
-	      </li>
+    <div id="wrap">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+	  <div class="navbar-header">
+	    <button type="button" class="navbar-toggle" 
+		    data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+	    </button>
+	    <a id="branding-link" class="navbar-brand"
+	       href="{% url 'tracker:home' %}"
+	       title="{% trans 'Love without counting' %}">
+	      {{ "porte-monnaie"|capfirst }}
+	    </a>
+	  </div>
+	  <div class="navbar-collapse collapse">
+	    <ul class="nav navbar-nav">
+	      {% block add %}{% endblock %}
+	      {% block navigate %}{% endblock %}
+	      {% block filter %}{% endblock %}
 	    </ul>
-	    {% endif %}
-	    {% endblock %}
+	    {% block parameters %}{% endblock %}
 	  </div>
 	</div>
       </div>
-      <div id="content">
+      <div class="container">
 	{% block content %}{% endblock %}
       </div>
-      <div id="footer" class="small">
-	{% block footer %}
-	<p class="left">
+    </div>
+
+    <div id="footer">
+      <div class="container">
+	<p class="pull-left">
 	  copyright © {% email_admin %} 2013
 	</p>
-	<p class="right">
+	<p class="pull-right">
 	  {% blocktrans with link='<a href="https://www.djangoproject.com/">Django</a>' %}Powered by {{ link }}{% endblocktrans %}
 	</p>
-	{% endblock %}
       </div>
     </div>
-    {% block scripts %}{% endblock %}
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <!--     <script src="{% static 'js/tracker.js' %}"></script> -->
+    <!--     {% block scripts %}{% endblock %} -->
   </body>
 </html>

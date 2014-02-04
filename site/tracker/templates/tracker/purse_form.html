@@ -3,7 +3,7 @@
 {% block content %}
 <h2>{% trans 'new purse'|capfirst %}</h2>
 {% if form.errors %}
-<p class="errornote">
+<p class="alert alert-error">
   {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
 </p>
 {% endif %}

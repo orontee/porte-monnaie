@@ -1,27 +1,36 @@
 {% extends 'tracker/base.html' %}
-{% load i18n table %}
+{% load i18n tracker_extras table %}
+
+{% block add %}
+<li>
+  <a id="create-purse" href="{% url 'tracker:purse_creation' %}"
+     title="{% trans 'Create a new purse' %}">
+    {% trans 'add'|capfirst %}
+  </a>
+</li>
+{% endblock add %}
+
+{% block parameters %}
+<ul class="nav navbar-nav navbar-right">
+  {% include 'tracker/nav_parameters.html' %}
+</ul>
+{% endblock parameters %}
+
 {% block content %}
+<div class="page-header">
+  <h2>{% trans 'Purses management' %}</h2>
+</div>
 <div id="main">
-  <ul id="toolbar" class="left small menu-container">
-    <li class="left">
-      <a id="create-purse" href="{% url 'tracker:purse_creation' %}"
-  	 title="{% trans 'Create a new purse' %}">
-  	{% trans 'create'|capfirst %}
-      </a>
-    </li>
-  </ul>
   <p>
     {% if purses %}
     {% blocktrans %}Here are the purses you belong to.{% endblocktrans %}
-    <table id="purses-table">
-      <caption class="small">
-	{% trans 'Purses' %}
-      </caption>
+  </p>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
       {% table_header field_names %}
-      {% table_footer field_names %}
       <tbody>
 	{% for p in purses %}
-	<tr class={% cycle 'odd' 'even' %}>
+	<tr>
 	  <td title="{{ p.name }}">
 	    <a href="{% url 'tracker:purse_update' pk=p.id %}">
 	      {{ p.name }}
@@ -37,7 +46,10 @@
 	{% endfor %}
       </tbody>
     </table>
-    {% else %}
+    {% pagination %}
+  </div>
+  {% else %}
+  <p>
     {% blocktrans %}You don't belong to any purse right now!{% endblocktrans %}
     <a href="{% url 'tracker:purse_creation' %}">
       {% blocktrans %}Create a new purse...{% endblocktrans %}
@@ -45,10 +57,10 @@
     {% endif %}
   </p>
 </div>
-{% endblock %}
+{% endblock content %}
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
   Tracker.focus('create-purse');
 </script>
-{% endblock %}
+{% endblock scripts%}

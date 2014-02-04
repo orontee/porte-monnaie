@@ -1,47 +1,44 @@
 {% extends 'tracker/base.html' %}
 {% load i18n tracker_extras table humanize %}
-{% block content %}
 {% is_current_year year as is_current %}
-{% current_date as now %}
+
+{% block add %}
+<li>
+  <a id="add-expenditure" href="{% url 'tracker:add' %}"
+     title="{% trans 'Add a new expenditure' %}">
+    {% trans 'add'|capfirst %}
+  </a>
+</li>
+{% endblock add %}
+
+{% block navigate %}
+<li>
+  <a id="previous" 
+     href="{% url 'tracker:summary' previous_year.year %}"
+     title="{% trans 'View previous report' %}">
+    {% trans 'previous'|capfirst %}
+  </a>
+</li>
+<li>
+  <a id="next" 
+     href="{% url 'tracker:summary' next_year.year %}"
+     title="{% trans 'View next report' %}">
+    {% trans 'next'|capfirst %}
+  </a>
+</li>
+{% endblock navigate %}
+
+{% block parameters %}
+<ul class="nav navbar-nav navbar-right">
+  {% include 'tracker/nav_parameters.html' %}
+</ul>
+{% endblock parameters %}
+
+{% block content %}
+<div class="page-header">
+  <h2>{% blocktrans with date=year|date:'Y' %}Report for {{ date }}{% endblocktrans %}</h2>
+</div>
 <div id="main">
-  <ul id="toolbar" class="left small menu-container">
-    <li class="left">
-      <a id="add-expenditure" href="{% url 'tracker:add' %}"
-	 title="{% trans 'Add a new expenditure' %}">
-	{% trans 'add'|capfirst %}
-      </a>
-    </li>
-    <li class="left">
-      <a id="previous" href="{% url 'tracker:summary' previous_year.year %}"
-	 title="{% trans 'View previous report' %}">
-	{% trans 'previous'|capfirst %}
-      </a>
-    </li>
-    <li class="left">
-      <a id="next" href="{% url 'tracker:summary' next_year.year %}"
-	 title="{% trans 'View next report' %}">
-	{% trans 'next'|capfirst %}
-      </a>
-    </li>
-    <li class="left first-choice">
-      <a id="details" href="{% url 'tracker:archive' now.year now.month %}"
-	 title="{% trans 'View current month expenditures' %}">
-	{% trans 'details'|capfirst %}
-      </a>
-    </li>
-    <li class="left middle-choice">
-      <a id="tags" href="{% url 'tracker:tags' now.year now.month %}"
-	 title="{% trans 'View current month tags' %}">
-	{% trans 'tags'|capfirst %}
-      </a>
-    </li>
-    <li class="left selected last-choice">
-      <a id="report" href="{% url 'tracker:summary' year.year %}"
-	 title="{% trans 'View yearly report' %}">
-	{% trans 'report'|capfirst %}
-      </a>
-    </li>
-  </ul>
   {% if amounts %}
   <p>
     {% if is_current %}
@@ -50,77 +47,76 @@
     {% blocktrans with date=year|date:'Y' %}The following table outlines your expenditures for {{ date }}.{% endblocktrans %}
     {% endif %}
   </p>
-  <table id="expenditures-table">
-    <caption class="small">
-      {% blocktrans with date=year|date:'Y' %}Expenditures of {{ date }}.{% endblocktrans %}
-    </caption>
-    <thead class="small">
-      <tr>
-	<th class="month">
-	  {% trans 'month'|capfirst %}
-	</th>
-	<th class="amount">
-	  {% trans 'amount'|capfirst %}
-	</th>
-	{% if shared_purse %}
-	<th class="average">
-	  {% trans 'average'|capfirst %}
-	</th>
-	<th class="delta">
-	  {% trans 'delta'|capfirst %}
-	</th>
-	{% endif %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for a in amounts %}
-      <tr class={% cycle 'odd' 'even' %}>
-	<td title="{{ a.month|date:'F'|capfirst }}">
-	  <a href="{% url 'tracker:archive' year=year.year month=a.month.month %}">
-	    {{ a.month|date:'F'|capfirst }}
-	  </a>
-	</td>
-	<td title="{{ a.amount|floatformat:2 }}" class="amount">
-	  {{ a.amount|floatformat:2 }}
-	</td>
-	{% if shared_purse %}
-	<td title="{{ a.average|floatformat:2 }}" class="average">
-	  {{ a.average|floatformat:2 }}
-	</td>
-	<td title="{{ a.delta|floatformat:2 }}" class="delta">
-	  {{ a.delta|floatformat:2 }}
-	</td>
-	{% endif %}
-      </tr>
-      {% endfor %}
-      <tr class="total">
-	<td>
-	  {% trans 'totals'|capfirst %}
-	</td>
-	<td title="{{ totals.amount|floatformat:2 }}" class="amount">
-	  {{ totals.amount|floatformat:2 }}
-	</td>
-	{% if shared_purse %}
-	<td title="{{ totals.average|floatformat:2 }}" class="average">
-	  {{ totals.average|floatformat:2 }}
-	</td>
-	<td title="{{ totals.delta|floatformat:2 }}" class="delta">
-	  {{ totals.delta|floatformat:2 }}
-	</td>
-	{% endif %}
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
+      <thead class="small">
+	<tr>
+	  <th class="month">
+	    {% trans 'month'|capfirst %}
+	  </th>
+	  <th class="amount">
+	    {% trans 'amount'|capfirst %}
+	  </th>
+	  {% if shared_purse %}
+	  <th class="average">
+	    {% trans 'average'|capfirst %}
+	  </th>
+	  <th class="delta">
+	    {% trans 'delta'|capfirst %}
+	  </th>
+	  {% endif %}
+	</tr>
+      </thead>
+      <tbody>
+	{% for a in amounts %}
+	<tr>
+	  <td title="{{ a.month|date:'F'|capfirst }}">
+	    <a href="{% url 'tracker:archive' year=year.year month=a.month.month %}">
+	      {{ a.month|date:'F'|capfirst }}
+	    </a>
+	  </td>
+	  <td title="{{ a.amount|floatformat:2 }}" class="amount">
+	    {{ a.amount|floatformat:2 }}
+	  </td>
+	  {% if shared_purse %}
+	  <td title="{{ a.average|floatformat:2 }}" class="average">
+	    {{ a.average|floatformat:2 }}
+	  </td>
+	  <td title="{{ a.delta|floatformat:2 }}" class="delta">
+	    {{ a.delta|floatformat:2 }}
+	  </td>
+	  {% endif %}
+	</tr>
+	{% endfor %}
+	<tr class="total">
+	  <td>
+	    {% trans 'totals'|capfirst %}
+	  </td>
+	  <td title="{{ totals.amount|floatformat:2 }}" class="amount">
+	    {{ totals.amount|floatformat:2 }}
+	  </td>
+	  {% if shared_purse %}
+	  <td title="{{ totals.average|floatformat:2 }}" class="average">
+	    {{ totals.average|floatformat:2 }}
+	  </td>
+	  <td title="{{ totals.delta|floatformat:2 }}" class="delta">
+	    {{ totals.delta|floatformat:2 }}
+	  </td>
+	  {% endif %}
+	</tr>
+      </tbody>
+    </table>
+  </div>
   {% else %}
   <p>
     {% blocktrans with date=year|date:'Y' %}No expenditures found in {{ date }}!{% endblocktrans %}
   </p>
   {% endif %}
 </div>
-{% endblock %}
+{% endblock content %}
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-    Tracker.focus('add-expenditure');
+  Tracker.focus('add-expenditure');
 </script>
-{% endblock %}
+{% endblock scripts %}

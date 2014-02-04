@@ -52,7 +52,7 @@ def add_page_query(url, page=1, paginator=None):
 @register.simple_tag(name='pagination',
                      takes_context=True)
 def do_pagination(context):
-    """Build the pagination anchors.
+    """Build the pagination anchors list.
     """
     try:
         is_paginated = context['is_paginated']
@@ -63,37 +63,37 @@ def do_pagination(context):
         raise ImproperlyConfigured('The pagination tag must be used with '
                                    'the QueryPaginationMixin mixin')
     else:
-        this_page = '<span class="current-page">{0}</span>'
         if is_paginated is False:
-            return this_page.format(1)
-        delta = 2
-        elements = []
-        template = u"""<a href="{url}" class="page-number" """
-        template += u"""title="{msg}">{number}</a>"""
-        msg = _('Jump to page {0}')
+            return ''
+        anchor = u"""<a href="{url}">{number}</a>"""
+        def build_element(i, cls=None):
+            lnk = add_page_query(url, i, paginator) if isinstance(i, int) else url
+            if cls is not None:
+                elt = u"""<li class=""" + cls + '>' + anchor + '</li>'
+            else:
+                elt = u"""<li>""" + anchor + '</li>'
+            return elt.format(url=lnk, number=i)
 
-        def add_element(i):
-            elements.append(template.format(url=add_page_query(url, i,
-                                                               paginator),
-                                            msg=msg.format(i),
-                                            number=i))
+        elements = ['<ul class="pagination">']
+        delta = 2
         hidden = min(page.number - delta - 1, delta) + 1
         for i in range(1, hidden):
-            add_element(i)
+            elements.append(build_element(i))
         if page.number - delta - 1 > delta:
-            elements.append('...')
+            elements.append(build_element('...', 'disabled'))
         visible = max(page.number - delta, 1)
         for i in range(visible, page.number):
-            add_element(i)
-        elements.append(this_page.format(page.number))
+            elements.append(build_element(i))
+        elements.append(build_element(page.number, 'active'))
         hidden = min(page.number + delta + 1, paginator.num_pages + 1)
         for i in range(page.number + 1, hidden):
-            add_element(i)
+            elements.append(build_element(i))
         if page.number + delta < paginator.num_pages - delta:
-            elements.append('...')
+            elements.append(build_element('...', 'disabled'))
         visible = max(hidden, paginator.num_pages - delta + 1)
         for i in range(visible, paginator.num_pages + 1):
-            add_element(i)
+            elements.append(build_element(i))
+        elements.append('</ul>')
         return ' '.join(elements)
 
 

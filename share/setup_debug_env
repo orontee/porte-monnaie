@@ -7,8 +7,8 @@ source "$VIRTUALENV_PATH/bin/activate"
 
 export DJANGO_SETTINGS_MODULE='purse.settings.local'
 export DJANGO_SECRET_KEY='public fake key'
-export DJANGO_ADMIN_NAME='The Developper'
-export DJANGO_ADMIN_EMAIL='the@developper.hh'
+export DJANGO_ADMIN_NAME='Matthias Meulien'
+export DJANGO_ADMIN_EMAIL='matthias.meulien@example.com'
 export PYTHONPATH
 
 echo "To run the debug server, use:"
