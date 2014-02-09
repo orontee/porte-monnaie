@@ -8,7 +8,13 @@
 {% endblock parameters %}
 
 {% block header %}
-<h2>{% trans 'new purse'|capfirst %}</h2>
+<h2>
+{% if purse %}
+{% trans 'edit purse'|capfirst %}
+{% else %}
+{% trans 'add purse'|capfirst %}
+{% endif %}
+</h2>
 {% endblock %}
 
 {% block content %}
