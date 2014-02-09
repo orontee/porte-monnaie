@@ -82,9 +82,11 @@
 	  <td title="{{ e.description|capfirst }}" class="description">
 	    {{ e.description|capfirst }}
 	    {% if user.username == e.author.username and e.is_editable %}
-	    <a href="{% url 'tracker:update' e.pk %}" class="right small"
+	    <a href="{% url 'tracker:update' e.pk %}"
 	       title="{% blocktrans count days=edit_delay %}Your expenditures can be updated the day of their creation{% plural %}Your expenditures can be updated for {{ days }} days after their creation{% endblocktrans %}">
-	      {% trans 'edit' %}
+	      <span class="badge pull-right">
+		<span class="glyphicon glyphicon-pencil"></span>
+	      </span>
 	    </a>
 	    {% endif %}
 	  </td>
