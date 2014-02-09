@@ -26,6 +26,13 @@
     {% trans 'next'|capfirst %}
   </a>
 </li>
+<li>
+  <a id="report" 
+     href="{% url 'tracker:summary' next_month.year %}"
+     title="{% trans 'View yearly report' %}">
+    {% trans 'report'|capfirst %}
+  </a>
+</li>
 {% endblock navigate %}
 
 {% block filter %}
@@ -38,10 +45,11 @@
 </ul>
 {% endblock parameters %}
 
+{% block header %}
+<h2>{{ month|date:'YEAR_MONTH_FORMAT'|capfirst }}</h2>
+{% endblock %}
+
 {% block content %}
-<div class="page-header">
-  <h2>{{ month|date:'YEAR_MONTH_FORMAT'|capfirst }}</h2>
-</div>
 <div id="main">
   {% if expenditures %}
   <p>

@@ -1,18 +1,28 @@
 {% extends 'tracker/base.html' %}
 {% load i18n static %}
+
+{% block parameters %}
+<ul class="nav navbar-nav navbar-right">
+  {% include 'tracker/nav_parameters.html' %}
+</ul>
+{% endblock parameters %}
+
+{% block header %}
+<h2>{% trans 'edit user data'|capfirst %}</h2>
+{% endblock %}
+
 {% block content %}
-<h2>{% trans 'edit'|capfirst %}</h2>
-{% if form.errors %}
-<p class="errornote">
-  {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
-</p>
-{% endif %}
-<form id="user-change-form"
-      action="" 
-      method="post">
-  {% csrf_token %}
-  {% include "tracker/fieldset.html" %}
-  <input type="submit" value="{% trans 'save'|capfirst %}">
+<form id="user-change-form" class="form-horizontal"
+      role="form"
+      action="" method="post">{% csrf_token %}
+  {% include 'tracker/form_errors.html' %}
+  {% include 'tracker/fieldset.html' %}
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" value="{% trans 'save'|capfirst %}"
+	     class="btn btn-default">
+    </div>
+  </div>
 </form>
 {% endblock %}
 {% block scripts %}

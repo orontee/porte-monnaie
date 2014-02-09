@@ -1,6 +1,10 @@
 {% extends 'tracker/base.html' %}
 {% load i18n %}
-{% block usertools %}{% endblock %}
+
+{% block header %}
+<h2>{% trans 'logged out'|capfirst %}</h2>
+{% endblock %}
+
 {% block content %}
 <p>
   {% trans 'Thanks for spending some quality time with us today!' %}

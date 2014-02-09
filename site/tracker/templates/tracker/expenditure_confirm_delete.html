@@ -1,17 +1,21 @@
 {% extends 'tracker/base.html' %}
 {% load i18n %}
-{% block content %}
+
+{% block header %}
 <h2>{% trans 'expenditure deletion' %}</h2>
+{% endblock %}
+
+{% block content %}
 <p>{% blocktrans with amount=expenditure.amount|floatformat:2 description=expenditure.description %}Confirm the deletion of the {{ amount }}€ expenditure described as follows: <q>{{ description }}</q>.{% endblocktrans %}
-{% if form.errors %}
-<p class="errornote">
-  {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
-</p>
-{% endif %}
-<form id="expenditure-form"
-      action=""
-      method="post">{% csrf_token %}
-  {% include "tracker/form_errors.html" %}
-  <input type="submit" value="{% trans 'delete'|capfirst %}">
+<form id="expenditure-form " class="form-horizontal"
+      role="form"
+      action="" method="post">{% csrf_token %}
+  {% include 'tracker/form_errors.html' %}
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" value="{% trans 'delete'|capfirst %}"
+	     class="btn btn-default">
+    </div>
+  </div>
 </form>
 {% endblock %}

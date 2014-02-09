@@ -16,10 +16,11 @@
 </ul>
 {% endblock parameters %}
 
+{% block header %}
+<h2>{% trans 'Purses management' %}</h2>
+{% endblock %}
+
 {% block content %}
-<div class="page-header">
-  <h2>{% trans 'Purses management' %}</h2>
-</div>
 <div id="main">
   <p>
     {% if purses %}
