@@ -3,12 +3,12 @@ from django.forms import (ModelForm, CharField, RegexField,
                           PasswordInput, ValidationError)
 from django.utils.translation import ugettext_lazy as _
 from users.models import Registration
-
+from bootstrap.forms import BootstrapWidgetMixin
 
 User = get_user_model()
 
 
-class UserCreationForm(ModelForm):
+class UserCreationForm(BootstrapWidgetMixin, ModelForm):
     """A form that creates a user, with no privileges, from the given
     username, password and email.
 
@@ -64,7 +64,7 @@ class UserCreationForm(ModelForm):
         return user
 
 
-class UserChangeForm(ModelForm):
+class UserChangeForm(BootstrapWidgetMixin, ModelForm):
     """Form to change a user account.
     """
     class Meta:

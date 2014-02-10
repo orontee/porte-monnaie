@@ -15,9 +15,8 @@ from django.views.generic import (CreateView,
                                   UpdateView,
                                   TemplateView)
 from tracker.models import (Expenditure, Purse, Tag)
-from tracker.forms import ExpenditureForm
+from tracker.forms import (ExpenditureForm, PurseForm)
 from tracker.utils import dictfetchall
-from django.utils.datastructures import SortedDict
 from django.utils.translation import ugettext_lazy as _
 from tracker.views.mixins import (FieldNamesMixin,
                                   QueryPaginationMixin,
@@ -40,6 +39,7 @@ class PurseCreation(LoginRequiredMixin, CreateView):
     """View to create a purse.
     """
     model = Purse
+    form_class = PurseForm
     success_url = reverse_lazy('tracker:home')
 
 
@@ -47,6 +47,7 @@ class PurseUpdate(LoginRequiredMixin, UpdateView):
     """View to modify a purse.
     """
     model = Purse
+    form_class = PurseForm
     success_url = reverse_lazy('tracker:home')
 
     def dispatch(self, *args, **kwargs):

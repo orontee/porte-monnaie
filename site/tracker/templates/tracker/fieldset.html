@@ -4,7 +4,7 @@
 	 class="col-sm-2 control-label">
     {{ field.label }}
   </label>
-  <div class="col-sm-10">
+  <div class="col-sm-4">
     {{ field }}
     {% if field.errors %}
     <div class="help-block">
@@ -15,6 +15,13 @@
     <div class="help-block">
       {{ field.help_text|capfirst }}
     </div>
+    {% if field.name == 'description' and tagnames|length > 10 %}
+    <div class="tags">
+      {% for name in tagnames %}
+      <a class="label label-default">{{ name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
     {% endif %}
   </div>
 </div>

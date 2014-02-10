@@ -1,7 +1,11 @@
+from django.contrib.auth.forms import (
+    AuthenticationForm as OrigAuthenticationForm,
+    PasswordChangeForm as OrigPasswordChangeForm)
 from django.core.exceptions import ValidationError
 from django.forms import (ModelForm, ChoiceField)
 from django.utils.translation import ugettext_lazy as _
-from tracker.models import Expenditure
+from tracker.models import (Expenditure, Purse)
+from bootstrap.forms import BootstrapWidgetMixin
 
 OCCURRENCES_CHOICES = (('1', _('unique')),
                        ('2', _('next two months')),
@@ -12,7 +16,7 @@ OCCURRENCES_CHOICES = (('1', _('unique')),
                        ('12', _('forthcoming year')))
 
 
-class ExpenditureForm(ModelForm):
+class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
     """Form to input an expenditure.
     """
     occurrences = ChoiceField(choices=OCCURRENCES_CHOICES,
@@ -62,3 +66,24 @@ class ExpenditureForm(ModelForm):
                 else:
                     self.other_dates.append(start)
         return cleaned_data
+
+
+class PurseForm(BootstrapWidgetMixin, ModelForm):
+    """Form to input a purse.
+    """
+    class Meta(object):
+        model = Purse
+
+
+class AuthenticationForm(BootstrapWidgetMixin,
+                         OrigAuthenticationForm):
+    """Improve default authentication form with Bootstrap aware widgets.
+    """
+    pass
+
+
+class PasswordChangeForm(BootstrapWidgetMixin,
+                         OrigPasswordChangeForm):
+    """Improve default password change form with Bootstrap aware widgets.
+    """
+    pass

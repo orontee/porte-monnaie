@@ -7,8 +7,6 @@ namespace.
 from django.conf import settings
 from django.conf.urls import (patterns, url)
 from django.core.urlresolvers import reverse_lazy
-from django.contrib.auth.forms import (AuthenticationForm,
-                                       PasswordChangeForm)
 from django.views.generic import TemplateView
 from tracker.views import (ExpenditureAdd,
                            ExpenditureDelete,
@@ -20,7 +18,9 @@ from tracker.views import (ExpenditureAdd,
                            HomeView,
                            PurseCreation, PurseUpdate, PurseList,
                            UserChange)
+from tracker.forms import (AuthenticationForm, PasswordChangeForm)
 from users.views.base import (UserCreation, UserActivation)
+
 
 urlpatterns = patterns('',
                        url(regex=r'^$',
