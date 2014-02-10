@@ -6,6 +6,7 @@ publicdir = $(projdir)/$(projname)/public
 apps = $(projdir)/$(projname)
 apps += $(projdir)/tracker
 apps += $(projdir)/users
+apps += $(projdir)/bootstrap
 
 dbname = porte-monnaie_data
 dbuser = porte-monnaie
@@ -14,6 +15,8 @@ dbhost = localhost
 manager = django-admin.py
 
 lang = fr
+
+bootstrap_archive = share/contrib/bootstrap-3.1.0-dist.zip
 
 setup: compile-messages
 
@@ -78,3 +81,6 @@ $(publicdir)/django.fcgi: share/django.fcgi | $(publicdir)
 
 $(publicdir)/%: share/% | $(publicdir)
 	cp $< $(publicdir)/
+
+$(projdir)/bootstrap/static/bootstrap: $(bootstrap_archive)
+	$(manager) installbs $<

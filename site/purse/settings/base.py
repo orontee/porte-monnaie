@@ -137,7 +137,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'django.contrib.humanize',
     'tracker',
-    'users'
+    'users',
+    'bootstrap'
 )
 
 # A sample logging configuration. The only tangible logging

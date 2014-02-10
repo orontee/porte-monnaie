@@ -1,5 +1,6 @@
 *.pyc
 *~
 *.mo
-site/porte-monnaie/public
+site/purse/public
+site/bootstrap/static
 *_flymake*
