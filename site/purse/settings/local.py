@@ -8,6 +8,8 @@ from purse.settings.base import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+
 LOGGING.update({
     'handlers': {
         'console': {
