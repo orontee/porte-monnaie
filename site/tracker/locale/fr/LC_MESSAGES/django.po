@@ -384,7 +384,7 @@ msgstr "gestion des porte-monnaies"
 
 #: templates/tracker/nav_parameters.html:30
 msgid "log out"
-msgstr "quitter"
+msgstr "deconnexion"
 
 #: templates/tracker/purse_form.html:13
 msgid "edit purse"
