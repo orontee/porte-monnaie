@@ -9,9 +9,9 @@
     <title>{{ 'porte-monnaie'|capfirst }}</title>
     {% endblock %}
     <link rel="stylesheet" 
-	  href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-    <link href="{% static 'css/base.css' %}" 
-	  rel="stylesheet">
+	  href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet"
+	  href="{% static 'css/base.css' %}">
   </head>
   <body>
     <div id="wrap">
@@ -59,8 +59,8 @@
 	</p>
       </div>
     </div>
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/tracker.js' %}"></script>
     {% block scripts %}{% endblock %}
   </body>

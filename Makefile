@@ -1,6 +1,7 @@
 projname = purse
 projdir = site
 
+contribdir = share/contrib
 publicdir = $(projdir)/$(projname)/public
 
 apps = $(projdir)/$(projname)
@@ -16,9 +17,12 @@ manager = django-admin.py
 
 lang = fr
 
-bootstrap_archive = share/contrib/bootstrap-3.1.0-dist.zip
+bootstrap_archive = $(contribdir)/bootstrap-3.1.0-dist.zip
+jquery_src = $(contribdir)/jquery-1.11.0.min.js
 
 setup: compile-messages
+setup: $(projdir)/bootstrap/static/js/jquery.min.js
+setup: $(projdir)/bootstrap/static/bootstrap
 
 install: setup $(publicdir)/django.fcgi $(publicdir)/.htaccess collect syncdb
 
@@ -51,7 +55,7 @@ syncdb:
 
 update-messages:
 	for app in $(apps); do \
-		[ -x $$app/locale ] && ( \
+		[ ! -x $$app/locale ] || ( \
 			cd $$app; \
 			django-admin.py makemessages -l $(lang) --pythonpath=..; \
 			cd .. \
@@ -60,7 +64,7 @@ update-messages:
 
 compile-messages:
 	for app in $(apps); do \
-		[ -x $$app/locale ] && ( \
+		[ ! -x $$app/locale ] || ( \
 			cd $$app; \
 			django-admin.py compilemessages -l $(lang) --pythonpath=..; \
 			cd .. \
@@ -73,7 +77,6 @@ collect:
 
 $(publicdir):
 	[ -x $@ ] || mkdir $@
-	touch	$@
 
 $(publicdir)/django.fcgi: share/django.fcgi | $(publicdir)
 	cp $< $(publicdir)/
@@ -84,3 +87,9 @@ $(publicdir)/%: share/% | $(publicdir)
 
 $(projdir)/bootstrap/static/bootstrap: $(bootstrap_archive)
 	$(manager) installbs $<
+
+$(projdir)/bootstrap/static/js/jquery.min.js: $(jquery_src) | $(projdir)/bootstrap/static/js
+	cp $< $@
+
+$(projdir)/bootstrap/static/js:
+	[ -x $@ ] || mkdir $@
