@@ -5,6 +5,8 @@
 <h2>{% trans 'login'|capfirst %}</h2>
 {% endblock %}
 
+{% block navbar %}{% endblock %}
+
 {% block content %}
 <form  id="login-form" class="form-horizontal"
        role="form"
@@ -22,6 +24,7 @@
   {% url 'tracker:user_creation' as the_url %}
   {% blocktrans %}Not yet registered? Jump to the <a href="{{ the_url }}">registration page</a>.{% endblocktrans %}
 {% endblock %} 
+
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">

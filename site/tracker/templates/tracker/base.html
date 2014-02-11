@@ -31,6 +31,7 @@
 	      {{ "porte-monnaie"|capfirst }}
 	    </a>
 	  </div>
+	  {% block navbar %}
 	  <div class="navbar-collapse collapse">
 	    <ul class="nav navbar-nav">
 	      {% block add %}{% endblock %}
@@ -39,6 +40,7 @@
 	    </ul>
 	    {% block parameters %}{% endblock %}
 	  </div>
+	  {% endblock %}
 	</div>
       </div>
       <div class="container">
