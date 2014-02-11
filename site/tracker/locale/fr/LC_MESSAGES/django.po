@@ -364,7 +364,7 @@ msgstr "paramètres"
 
 #: templates/tracker/nav_parameters.html:9
 msgid "account"
-msgstr "montant"
+msgstr "compte"
 
 #: templates/tracker/nav_parameters.html:13 templates/users/user_form.html:11
 msgid "edit user data"
