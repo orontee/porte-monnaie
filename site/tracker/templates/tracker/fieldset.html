@@ -15,21 +15,20 @@
     <div class="help-block">
       {{ field.help_text|capfirst }}
     </div>
-    {% if field.name == 'description' and tagnames|length > 10 %}
-    <div class="tags">
-      {% for name in tagnames %}
-      <a class="label label-default">{{ name }}</a>
-      {% endfor %}
-    </div>
-    {% endif %}
     {% endif %}
   </div>
 </div>
-<!-- {% if tagnames and field.name == "description" and tagnames|length > 10 %} -->
-<!-- <div class="tags"> -->
-<!--   {% for name in tagnames %} -->
-<!--   <a class="tag">{{ name }}</a> -->
-<!--   {% endfor %} -->
-<!-- </div> -->
-<!-- {% endif %} -->
+
+{% if tagnames and field.name == "description" and tagnames|length > 10 %}
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-4">
+    {% for name in tagnames %}
+    <a href="#" class="tag">
+	{{ name }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
 {% endfor %}
