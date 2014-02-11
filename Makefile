@@ -92,4 +92,4 @@ $(projdir)/bootstrap/static/js/jquery.min.js: $(jquery_src) | $(projdir)/bootstr
 	cp $< $@
 
 $(projdir)/bootstrap/static/js:
-	[ -x $@ ] || mkdir $@
+	[ -x $@ ] || mkdir -p $@
