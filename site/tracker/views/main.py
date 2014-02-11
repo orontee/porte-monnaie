@@ -71,7 +71,7 @@ class PurseList(LoginRequiredMixin,
 
     def get_queryset(self):
         qs = super(PurseList, self).get_queryset()
-        qs = qs.filter(users=self.request.user)
+        qs = qs.filter(users=self.request.user).select_related()
         return qs
 
 
@@ -240,7 +240,7 @@ class ExpenditureList(LoginRequiredMixin,
 
     def get_queryset(self):
         qs = super(ExpenditureList, self).get_queryset()
-        qs = qs.filter(purse=self.purse)
+        qs = qs.filter(purse=self.purse).select_related()
         return qs
 
     def get_context_data(self, **kwargs):
@@ -282,7 +282,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
 
     def get_queryset(self):
         qs = super(ExpenditureMonthList, self).get_queryset()
-        qs = qs.filter(purse=self.purse)
+        qs = qs.filter(purse=self.purse).select_related()
         return qs
 
     def get_context_data(self, **kwargs):
