@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block header %}
-<h2>{% trans 'expenditure deletion' %}</h2>
+<h2>{% trans 'expenditure deletion'|capfirst %}</h2>
 {% endblock %}
 
 {% block content %}
@@ -12,10 +12,10 @@
       action="" method="post">{% csrf_token %}
   {% include 'tracker/form_errors.html' %}
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-10">
       <input type="submit" value="{% trans 'delete'|capfirst %}"
-	     class="btn btn-default">
+	     class="btn btn-primary">
     </div>
   </div>
 </form>
-{% endblock %}
+{% endblock content %}

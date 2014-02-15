@@ -26,10 +26,11 @@
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <input type="submit" value="{% trans 'save'|capfirst %}"
-	     class="btn btn-default">
+	     class="btn btn-primary">
       {% if expenditure %}
-      {% trans 'or' %} <a href="{% url 'tracker:delete' expenditure.pk %}">
-	{% trans 'delete' %}
+      <a href="{% url 'tracker:delete' expenditure.pk %}"
+	 class="btn btn-default">
+	{% trans 'delete'|capfirst %}
       </a>
       {% endif %}
     </div>

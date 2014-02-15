@@ -16,7 +16,9 @@ from tracker.views import (ExpenditureAdd,
                            ExpenditureYearSummary,
                            ExpenditureHome,
                            HomeView,
-                           PurseCreation, PurseUpdate, PurseList,
+                           PurseCreation,
+                           PurseList,
+                           PurseUpdate,
                            UserChange)
 from tracker.forms import (AuthenticationForm, PasswordChangeForm)
 from users.views.base import (UserCreation, UserActivation)
