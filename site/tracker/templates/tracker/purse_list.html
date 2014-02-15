@@ -33,15 +33,19 @@
 	{% for p in purses %}
 	<tr>
 	  <td title="{{ p.name }}">
-	    <a href="{% url 'tracker:purse_update' pk=p.id %}">
-	      {{ p.name }}
-	    </a>
+	    {{ p.name }}
 	  </td>
 	  <td title="{{ p.usernames }}">
 	    {{ p.usernames }}
 	  </td>
 	  <td title="{{ p.description }}">
-	    {{ p.description }}
+	    {{ p.description|capfirst }}
+	    <a href="{% url 'tracker:purse_update' pk=p.id %}"
+	       title="{% trans 'Edit this purse data' %}">
+	      <span class="badge pull-right">
+		<span class="glyphicon glyphicon-pencil"></span>
+	      </span>
+	    </a>
 	  </td>
 	</tr>
 	{% endfor %}
