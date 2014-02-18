@@ -5,8 +5,6 @@ import datetime
 from django import template
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext as _
 
 register = template.Library()
 
