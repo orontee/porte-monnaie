@@ -45,6 +45,16 @@ class PurseCreation(LoginRequiredMixin, CreateView):
     form_class = PurseForm
     success_url = reverse_lazy('tracker:home')
 
+    def form_valid(self, form):
+        """Process a valid form.
+
+        The user is added to the purse users.
+        """
+        res = super(PurseCreation, self).form_valid(form)
+        self.object.users.add(self.request.user)
+        self.object.save()
+        return res
+
 
 class PurseUpdate(LoginRequiredMixin, UpdateView):
     """View to modify a purse.
