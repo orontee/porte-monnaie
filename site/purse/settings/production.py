@@ -3,6 +3,7 @@
 
 import os
 import os.path
+from django.contrib.messages import constants as messages
 from purse.settings.base import *
 
 DEBUG = False
@@ -26,3 +27,5 @@ STATIC_ROOT = os.path.join(PROJECT_PATH, 'public/static/')
 EMAIL_HOST = os.environ['EMAIL_HOST']
 SERVER_EMAIL = os.environ['DJANGO_ADMIN_EMAIL']
 DEFAULT_FROM_EMAIL = SERVER_EMAIL
+
+MESSAGE_LEVEL = messages.INFO

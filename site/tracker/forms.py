@@ -1,11 +1,15 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
     AuthenticationForm as OrigAuthenticationForm,
     PasswordChangeForm as OrigPasswordChangeForm)
 from django.core.exceptions import ValidationError
-from django.forms import (ModelForm, ChoiceField)
+from django.forms import (Form, ModelForm,
+                          ChoiceField, CharField)
 from django.utils.translation import ugettext_lazy as _
 from tracker.models import (Expenditure, Purse)
 from bootstrap.forms import BootstrapWidgetMixin
+
+User = get_user_model()
 
 OCCURRENCES_CHOICES = (('1', _('unique')),
                        ('2', _('next two months')),
@@ -35,7 +39,10 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
         # attribute
 
     def clean_amount(self):
-        """"""
+        """Amount field cleaning.
+
+        It makes sure that the value is non-zero.
+        """
         data = self.cleaned_data['amount']
         if data == 0:
             msg = _('The amount must be non-zero.')
@@ -73,6 +80,36 @@ class PurseForm(BootstrapWidgetMixin, ModelForm):
     """
     class Meta(object):
         model = Purse
+        exclude = ['users']
+
+
+class PurseShareForm(BootstrapWidgetMixin, Form):
+    """Form to input a user name.
+    """
+    purse = ChoiceField(label=_('purse'), required=True)
+    user = CharField(label=_('user name'))
+
+    def clean_user(self):
+        """Name field cleaning.
+        """
+        data = self.cleaned_data['user']
+        try:            
+            data = User.objects.get(username=data)
+        except User.DoesNotExist:
+            msg = _('This user name is unknown.')
+            raise ValidationError(msg)
+        return data
+
+    def clean_purse(self):
+        """Purse field cleaning.
+        """
+        data = self.cleaned_data['purse']
+        try:            
+            data = Purse.objects.get(pk=data)
+        except Purse.DoesNotExist:
+            msg = _('This purse was not found.')
+            raise ValidationError(msg)
+        return data
 
 
 class AuthenticationForm(BootstrapWidgetMixin,

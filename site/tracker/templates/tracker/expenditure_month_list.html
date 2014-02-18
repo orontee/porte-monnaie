@@ -2,14 +2,20 @@
 {% load i18n tracker_extras table humanize %}
 {% is_current_month month as is_current %}
 
-{% block add %}
+{% block tools %}
 <li>
   <a id="add-expenditure" href="{% url 'tracker:add' %}"
      title="{% trans 'Add a new expenditure' %}">
     {% trans 'add'|capfirst %}
   </a>
 </li>
-{% endblock add %}
+<li>
+  <a id="share-purse" href="{% url 'tracker:purse_share' %}"
+     title="{% trans 'Share purse with other users' %}">
+    {% trans 'share'|capfirst %}
+  </a>
+</li>
+{% endblock tools %}
 
 {% block navigate %}
 <li>

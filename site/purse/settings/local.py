@@ -3,7 +3,9 @@
 
 import os
 import tempfile
+from django.contrib.messages import constants as messages
 from purse.settings.base import *
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -43,3 +45,5 @@ LOGGING.update({
 })
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MESSAGE_LEVEL = messages.DEBUG

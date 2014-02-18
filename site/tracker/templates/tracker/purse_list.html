@@ -1,14 +1,20 @@
 {% extends 'tracker/base.html' %}
 {% load i18n tracker_extras table %}
 
-{% block add %}
+{% block tools %}
 <li>
   <a id="create-purse" href="{% url 'tracker:purse_creation' %}"
      title="{% trans 'Create a new purse' %}">
     {% trans 'add'|capfirst %}
   </a>
 </li>
-{% endblock add %}
+<li>
+  <a id="share-purse" href="{% url 'tracker:purse_share' %}"
+     title="{% trans 'Share purse with other users' %}">
+    {% trans 'share'|capfirst %}
+  </a>
+</li>
+{% endblock tools %}
 
 {% block parameters %}
 <ul class="nav navbar-nav navbar-right">
@@ -24,7 +30,7 @@
 <div id="main">
   <p>
     {% if purses %}
-    {% blocktrans %}Here are the purses you belong to.{% endblocktrans %}
+    {% blocktrans count counter=purses|length %}You have access to one purse.{% plural %}You have access to {{ counter }} purses.{% endblocktrans %}
   </p>
   <div class="table-responsive">
     <table class="table table-hover table-bordered table-striped">

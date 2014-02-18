@@ -1,0 +1,39 @@
+{% extends 'tracker/base.html' %}
+{% load i18n %}
+
+{% block parameters %}
+<ul class="nav navbar-nav navbar-right">
+  {% include 'tracker/nav_parameters.html' %}
+</ul>
+{% endblock parameters %}
+
+{% block header %}
+<h2>
+{% trans 'Share purse'|capfirst %}
+</h2>
+{% endblock header %}
+
+{% block content %}
+<div class="alert alert-warning">
+  <strong>{% trans 'Warning!' %}</strong>
+  {% blocktrans %}Sharing a purse is an irreversible operation. Whatsmore, once a purse is shared with a given user, that user is free to share the purse with anyone.{% endblocktrans %}
+</div>
+<form id="purse-form" class="form-horizontal"
+      role="form"
+      action="" method="post">{% csrf_token %}
+  {% include 'tracker/form_errors.html' %}
+  {% include 'tracker/fieldset.html' %}
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" value="{% trans 'share'|capfirst %}"
+	     class="btn btn-primary">
+    </div>
+  </div>
+</form>
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript">
+  Tracker.focus('id_name');
+</script>
+{% endblock scripts %}

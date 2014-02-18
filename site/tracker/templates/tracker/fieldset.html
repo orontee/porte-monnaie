@@ -2,14 +2,14 @@
 <div class="form-group{% if field.errors %} has-error{% endif %}">
   <label for="id_{{ field.name }}" 
 	 class="col-sm-2 control-label">
-    {{ field.label }}
+    {{ field.label|capfirst }}
   </label>
   <div class="col-sm-4">
     {{ field }}
     {% if field.errors %}
     <div class="help-block">
       {% for error in field.errors %}
-      {{ error }}
+      {{ error|capfirst }}
       {% endfor %}
     </div>
     <div class="help-block">

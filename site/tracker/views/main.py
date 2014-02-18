@@ -3,19 +3,22 @@
 
 import datetime
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import (HttpResponseRedirect, Http404)
 from django.views.generic import (CreateView,
                                   DeleteView,
+                                  FormView,
                                   ListView,
                                   MonthArchiveView,
                                   RedirectView,
                                   UpdateView,
                                   TemplateView)
 from tracker.models import (Expenditure, Purse, Tag)
-from tracker.forms import (ExpenditureForm, PurseForm)
+from tracker.forms import (ExpenditureForm, PurseForm,
+                           PurseShareForm)
 from tracker.utils import dictfetchall
 from django.utils.translation import ugettext_lazy as _
 from tracker.views.mixins import (FieldNamesMixin,
@@ -105,6 +108,33 @@ class UserPurseMixin(object):
 
 class UserChange(UserPurseMixin, UserChangeOrig):
     purse_field_name = 'default_purse'
+
+
+class PurseShare(LoginRequiredMixin,
+                 UserPurseMixin,
+                 FormView):
+    """View to invite a user to join a purse.
+    """
+    template_name = 'tracker/purse_share.html'
+    form_class = PurseShareForm
+    success_url = reverse_lazy('tracker:home')
+
+    def form_valid(self, form):
+        """Process a valid form.
+
+        The user is notified. 
+        """
+        other = form.cleaned_data['user']
+        purse = form.cleaned_data['purse']
+        if purse.users.filter(pk=other.pk).exists():
+            msg = _("The purse called {purse} is already shared with {other}.")
+        else:
+            msg = _("The purse called {purse} is now shared with {other}.")
+            purse.users.add(other)
+            purse.save()
+        messages.info(self.request, msg.format(other=other.get_full_name(),
+                                               purse=purse.name))
+        return super(PurseShare, self).form_valid(form)
 
 
 class DefaultPurseMixin(object):

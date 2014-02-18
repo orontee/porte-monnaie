@@ -2,6 +2,7 @@
 """
 
 import os
+from django.contrib.messages import constants as messages
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -189,3 +190,11 @@ except KeyError:
 EMAIL_SUBJECT_PREFIX = '[Porte-monnaie] '
 
 AUTH_USER_MODEL = 'tracker.User'
+
+MESSAGE_TAGS = {
+    messages.INFO: 'alert alert-info alert-dismissable"',
+    messages.SUCCESS: 'alert alert-success alert-dismissable"',
+    messages.WARNING: 'alert alert-warning alert-dismissable"',
+    messages.ERROR: 'alert alert-danger alert-dismissable"',
+}
+

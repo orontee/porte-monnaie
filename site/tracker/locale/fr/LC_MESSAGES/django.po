@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-11 01:24+0100\n"
+"POT-Creation-Date: 2014-02-18 01:05+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -18,45 +18,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:10
+#: forms.py:14
 msgid "unique"
 msgstr ""
 
-#: forms.py:11
+#: forms.py:15
 msgid "next two months"
 msgstr "deux prochains mois"
 
-#: forms.py:12
+#: forms.py:16
 msgid "next three months"
 msgstr "trois prochains mois"
 
-#: forms.py:13
+#: forms.py:17
 msgid "next four months"
 msgstr "quatre prochains mois"
 
-#: forms.py:14
+#: forms.py:18
 msgid "next five months"
 msgstr "cinq prochains mois"
 
-#: forms.py:15
+#: forms.py:19
 msgid "next six months"
 msgstr "six prochains mois"
 
-#: forms.py:16
+#: forms.py:20
 msgid "forthcoming year"
 msgstr "année à venir"
 
-#: forms.py:23
+#: forms.py:27
 msgid "Occurrences"
 msgstr ""
 
-#: forms.py:41
+#: forms.py:48
 msgid "The amount must be non-zero."
 msgstr "Le montant ne peut être nul."
 
-#: forms.py:62
+#: forms.py:69
 msgid "All expenditures must occur on valid dates."
 msgstr "Toutes les dates doivent être valides."
+
+#: forms.py:89 models.py:60 models.py:139
+msgid "purse"
+msgstr "porte-monnaie"
+
+#: forms.py:90
+msgid "user name"
+msgstr "nom d'utilisateur"
+
+#: forms.py:99
+msgid "This user name is unknown."
+msgstr "Ce nom d'utilisateur est inconnu."
+
+#: forms.py:110
+msgid "This purse was not found."
+msgstr "Ce porte-monnaie n'a pu être trouvé."
 
 #: models.py:20
 msgid "default purse"
@@ -79,7 +95,7 @@ msgid "created"
 msgstr "crée le"
 
 #: models.py:56 templates/tracker/expenditure_month_tags.html:63
-#: templates/tracker/expenditure_year_summary.html:59
+#: templates/tracker/expenditure_year_summary.html:65
 msgid "amount"
 msgstr "montant"
 
@@ -90,10 +106,6 @@ msgstr ""
 #: models.py:59
 msgid "author"
 msgstr "auteur"
-
-#: models.py:60 models.py:139
-msgid "purse"
-msgstr "porte-monnaie"
 
 #: models.py:61
 msgid "generated"
@@ -143,7 +155,7 @@ msgstr ""
 msgid "Love without counting"
 msgstr "Aimer sans compter"
 
-#: templates/tracker/base.html:58
+#: templates/tracker/base.html:75
 #, python-format
 msgid "Powered by %(link)s"
 msgstr "Propulsé par %(link)s"
@@ -162,7 +174,7 @@ msgstr ""
 "<q>%(description)s</q>."
 
 #: templates/tracker/expenditure_confirm_delete.html:16
-#: templates/tracker/expenditure_form.html:32
+#: templates/tracker/expenditure_form.html:33
 msgid "delete"
 msgstr "supprimer"
 
@@ -181,10 +193,6 @@ msgstr "ajout d'une dépense"
 msgid "save"
 msgstr "enregistrer"
 
-#: templates/tracker/expenditure_form.html:31
-msgid "or"
-msgstr "ou"
-
 #: templates/tracker/expenditure_month_list.html:8
 #: templates/tracker/expenditure_month_tags.html:9
 #: templates/tracker/expenditure_year_summary.html:8
@@ -198,54 +206,66 @@ msgstr "Ajouter une dépense"
 msgid "add"
 msgstr "ajouter"
 
-#: templates/tracker/expenditure_month_list.html:18
+#: templates/tracker/expenditure_month_list.html:14
+#: templates/tracker/expenditure_year_summary.html:14
+#: templates/tracker/purse_list.html:13
+msgid "Share purse with other users"
+msgstr "Partager un porte-monnaie avec d'autres utilisateurs"
+
+#: templates/tracker/expenditure_month_list.html:15
+#: templates/tracker/expenditure_year_summary.html:15
+#: templates/tracker/purse_list.html:14 templates/tracker/purse_share.html:28
+msgid "share"
+msgstr "partager"
+
+#: templates/tracker/expenditure_month_list.html:24
 msgid "View previous month expenditures"
 msgstr "Voir les dépenses du mois précédent"
 
-#: templates/tracker/expenditure_month_list.html:19
+#: templates/tracker/expenditure_month_list.html:25
 #: templates/tracker/expenditure_month_tags.html:16
-#: templates/tracker/expenditure_year_summary.html:19
+#: templates/tracker/expenditure_year_summary.html:25
 msgid "previous"
 msgstr "précédent"
 
-#: templates/tracker/expenditure_month_list.html:25
+#: templates/tracker/expenditure_month_list.html:31
 msgid "View next month expenditures"
 msgstr "Voir les dépenses du mois suivant"
 
-#: templates/tracker/expenditure_month_list.html:26
+#: templates/tracker/expenditure_month_list.html:32
 #: templates/tracker/expenditure_month_tags.html:22
-#: templates/tracker/expenditure_year_summary.html:26
+#: templates/tracker/expenditure_year_summary.html:32
 msgid "next"
 msgstr "suivant"
 
-#: templates/tracker/expenditure_month_list.html:32
+#: templates/tracker/expenditure_month_list.html:38
 #: templates/tracker/expenditure_month_tags.html:39
 msgid "View yearly report"
 msgstr "Afficher le bilan annuel"
 
-#: templates/tracker/expenditure_month_list.html:33
+#: templates/tracker/expenditure_month_list.html:39
 #: templates/tracker/expenditure_month_tags.html:40
 msgid "report"
 msgstr "bilan"
 
-#: templates/tracker/expenditure_month_list.html:57
+#: templates/tracker/expenditure_month_list.html:63
 #, python-format
 msgid "In %(date)s, the current amount of expenditures is equal to %(total)s€."
 msgstr ""
 "Au mois de %(date)s, le montant total des dépenses s'élève à %(total)s€."
 
-#: templates/tracker/expenditure_month_list.html:59
+#: templates/tracker/expenditure_month_list.html:65
 #, python-format
 msgid "In %(date)s, the total amount of expenditures was equal to %(total)s€."
 msgstr ""
 "Au mois de %(date)s, le montant total des dépenses a été de %(total)s€."
 
-#: templates/tracker/expenditure_month_list.html:62
+#: templates/tracker/expenditure_month_list.html:68
 #, python-format
 msgid "You authored %(user)s€."
 msgstr "Dont %(user)s€ sont à votre initiative."
 
-#: templates/tracker/expenditure_month_list.html:86
+#: templates/tracker/expenditure_month_list.html:92
 #, python-format
 msgid "Your expenditures can be updated the day of their creation"
 msgid_plural ""
@@ -255,7 +275,7 @@ msgstr[1] ""
 "Vos dépenses peuvent être modifiées pendant %(days)s jours à partir de leur "
 "création"
 
-#: templates/tracker/expenditure_month_list.html:101
+#: templates/tracker/expenditure_month_list.html:107
 #, python-format
 msgid "No expenditures found for %(date)s!"
 msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
@@ -304,47 +324,47 @@ msgid "Tags for %(date)s."
 msgstr "Mots clés de %(date)s."
 
 #: templates/tracker/expenditure_month_tags.html:85
-#: templates/tracker/expenditure_year_summary.html:113
+#: templates/tracker/expenditure_year_summary.html:119
 #, python-format
 msgid "No expenditures found in %(date)s!"
 msgstr "Pas de dépenses en %(date)s&nbsp;!"
 
-#: templates/tracker/expenditure_year_summary.html:18
+#: templates/tracker/expenditure_year_summary.html:24
 msgid "View previous report"
 msgstr "Afficher le précédent bilan"
 
-#: templates/tracker/expenditure_year_summary.html:25
+#: templates/tracker/expenditure_year_summary.html:31
 msgid "View next report"
 msgstr "Afficher le bilan suivant"
 
-#: templates/tracker/expenditure_year_summary.html:38
+#: templates/tracker/expenditure_year_summary.html:44
 #, python-format
 msgid "Report for %(date)s"
 msgstr "Bilan de l'année %(date)s"
 
-#: templates/tracker/expenditure_year_summary.html:46
+#: templates/tracker/expenditure_year_summary.html:52
 msgid "The following table outlines your expenditures for the current year."
 msgstr ""
 "La table suivante donne un aperçu de vos dépenses au cours de cette année."
 
-#: templates/tracker/expenditure_year_summary.html:48
+#: templates/tracker/expenditure_year_summary.html:54
 #, python-format
 msgid "The following table outlines your expenditures for %(date)s."
 msgstr "La table suivante donne un aperçu de vos dépenses de %(date)s."
 
-#: templates/tracker/expenditure_year_summary.html:56
+#: templates/tracker/expenditure_year_summary.html:62
 msgid "month"
 msgstr "mois"
 
-#: templates/tracker/expenditure_year_summary.html:63
+#: templates/tracker/expenditure_year_summary.html:69
 msgid "average"
 msgstr "moyenne"
 
-#: templates/tracker/expenditure_year_summary.html:66
+#: templates/tracker/expenditure_year_summary.html:72
 msgid "delta"
 msgstr "écart"
 
-#: templates/tracker/expenditure_year_summary.html:94
+#: templates/tracker/expenditure_year_summary.html:100
 msgid "totals"
 msgstr "totaux"
 
@@ -398,21 +418,45 @@ msgstr "création d'un porte-monnaie"
 msgid "Create a new purse"
 msgstr "Créer un porte-monnaie"
 
-#: templates/tracker/purse_list.html:20
+#: templates/tracker/purse_list.html:26
 msgid "Purses management"
 msgstr "Gestion des porte-monnaies"
 
-#: templates/tracker/purse_list.html:27
-msgid "Here are the purses you belong to."
-msgstr "Voici la liste des porte-monnaies auxquels vous avez accès."
+#: templates/tracker/purse_list.html:33
+#, python-format
+msgid "You have access to one purse."
+msgid_plural "You have access to %(counter)s purses."
+msgstr[0] ""
+msgstr[1] ""
 
-#: templates/tracker/purse_list.html:54
+#: templates/tracker/purse_list.html:50
+msgid "Edit this purse data"
+msgstr "Édition des paramètres du porte-monnaie"
+
+#: templates/tracker/purse_list.html:64
 msgid "You don't belong to any purse right now!"
 msgstr "Vous n'avez accès à aucun porte-monnaie pour le moment&nbsp;!"
 
-#: templates/tracker/purse_list.html:56
+#: templates/tracker/purse_list.html:66
 msgid "Create a new purse..."
 msgstr "Créer un porte-monnaie..."
+
+#: templates/tracker/purse_share.html:12
+msgid "Share purse"
+msgstr "Partager un porte-monnaie"
+
+#: templates/tracker/purse_share.html:18
+msgid "Warning!"
+msgstr "Attention&nbsp;!"
+
+#: templates/tracker/purse_share.html:19
+msgid ""
+"Sharing a purse is an irreversible operation. Whatsmore, once a purse is "
+"shared with a given user, that user is free to share the purse with anyone."
+msgstr ""
+"Le partage d'un porte-monnaie est une opération irréversible. Par ailleurs, "
+"tous les utilisateurs d'un porte-monnaie sont libres de le partager avec "
+"n'importe qui."
 
 #: templates/users/email_msg.txt:2
 #, python-format
@@ -433,11 +477,11 @@ msgstr "Porte-monnaie : activation d'un compte utilisateur"
 msgid "logged out"
 msgstr "deconnexion"
 
-#: templates/users/logged_out.html:10
+#: templates/users/logged_out.html:12
 msgid "Thanks for spending some quality time with us today!"
 msgstr "Merci pour le temps que vous avez accordé à ce site aujourd'hui."
 
-#: templates/users/logged_out.html:14
+#: templates/users/logged_out.html:16
 msgid "log in again"
 msgstr "se reconnecter"
 
@@ -445,11 +489,11 @@ msgstr "se reconnecter"
 msgid "login"
 msgstr "connexion"
 
-#: templates/users/login.html:16
+#: templates/users/login.html:18
 msgid "log in"
 msgstr "connecter"
 
-#: templates/users/login.html:23
+#: templates/users/login.html:25
 #, python-format
 msgid ""
 "Not yet registered? Jump to the <a href=\"%(the_url)s\">registration page</"
@@ -466,13 +510,13 @@ msgstr "changement de mot de passe"
 msgid "account activated"
 msgstr "compte activé"
 
-#: templates/users/user_activation_done.html:10
+#: templates/users/user_activation_done.html:12
 #, python-format
 msgid "Congratulations! The user account %(username)s has been activated."
 msgstr ""
 "Félicitations&nbsp;! Le compte utilisateur «%(username)s» a été activé."
 
-#: templates/users/user_activation_done.html:10
+#: templates/users/user_activation_done.html:12
 msgid "Go to the login page"
 msgstr "Aller à la page de connexion"
 
@@ -480,7 +524,7 @@ msgstr "Aller à la page de connexion"
 msgid "complete creation"
 msgstr "création terminée"
 
-#: templates/users/user_creation_done.html:10
+#: templates/users/user_creation_done.html:12
 msgid ""
 "Thanks for your interest in Porte-monnaie! You'll soon receive an email with "
 "instructions to activate your account."
@@ -488,11 +532,21 @@ msgstr ""
 "Merci de vous intéresser à Porte-monnaie&nbsp;! Vous recevrez bientôt un "
 "courrier électronique expliquant comment activer votre compte."
 
-#: views/main.py:280
+#: views/main.py:130
+#, python-brace-format
+msgid "The purse called {purse} is already shared with {other}."
+msgstr "Le porte-monnaie {purse} est déjà partagé avec {other}."
+
+#: views/main.py:132
+#, python-brace-format
+msgid "The purse called {purse} is now shared with {other}."
+msgstr "Le porte-monnaie {purse} est maintenant partagé avec {other}."
+
+#: views/main.py:310
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 
-#: views/main.py:320
+#: views/main.py:350
 msgid "Filter tags"
 msgstr "Filtrer les mots clés"
 
@@ -506,6 +560,12 @@ msgid "keyword %(last)s"
 msgid_plural "keywords %(others)s and %(last)s"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "or"
+#~ msgstr "ou"
+
+#~ msgid "Here are the purses you belong to."
+#~ msgstr "Voici la liste des porte-monnaies auxquels vous avez accès."
 
 #~ msgid "Welcome,"
 #~ msgstr "Bienvenue,"

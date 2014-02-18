@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block title %}
     <title>{{ 'porte-monnaie'|capfirst }}</title>
-    {% endblock %}
+    {% endblock title %}
     <link rel="stylesheet" 
 	  href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet"
@@ -34,20 +34,35 @@
 	  {% block navbar %}
 	  <div class="navbar-collapse collapse">
 	    <ul class="nav navbar-nav">
-	      {% block add %}{% endblock %}
-	      {% block navigate %}{% endblock %}
-	      {% block filter %}{% endblock %}
+	      {% block tools %}{% endblock tools %}
+	      {% block navigate %}{% endblock navigate %}
+	      {% block filter %}{% endblock filter %}
 	    </ul>
-	    {% block parameters %}{% endblock %}
+	    {% block parameters %}{% endblock parameters %}
 	  </div>
 	  {% endblock navbar %}
 	</div>
       </div>
       <div class="container">
 	<div class="page-header">
-	  {% block header %}{% endblock %}
+	  {% block header %}{% endblock header %}
 	</div>
-	{% block content %}{% endblock %}
+	{% block messages %}
+	{% if messages %}
+	<div class="messages">
+          {% for message in messages %}
+          <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+	    <button type="button" class="close" 
+		    data-dismiss="alert" aria-hidden="true">
+	      &times;
+	    </button>
+	    {{ message }}
+	  </div>
+          {% endfor %}
+	</div>
+	{% endif %}
+	{% endblock messages %}
+	{% block content %}{% endblock content %}
       </div>
     </div>
 
@@ -64,6 +79,6 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/tracker.js' %}"></script>
-    {% block scripts %}{% endblock %}
+    {% block scripts %}{% endblock scripts %}
   </body>
 </html>
