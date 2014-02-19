@@ -6,6 +6,20 @@
   </a>
   <ul class="dropdown-menu">
     <li class="dropdown-header">
+      {% trans 'purse'|capfirst %}
+    </li>
+    <li>
+      <a href="{% url 'tracker:purse_list' %}">
+	{% trans 'manage purses'|capfirst %}
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'tracker:purse_share' %}">
+	{% trans 'share'|capfirst %}
+      </a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">
       {% trans 'account'|capfirst %}
     </li>
     <li>
@@ -18,13 +32,6 @@
 	{% trans 'change password'|capfirst %}
       </a>
     </li>
-    <li>
-      <a href="{% url 'tracker:purse_list' %}"
-	 title="{% trans 'manage user purses' %}">
-	{% trans 'manage purses'|capfirst %}
-      </a>
-    </li>
-    <li class="divider"></li>
     <li>
       <a href="{% url 'tracker:logout' %}">
 	{% trans 'log out'|capfirst %}
