@@ -3,11 +3,15 @@
 
 {% block header %}
 <h2>{% trans 'login'|capfirst %}</h2>
-{% endblock %}
+{% endblock header %}
 
-{% block navbar %}{% endblock %}
+{% block navbar %}{% endblock navbar %}
 
 {% block content %}
+<div class="alert alert-success">
+  {% url 'tracker:user_creation' as the_url %}
+  {% blocktrans %}Not yet registered? Jump to the <a href="{{ the_url }}">registration page</a>.{% endblocktrans %}
+</div>
 <form  id="login-form" class="form-horizontal"
        role="form"
        action="{% url 'tracker:login' %}" method="post">{% csrf_token %}
@@ -20,14 +24,11 @@
     </div>
   </div>
 </form>
-<p>
-  {% url 'tracker:user_creation' as the_url %}
-  {% blocktrans %}Not yet registered? Jump to the <a href="{{ the_url }}">registration page</a>.{% endblocktrans %}
-{% endblock %} 
+{% endblock content %}
 
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
   Tracker.focus('id_username');
 </script>
-{% endblock %}
+{% endblock scripts %}
