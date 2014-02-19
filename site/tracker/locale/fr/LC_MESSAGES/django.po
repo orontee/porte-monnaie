@@ -475,7 +475,7 @@ msgstr "Porte-monnaie : activation d'un compte utilisateur"
 
 #: templates/users/logged_out.html:5
 msgid "logged out"
-msgstr "deconnexion"
+msgstr "déconnexion"
 
 #: templates/users/logged_out.html:12
 msgid "Thanks for spending some quality time with us today!"
