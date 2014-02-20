@@ -322,7 +322,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
 
     def get_queryset(self):
         qs = super(ExpenditureMonthList, self).get_queryset()
-        qs = qs.filter(purse=self.purse).select_related()
+        qs = qs.filter(purse=self.purse).select_related('author__username')
         return qs
 
     def get_context_data(self, **kwargs):
