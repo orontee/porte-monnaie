@@ -2,13 +2,21 @@
 {% load i18n static %}
 
 {% block parameters %}
+{% if user.username %}
 <ul class="nav navbar-nav navbar-right">
   {% include 'tracker/nav_parameters.html' %}
 </ul>
+{% endif %}
 {% endblock parameters %}
 
 {% block header %}
-<h2>{% trans 'edit user data'|capfirst %}</h2>
+<h2>
+{% if user.username %}
+{% trans 'account parameters'|capfirst %}
+{% else %}
+{% trans 'create account'|capfirst %}
+{% endif %}
+</h2>
 {% endblock %}
 
 {% block content %}

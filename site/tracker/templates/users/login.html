@@ -5,13 +5,7 @@
 <h2>{% trans 'login'|capfirst %}</h2>
 {% endblock header %}
 
-{% block navbar %}{% endblock navbar %}
-
 {% block content %}
-<div class="alert alert-success">
-  {% url 'tracker:user_creation' as the_url %}
-  {% blocktrans %}Not yet registered? Jump to the <a href="{{ the_url }}">registration page</a>.{% endblocktrans %}
-</div>
 <form  id="login-form" class="form-horizontal"
        role="form"
        action="{% url 'tracker:login' %}" method="post">{% csrf_token %}
@@ -21,6 +15,10 @@
     <div class="col-sm-offset-2 col-sm-10">
       <input type="submit" value="{% trans 'log in'|capfirst %}"
 	     class="btn btn-primary">
+      <a href="{% url 'tracker:user_creation' %}"
+	 class="btn btn-default">
+	{% trans 'create account'|capfirst %}
+      </a>
     </div>
   </div>
 </form>

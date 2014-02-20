@@ -3,9 +3,7 @@
 
 {% block header %}
 <h2>{% trans 'logged out'|capfirst %}</h2>
-{% endblock %}
-
-{% block navbar %}{% endblock %}
+{% endblock header %}
 
 {% block content %}
 <p>
@@ -16,11 +14,11 @@
     {% trans 'log in again'|capfirst %}
   </a>
 </p>
-{% endblock %}
+{% endblock content %}
 
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
   Tracker.focus('login-again');
 </script>
-{% endblock %}
+{% endblock scripts %}

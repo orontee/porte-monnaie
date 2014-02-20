@@ -3,18 +3,16 @@
 
 {% block header %}
 <h2>{% trans 'account activated'|capfirst %}</h2>
-{% endblock %}
-
-{% block navbar %}{% endblock %}
+{% endblock header %}
 
 {% block content %}
 <p>
   {% blocktrans with username=key_user.username %}Congratulations! The user account {{ username }} has been activated.{% endblocktrans %} <a id="login" href="{% url 'tracker:login' %}">{% trans 'Go to the login page' %}</a>.
 </p>
-{% endblock %}
+{% endblock content %}
 
 {% block scripts %}
 <script type="text/javascript">
   Tracker.focus('login');
 </script>
-{% endblock %}
+{% endblock scripts %}
