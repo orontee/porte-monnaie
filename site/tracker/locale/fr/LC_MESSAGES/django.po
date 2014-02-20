@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-20 02:20+0100\n"
+"POT-Creation-Date: 2014-02-20 23:13+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -59,7 +59,7 @@ msgid "All expenditures must occur on valid dates."
 msgstr "Toutes les dates doivent être valides."
 
 #: forms.py:89 models.py:60 models.py:139
-#: templates/tracker/nav_parameters.html:11
+#: templates/tracker/nav_parameters.html:10
 msgid "purse"
 msgstr "porte-monnaie"
 
@@ -184,8 +184,11 @@ msgid "edit expenditure"
 msgstr "édition d'une dépense"
 
 #: templates/tracker/expenditure_form.html:15
+#: templates/tracker/expenditure_month_list.html:8
+#: templates/tracker/expenditure_month_tags.html:9
+#: templates/tracker/expenditure_year_summary.html:8
 msgid "add expenditure"
-msgstr "ajout d'une dépense"
+msgstr "ajouter une dépense"
 
 #: templates/tracker/expenditure_form.html:28
 #: templates/tracker/purse_form.html:28
@@ -193,12 +196,6 @@ msgstr "ajout d'une dépense"
 #: templates/users/user_form.html:30
 msgid "save"
 msgstr "enregistrer"
-
-#: templates/tracker/expenditure_month_list.html:8
-#: templates/tracker/expenditure_month_tags.html:9
-#: templates/tracker/expenditure_year_summary.html:8
-msgid "Add a new expenditure"
-msgstr "Ajouter une dépense"
 
 #: templates/tracker/expenditure_month_list.html:9
 #: templates/tracker/expenditure_month_tags.html:10
@@ -367,33 +364,29 @@ msgstr[1] "Veuillez corriger les erreurs ci-dessous."
 msgid "filter"
 msgstr "filtrer"
 
-#: templates/tracker/nav_parameters.html:4
-msgid "parameters"
-msgstr "paramètres"
-
-#: templates/tracker/nav_parameters.html:15
+#: templates/tracker/nav_parameters.html:14
 #: templates/tracker/purse_list.html:20
 msgid "purse list"
 msgstr "liste des porte-monnaies"
 
-#: templates/tracker/nav_parameters.html:20
+#: templates/tracker/nav_parameters.html:19
 msgid "share purse"
 msgstr "partager un porte-monnaie"
 
-#: templates/tracker/nav_parameters.html:25
+#: templates/tracker/nav_parameters.html:24
 msgid "account"
 msgstr "compte"
 
-#: templates/tracker/nav_parameters.html:29 templates/users/user_form.html:15
+#: templates/tracker/nav_parameters.html:28 templates/users/user_form.html:15
 msgid "account parameters"
 msgstr "paramètres du compte"
 
-#: templates/tracker/nav_parameters.html:34
+#: templates/tracker/nav_parameters.html:33
 #: templates/users/password_change_form.html:11
 msgid "change password"
 msgstr "changer de mot de passe"
 
-#: templates/tracker/nav_parameters.html:39
+#: templates/tracker/nav_parameters.html:38
 msgid "log out"
 msgstr "deconnexion"
 
@@ -543,6 +536,13 @@ msgid_plural "keywords %(others)s and %(last)s"
 msgstr[0] ""
 msgstr[1] ""
 
+#, fuzzy
+#~ msgid "Add a new expenditure"
+#~ msgstr "Ajouter une dépense..."
+
+#~ msgid "parameters"
+#~ msgstr "paramètres"
+
 #~ msgid "Purses management"
 #~ msgstr "Gestion des porte-monnaies"
 
@@ -612,9 +612,6 @@ msgstr[1] ""
 
 #~ msgid "browse"
 #~ msgstr "parcourir"
-
-#~ msgid "Add a new expenditure..."
-#~ msgstr "Ajouter une dépense..."
 
 #~ msgid "Browse other months expenditures"
 #~ msgstr "Voir les dépenses des autres mois"
