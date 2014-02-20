@@ -392,11 +392,11 @@ msgstr "deconnexion"
 
 #: templates/tracker/purse_form.html:13
 msgid "edit purse"
-msgstr "édition d'un porte-monnaie"
+msgstr "éditer un porte-monnaie"
 
 #: templates/tracker/purse_form.html:15
 msgid "add purse"
-msgstr "création d'un porte-monnaie"
+msgstr "ajouter un porte-monnaie"
 
 #: templates/tracker/purse_list.html:7
 msgid "Create a new purse"
