@@ -1,5 +1,6 @@
 import hashlib
 import random
+from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.db.models import (CharField, DateTimeField,
                               ForeignKey, Manager, Model)
@@ -35,6 +36,19 @@ class RegistrationManager(Manager):
         return self.create(user=user, key=key)
 
 
+class ExpiredRegistrationManager(Manager):
+    """Manager of the ``Registration`` model handling expired
+    registrations only.
+    """
+    def get_query_set(self):
+        """Return a query set for expired registrations.
+        """
+        end_date = timezone.now()
+        start_date = end_date - timedelta(days=Registration.validity_delay)
+        qs = super(ExpiredRegistrationManager, self).get_query_set()
+        return qs.exclude(created__range=(start_date, end_date))
+
+
 class Registration(Model):
     """Model for account registrations.
 
@@ -46,6 +60,7 @@ class Registration(Model):
     validity_delay = 30
 
     objects = RegistrationManager()
+    expired_objects = ExpiredRegistrationManager()
 
     def __str__(self):
         return u'Account registration: {0}'.format(self.user)

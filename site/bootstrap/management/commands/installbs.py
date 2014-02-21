@@ -5,6 +5,7 @@ from shutil import rmtree
 from zipfile import (ZipFile, is_zipfile)
 import bootstrap
 
+
 class Command(LabelCommand):
     """Command to unzip a Bootstrap archive into static directory.
     """
