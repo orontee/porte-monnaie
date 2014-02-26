@@ -4,6 +4,7 @@ import os
 from shutil import rmtree
 import bootstrap
 
+
 class Command(BaseCommand):
     """Command to remove a Bootstrap tree from static directory.
     """

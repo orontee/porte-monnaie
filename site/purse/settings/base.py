@@ -197,4 +197,3 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert alert-warning alert-dismissable"',
     messages.ERROR: 'alert alert-danger alert-dismissable"',
 }
-

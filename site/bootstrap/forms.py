@@ -1,5 +1,6 @@
 from bootstrap.util import update_widgets
 
+
 class BootstrapWidgetMixin(object):
     """Mixin to build forms with Bootstrap classes.
     """
@@ -8,4 +9,3 @@ class BootstrapWidgetMixin(object):
         """
         super(BootstrapWidgetMixin, self).__init__(*args, **kwargs)
         update_widgets(self)
-

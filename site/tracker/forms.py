@@ -93,7 +93,7 @@ class PurseShareForm(BootstrapWidgetMixin, Form):
         """Name field cleaning.
         """
         data = self.cleaned_data['user']
-        try:            
+        try:
             data = User.objects.get(username=data)
         except User.DoesNotExist:
             msg = _('This user name is unknown.')
@@ -104,7 +104,7 @@ class PurseShareForm(BootstrapWidgetMixin, Form):
         """Purse field cleaning.
         """
         data = self.cleaned_data['purse']
-        try:            
+        try:
             data = Purse.objects.get(pk=data)
         except Purse.DoesNotExist:
             msg = _('This purse was not found.')

@@ -64,8 +64,10 @@ def do_pagination(context):
         if is_paginated is False:
             return ''
         anchor = u"""<a href="{url}">{number}</a>"""
+
         def build_element(i, cls=None):
-            lnk = add_page_query(url, i, paginator) if isinstance(i, int) else url
+            lnk = (add_page_query(url, i, paginator)
+                   if isinstance(i, int) else url)
             if cls is not None:
                 elt = u"""<li class=""" + cls + '>' + anchor + '</li>'
             else:

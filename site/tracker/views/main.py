@@ -132,7 +132,7 @@ class PurseShare(LoginRequiredMixin,
     def form_valid(self, form):
         """Process a valid form.
 
-        The user is notified. 
+        The user is notified.
         """
         other = form.cleaned_data['user']
         purse = form.cleaned_data['purse']
