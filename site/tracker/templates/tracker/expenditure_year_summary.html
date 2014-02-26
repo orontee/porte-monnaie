@@ -1,5 +1,5 @@
 {% extends 'tracker/base.html' %}
-{% load i18n tracker_extras table humanize %}
+{% load i18n tracker_extras table humanize static %}
 {% is_current_year year as is_current %}
 
 {% block tools %}
@@ -36,7 +36,7 @@
 
 {% block header %}
 <h2>{% blocktrans with date=year|date:'Y' %}Report for {{ date }}{% endblocktrans %}</h2>
-{% endblock %}
+{% endblock header %}
 
 {% block content %}
 <div id="main">
@@ -114,9 +114,26 @@
   </p>
   {% endif %}
 </div>
+<div class="modal fade" id="graphModal" tabindex="-1" role="dialog" aria-labelledby="graphModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="graphModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
 
 {% block scripts %}
+<script src="{% static 'js/d3.min.js' %}"></script>
+<script src="{% static 'js/graph.js' %}"></script>
 <script type="text/javascript">
   Tracker.focus('add-expenditure');
 </script>
