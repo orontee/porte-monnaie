@@ -27,7 +27,7 @@ var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
-var yAxisLeft = d3.svg.axis().scale(y0).ticks(10).orient("left");
+var yAxisLeft = d3.svg.axis().scale(y0).ticks(6).orient("left");
 
 var svg = d3.select("#graph-body").append("svg")
     .attr("width", width + margin.left + margin.right)
