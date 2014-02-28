@@ -8,10 +8,12 @@
     {% block title %}
     <title>{{ 'porte-monnaie'|capfirst }}</title>
     {% endblock title %}
+    {% block style %}
     <link rel="stylesheet" 
 	  href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
     <link rel="stylesheet"
 	  href="{% static 'css/base.css' %}">
+    {% endblock style %}
   </head>
   <body>
     <div id="wrap">

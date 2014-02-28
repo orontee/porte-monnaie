@@ -1,0 +1,35 @@
+
+#graph-body {
+  font: 10px sans-serif;
+}
+
+.y.axisLeft text {
+    fill: steelblue;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar1 {
+  fill: #5cacee;
+}
+
+.bar2 {
+  fill: #ee9a00;
+}
+
+.bar1:hover {
+  fill: #63b8ff;
+}
+
+.bar2:hover {
+  fill: #ffa500;
+}
+
+.x.axis path {
+/*   display: none; */
+}
