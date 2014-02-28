@@ -97,7 +97,7 @@ $(projdir)/bootstrap/static/js:
 	[ -x $@ ] || mkdir -p $@
 
 $(projdir)/tracker/static/js/d3.js: $(d3_archive)
-	unzip $< d3.js -d $(projdir)/tracker/static/js
+	unzip -o $< d3.js -d $(projdir)/tracker/static/js
 
 $(projdir)/tracker/static/js/d3.min.js: $(d3_archive)
-	unzip $< d3.min.js -d $(projdir)/tracker/static/js
+	unzip -o $< d3.min.js -d $(projdir)/tracker/static/js
