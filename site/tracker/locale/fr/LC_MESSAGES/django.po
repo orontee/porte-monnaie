@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-20 23:25+0100\n"
+"POT-Creation-Date: 2014-02-28 01:50+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -96,7 +96,7 @@ msgid "created"
 msgstr "crée le"
 
 #: models.py:56 templates/tracker/expenditure_month_tags.html:63
-#: templates/tracker/expenditure_year_summary.html:59
+#: templates/tracker/expenditure_year_summary.html:74
 msgid "amount"
 msgstr "montant"
 
@@ -152,11 +152,11 @@ msgstr ""
 "Une erreur est survenue. L'administrateur du site a été informé et devrait "
 "corriger rapidement. Merci pour votre patience."
 
-#: templates/tracker/base.html:30
+#: templates/tracker/base.html:32
 msgid "Love without counting"
 msgstr "Aimer sans compter"
 
-#: templates/tracker/base.html:75
+#: templates/tracker/base.html:77
 #, python-format
 msgid "Powered by %(link)s"
 msgstr "Propulsé par %(link)s"
@@ -186,7 +186,7 @@ msgstr "édition d'une dépense"
 #: templates/tracker/expenditure_form.html:15
 #: templates/tracker/expenditure_month_list.html:8
 #: templates/tracker/expenditure_month_tags.html:9
-#: templates/tracker/expenditure_year_summary.html:8
+#: templates/tracker/expenditure_year_summary.html:13
 msgid "add expenditure"
 msgstr "ajouter une dépense"
 
@@ -199,7 +199,7 @@ msgstr "enregistrer"
 
 #: templates/tracker/expenditure_month_list.html:9
 #: templates/tracker/expenditure_month_tags.html:10
-#: templates/tracker/expenditure_year_summary.html:9
+#: templates/tracker/expenditure_year_summary.html:14
 #: templates/tracker/purse_list.html:8
 msgid "add"
 msgstr "ajouter"
@@ -210,7 +210,7 @@ msgstr "Voir les dépenses du mois précédent"
 
 #: templates/tracker/expenditure_month_list.html:19
 #: templates/tracker/expenditure_month_tags.html:16
-#: templates/tracker/expenditure_year_summary.html:19
+#: templates/tracker/expenditure_year_summary.html:24
 msgid "previous"
 msgstr "précédent"
 
@@ -220,7 +220,7 @@ msgstr "Voir les dépenses du mois suivant"
 
 #: templates/tracker/expenditure_month_list.html:26
 #: templates/tracker/expenditure_month_tags.html:22
-#: templates/tracker/expenditure_year_summary.html:26
+#: templates/tracker/expenditure_year_summary.html:31
 msgid "next"
 msgstr "suivant"
 
@@ -310,49 +310,54 @@ msgid "Tags for %(date)s."
 msgstr "Mots clés de %(date)s."
 
 #: templates/tracker/expenditure_month_tags.html:85
-#: templates/tracker/expenditure_year_summary.html:113
+#: templates/tracker/expenditure_year_summary.html:129
 #, python-format
 msgid "No expenditures found in %(date)s!"
 msgstr "Pas de dépenses en %(date)s&nbsp;!"
 
-#: templates/tracker/expenditure_year_summary.html:18
+#: templates/tracker/expenditure_year_summary.html:23
 msgid "View previous report"
 msgstr "Afficher le précédent bilan"
 
-#: templates/tracker/expenditure_year_summary.html:25
+#: templates/tracker/expenditure_year_summary.html:30
 msgid "View next report"
 msgstr "Afficher le bilan suivant"
 
-#: templates/tracker/expenditure_year_summary.html:38
+#: templates/tracker/expenditure_year_summary.html:44
+#: templates/tracker/expenditure_year_summary.html:140
 #, python-format
 msgid "Report for %(date)s"
 msgstr "Bilan de l'année %(date)s"
 
-#: templates/tracker/expenditure_year_summary.html:46
+#: templates/tracker/expenditure_year_summary.html:61
 msgid "The following table outlines your expenditures for the current year."
 msgstr ""
 "La table suivante donne un aperçu de vos dépenses au cours de cette année."
 
-#: templates/tracker/expenditure_year_summary.html:48
+#: templates/tracker/expenditure_year_summary.html:63
 #, python-format
 msgid "The following table outlines your expenditures for %(date)s."
 msgstr "La table suivante donne un aperçu de vos dépenses de %(date)s."
 
-#: templates/tracker/expenditure_year_summary.html:56
+#: templates/tracker/expenditure_year_summary.html:71
 msgid "month"
 msgstr "mois"
 
-#: templates/tracker/expenditure_year_summary.html:63
+#: templates/tracker/expenditure_year_summary.html:78
 msgid "average"
 msgstr "moyenne"
 
-#: templates/tracker/expenditure_year_summary.html:66
+#: templates/tracker/expenditure_year_summary.html:81
 msgid "delta"
 msgstr "écart"
 
-#: templates/tracker/expenditure_year_summary.html:94
+#: templates/tracker/expenditure_year_summary.html:110
 msgid "totals"
 msgstr "totaux"
+
+#: templates/tracker/expenditure_year_summary.html:147
+msgid "close"
+msgstr "fermer"
 
 #: templates/tracker/form_errors.html:5
 msgid "Please correct the error below."

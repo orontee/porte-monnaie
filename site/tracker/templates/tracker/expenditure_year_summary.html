@@ -137,14 +137,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="graph-modal-label">
-	  {% blocktrans with date=year|date:'Y' %}Graph for {{ date }}{% endblocktrans %}	  
+	  {% blocktrans with date=year|date:'Y' %}Report for {{ date }}{% endblocktrans %}	  
 	</h4>
       </div>
       <div class="modal-body" id="graph-body">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" 
-		data-dismiss="modal">Close</button>
+		data-dismiss="modal">{% trans 'close'|capfirst %}</button>
       </div>
     </div>
   </div>
