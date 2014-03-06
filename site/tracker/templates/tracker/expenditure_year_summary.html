@@ -133,6 +133,7 @@
 {% endblock content %}
 
 {% block scripts %}
+<script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
 <script src="{% static 'js/d3.min.js' %}"></script>
 <script src="{% static 'js/graph.js' %}"></script>
 <script type="text/javascript">
