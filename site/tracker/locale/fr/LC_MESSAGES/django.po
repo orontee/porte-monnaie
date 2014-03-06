@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-28 01:50+0100\n"
+"POT-Creation-Date: 2014-03-05 00:11+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -512,21 +512,29 @@ msgstr ""
 "Merci de vous intéresser à Porte-monnaie&nbsp;! Vous recevrez bientôt un "
 "courrier électronique expliquant comment activer votre compte."
 
-#: views/main.py:140
+#: views/main.py:34
+msgid "Your expenditures"
+msgstr "Vos dépenses"
+
+#: views/main.py:35
+msgid "Average"
+msgstr "Moyenne"
+
+#: views/main.py:143
 #, python-brace-format
 msgid "The purse called {purse} is already shared with {other}."
 msgstr "Le porte-monnaie {purse} est déjà partagé avec {other}."
 
-#: views/main.py:142
+#: views/main.py:145
 #, python-brace-format
 msgid "The purse called {purse} is now shared with {other}."
 msgstr "Le porte-monnaie {purse} est maintenant partagé avec {other}."
 
-#: views/main.py:320
+#: views/main.py:323
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 
-#: views/main.py:360
+#: views/main.py:363
 msgid "Filter tags"
 msgstr "Filtrer les mots clés"
 

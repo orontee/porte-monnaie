@@ -14,20 +14,20 @@
   shape-rendering: crispEdges;
 }
 
-.bar1 {
-  fill: #5cacee;
+.bar0 {
+  fill: #f0ad4e;
 }
 
-.bar2 {
-  fill: #ee9a00;
+.bar1 {
+  fill: #5bc0de;
+}
+
+.bar0:hover {
+  fill: #f0ad4e;
 }
 
 .bar1:hover {
-  fill: #63b8ff;
-}
-
-.bar2:hover {
-  fill: #ffa500;
+  fill: #5bc0de;
 }
 
 .x.axis path {

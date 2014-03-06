@@ -10,6 +10,13 @@ urlpatterns = patterns('',
                        url(r'^$', RedirectView.as_view(
                            url=reverse_lazy('tracker:home'))))
 
+js_info_dict = {
+    'packages': ('tracker',),
+}
+
+urlpatterns += patterns('',
+    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),)
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += patterns('', url(
