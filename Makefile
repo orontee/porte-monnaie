@@ -63,6 +63,8 @@ update-messages:
 			cd .. \
 		); \
 	done
+	cd $(projdir)/tracker; \
+	django-admin.py makemessages -l $(lang) --pythonpath=.. -d djangojs
 
 compile-messages:
 	for app in $(apps); do \
@@ -72,6 +74,8 @@ compile-messages:
 			cd .. \
 		); \
 	done
+	cd $(projdir)/tracker; \
+	django-admin.py compilemessages -l $(lang) --pythonpath=..
 
 collect:
 	cd $(projdir); \

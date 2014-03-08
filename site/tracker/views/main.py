@@ -31,9 +31,6 @@ from users.views.base import UserChange as UserChangeOrig
 
 User = get_user_model()
 
-_('Your expenditures')
-_('Average')
-
 
 class HomeView(RedirectView):
     """Home view.
