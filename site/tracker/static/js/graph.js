@@ -1,14 +1,16 @@
-var months = $(".month-anchor");
-var amounts = $(".amount");
-var averages = $(".average");
+var months = $("a.month-anchor");
+var amounts = $("td.amount");
+var averages = $("td.average");
 var i, data = [], amount, average;
 var cleanUp = function (str) {
     return str.replace(',', '.').replace('&nbsp;', '');
 };
 for (i = 0; i < months.length; i++) {
     amount = Number(cleanUp(amounts[i].innerHTML));
-    average = Number(cleanUp(averages[i].innerHTML));
-    if (!isNaN(amount) && !isNaN(average)) {
+    average = ((averages[i] !== undefined)
+               ? Number(cleanUp(averages[i].innerHTML))
+               : undefined);
+    if (!isNaN(amount)) {
         data.push({'amount': amount,
                    'average': average,
                    'month': months[i].innerHTML});
@@ -39,7 +41,10 @@ var legendData = d3.values(names);
 
 x.domain(data.map(function(d) { return d.month; }));
 y0.domain([0, d3.max(data, function(d) {
-    return Math.max(d.amount, d.average);
+    if (d.average !== undefined) {
+        return Math.max(d.amount, d.average);
+    }
+    return d.amount;
 })]);
 
 svg.append("g")
