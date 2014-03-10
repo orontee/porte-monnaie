@@ -1,35 +1,19 @@
 
 #graph-body {
-  font: 10px sans-serif;
-}
-
-.y.axisLeft text {
-    fill: steelblue;
+    font: 10px sans-serif;
 }
 
 .axis path,
 .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
 }
 
 .bar0 {
-  fill: #f0ad4e;
+    fill: #BA3482;
 }
 
 .bar1 {
-  fill: #5bc0de;
-}
-
-.bar0:hover {
-  fill: #f0ad4e;
-}
-
-.bar1:hover {
-  fill: #5bc0de;
-}
-
-.x.axis path {
-/*   display: none; */
+    fill: #BABABA;
 }
