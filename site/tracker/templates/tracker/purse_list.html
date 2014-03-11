@@ -1,15 +1,6 @@
 {% extends 'tracker/base.html' %}
 {% load i18n tracker_extras table %}
 
-{% block tools %}
-<li>
-  <a id="create-purse" href="{% url 'tracker:purse_creation' %}"
-     title="{% trans 'Create a new purse' %}">
-    {% trans 'add'|capfirst %}
-  </a>
-</li>
-{% endblock tools %}
-
 {% block parameters %}
 <ul class="nav navbar-nav navbar-right">
   {% include 'tracker/nav_parameters.html' %}
@@ -24,7 +15,9 @@
 <div id="main">
   {% if purses %}
   <p>
+    {% url 'tracker:purse_creation' as create_url %}
     {% blocktrans count counter=purses|length %}You have access to one purse.{% plural %}You have access to {{ counter }} purses.{% endblocktrans %}
+    {% blocktrans %}You may also <a href="{{ create_url }}">create</a> new purses.{% endblocktrans %}
   </p>
   <div class="table-responsive">
     <table class="table table-hover table-bordered table-striped">
@@ -32,16 +25,15 @@
       <tbody>
 	{% for p in purses %}
 	<tr>
-	  <td title="{{ p.name }}">
+	  <td>
 	    {{ p.name }}
 	  </td>
-	  <td title="{{ p.usernames }}">
+	  <td>
 	    {{ p.usernames }}
 	  </td>
-	  <td title="{{ p.description }}">
+	  <td>
 	    {{ p.description|capfirst }}
-	    <a href="{% url 'tracker:purse_update' pk=p.id %}"
-	       title="{% trans 'Edit this purse data' %}">
+	    <a href="{% url 'tracker:purse_update' pk=p.id %}">
 	      <span class="badge pull-right">
 		<span class="glyphicon glyphicon-pencil"></span>
 	      </span>

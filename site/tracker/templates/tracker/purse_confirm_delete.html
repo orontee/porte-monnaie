@@ -1,0 +1,29 @@
+{% extends 'tracker/base.html' %}
+{% load i18n %}
+
+{% block header %}
+<h2>{% trans 'purse deletion'|capfirst %}</h2>
+{% endblock %}
+
+{% block content %}
+{% with description=purse.description name=purse.name %}
+<p>
+  {% if description %}
+  {% blocktrans %}Confirm the deletion of the purse named <q>{{ name }}</q> described as follows: <q>{{ description }}</q>.{% endblocktrans %}
+  {% else %}
+  {% blocktrans %}Confirm the deletion of the purse named <q>{{ name }}</q>.{% endblocktrans %}
+  {% endif %}
+</p>
+{% endwith %}
+<form id="purse-form " class="form-horizontal"
+      role="form"
+      action="" method="post">{% csrf_token %}
+  {% include 'tracker/form_errors.html' %}
+  <div class="form-group">
+    <div class="col-sm-10">
+      <input type="submit" value="{% trans 'delete'|capfirst %}"
+	     class="btn btn-primary">
+    </div>
+  </div>
+</form>
+{% endblock content %}

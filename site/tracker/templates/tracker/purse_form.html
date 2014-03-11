@@ -30,6 +30,13 @@
     </div>
   </div>
 </form>
+{% if purse %}
+<p>
+  {% url 'tracker:purse_delete' purse as delete_url %}
+  {% url 'tracker:purse_share' purse as share_url %}
+  {% blocktrans %}You may also <a href="{{ delete_url }}">delete </a> or <a href="{{ share_url }}">share</a> this purse.{% endblocktrans %}
+</p>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}

@@ -15,8 +15,8 @@ class FieldNamesMixin(object):
         try:
             context['field_names'] = self.field_names
         except AttributeError:
-            raise ImproperlyConfigured("field_names attribute "
-                                       "required by FieldNamesMixin")
+            raise ImproperlyConfigured('FieldNamesMixin requires '
+                                       'the field_names attribute')
         return context
 
 
@@ -102,17 +102,28 @@ class QueryFilterMixin(object):
 
 
 class ObjectOwnerMixin(object):
-    """Check that the logged in account is the owner of ``object``.
+    """Check that the logged in account is the owner of an object.
 
     To be used with ``SingleObjectMixin`` or
     ``SingleObjectTemplateResponseMixin``.
     """
     owner_field = "author"
 
+    def is_owner(self, user, obj):
+        """Check that ``user`` is the owner of ``obj``.
+
+        The check compares the attribute named ``owner_field`` of
+        ``obj`` and ``user``.
+        """
+        if self.author_field is None:
+            raise ImproperlyConfigured('ObjectOwnerMixin requires '
+                                       'the owner_field')
+        return getattr(obj, self.owner_field, None) == user
+
     def dispatch(self, *args, **kwargs):
         user = self.request.user
         obj = self.get_object()
-        if not getattr(obj, self.owner_field, None) == user:
+        if not self.is_owner(user, obj):
             raise Http404()
         return super(ObjectOwnerMixin, self).dispatch(*args, **kwargs)
 
@@ -129,6 +140,6 @@ class EditableObjectMixin(object):
             if not obj.is_editable():
                 raise Http404()
         except AttributeError:
-            raise ImproperlyConfigured("is_editable attribute required "
-                                       "by EditableObjectMixin")
+            raise ImproperlyConfigured('EditableObjectMixin requires '
+                                       'the is_editable attribute')
         return super(EditableObjectMixin, self).dispatch(*args, **kwargs)

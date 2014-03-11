@@ -88,6 +88,19 @@ class PurseList(LoginRequiredMixin,
         return qs
 
 
+class PurseDelete(LoginRequiredMixin,
+                  ObjectOwnerMixin,
+                  DeleteView):
+    """View to delete a purse.
+    """
+    model = Purse
+    context_object_name = 'purse'
+    success_url = reverse_lazy('tracker:purse_list')
+
+    def is_owner(self, user, obj):
+        return user in obj.users.all()
+
+
 class UserPurseMixin(object):
     """Set choices for the attribute whose name is ``purse_field_name``.
 
@@ -102,8 +115,8 @@ class UserPurseMixin(object):
             form = super(UserPurseMixin, self).get_form(form_class)
             purses = self.request.user.purse_set.all()
         except AttributeError:
-            raise ImproperlyConfigured("UserPurseMixin requires the mixin"
-                                       "LoginRequiredMixin and FormMixin")
+            raise ImproperlyConfigured('UserPurseMixin requires the mixin '
+                                       'LoginRequiredMixin and FormMixin')
         else:
             f = form.fields.get(self.purse_field_name)
             f.choices = [(p.id, p.name) for p in purses]
@@ -159,14 +172,14 @@ class DefaultPurseMixin(object):
         try:
             user = self.request.user
         except AttributeError:
-            raise ImproperlyConfigured("DefaultPurseMixin requires the mixin"
-                                       "LoginRequiredMixin")
+            raise ImproperlyConfigured('DefaultPurseMixin requires the mixin '
+                                       'LoginRequiredMixin')
         else:
             try:
                 purse = user.default_purse
             except AttributeError:
-                raise ImproperlyConfigured("User model does not define a "
-                                           "purse_default attribute")
+                raise ImproperlyConfigured('User model does not define a '
+                                           'purse_default attribute')
             else:
                 return purse
 
@@ -195,8 +208,8 @@ class ObjectPurseMixin(object):
         try:
             purse = self.object.purse
         except AttributeError:
-            raise ImproperlyConfigured("object attribute required by"
-                                       "ObjectPurseMixin")
+            raise ImproperlyConfigured('object attribute required by '
+                                       'ObjectPurseMixin')
         else:
             return purse
 
@@ -210,8 +223,8 @@ class TagNamesMixin(object):
         try:
             purse = self.purse
         except AttributeError:
-            raise ImproperlyConfigured("purse attribute required "
-                                       "by TagNamesMixin")
+            raise ImproperlyConfigured('purse attribute required '
+                                       'by TagNamesMixin')
         context.update({'tagnames': Tag.objects.get_names_for(purse)})
         return context
 
