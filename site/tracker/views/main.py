@@ -270,6 +270,7 @@ class ExpenditureDelete(LoginRequiredMixin,
     model = Expenditure
     context_object_name = 'expenditure'
     success_url = reverse_lazy('tracker:home')
+    owner_field = "author"
 
 
 class ExpenditureUpdate(LoginRequiredMixin,
@@ -284,6 +285,7 @@ class ExpenditureUpdate(LoginRequiredMixin,
     context_object_name = 'expenditure'
     form_class = ExpenditureForm
     success_url = reverse_lazy('tracker:home')
+    owner_field = "author"
 
 
 class ExpenditureList(LoginRequiredMixin,

@@ -107,7 +107,7 @@ class ObjectOwnerMixin(object):
     To be used with ``SingleObjectMixin`` or
     ``SingleObjectTemplateResponseMixin``.
     """
-    owner_field = "author"
+    owner_field = None
 
     def is_owner(self, user, obj):
         """Check that ``user`` is the owner of ``obj``.
@@ -115,7 +115,7 @@ class ObjectOwnerMixin(object):
         The check compares the attribute named ``owner_field`` of
         ``obj`` and ``user``.
         """
-        if self.author_field is None:
+        if self.owner_field is None:
             raise ImproperlyConfigured('ObjectOwnerMixin requires '
                                        'the owner_field')
         return getattr(obj, self.owner_field, None) == user
