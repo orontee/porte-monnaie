@@ -42,12 +42,6 @@
 {% block header %}
 <h2>
   {% blocktrans with date=year|date:'Y' %}Report for {{ date }}{% endblocktrans %}
-  {% if amounts %}
-  <a class="hidden-xs" href="#graph-body">
-    <span class="glyphicon glyphicon-stats">
-    </span>
-  </a>
-  {% endif %}
 </h2>
 {% endblock header %}
 

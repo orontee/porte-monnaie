@@ -1,38 +1,21 @@
 {% load i18n tracker_extras %}
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    <span class="glyphicon glyphicon-wrench">
-    </span>
+    {% trans 'parameters'|capfirst %}
     <b class="caret"></b>
   </a>
   <ul class="dropdown-menu">
-    <li class="dropdown-header">
-      {% trans 'purse'|capfirst %}
-    </li>
     <li>
       <a href="{% url 'tracker:purse_list' %}">
 	{% trans 'purse list'|capfirst %}
       </a>
     </li>
     <li>
-      <a href="{% url 'tracker:purse_share' %}">
-	{% trans 'share purse'|capfirst %}
-      </a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">
-      {% trans 'account'|capfirst %}
-    </li>
-    <li>
       <a href="{% url 'tracker:user_change' %}">
 	{% trans 'account parameters'|capfirst %}
       </a>
     </li>
-    <li>
-      <a href="{% url 'tracker:password_change' %}">
-	{% trans 'change password'|capfirst %}
-      </a>
-    </li>
+    <li class="divider"></li>
     <li>
       <a href="{% url 'tracker:logout' %}">
 	{% trans 'log out'|capfirst %}
