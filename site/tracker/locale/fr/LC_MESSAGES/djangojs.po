@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
-"Report-Msgid-Bugs-To: Matthias Meulien <orontee@gmail.com>\n"
-"POT-Creation-Date: 2014-03-08 22:55+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-03-11 02:43+0100\n"
 "PO-Revision-Date: 2014-03-08 22:56+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: static/js/graph.js:36
+#: static/js/graph.js:38
 msgid "Your expenditures"
 msgstr "Vos dépenses"
 
-#: static/js/graph.js:36
+#: static/js/graph.js:38
 msgid "Average"
 msgstr "Moyenne"

@@ -17,7 +17,7 @@
   <p>
     {% url 'tracker:purse_creation' as create_url %}
     {% blocktrans count counter=purses|length %}You have access to one purse.{% plural %}You have access to {{ counter }} purses.{% endblocktrans %}
-    {% blocktrans %}You may also <a href="{{ create_url }}">create</a> new purses.{% endblocktrans %}
+    {% blocktrans %}You can <a href="{{ create_url }}">create new purses</a>.{% endblocktrans %}
   </p>
   <div class="table-responsive">
     <table class="table table-hover table-bordered table-striped">

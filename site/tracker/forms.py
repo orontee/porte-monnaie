@@ -86,7 +86,6 @@ class PurseForm(BootstrapWidgetMixin, ModelForm):
 class PurseShareForm(BootstrapWidgetMixin, Form):
     """Form to input a user name.
     """
-    purse = ChoiceField(label=_('purse'), required=True)
     user = CharField(label=_('user name'))
 
     def clean_user(self):
@@ -97,17 +96,6 @@ class PurseShareForm(BootstrapWidgetMixin, Form):
             data = User.objects.get(username=data)
         except User.DoesNotExist:
             msg = _('This user name is unknown.')
-            raise ValidationError(msg)
-        return data
-
-    def clean_purse(self):
-        """Purse field cleaning.
-        """
-        data = self.cleaned_data['purse']
-        try:
-            data = Purse.objects.get(pk=data)
-        except Purse.DoesNotExist:
-            msg = _('This purse was not found.')
             raise ValidationError(msg)
         return data
 

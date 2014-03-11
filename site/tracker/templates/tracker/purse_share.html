@@ -16,7 +16,7 @@
 {% block content %}
 <div class="alert alert-warning">
   <strong>{% trans 'Warning!' %}</strong>
-  {% blocktrans %}Sharing a purse is an irreversible operation. Whatsmore, once a purse is shared with a given user, that user is free to share the purse with anyone.{% endblocktrans %}
+  {% blocktrans with name=purse.name %}You are about to share the purse named <q>{{name }}</q>. Sharing a purse is an irreversible operation. Whatsmore, once a purse is shared with a given user, that user is free to share or delete the purse.{% endblocktrans %}
 </div>
 <form id="purse-form" class="form-horizontal"
       role="form"

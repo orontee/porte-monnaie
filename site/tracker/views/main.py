@@ -10,7 +10,6 @@ from django.db.models import Sum
 from django.http import (HttpResponseRedirect, Http404)
 from django.views.generic import (CreateView,
                                   DeleteView,
-                                  FormView,
                                   ListView,
                                   MonthArchiveView,
                                   RedirectView,
@@ -43,7 +42,7 @@ class PurseCreation(LoginRequiredMixin, CreateView):
     """
     model = Purse
     form_class = PurseForm
-    success_url = reverse_lazy('tracker:home')
+    success_url = reverse_lazy('tracker:purse_list')
 
     def form_valid(self, form):
         """Process a valid form.
@@ -61,7 +60,7 @@ class PurseUpdate(LoginRequiredMixin, UpdateView):
     """
     model = Purse
     form_class = PurseForm
-    success_url = reverse_lazy('tracker:home')
+    success_url = reverse_lazy('tracker:purse_list')
 
     def dispatch(self, *args, **kwargs):
         """Check that the logged in account belongs to the requested purse.
@@ -134,13 +133,19 @@ class UserChange(UserPurseMixin, UserChangeOrig):
 
 
 class PurseShare(LoginRequiredMixin,
-                 UserPurseMixin,
-                 FormView):
+                 UpdateView):
     """View to invite a user to join a purse.
     """
     template_name = 'tracker/purse_share.html'
+    context_object_name = 'purse'
+    model = Purse
     form_class = PurseShareForm
-    success_url = reverse_lazy('tracker:home')
+    success_url = reverse_lazy('tracker:purse_list')
+
+    def get_form_kwargs(self):
+        kwargs = super(PurseShare, self).get_form_kwargs()
+        del kwargs['instance']
+        return kwargs
 
     def form_valid(self, form):
         """Process a valid form.
@@ -148,16 +153,15 @@ class PurseShare(LoginRequiredMixin,
         The user is notified.
         """
         other = form.cleaned_data['user']
-        purse = form.cleaned_data['purse']
+        purse = self.get_object()
         if purse.users.filter(pk=other.pk).exists():
-            msg = _("The purse called {purse} is already shared with {other}.")
+            msg = _("The purse called <q>{purse}</q> is already shared with {other}.")
         else:
-            msg = _("The purse called {purse} is now shared with {other}.")
+            msg = _("The purse called <q>{purse}</q> is now shared with {other}.")
             purse.users.add(other)
-            purse.save()
         messages.info(self.request, msg.format(other=other.get_full_name(),
                                                purse=purse.name))
-        return super(PurseShare, self).form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DefaultPurseMixin(object):
@@ -187,11 +191,15 @@ class DefaultPurseMixin(object):
         user = self.request.user
         purses = Purse.objects.filter(users__pk=user.pk)
         if not purses.exists():
+            msg = _('First, create a purse...')
+            messages.info(self.request, msg)
             return HttpResponseRedirect(
                 reverse_lazy('tracker:purse_creation'))
         if self.purse is None:
-            return HttpResponseRedirect(
-                reverse_lazy('tracker:user_change'))
+            user.default_purse = purses[0]
+            user.save()
+            msg = _('Your default purse is now <q>{name}</q>.')
+            messages.info(self.request, msg.format(name=purses[0].name))
         return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
