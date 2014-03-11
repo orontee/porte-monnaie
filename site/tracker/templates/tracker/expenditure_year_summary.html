@@ -9,8 +9,7 @@
 
 {% block tools %}
 <li>
-  <a id="add-expenditure" href="{% url 'tracker:add' %}"
-     title="{% trans 'add expenditure'|capfirst %}">
+  <a id="add-expenditure" href="{% url 'tracker:add' %}">
     {% trans 'add'|capfirst %}
   </a>
 </li>
@@ -19,15 +18,13 @@
 {% block navigate %}
 <li>
   <a id="previous" 
-     href="{% url 'tracker:summary' previous_year.year %}"
-     title="{% trans 'View previous report' %}">
+     href="{% url 'tracker:summary' previous_year.year %}">
     {% trans 'previous'|capfirst %}
   </a>
 </li>
 <li>
   <a id="next" 
-     href="{% url 'tracker:summary' next_year.year %}"
-     title="{% trans 'View next report' %}">
+     href="{% url 'tracker:summary' next_year.year %}">
     {% trans 'next'|capfirst %}
   </a>
 </li>
@@ -78,20 +75,20 @@
       <tbody>
 	{% for a in amounts %}
 	<tr>
-	  <td title="{{ a.month|date:'F'|capfirst }}" class="month">
+	  <td class="month">
 	    <a class="month-anchor" 
 	       href="{% url 'tracker:archive' year=year.year month=a.month.month %}">
 	      {{ a.month|date:'F'|capfirst }}
 	    </a>
 	  </td>
-	  <td title="{{ a.amount|floatformat:2 }}" class="amount">
+	  <td class="amount">
 	    {{ a.amount|floatformat:2 }}
 	  </td>
 	  {% if shared_purse %}
-	  <td title="{{ a.average|floatformat:2 }}" class="average">
+	  <td class="average">
 	    {{ a.average|floatformat:2 }}
 	  </td>
-	  <td title="{{ a.delta|floatformat:2 }}" class="delta">
+	  <td class="delta">
 	    {{ a.delta|floatformat:2 }}
 	  </td>
 	  {% endif %}
@@ -101,14 +98,14 @@
 	  <td>
 	    {% trans 'totals'|capfirst %}
 	  </td>
-	  <td title="{{ totals.amount|floatformat:2 }}" class="amount">
+	  <td class="amount">
 	    {{ totals.amount|floatformat:2 }}
 	  </td>
 	  {% if shared_purse %}
-	  <td title="{{ totals.average|floatformat:2 }}" class="average">
+	  <td class="average">
 	    {{ totals.average|floatformat:2 }}
 	  </td>
-	  <td title="{{ totals.delta|floatformat:2 }}" class="delta">
+	  <td class="delta">
 	    {{ totals.delta|floatformat:2 }}
 	  </td>
 	  {% endif %}

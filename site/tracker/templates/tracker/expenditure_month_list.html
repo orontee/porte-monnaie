@@ -4,8 +4,7 @@
 
 {% block tools %}
 <li>
-  <a id="add-expenditure" href="{% url 'tracker:add' %}"
-     title="{% trans 'add expenditure'|capfirst %}">
+  <a id="add-expenditure" href="{% url 'tracker:add' %}">
     {% trans 'add'|capfirst %}
   </a>
 </li>
@@ -14,22 +13,19 @@
 {% block navigate %}
 <li>
   <a id="previous" 
-     href="{% url 'tracker:archive' previous_month.year previous_month.month %}"
-     title="{% trans 'View previous month expenditures' %}">
+     href="{% url 'tracker:archive' previous_month.year previous_month.month %}">
     {% trans 'previous'|capfirst %}
   </a>
 </li>
 <li>
   <a id="next" 
-     href="{% url 'tracker:archive' next_month.year next_month.month %}"
-     title="{% trans 'View next month expenditures' %}">
+     href="{% url 'tracker:archive' next_month.year next_month.month %}">
     {% trans 'next'|capfirst %}
   </a>
 </li>
 <li>
   <a id="report" 
-     href="{% url 'tracker:summary' next_month.year %}"
-     title="{% trans 'View yearly report' %}">
+     href="{% url 'tracker:summary' next_month.year %}">
     {% trans 'report'|capfirst %}
   </a>
 </li>
@@ -68,22 +64,21 @@
       <tbody>
 	{% for e in expenditures %}
 	<tr>
-	  <td title="{{ e.date|date:'DATE_FORMAT' }}" class="date">
+	  <td class="date">
 	    {{ e.date|naturalday:'l j' }}
 	  </td>
-	  <td title="{{ e.amount|floatformat:2 }}" class="amount">
+	  <td class="amount">
 	    {{ e.amount|floatformat:2 }}
 	  </td>
 	  {% with user=e.author %}
-	  <td title="{% firstof user.first_name user.username %}" class="author">
+	  <td class="author">
 	    {% firstof user.first_name user.username %}
 	  </td>
 	  {% endwith %}
-	  <td title="{{ e.description|capfirst }}" class="description">
+	  <td class="description">
 	    {{ e.description|capfirst }}
 	    {% if user.username == e.author.username and e.is_editable %}
-	    <a href="{% url 'tracker:update' e.pk %}"
-	       title="{% blocktrans count days=edit_delay %}Your expenditures can be updated the day of their creation{% plural %}Your expenditures can be updated for {{ days }} days after their creation{% endblocktrans %}">
+	    <a href="{% url 'tracker:update' e.pk %}">
 	      <span class="badge pull-right">
 		<span class="glyphicon glyphicon-pencil"></span>
 	      </span>

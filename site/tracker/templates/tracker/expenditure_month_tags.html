@@ -5,38 +5,32 @@
 <div id="main">
   <ul id="toolbar" class="small left menu-container">
     <li class="left">
-      <a id="add-expenditure" href="{% url 'tracker:add' %}"
-	 title="{% trans 'add expenditure'|capfirst %}">
+      <a id="add-expenditure" href="{% url 'tracker:add' %}">
 	{% trans 'add'|capfirst %}
       </a>
     </li>
     <li class="left">
-      <a id="previous" href="{% url 'tracker:tags' previous_month.year previous_month.month %}"
-	 title="{% trans 'View previous month tags' %}">
+      <a id="previous" href="{% url 'tracker:tags' previous_month.year previous_month.month %}">
 	{% trans 'previous'|capfirst %}
       </a>
     </li>
     <li class="left">
-      <a id="next" href="{% url 'tracker:tags' next_month.year next_month.month %}"
-	 title="{% trans 'View next month tags' %}">
+      <a id="next" href="{% url 'tracker:tags' next_month.year next_month.month %}">
 	{% trans 'next'|capfirst %}
       </a>
     </li>
     <li class="left first-choice">
-      <a id="details" href="{% url 'tracker:archive' month.year month.month %}"
-	 title="{% trans 'View expenditures details' %}">
+      <a id="details" href="{% url 'tracker:archive' month.year month.month %}">
 	{% trans 'details'|capfirst %}
       </a>
     </li>
     <li class="left selected middle-choice">
-      <a id="tags" href="{% url 'tracker:tags' month.year month.month %}"
-	 title="{% trans 'View month tags' %}">
+      <a id="tags" href="{% url 'tracker:tags' month.year month.month %}">
 	{% trans 'tags'|capfirst %}
       </a>
     </li>
     <li class="left last-choice">
-      <a id="report" href="{% url 'tracker:summary' month.year %}"
-	 title="{% trans 'View yearly report' %}">
+      <a id="report" href="{% url 'tracker:summary' month.year %}">
 	{% trans 'report'|capfirst %}
       </a>
     </li>
@@ -68,12 +62,12 @@
     <tbody>
       {% for a in tags %}
       <tr class={% cycle 'odd' 'even' %}>
-	<td title="{{ a.name|capfirst }}">
+	<td>
 	  <a href="{% url 'tracker:archive' year=month.year month=month.month %}?filter={{ a.name }}">
 	    {{ a.name|capfirst }}
 	  </a>
 	</td>
-	<td title="{{ a.amount|floatformat:2 }}" class="amount">
+	<td class="amount">
 	  {{ a.amount|floatformat:2 }}
 	</td>
       </tr>
