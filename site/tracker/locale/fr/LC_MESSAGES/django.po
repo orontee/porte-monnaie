@@ -370,7 +370,7 @@ msgstr "paramètres du compte"
 
 #: templates/tracker/nav_parameters.html:21
 msgid "log out"
-msgstr "deconnexion"
+msgstr "déconnexion"
 
 #: templates/tracker/purse_confirm_delete.html:5
 msgid "purse deletion"
