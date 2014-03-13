@@ -1,0 +1,86 @@
+{% extends 'tracker/base.html' %}
+{% load i18n tracker_extras table humanize %}
+
+{% block navigate %}
+<li>
+  <a id="report"
+     href="{% url 'tracker:summary' now.year %}">
+    {% trans 'report'|capfirst %}
+  </a>
+</li>
+<li class="active">
+  <a id="search"
+     href="{% url 'tracker:expenditure-search' %}">
+    {% trans 'search'|capfirst %}
+  </a>
+</li>
+{% endblock navigate %}
+
+{% block parameters %}
+<ul class="nav navbar-nav navbar-right">
+  {% include 'tracker/nav_parameters.html' %}
+</ul>
+{% endblock parameters %}
+
+{% block header %}
+<h2>{% trans 'Expenditure search' %}</h2>
+{% endblock %}
+
+{% block content %}
+<div id="main">
+  {% include 'tracker/filter.html' %}
+  {% if expenditures %}
+  {% if filter %}
+  <div>
+    {% blocktrans with count=paginator.count total=total_amount|floatformat:2 %}Found {{ count }} expenditures for an amount of {{ total }}€.{% endblocktrans %}
+    {% if user_amount and shared_purse %}
+    {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
+    {% endif %}
+    {% endif %}
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
+      {% table_header field_names %}
+      <tbody>
+	{% for e in expenditures %}
+	<tr>
+	  <td class="date">
+	    {{ e.date|naturalday:'l j F Y' }}
+	  </td>
+	  <td class="amount">
+	    {{ e.amount|floatformat:2 }}
+	  </td>
+	  {% with user=e.author %}
+	  <td class="author">
+	    {% firstof user.first_name user.username %}
+	  </td>
+	  {% endwith %}
+	  <td class="description">
+	    {{ e.description|capfirst }}
+	    {% if user.username == e.author.username and e.is_editable %}
+	    <a href="{% url 'tracker:update' e.pk %}">
+	      <span class="badge pull-right">
+		<span class="glyphicon glyphicon-pencil"></span>
+	      </span>
+	    </a>
+	    {% endif %}
+	  </td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+    {% pagination %}
+  </div>
+  {% else %}
+  <div class="alert alert-warning">
+    {% trans 'No expenditures found!' %}
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript">
+  Tracker.focus('id_filter');
+</script>
+{% endblock scripts %}

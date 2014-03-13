@@ -1,0 +1,22 @@
+{% load i18n %}
+<form id="filter"
+      role="search"
+      action="" method="get">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group">
+	<input id="id_filter" class="form-control"
+	       name="filter" type="text"
+	       value="{{ filter }}" 
+	       placeholder="{{ filter_description }}">
+	<span class="input-group-btn">
+	  <button class="btn btn-default" type="button">
+	    <span class="glyphicon glyphicon-search"></span>
+	  </button>
+	</span>
+      </div>
+    </div>
+  </div>
+</form>
+
+
