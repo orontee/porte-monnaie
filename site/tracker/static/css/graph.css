@@ -10,10 +10,10 @@
     shape-rendering: crispEdges;
 }
 
-.bar0 {
+.bar-amount {
     fill: #BA3482;
 }
 
-.bar1 {
+.bar-average {
     fill: #BABABA;
 }
