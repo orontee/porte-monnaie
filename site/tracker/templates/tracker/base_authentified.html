@@ -1,0 +1,29 @@
+{% extends 'tracker/base.html' %}
+{% load i18n %}
+
+{% block navigate %}
+<li>
+  <a id="browse"
+     href="{% url 'tracker:archive' now.year now.month %}">
+    {% trans 'browse'|capfirst %}
+  </a>
+</li>
+<li>
+  <a id="report"
+     href="{% url 'tracker:summary' now.year %}">
+    {% trans 'report'|capfirst %}
+  </a>
+</li>
+<li>
+  <a id="search"
+     href="{% url 'tracker:expenditure-search' %}">
+    {% trans 'search'|capfirst %}
+  </a>
+</li>
+{% endblock navigate %}
+
+{% block parameters %}
+<ul class="nav navbar-nav navbar-right">
+  {% include 'tracker/nav_parameters.html' %}
+</ul>
+{% endblock parameters %}
