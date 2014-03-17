@@ -1,26 +1,5 @@
-{% extends 'tracker/base.html' %}
+{% extends 'tracker/base_authentified.html' %}
 {% load i18n tracker_extras table humanize %}
-
-{% block navigate %}
-<li>
-  <a id="report"
-     href="{% url 'tracker:summary' now.year %}">
-    {% trans 'report'|capfirst %}
-  </a>
-</li>
-<li class="active">
-  <a id="search"
-     href="{% url 'tracker:expenditure-search' %}">
-    {% trans 'search'|capfirst %}
-  </a>
-</li>
-{% endblock navigate %}
-
-{% block parameters %}
-<ul class="nav navbar-nav navbar-right">
-  {% include 'tracker/nav_parameters.html' %}
-</ul>
-{% endblock parameters %}
 
 {% block header %}
 <h2>{% trans 'Expenditure search' %}</h2>
@@ -32,7 +11,7 @@
   {% if expenditures %}
   {% if filter %}
   <div>
-    {% blocktrans with count=paginator.count total=total_amount|floatformat:2 %}Found {{ count }} expenditures for an amount of {{ total }}€.{% endblocktrans %}
+    {% blocktrans count count=paginator.count with total=total_amount|floatformat:2 %}Found one expenditure for an amount of {{ total }}€.{% plural %}Found {{ count }} expenditures for an amount of {{ total }}€.{% endblocktrans %}
     {% if user_amount and shared_purse %}
     {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
     {% endif %}
@@ -80,7 +59,13 @@
 {% endblock content %}
 
 {% block scripts %}
+{{ block.super }}
 <script type="text/javascript">
   Tracker.focus('id_filter');
+
+  var activeTool = document.getElementById('search');
+  if (activeTool != null) {
+    activeTool.parentNode.className += 'active';
+}
 </script>
 {% endblock scripts %}

@@ -36,6 +36,9 @@ body {
     padding-left: 0.125em;
 }
 
+.header-detail {
+    vertical-align: middle;
+}
 
 td.date{
     text-align: left;
@@ -57,4 +60,8 @@ th.author {
 
 tr.total {
     font-weight: bold;
+}
+
+#filter {
+    margin-bottom: 2ex;
 }

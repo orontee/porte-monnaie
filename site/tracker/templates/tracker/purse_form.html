@@ -1,11 +1,5 @@
-{% extends 'tracker/base.html' %}
+{% extends 'tracker/base_authentified.html' %}
 {% load i18n %}
-
-{% block parameters %}
-<ul class="nav navbar-nav navbar-right">
-  {% include 'tracker/nav_parameters.html' %}
-</ul>
-{% endblock parameters %}
 
 {% block header %}
 <h2>
@@ -40,6 +34,7 @@
 {% endblock %}
 
 {% block scripts %}
+{{ block.super }}
 <script type="text/javascript">
   Tracker.focus('id_name');
 </script>

@@ -1,4 +1,4 @@
-{% extends 'tracker/base.html' %}
+{% extends 'tracker/base_authentified.html' %}
 {% load i18n tracker_extras table %}
 
 {% block parameters %}
@@ -57,6 +57,7 @@
 {% endblock content %}
 
 {% block scripts %}
+{{ block.super }}
 <script type="text/javascript">
   Tracker.focus('create-purse');
 </script>

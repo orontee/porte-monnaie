@@ -1,4 +1,4 @@
-{% extends 'tracker/base.html' %}
+{% extends 'tracker/base_authentified.html' %}
 {% load i18n %}
 
 {% block parameters %}
@@ -39,6 +39,7 @@
 {% endblock %}
 
 {% block scripts %}
+{{ super.block }}
 <script type="text/javascript">
   Tracker.focus('id_amount');
   Tracker.listenToTags('id_description');

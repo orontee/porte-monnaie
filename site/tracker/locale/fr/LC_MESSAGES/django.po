@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-11 02:43+0100\n"
+"POT-Creation-Date: 2014-03-17 00:44+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -86,8 +86,7 @@ msgstr ""
 msgid "created"
 msgstr "crée le"
 
-#: models.py:56 templates/tracker/expenditure_month_tags.html:63
-#: templates/tracker/expenditure_year_summary.html:66
+#: models.py:56 templates/tracker/expenditure_year_summary.html:50
 msgid "amount"
 msgstr "montant"
 
@@ -107,7 +106,7 @@ msgstr "porte-monnaie"
 msgid "generated"
 msgstr "généré"
 
-#: models.py:138 templates/tracker/expenditure_month_tags.html:60
+#: models.py:138
 msgid "name"
 msgstr "nom"
 
@@ -152,6 +151,22 @@ msgstr ""
 msgid "Powered by %(link)s"
 msgstr "Propulsé par %(link)s"
 
+#: templates/tracker/base_authentified.html:8
+msgid "browse"
+msgstr "parcourir"
+
+#: templates/tracker/base_authentified.html:14
+msgid "report"
+msgstr "bilan"
+
+#: templates/tracker/base_authentified.html:20
+msgid "search"
+msgstr "recherche"
+
+#: templates/tracker/base_authentified.html:25
+msgid "add"
+msgstr "ajouter"
+
 #: templates/tracker/expenditure_confirm_delete.html:5
 msgid "expenditure deletion"
 msgstr "suppression d'une dépense"
@@ -171,189 +186,110 @@ msgstr ""
 msgid "delete"
 msgstr "supprimer"
 
+#: templates/tracker/expenditure_filtered_list.html:5
+msgid "Expenditure search"
+msgstr "Recherche de dépenses"
+
+#: templates/tracker/expenditure_filtered_list.html:14
+#, python-format
+msgid "Found one expenditure for an amount of %(total)s€."
+msgid_plural "Found %(count)s expenditures for an amount of %(total)s€."
+msgstr[0] "Une dépense trouvée pour un montant de %(total)s€."
+msgstr[1] "%(count)s dépenses trouvées pour un montant de %(total)s€."
+
+#: templates/tracker/expenditure_filtered_list.html:16
+#: templates/tracker/expenditure_month_list.html:37
+#, python-format
+msgid "You authored %(user)s€."
+msgstr "Dont %(user)s€ sont à votre initiative."
+
+#: templates/tracker/expenditure_filtered_list.html:55
+msgid "No expenditures found!"
+msgstr "Pas de dépenses trouvées&nbsp;!"
+
 #: templates/tracker/expenditure_form.html:13
 msgid "edit expenditure"
 msgstr "édition d'une dépense"
 
 #: templates/tracker/expenditure_form.html:15
-#: templates/tracker/expenditure_month_list.html:8
-#: templates/tracker/expenditure_month_tags.html:9
-#: templates/tracker/expenditure_year_summary.html:13
 msgid "add expenditure"
 msgstr "ajouter une dépense"
 
 #: templates/tracker/expenditure_form.html:28
-#: templates/tracker/purse_form.html:28
+#: templates/tracker/purse_form.html:22
 #: templates/users/password_change_form.html:22
 #: templates/users/user_form.html:30
 msgid "save"
 msgstr "enregistrer"
 
-#: templates/tracker/expenditure_month_list.html:9
-#: templates/tracker/expenditure_month_tags.html:10
-#: templates/tracker/expenditure_year_summary.html:14
-msgid "add"
-msgstr "ajouter"
-
-#: templates/tracker/expenditure_month_list.html:18
-msgid "View previous month expenditures"
-msgstr "Voir les dépenses du mois précédent"
-
-#: templates/tracker/expenditure_month_list.html:19
-#: templates/tracker/expenditure_month_tags.html:16
-#: templates/tracker/expenditure_year_summary.html:24
+#: templates/tracker/expenditure_month_list.html:17
+#: templates/tracker/expenditure_year_summary.html:22
 msgid "previous"
 msgstr "précédent"
 
-#: templates/tracker/expenditure_month_list.html:25
-msgid "View next month expenditures"
-msgstr "Voir les dépenses du mois suivant"
-
-#: templates/tracker/expenditure_month_list.html:26
-#: templates/tracker/expenditure_month_tags.html:22
-#: templates/tracker/expenditure_year_summary.html:31
+#: templates/tracker/expenditure_month_list.html:22
+#: templates/tracker/expenditure_year_summary.html:27
 msgid "next"
 msgstr "suivant"
 
 #: templates/tracker/expenditure_month_list.html:32
-#: templates/tracker/expenditure_month_tags.html:39
-msgid "View yearly report"
-msgstr "Afficher le bilan annuel"
-
-#: templates/tracker/expenditure_month_list.html:33
-#: templates/tracker/expenditure_month_tags.html:40
-msgid "report"
-msgstr "bilan"
-
-#: templates/tracker/expenditure_month_list.html:57
 #, python-format
 msgid "In %(date)s, the current amount of expenditures is equal to %(total)s€."
 msgstr ""
 "Au mois de %(date)s, le montant total des dépenses s'élève à %(total)s€."
 
-#: templates/tracker/expenditure_month_list.html:59
+#: templates/tracker/expenditure_month_list.html:34
 #, python-format
 msgid "In %(date)s, the total amount of expenditures was equal to %(total)s€."
 msgstr ""
 "Au mois de %(date)s, le montant total des dépenses a été de %(total)s€."
 
-#: templates/tracker/expenditure_month_list.html:62
-#, python-format
-msgid "You authored %(user)s€."
-msgstr "Dont %(user)s€ sont à votre initiative."
-
-#: templates/tracker/expenditure_month_list.html:86
-#, python-format
-msgid "Your expenditures can be updated the day of their creation"
-msgid_plural ""
-"Your expenditures can be updated for %(days)s days after their creation"
-msgstr[0] "Vos dépenses peuvent être modifiées le jour de leur création"
-msgstr[1] ""
-"Vos dépenses peuvent être modifiées pendant %(days)s jours à partir de leur "
-"création"
-
-#: templates/tracker/expenditure_month_list.html:101
+#: templates/tracker/expenditure_month_list.html:75
 #, python-format
 msgid "No expenditures found for %(date)s!"
 msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
 
-#: templates/tracker/expenditure_month_tags.html:15
-msgid "View previous month tags"
-msgstr "Voir les mots clés du mois précédent"
-
-#: templates/tracker/expenditure_month_tags.html:21
-msgid "View next month tags"
-msgstr "Voir les mots clés du mois suivant"
-
-#: templates/tracker/expenditure_month_tags.html:27
-msgid "View expenditures details"
-msgstr "Voir le détail des dépenses"
-
-#: templates/tracker/expenditure_month_tags.html:28
-msgid "details"
-msgstr "détails"
-
-#: templates/tracker/expenditure_month_tags.html:33
-msgid "View month tags"
-msgstr "Voir les mots clés"
-
-#: templates/tracker/expenditure_month_tags.html:34
-msgid "tags"
-msgstr "mots clés"
-
-#: templates/tracker/expenditure_month_tags.html:48
-msgid ""
-"The following table summarizes the expenditures tags of the current month."
-msgstr ""
-"La table suivante donne un aperçu des mots clés associés aux dépenses du "
-"mois en cours."
-
-#: templates/tracker/expenditure_month_tags.html:50
-#, python-format
-msgid "The following table summarizes the expenditures tags for %(date)s."
-msgstr ""
-"La table suivante donne un aperçu des mots clés associés aux dépenses du "
-"mois de %(date)s."
-
-#: templates/tracker/expenditure_month_tags.html:55
-#, python-format
-msgid "Tags for %(date)s."
-msgstr "Mots clés de %(date)s."
-
-#: templates/tracker/expenditure_month_tags.html:85
-#: templates/tracker/expenditure_year_summary.html:123
-#, python-format
-msgid "No expenditures found in %(date)s!"
-msgstr "Pas de dépenses en %(date)s&nbsp;!"
-
-#: templates/tracker/expenditure_year_summary.html:23
-msgid "View previous report"
-msgstr "Afficher le précédent bilan"
-
-#: templates/tracker/expenditure_year_summary.html:30
-msgid "View next report"
-msgstr "Afficher le bilan suivant"
-
-#: templates/tracker/expenditure_year_summary.html:44
+#: templates/tracker/expenditure_year_summary.html:12
 #, python-format
 msgid "Report for %(date)s"
 msgstr "Bilan de l'année %(date)s"
 
-#: templates/tracker/expenditure_year_summary.html:53
+#: templates/tracker/expenditure_year_summary.html:37
 msgid "The following table outlines your expenditures for the current year."
 msgstr ""
 "La table suivante donne un aperçu de vos dépenses au cours de cette année."
 
-#: templates/tracker/expenditure_year_summary.html:55
+#: templates/tracker/expenditure_year_summary.html:39
 #, python-format
 msgid "The following table outlines your expenditures for %(date)s."
 msgstr "La table suivante donne un aperçu de vos dépenses de %(date)s."
 
-#: templates/tracker/expenditure_year_summary.html:63
+#: templates/tracker/expenditure_year_summary.html:47
 msgid "month"
 msgstr "mois"
 
-#: templates/tracker/expenditure_year_summary.html:70
+#: templates/tracker/expenditure_year_summary.html:54
 msgid "average"
 msgstr "moyenne"
 
-#: templates/tracker/expenditure_year_summary.html:73
+#: templates/tracker/expenditure_year_summary.html:57
 msgid "delta"
 msgstr "écart"
 
-#: templates/tracker/expenditure_year_summary.html:102
+#: templates/tracker/expenditure_year_summary.html:86
 msgid "totals"
 msgstr "totaux"
+
+#: templates/tracker/expenditure_year_summary.html:107
+#, python-format
+msgid "No expenditures found in %(date)s!"
+msgstr "Pas de dépenses en %(date)s&nbsp;!"
 
 #: templates/tracker/form_errors.html:5
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] "Veuillez corriger l'erreur ci-dessous."
 msgstr[1] "Veuillez corriger les erreurs ci-dessous."
-
-#: templates/tracker/nav_filter.html:9
-msgid "filter"
-msgstr "filtrer"
 
 #: templates/tracker/nav_parameters.html:4
 msgid "parameters"
@@ -390,15 +326,15 @@ msgstr ""
 msgid "Confirm the deletion of the purse named <q>%(name)s</q>."
 msgstr "Confirmez la suppression du porte-monnaie <q>%(name)s</q>."
 
-#: templates/tracker/purse_form.html:13
+#: templates/tracker/purse_form.html:7
 msgid "edit purse"
 msgstr "éditer un porte-monnaie"
 
-#: templates/tracker/purse_form.html:15
+#: templates/tracker/purse_form.html:9
 msgid "add purse"
 msgstr "ajouter un porte-monnaie"
 
-#: templates/tracker/purse_form.html:37
+#: templates/tracker/purse_form.html:31
 #, python-format
 msgid ""
 "You may also <a href=\"%(delete_url)s\">delete</a> or <a href=\"%(share_url)s"
@@ -429,15 +365,15 @@ msgstr "Vous n'avez accès à aucun porte-monnaie pour le moment&nbsp;!"
 msgid "Create a new purse..."
 msgstr "Créer un porte-monnaie..."
 
-#: templates/tracker/purse_share.html:12
+#: templates/tracker/purse_share.html:6
 msgid "Share purse"
 msgstr "Partager un porte-monnaie"
 
-#: templates/tracker/purse_share.html:18
+#: templates/tracker/purse_share.html:12
 msgid "Warning!"
 msgstr "Attention&nbsp;!"
 
-#: templates/tracker/purse_share.html:19
+#: templates/tracker/purse_share.html:13
 #, python-format
 msgid ""
 "You are about to share the purse named <q>%(name)s</q>. Sharing a purse is "
@@ -449,7 +385,7 @@ msgstr ""
 "tous les utilisateurs d'un porte-monnaie sont libres de partager ou de "
 "supprimer ce porte-monnaie."
 
-#: templates/tracker/purse_share.html:28
+#: templates/tracker/purse_share.html:22
 msgid "share"
 msgstr "partager"
 
@@ -529,43 +465,100 @@ msgstr ""
 "Vous pouvez également <a href=\"%(change_url)s\">changer votre mot de passe</"
 "a>."
 
-#: views/main.py:158
+#: views/main.py:170
 #, python-brace-format
 msgid "The purse called <q>{purse}</q> is already shared with {other}."
 msgstr "Le porte-monnaie <q>{purse}</q> est déjà partagé avec {other}."
 
-#: views/main.py:160
+#: views/main.py:172
 #, python-brace-format
 msgid "The purse called <q>{purse}</q> is now shared with {other}."
 msgstr "Le porte-monnaie <q>{purse}</q> est maintenant partagé avec {other}."
 
-#: views/main.py:194
+#: views/main.py:206
 msgid "First, create a purse..."
 msgstr "Commencez par créer un porte-monnaie..."
 
-#: views/main.py:201
+#: views/main.py:213
 #, python-brace-format
 msgid "Your default purse is now <q>{name}</q>."
 msgstr "Votre porte-monnaie par défaut est maintenant <q>{name}</q>."
 
-#: views/main.py:341
+#: views/main.py:320 views/main.py:361
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 
-#: views/main.py:381
-msgid "Filter tags"
-msgstr "Filtrer les mots clés"
-
-#: views/mixins.py:58
+#: views/mixins.py:69
 msgid "Apply filter"
 msgstr "Appliquer le filtre"
 
-#: views/mixins.py:84
+#: views/mixins.py:95
 #, python-format
 msgid "keyword %(last)s"
 msgid_plural "keywords %(others)s and %(last)s"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "details"
+#~ msgstr "détails"
+
+#~ msgid "tags"
+#~ msgstr "mots clés"
+
+#~ msgid ""
+#~ "The following table summarizes the expenditures tags of the current month."
+#~ msgstr ""
+#~ "La table suivante donne un aperçu des mots clés associés aux dépenses du "
+#~ "mois en cours."
+
+#~ msgid "The following table summarizes the expenditures tags for %(date)s."
+#~ msgstr ""
+#~ "La table suivante donne un aperçu des mots clés associés aux dépenses du "
+#~ "mois de %(date)s."
+
+#~ msgid "Tags for %(date)s."
+#~ msgstr "Mots clés de %(date)s."
+
+#~ msgid "Filter tags"
+#~ msgstr "Filtrer les mots clés"
+
+#~ msgid "View previous month expenditures"
+#~ msgstr "Voir les dépenses du mois précédent"
+
+#~ msgid "View next month expenditures"
+#~ msgstr "Voir les dépenses du mois suivant"
+
+#~ msgid "View yearly report"
+#~ msgstr "Afficher le bilan annuel"
+
+#~ msgid "Your expenditures can be updated the day of their creation"
+#~ msgid_plural ""
+#~ "Your expenditures can be updated for %(days)s days after their creation"
+#~ msgstr[0] "Vos dépenses peuvent être modifiées le jour de leur création"
+#~ msgstr[1] ""
+#~ "Vos dépenses peuvent être modifiées pendant %(days)s jours à partir de "
+#~ "leur création"
+
+#~ msgid "View previous month tags"
+#~ msgstr "Voir les mots clés du mois précédent"
+
+#~ msgid "View next month tags"
+#~ msgstr "Voir les mots clés du mois suivant"
+
+#~ msgid "View expenditures details"
+#~ msgstr "Voir le détail des dépenses"
+
+#~ msgid "View month tags"
+#~ msgstr "Voir les mots clés"
+
+#~ msgid "View previous report"
+#~ msgstr "Afficher le précédent bilan"
+
+#~ msgid "View next report"
+#~ msgstr "Afficher le bilan suivant"
+
+#~ msgid "filter"
+#~ msgstr "filtrer"
 
 #~ msgid "This purse was not found."
 #~ msgstr "Ce porte-monnaie n'a pu être trouvé."
@@ -594,7 +587,6 @@ msgstr[1] ""
 #~ msgid "Average"
 #~ msgstr "Moyenne"
 
-#, fuzzy
 #~ msgid "Add a new expenditure"
 #~ msgstr "Ajouter une dépense..."
 
@@ -664,9 +656,6 @@ msgstr[1] ""
 
 #~ msgid "Jump to page {0}"
 #~ msgstr "Aller à la page {0}"
-
-#~ msgid "browse"
-#~ msgstr "parcourir"
 
 #~ msgid "Browse other months expenditures"
 #~ msgstr "Voir les dépenses des autres mois"

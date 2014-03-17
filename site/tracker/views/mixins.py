@@ -3,8 +3,19 @@
 
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404
+from django.utils.timezone import now
 from django.utils.translation import ungettext
 from django.utils.translation import ugettext_lazy as _
+
+
+class WithCurrentDateMixin(object):
+    """
+    Extends a view context with the current datetime.
+    """
+    def get_context_data(self, **kwargs):
+        context = super(WithCurrentDateMixin, self).get_context_data(**kwargs)
+        context['now'] = now()
+        return context
 
 
 class FieldNamesMixin(object):

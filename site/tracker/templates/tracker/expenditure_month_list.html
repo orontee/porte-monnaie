@@ -1,51 +1,30 @@
-{% extends 'tracker/base.html' %}
+{% extends 'tracker/base_authentified.html' %}
 {% load i18n tracker_extras table humanize %}
 {% is_current_month month as is_current %}
 
-{% block tools %}
-<li>
-  <a id="add-expenditure" href="{% url 'tracker:add' %}">
-    {% trans 'add'|capfirst %}
-  </a>
-</li>
-{% endblock tools %}
-
-{% block navigate %}
-<li>
-  <a id="previous" 
-     href="{% url 'tracker:archive' previous_month.year previous_month.month %}">
-    {% trans 'previous'|capfirst %}
-  </a>
-</li>
-<li>
-  <a id="next" 
-     href="{% url 'tracker:archive' next_month.year next_month.month %}">
-    {% trans 'next'|capfirst %}
-  </a>
-</li>
-<li>
-  <a id="report" 
-     href="{% url 'tracker:summary' next_month.year %}">
-    {% trans 'report'|capfirst %}
-  </a>
-</li>
-{% endblock navigate %}
-
-{% block filter %}
-{% include 'tracker/nav_filter.html' %}
-{% endblock filter %}
-
-{% block parameters %}
-<ul class="nav navbar-nav navbar-right">
-  {% include 'tracker/nav_parameters.html' %}
-</ul>
-{% endblock parameters %}
-
 {% block header %}
-<h2>{{ month|date:'YEAR_MONTH_FORMAT'|capfirst }}</h2>
+<h2>
+  {{ month|date:'YEAR_MONTH_FORMAT'|capfirst }}
+</h2>
 {% endblock %}
 
 {% block content %}
+<div id="pager">
+  <small>
+    <ul class="pager">
+      <li class="previous">
+	<a href="{% url 'tracker:archive' previous_month.year previous_month.month %}">
+	  &larr; {% trans 'previous'|capfirst %}
+	</a>
+      </li>
+      <li class="next">
+	<a href="{% url 'tracker:archive' next_month.year next_month.month %}">
+	  {% trans 'next'|capfirst %} &rarr;
+	</a>
+      </li>
+    </ul>
+  </small>
+</div>
 <div id="main">
   {% if expenditures %}
   <p>
@@ -100,11 +79,11 @@
 {% endblock content %}
 
 {% block scripts %}
+{{ block.super }}
 <script type="text/javascript">
-  {% if filter %}
-  Tracker.focus('id_filter');
-  {% else %}
-  Tracker.focus('add-expenditure');
-  {% endif %}
+var activeTool = document.getElementById('browse');
+if (activeTool != null) {
+   activeTool.parentNode.className += 'active';
+}
 </script>
 {% endblock scripts %}

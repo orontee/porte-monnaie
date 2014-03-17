@@ -5,6 +5,7 @@ import datetime
 from django import template
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.http import urlencode
 
 register = template.Library()
 
@@ -36,15 +37,16 @@ def do_current_date():
     return datetime.date.today()
 
 
-def add_page_query(url, page=1, paginator=None):
+def add_page_query(url, page=1, paginator=None, filt=None):
     """Add page query to the given url.
     """
-    template = '{0}?page={1}'
-    paginate_by = None
+    template = '{0}?{1}'
+    query = {'page': page}
     if paginator is not None:
-        paginate_by = paginator.per_page
-        template += '&paginate_by={2}'
-    return template.format(url, page, paginate_by)
+        query['paginate_by'] = paginator.per_page
+    if filt is not None:
+        query['filter'] = filt
+    return template.format(url, urlencode(query))
 
 
 @register.simple_tag(name='pagination',
@@ -61,12 +63,13 @@ def do_pagination(context):
         raise ImproperlyConfigured('The pagination tag must be used with '
                                    'the QueryPaginationMixin mixin')
     else:
+        filt = context.get('filter', None)
         if is_paginated is False:
             return ''
         anchor = u"""<a href="{url}">{number}</a>"""
 
         def build_element(i, cls=None):
-            lnk = (add_page_query(url, i, paginator)
+            lnk = (add_page_query(url, i, paginator, filt)
                    if isinstance(i, int) else url)
             if cls is not None:
                 elt = u"""<li class=""" + cls + '>' + anchor + '</li>'

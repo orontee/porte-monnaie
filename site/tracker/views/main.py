@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import (HttpResponseRedirect, Http404)
+from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import (CreateView,
                                   DeleteView,
                                   ListView,
@@ -19,12 +21,12 @@ from tracker.models import (Expenditure, Purse, Tag)
 from tracker.forms import (ExpenditureForm, PurseForm,
                            PurseShareForm)
 from tracker.utils import dictfetchall
-from django.utils.translation import ugettext_lazy as _
-from tracker.views.mixins import (FieldNamesMixin,
+from tracker.views.mixins import (EditableObjectMixin,
+                                  FieldNamesMixin,
+                                  ObjectOwnerMixin,
                                   QueryPaginationMixin,
                                   QueryFilterMixin,
-                                  ObjectOwnerMixin,
-                                  EditableObjectMixin)
+                                  WithCurrentDateMixin)
 from users.views.mixins import LoginRequiredMixin
 from users.views.base import UserChange as UserChangeOrig
 
@@ -37,13 +39,16 @@ class HomeView(RedirectView):
     url = reverse_lazy('tracker:list')
 
 
-class PurseCreation(LoginRequiredMixin, CreateView):
+class PurseCreation(LoginRequiredMixin,
+                    WithCurrentDateMixin,
+                    CreateView):
     """View to create a purse.
     """
     model = Purse
     form_class = PurseForm
     success_url = reverse_lazy('tracker:purse_list')
-
+    is_active = None
+    
     def form_valid(self, form):
         """Process a valid form.
 
@@ -55,7 +60,9 @@ class PurseCreation(LoginRequiredMixin, CreateView):
         return res
 
 
-class PurseUpdate(LoginRequiredMixin, UpdateView):
+class PurseUpdate(LoginRequiredMixin,
+                  WithCurrentDateMixin,
+                  UpdateView):
     """View to modify a purse.
     """
     model = Purse
@@ -73,6 +80,7 @@ class PurseUpdate(LoginRequiredMixin, UpdateView):
 
 class PurseList(LoginRequiredMixin,
                 FieldNamesMixin,
+                WithCurrentDateMixin,
                 QueryPaginationMixin,
                 ListView):
     """List the purses of the logged in account.
@@ -88,6 +96,7 @@ class PurseList(LoginRequiredMixin,
 
 
 class PurseDelete(LoginRequiredMixin,
+                  WithCurrentDateMixin,
                   ObjectOwnerMixin,
                   DeleteView):
     """View to delete a purse.
@@ -128,11 +137,14 @@ class UserPurseMixin(object):
     # TODO Do not save when the purse is not a user purse
 
 
-class UserChange(UserPurseMixin, UserChangeOrig):
+class UserChange(UserPurseMixin,
+                 WithCurrentDateMixin,
+                 UserChangeOrig):
     purse_field_name = 'default_purse'
 
 
 class PurseShare(LoginRequiredMixin,
+                 WithCurrentDateMixin,
                  UpdateView):
     """View to invite a user to join a purse.
     """
@@ -239,6 +251,7 @@ class TagNamesMixin(object):
 
 class ExpenditureAdd(LoginRequiredMixin,
                      DefaultPurseMixin,
+                     WithCurrentDateMixin,
                      TagNamesMixin,
                      CreateView):
     """View to add expenditures.
@@ -262,6 +275,7 @@ class ExpenditureAdd(LoginRequiredMixin,
 
 
 class ExpenditureDelete(LoginRequiredMixin,
+                        WithCurrentDateMixin,
                         ObjectOwnerMixin,
                         EditableObjectMixin,
                         DeleteView):
@@ -274,6 +288,7 @@ class ExpenditureDelete(LoginRequiredMixin,
 
 
 class ExpenditureUpdate(LoginRequiredMixin,
+                        WithCurrentDateMixin,
                         ObjectPurseMixin,
                         ObjectOwnerMixin,
                         EditableObjectMixin,
@@ -288,11 +303,13 @@ class ExpenditureUpdate(LoginRequiredMixin,
     owner_field = "author"
 
 
-class ExpenditureList(LoginRequiredMixin,
-                      DefaultPurseMixin,
-                      FieldNamesMixin,
-                      QueryPaginationMixin,
-                      ListView):
+class ExpenditureFilteredList(LoginRequiredMixin,
+                              DefaultPurseMixin,
+                              FieldNamesMixin,
+                              WithCurrentDateMixin,
+                              QueryFilterMixin,
+                              QueryPaginationMixin,
+                              ListView):
     """List of latest expenditures.
     """
     model = Expenditure
@@ -300,10 +317,12 @@ class ExpenditureList(LoginRequiredMixin,
     field_names = ['date', 'amount', 'author', 'description']
     allow_empty = True
     allow_future = True
-
+    filter_description = _('Filter expenditures')
+    template_name = 'tracker/expenditure_filtered_list.html'
+    
     def get_queryset(self):
-        qs = super(ExpenditureList, self).get_queryset()
-        qs = qs.filter(purse=self.purse).select_related()
+        qs = super(ExpenditureFilteredList, self).get_queryset()
+        qs = qs.filter(purse=self.purse).select_related('author__username')
         return qs
 
     def get_context_data(self, **kwargs):
@@ -312,22 +331,21 @@ class ExpenditureList(LoginRequiredMixin,
         Table field names and various data computed from the
         expenditures amounts are added.
         """
-        context = super(ExpenditureMonthList, self).get_context_data(**kwargs)
+        context = super(ExpenditureFilteredList, self).get_context_data(**kwargs)
         user = self.request.user if self.request else None
         if user:
             qs = self.object_list.all()
             context.update(qs.aggregate(total_amount=Sum('amount')))
             context.update(qs.filter(author_id__exact=user.id)
                            .aggregate(user_amount=Sum('amount')))
-        context['params'] = {'month': self.get_month(),
-                             'year': self.get_year()}
-        context['edit_delay'] = Expenditure.edit_delay
+            context.update({'now': now()})
         return context
 
 
 class ExpenditureMonthList(LoginRequiredMixin,
                            DefaultPurseMixin,
                            FieldNamesMixin,
+                           WithCurrentDateMixin,
                            QueryFilterMixin,
                            QueryPaginationMixin,
                            MonthArchiveView):
@@ -363,78 +381,12 @@ class ExpenditureMonthList(LoginRequiredMixin,
                            .aggregate(user_amount=Sum('amount')))
         context['params'] = {'month': self.get_month(),
                              'year': self.get_year()}
-        context['edit_delay'] = Expenditure.edit_delay
-
-        return context
-
-
-class ExpenditureMonthTags(LoginRequiredMixin,
-                           DefaultPurseMixin,
-                           FieldNamesMixin,
-                           QueryFilterMixin,
-                           QueryPaginationMixin,
-                           ListView):
-    """List of tags in a month.
-    """
-    model = Tag
-    context_object_name = 'tags'
-    field_names = ['name', 'amount']
-    allow_empty = True
-    filter_description = _('Filter tags')
-    filter_attr = 'name'
-    template_name = 'tracker/expenditure_month_tags.html'
-
-    def get_date(self):
-        try:
-            year = int(self.kwargs['year'])
-        except KeyError:
-            raise Http404("No year specified")
-        try:
-            month = int(self.kwargs['month'])
-        except KeyError:
-            raise Http404("No month specified")
-        try:
-            date = datetime.date(year=year, month=month, day=1)
-        except ValueError:
-            raise Http404("Invalid date string '{0}' or '{1}'".format(year,
-                                                                      month))
-        return date
-
-    def get_queryset(self):
-        """Build query for tags of a given purse, with expenditures in a given
-        month.
-        """
-        qs = super(ExpenditureMonthTags, self).get_queryset()
-        qs = qs.filter(purse=self.purse)
-        wst = ("""UPPER("tracker_expenditure"."description"::text) """
-               """LIKE UPPER('%%'||"tracker_tag"."name"||'%%')""")
-        qs = qs.extra(where=[wst])
-        date = self.get_date()
-        qs = qs.filter(purse__expenditure__date__year=date.year,
-                       purse__expenditure__date__month=date.month)
-        qs = qs.values('name').annotate(amount=Sum(
-            'purse__expenditure__amount'))
-        qs = qs.order_by('-amount')
-        return qs
-
-    def get_context_data(self, **kwargs):
-        """Extend the view context with dates.
-        """
-        context = super(ExpenditureMonthTags,
-                        self).get_context_data(**kwargs)
-        date = self.get_date()
-        previous_month = date.replace(year=date.year + (date.month - 2) / 12,
-                                      month=(date.month - 2) % 12 + 1, day=1)
-        next_month = date.replace(year=date.year + date.month / 12,
-                                  month=date.month % 12 + 1, day=1)
-        context.update({'month': date,
-                        'next_month': next_month,
-                        'previous_month': previous_month})
         return context
 
 
 class ExpenditureYearSummary(LoginRequiredMixin,
                              DefaultPurseMixin,
+                             WithCurrentDateMixin,                             
                              TemplateView):
     """Summary of expenditures in a year.
     """

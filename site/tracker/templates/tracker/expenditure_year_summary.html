@@ -1,4 +1,4 @@
-{% extends 'tracker/base.html' %}
+{% extends 'tracker/base_authentified.html' %}
 {% load i18n tracker_extras table humanize static %}
 {% is_current_year year as is_current %}
 
@@ -7,35 +7,6 @@
 <link rel="stylesheet" href="{% static 'css/graph.css' %}">
 {% endblock style %}
 
-{% block tools %}
-<li>
-  <a id="add-expenditure" href="{% url 'tracker:add' %}">
-    {% trans 'add'|capfirst %}
-  </a>
-</li>
-{% endblock tools %}
-
-{% block navigate %}
-<li>
-  <a id="previous" 
-     href="{% url 'tracker:summary' previous_year.year %}">
-    {% trans 'previous'|capfirst %}
-  </a>
-</li>
-<li>
-  <a id="next" 
-     href="{% url 'tracker:summary' next_year.year %}">
-    {% trans 'next'|capfirst %}
-  </a>
-</li>
-{% endblock navigate %}
-
-{% block parameters %}
-<ul class="nav navbar-nav navbar-right">
-  {% include 'tracker/nav_parameters.html' %}
-</ul>
-{% endblock parameters %}
-
 {% block header %}
 <h2>
   {% blocktrans with date=year|date:'Y' %}Report for {{ date }}{% endblocktrans %}
@@ -43,6 +14,22 @@
 {% endblock header %}
 
 {% block content %}
+<div id="pager">
+  <small>
+    <ul class="pager">
+      <li class="previous">
+	<a href="{% url 'tracker:summary' previous_year.year %}">
+	  &larr; {% trans 'previous'|capfirst %}
+	</a>
+      </li>
+      <li class="next">
+	<a href="{% url 'tracker:summary' next_year.year %}">
+	  {% trans 'next'|capfirst %} &rarr;
+	</a>
+      </li>
+    </ul>
+  </small>
+</div>
 <div id="main">
   {% if amounts %}
   <p>
@@ -124,10 +111,14 @@
 {% endblock content %}
 
 {% block scripts %}
+{{ block.super }}
 <script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
 <script src="{% static 'js/d3.min.js' %}"></script>
 <script src="{% static 'js/graph.js' %}"></script>
 <script type="text/javascript">
-  Tracker.focus('add-expenditure');
+var activeTool = document.getElementById('report');
+if (activeTool != null) {
+   activeTool.parentNode.className += 'active';
+}
 </script>
 {% endblock scripts %}
