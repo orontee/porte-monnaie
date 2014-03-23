@@ -109,4 +109,4 @@ $(projdir)/tracker/static/js/d3.min.js: $(d3_archive)
 	unzip -o $< d3.min.js -d $(projdir)/tracker/static/js
 
 $(projdir)/tracker/static/js/d3.layout.cloud.js: $(d3-cloud_archive)
-	unzip -o $< d3-cloud-1.0.5/d3.layout.cloud.js -d $(projdir)/tracker/static/js
+	unzip -p -o $< d3-cloud-1.0.5/d3.layout.cloud.js > $@
