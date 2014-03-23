@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-17 00:44+0100\n"
+"POT-Creation-Date: 2014-03-23 02:19+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -151,21 +151,21 @@ msgstr ""
 msgid "Powered by %(link)s"
 msgstr "Propulsé par %(link)s"
 
-#: templates/tracker/base_authentified.html:8
+#: templates/tracker/base_authentified.html:9
+msgid "add"
+msgstr "ajouter"
+
+#: templates/tracker/base_authentified.html:15
 msgid "browse"
 msgstr "parcourir"
 
-#: templates/tracker/base_authentified.html:14
+#: templates/tracker/base_authentified.html:21
 msgid "report"
 msgstr "bilan"
 
-#: templates/tracker/base_authentified.html:20
+#: templates/tracker/base_authentified.html:27
 msgid "search"
 msgstr "recherche"
-
-#: templates/tracker/base_authentified.html:25
-msgid "add"
-msgstr "ajouter"
 
 #: templates/tracker/expenditure_confirm_delete.html:5
 msgid "expenditure deletion"
@@ -280,7 +280,15 @@ msgstr "écart"
 msgid "totals"
 msgstr "totaux"
 
-#: templates/tracker/expenditure_year_summary.html:107
+#: templates/tracker/expenditure_year_summary.html:106
+msgid "tags"
+msgstr "mots clés"
+
+#: templates/tracker/expenditure_year_summary.html:111
+msgid "histogram"
+msgstr "histogramme"
+
+#: templates/tracker/expenditure_year_summary.html:119
 #, python-format
 msgid "No expenditures found in %(date)s!"
 msgstr "Pas de dépenses en %(date)s&nbsp;!"
@@ -501,9 +509,6 @@ msgstr[1] ""
 
 #~ msgid "details"
 #~ msgstr "détails"
-
-#~ msgid "tags"
-#~ msgstr "mots clés"
 
 #~ msgid ""
 #~ "The following table summarizes the expenditures tags of the current month."
