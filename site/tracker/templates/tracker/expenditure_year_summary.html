@@ -100,7 +100,19 @@
       </tbody>
     </table>
   </div>
-  <div class="panel-body hidden-xs" id="graph-body">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+	<h2>{% trans 'tags'|capfirst %}</h2>
+	<div id="tags-body">
+	</div>
+      </div>
+      <div class="hidden-xs col-lg-6">
+	<h2>{% trans 'histogram'|capfirst %}</h2>
+	<div id="graph-body">
+	</div>
+      </div>
+    </div>
   </div>
   {% else %}
   <p>
@@ -120,5 +132,8 @@ var activeTool = document.getElementById('report');
 if (activeTool != null) {
    activeTool.parentNode.className += 'active';
 }
+var words = [{% for t in tags %}{text:"{{ t.name }}", url:"/tracker/expenditures/search/?filter={{ t.name }}", size: "{{ t.amount }}" }{% if not forloop.last %},{% endif %}{% endfor %}]
 </script>
+<script src="{% static 'js/d3.layout.cloud.js' %}"></script>
+<script src="{% static 'js/tags.js' %}"></script>
 {% endblock scripts %}
