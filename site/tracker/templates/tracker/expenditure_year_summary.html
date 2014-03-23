@@ -102,11 +102,13 @@
   </div>
   <div class="container">
     <div class="row">
+      {% if tags %}
       <div class="col-lg-6">
 	<h2>{% trans 'tags'|capfirst %}</h2>
 	<div id="tags-body">
 	</div>
       </div>
+      {% endif %}
       <div class="hidden-xs col-lg-6">
 	<h2>{% trans 'histogram'|capfirst %}</h2>
 	<div id="graph-body">

@@ -33,7 +33,7 @@ d3.layout.cloud().size([width + margin.left + margin.right,
     .rotate(function() { return ~~(Math.random() * 2) * 90; })
     .font("Impact")
     .fontSize(function(d) {
-        return Number(d.size.replace(',', '.').replace('&nbsp;', ''));
+        return Number(d.size.replace(',', '.'));
     })
     .on("end", draw)
     .start();
