@@ -403,19 +403,6 @@ class ExpenditureYearSummary(LoginRequiredMixin,
             raise Http404("Invalid year string '{0}'".format(year))
         return date
 
-    def get_tags(self):
-        qs = Tag.objects.filter(purse=self.purse)
-        wst = ("""UPPER("tracker_expenditure"."description"::text) """
-               """LIKE UPPER('%%'||"tracker_tag"."name"||'%%')""")
-        qs = qs.extra(where=[wst])
-        date = self.get_date()
-        qs = qs.filter(purse__expenditure__date__year=date.year)
-        qs = qs.values('name').annotate(amount=Sum(
-            'purse__expenditure__amount'))
-        qs = qs.order_by('-amount')
-        return qs
-
-
     def get_context_data(self, **kwargs):
         """Extend the view context with dates and amounts.
         """
@@ -452,7 +439,6 @@ class ExpenditureYearSummary(LoginRequiredMixin,
                         'totals': {'amount': sum(flat[0]),
                                    'average': sum(flat[1]),
                                    'delta': sum(flat[2])}})
-        context.update({'tags': self.get_tags()})
         return context
 
 
