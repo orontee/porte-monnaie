@@ -78,8 +78,56 @@ class PurseUpdate(LoginRequiredMixin,
         return super(PurseUpdate, self).dispatch(*args, **kwargs)
 
 
+class DefaultPurseMixin(object):
+    """Provides an accessor to the user account default purse.
+
+    If the user does not belong to any purse, redirect to purse
+    creation page. Otherwise, if the user account default purse has
+    not been set, set the default purse to one of the user purses.
+
+    Messages notify the user of the purse creation or the change of
+    default purse.
+    """
+    @property
+    def purse(self):
+        try:
+            user = self.request.user
+        except AttributeError:
+            raise ImproperlyConfigured('DefaultPurseMixin requires the mixin '
+                                       'LoginRequiredMixin')
+        else:
+            try:
+                purse = user.default_purse
+            except AttributeError:
+                raise ImproperlyConfigured('User model does not define a '
+                                           'purse_default attribute')
+            else:
+                return purse
+
+    def dispatch(self, *args, **kwargs):
+        user = self.request.user
+        purses = Purse.objects.filter(users__pk=user.pk)
+        if not purses.exists():
+            msg = _('First, create a purse...')
+            messages.info(self.request, msg)
+            return HttpResponseRedirect(
+                reverse_lazy('tracker:purse_creation'))
+        if self.purse is None:
+            user.default_purse = purses[0]
+            user.save()
+            msg = _('Your default purse is now <q>{name}</q>.')
+            messages.info(self.request, msg.format(name=purses[0].name))
+        return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(DefaultPurseMixin, self).get_context_data(**kwargs)
+        context.update({'shared_purse': self.purse.users.count() > 1})
+        return context
+
+
 class PurseList(LoginRequiredMixin,
                 FieldNamesMixin,
+                DefaultPurseMixin,
                 WithCurrentDateMixin,
                 QueryPaginationMixin,
                 ListView):
@@ -174,50 +222,6 @@ class PurseShare(LoginRequiredMixin,
         messages.info(self.request, msg.format(other=other.get_full_name(),
                                                purse=purse.name))
         return HttpResponseRedirect(self.get_success_url())
-
-
-class DefaultPurseMixin(object):
-    """Provides an accessor to the user account default purse.
-
-    If the user does not belong to any purse, redirect to purse
-    creation page. Otherwise, if the user account default purse has
-    not been set, redirect to the user change page.
-    """
-    @property
-    def purse(self):
-        try:
-            user = self.request.user
-        except AttributeError:
-            raise ImproperlyConfigured('DefaultPurseMixin requires the mixin '
-                                       'LoginRequiredMixin')
-        else:
-            try:
-                purse = user.default_purse
-            except AttributeError:
-                raise ImproperlyConfigured('User model does not define a '
-                                           'purse_default attribute')
-            else:
-                return purse
-
-    def dispatch(self, *args, **kwargs):
-        user = self.request.user
-        purses = Purse.objects.filter(users__pk=user.pk)
-        if not purses.exists():
-            msg = _('First, create a purse...')
-            messages.info(self.request, msg)
-            return HttpResponseRedirect(
-                reverse_lazy('tracker:purse_creation'))
-        if self.purse is None:
-            user.default_purse = purses[0]
-            user.save()
-            msg = _('Your default purse is now <q>{name}</q>.')
-            messages.info(self.request, msg.format(name=purses[0].name))
-        return super(DefaultPurseMixin, self).dispatch(*args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(DefaultPurseMixin, self).get_context_data(**kwargs)
-        context.update({'shared_purse': self.purse.users.count() > 1})
-        return context
 
 
 class ObjectPurseMixin(object):

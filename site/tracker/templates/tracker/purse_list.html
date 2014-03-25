@@ -33,9 +33,16 @@
 	  </td>
 	  <td>
 	    {{ p.description|capfirst }}
+	    {% if user.default_purse == p %}
+	    <span class="badge pull-right">
+	      <span class="glyphicon glyphicon-heart">
+	      </span>
+	    </span>
+	    {% endif %}
 	    <a href="{% url 'tracker:purse_update' pk=p.id %}">
 	      <span class="badge pull-right">
-		<span class="glyphicon glyphicon-pencil"></span>
+		<span class="glyphicon glyphicon-pencil">
+		</span>
 	      </span>
 	    </a>
 	  </td>
