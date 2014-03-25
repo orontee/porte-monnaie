@@ -1,9 +1,9 @@
-{% extends 'tracker/base_authentified.html' %}
+{% extends 'tracker/base.html' %}
 {% load i18n static %}
 
 {% block header %}
 <h2>
-{% trans 'account parameters'|capfirst %}
+{% trans 'create account'|capfirst %}
 </h2>
 {% endblock %}
 
@@ -20,10 +20,6 @@
     </div>
   </div>
 </form>
-<p>
-  {% url 'tracker:password_change' as change_url %}
-  {% blocktrans %}You may also <a href="{{ change_url }}">change your password</a>.{% endblocktrans %}
-</p>
 {% endblock %}
 
 {% block scripts %}

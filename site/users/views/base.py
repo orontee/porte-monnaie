@@ -15,7 +15,7 @@ class UserCreation(CreateView):
     """View to create a user account.
     """
     model = User
-    template_name = 'users/user_form.html'
+    template_name = 'users/user_creation.html'
     form_class = UserCreationForm
     success_url = reverse_lazy('users:user_creation_done')
 
