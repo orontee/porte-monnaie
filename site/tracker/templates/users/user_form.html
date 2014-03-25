@@ -1,20 +1,24 @@
 {% extends 'tracker/base_authentified.html' %}
 {% load i18n static %}
 
+{% block navigate %}
+{% if user.username != '' %}
+{{ block.super }}
+{% endif %}
+{% endblock navigate %}
+
 {% block parameters %}
-{% if user.username %}
-<ul class="nav navbar-nav navbar-right">
-  {% include 'tracker/nav_parameters.html' %}
-</ul>
+{% if user.username != '' %}
+{{ block.super }}
 {% endif %}
 {% endblock parameters %}
 
 {% block header %}
 <h2>
-{% if user.username %}
-{% trans 'account parameters'|capfirst %}
-{% else %}
+{% if user.username == '' %}
 {% trans 'create account'|capfirst %}
+{% else %}
+{% trans 'account parameters'|capfirst %}
 {% endif %}
 </h2>
 {% endblock %}
@@ -32,7 +36,7 @@
     </div>
   </div>
 </form>
-{% if user.username %}
+{% if user.username != '' %}
 <p>
   {% url 'tracker:password_change' as change_url %}
   {% blocktrans %}You may also <a href="{{ change_url }}">change your password</a>.{% endblocktrans %}
