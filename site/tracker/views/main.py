@@ -8,7 +8,6 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import (HttpResponseRedirect, Http404)
-from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import (CreateView,
                                   DeleteView,
@@ -342,7 +341,6 @@ class ExpenditureFilteredList(LoginRequiredMixin,
             context.update(qs.aggregate(total_amount=Sum('amount')))
             context.update(qs.filter(author_id__exact=user.id)
                            .aggregate(user_amount=Sum('amount')))
-            context.update({'now': now()})
         return context
 
 

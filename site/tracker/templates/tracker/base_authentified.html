@@ -1,7 +1,7 @@
 {% extends 'tracker/base.html' %}
 {% load i18n %}
 
-{% block navigate %}
+{% block tools %}
 <form class="navbar-form navbar-left"
       action="{% url 'tracker:add' %}">
   <button id="add-btn" 
@@ -9,6 +9,9 @@
     {% trans 'add'|capfirst %}
   </button>
 </form>
+{% endblock tools %}
+
+{% block navigate %}
 <li>
   <a id="browse"
      href="{% url 'tracker:archive' now.year now.month %}">

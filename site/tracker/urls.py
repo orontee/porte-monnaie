@@ -7,6 +7,7 @@ namespace.
 from django.conf import settings
 from django.conf.urls import (patterns, url)
 from django.core.urlresolvers import reverse_lazy
+from django.utils.timezone import now
 from django.views.generic import TemplateView
 from tracker.views import (ExpenditureAdd,
                            ExpenditureDelete,
@@ -96,7 +97,8 @@ urlpatterns += patterns('',
                              'users/password_change_form.html',
                              'password_change_form': PasswordChangeForm,
                              'post_change_redirect':
-                             reverse_lazy('tracker:home')},
+                             reverse_lazy('tracker:home'),
+                             'extra_context': {'now': now()}},
                             name='password_change'),
                         url(regex=r'^user_creation_done',
                             view=TemplateView.as_view(
