@@ -65,3 +65,22 @@ tr.total {
 #filter {
     margin-bottom: 2ex;
 }
+
+a.ribbon {
+    top: 3em;
+    right: -4em;
+    color: black;
+    z-index: 5000;
+    padding: 0.4em 2em 0.4em;
+    position: absolute;
+    text-decoration: none;
+    background-color: yellow;
+    box-shadow: 0 0 1em white;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg); }
+
+a.ribbon:hover {
+    box-shadow: none;
+    text-decoration: underline; }
