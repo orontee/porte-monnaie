@@ -1,11 +1,9 @@
 {% extends 'tracker/base_authentified.html' %}
 {% load i18n static %}
 
-{% block header %}
-<h2>
-{% trans 'account parameters'|capfirst %}
-</h2>
-{% endblock %}
+{% block header_content %}
+<h2>{% trans 'account parameters'|capfirst %}</h2>
+{% endblock header_content %}
 
 {% block content %}
 <form id="user-change-form" class="form-horizontal"

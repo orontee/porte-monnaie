@@ -32,10 +32,10 @@ from users.views.base import UserChange as UserChangeOrig
 User = get_user_model()
 
 
-class HomeView(RedirectView):
+class HomeView(TemplateView):
     """Home view.
     """
-    url = reverse_lazy('tracker:list')
+    template_name = 'tracker/home.html'
 
 
 class PurseCreation(LoginRequiredMixin,

@@ -1,9 +1,9 @@
 {% extends 'tracker/base_authentified.html' %}
 {% load i18n %}
 
-{% block header %}
+{% block header_content %}
 <h2>{% trans 'purse deletion'|capfirst %}</h2>
-{% endblock %}
+{% endblock header_content %}
 
 {% block content %}
 {% with description=purse.description name=purse.name %}

@@ -1,9 +1,9 @@
 {% extends 'tracker/base_authentified.html' %}
 {% load i18n %}
 
-{% block header %}
+{% block header_content %}
 <h2>{% trans 'expenditure deletion'|capfirst %}</h2>
-{% endblock %}
+{% endblock header_content %}
 
 {% block content %}
 <p>{% blocktrans with amount=expenditure.amount|floatformat:2 description=expenditure.description %}Confirm the deletion of the {{ amount }}€ expenditure described as follows: <q>{{ description }}</q>.{% endblocktrans %}

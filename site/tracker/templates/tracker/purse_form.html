@@ -1,7 +1,7 @@
 {% extends 'tracker/base_authentified.html' %}
 {% load i18n %}
 
-{% block header %}
+{% block header_content %}
 <h2>
 {% if purse %}
 {% trans 'edit purse'|capfirst %}
@@ -9,7 +9,7 @@
 {% trans 'add purse'|capfirst %}
 {% endif %}
 </h2>
-{% endblock %}
+{% endblock header_content %}
 
 {% block content %}
 <form id="purse-form" class="form-horizontal"
