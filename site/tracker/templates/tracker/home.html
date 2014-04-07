@@ -1,9 +1,15 @@
 {% extends 'tracker/base.html' %}
+{% load i18n %}
 
 {% block button %}
 {% endblock button %}
 
 {% block navbar %}
+<div id="ribbon">
+  <a class="ribbon" href="https://gitorious.org/porte-monnaie">
+    {% trans 'Fork me on gitorious!' %}
+  </a>
+</div>
 {% endblock navbar %}
 
 {% block messages %}
@@ -12,3 +18,26 @@
 {% block header %}
 {% endblock header %}
 
+{% block content %}
+<div class="jumbotron">
+  <h1>
+    Porte-monnaie
+  </h1>
+  <p>
+    {% blocktrans %}A web application for people to track and share their expenditures.{% endblocktrans %}
+  </p>
+  <p>
+    <a class="btn btn-primary btn-lg"
+       role="button" href="{% url 'tracker:user_creation' %}">
+      {% trans 'create account'|capfirst %}
+    </a>
+    <a class="btn btn-default btn-lg"
+       role="button" href="{% url 'tracker:login' %}">
+      {% trans 'login'|capfirst %}
+    </a>
+  </p>
+</div>
+
+<div id="main">
+</div>
+{% endblock content %}
