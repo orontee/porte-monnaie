@@ -47,7 +47,7 @@ class PurseCreation(LoginRequiredMixin,
     form_class = PurseForm
     success_url = reverse_lazy('tracker:purse_list')
     is_active = None
-    
+
     def form_valid(self, form):
         """Process a valid form.
 
@@ -322,7 +322,7 @@ class ExpenditureFilteredList(LoginRequiredMixin,
     allow_future = True
     filter_description = _('Filter expenditures')
     template_name = 'tracker/expenditure_filtered_list.html'
-    
+
     def get_queryset(self):
         qs = super(ExpenditureFilteredList, self).get_queryset()
         qs = qs.filter(purse=self.purse).select_related('author__username')
@@ -334,7 +334,8 @@ class ExpenditureFilteredList(LoginRequiredMixin,
         Table field names and various data computed from the
         expenditures amounts are added.
         """
-        context = super(ExpenditureFilteredList, self).get_context_data(**kwargs)
+        context = super(ExpenditureFilteredList, self).get_context_data(
+            **kwargs)
         user = self.request.user if self.request else None
         if user:
             qs = self.object_list.all()
@@ -388,7 +389,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
 
 class ExpenditureYearSummary(LoginRequiredMixin,
                              DefaultPurseMixin,
-                             WithCurrentDateMixin,                             
+                             WithCurrentDateMixin,
                              TemplateView):
     """Summary of expenditures in a year.
     """
