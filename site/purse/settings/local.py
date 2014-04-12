@@ -10,14 +10,15 @@ from purse.settings.base import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+DEBUG_TOOLBAR = False
 
-MIDDLEWARE_CLASSES = (('debug_toolbar.middleware.DebugToolbarMiddleware',)
-                      + MIDDLEWARE_CLASSES)
+if DEBUG_TOOLBAR:
+    INSTALLED_APPS = INSTALLED_APPS + ('debug_toolbar',)
+    MIDDLEWARE_CLASSES = (('debug_toolbar.middleware.DebugToolbarMiddleware',)
+                          + MIDDLEWARE_CLASSES)
+    DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 INTERNAL_IPS = ('127.0.0.1',)
-
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 LOGGING.update({
     'handlers': {
