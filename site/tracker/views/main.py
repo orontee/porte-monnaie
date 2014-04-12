@@ -261,7 +261,7 @@ class ExpenditureAdd(LoginRequiredMixin,
     """
     model = Expenditure
     form_class = ExpenditureForm
-    success_url = reverse_lazy('tracker:home')
+    success_url = reverse_lazy('tracker:list')
 
     def form_valid(self, form):
         """If the form is valid, save the associated model instances.
@@ -286,7 +286,7 @@ class ExpenditureDelete(LoginRequiredMixin,
     """
     model = Expenditure
     context_object_name = 'expenditure'
-    success_url = reverse_lazy('tracker:home')
+    success_url = reverse_lazy('tracker:list')
     owner_field = "author"
 
 
@@ -302,7 +302,7 @@ class ExpenditureUpdate(LoginRequiredMixin,
     model = Expenditure
     context_object_name = 'expenditure'
     form_class = ExpenditureForm
-    success_url = reverse_lazy('tracker:home')
+    success_url = reverse_lazy('tracker:list')
     owner_field = "author"
 
 
