@@ -74,8 +74,7 @@ urlpatterns += patterns('',
 
 urlpatterns += patterns('',
                         url(regex=r'^user_change/$',
-                            view=UserChange.as_view(
-                                success_url=reverse_lazy('tracker:home')),
+                            view=UserChange.as_view(),
                             name='user_change'),
                         url(regex=r'^user_creation/$',
                             view=UserCreation.as_view(

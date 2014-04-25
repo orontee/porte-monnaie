@@ -188,6 +188,7 @@ class UserChange(UserPurseMixin,
                  WithCurrentDateMixin,
                  UserChangeOrig):
     purse_field_name = 'default_purse'
+    success_url = reverse_lazy('tracker:list')
 
 
 class PurseShare(LoginRequiredMixin,
