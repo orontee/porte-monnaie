@@ -122,10 +122,7 @@
 <script src="{% static 'js/graph.js' %}"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    var activeTool = document.getElementById('report');
-    if (activeTool != null) {
-       activeTool.parentNode.className += 'active';
-    }
+    Tracker.activateParent('report');
     Tracker.focus('add-btn');
   });
 </script>

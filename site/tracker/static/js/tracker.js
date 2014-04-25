@@ -8,8 +8,15 @@ if(typeof String.prototype.trimRight !== 'function') {
 
 Tracker.focus = function(id){
     var node = document.getElementById(id);
-    if (node){
+    if (node != null){
         node.focus();
+    }
+};
+
+Tracker.activateParent = function(id){
+    var node = document.getElementById(id);
+    if (node != null){
+        node.parentNode.className += 'active';
     }
 };
 

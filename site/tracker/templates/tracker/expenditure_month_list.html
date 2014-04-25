@@ -80,10 +80,7 @@
 {{ block.super }}
 <script type="text/javascript">
   $(document).ready(function() {
-    var activeTool = document.getElementById('browse');
-    if (activeTool != null) {
-       activeTool.parentNode.className += 'active';
-    }
+    Tracker.activateParent('browse');
     Tracker.focus('add-btn');
   });
 </script>
