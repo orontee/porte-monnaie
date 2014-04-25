@@ -13,6 +13,8 @@
 
 {% block scripts %}
 <script type="text/javascript">
-  Tracker.focus('login');
+  $(document).ready(function() {
+    Tracker.focus('login');
+  });
 </script>
 {% endblock scripts %}

@@ -61,11 +61,13 @@
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-  Tracker.focus('id_filter');
+  $(document).ready(function() {
+    Tracker.focus('id_filter');
 
-  var activeTool = document.getElementById('search');
-  if (activeTool != null) {
-    activeTool.parentNode.className += 'active';
-}
+    var activeTool = document.getElementById('search');
+    if (activeTool != null) {
+      activeTool.parentNode.className += 'active';
+    }
+  });
 </script>
 {% endblock scripts %}

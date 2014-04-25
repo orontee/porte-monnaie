@@ -79,9 +79,12 @@
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-var activeTool = document.getElementById('browse');
-if (activeTool != null) {
-   activeTool.parentNode.className += 'active';
-}
+  $(document).ready(function() {
+    var activeTool = document.getElementById('browse');
+    if (activeTool != null) {
+       activeTool.parentNode.className += 'active';
+    }
+    Tracker.focus('add-btn');
+  });
 </script>
 {% endblock scripts %}

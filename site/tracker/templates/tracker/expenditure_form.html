@@ -41,7 +41,9 @@
 {% block scripts %}
 {{ super.block }}
 <script type="text/javascript">
-  Tracker.focus('id_amount');
-  Tracker.listenToTags('id_description');
+  $(document).ready(function() {
+    Tracker.focus('id_amount');
+    Tracker.listenToTags('id_description');
+  });
 </script>
 {% endblock %}

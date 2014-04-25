@@ -23,6 +23,8 @@
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-  Tracker.focus('id_username');
+  $(document).ready(function() {
+    Tracker.focus('id_username');
+  });
 </script>
 {% endblock scripts %}

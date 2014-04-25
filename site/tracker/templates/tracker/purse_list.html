@@ -55,7 +55,7 @@
   {% else %}
   <p>
     {% blocktrans %}You don't belong to any purse right now!{% endblocktrans %}
-    <a href="{% url 'tracker:purse_creation' %}">
+    <a id="create-purse" href="{% url 'tracker:purse_creation' %}">
       {% blocktrans %}Create a new purse...{% endblocktrans %}
     </a>
   </p>
@@ -66,6 +66,8 @@
 {% block scripts %}
 {{ block.super }}
 <script type="text/javascript">
-  Tracker.focus('create-purse');
+  $(document).ready(function() {
+    Tracker.focus('create-purse');
+  });
 </script>
 {% endblock scripts%}

@@ -26,9 +26,11 @@
 
 {% block scripts %}
 <script type="text/javascript">
-  var elt = document.getElementById('id_first_name') || document.getElementById('id_username');
-  if (elt) {
-  elt.focus();
-  }
+  $(document).ready(function() {
+    var elt = document.getElementById('id_first_name') || document.getElementById('id_username');
+    if (elt) {
+      elt.focus();
+    }
+  });
 </script>
 {% endblock %}

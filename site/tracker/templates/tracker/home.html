@@ -31,7 +31,7 @@
        role="button" href="{% url 'tracker:user_creation' %}">
       {% trans 'create account'|capfirst %}
     </a>
-    <a class="btn btn-default btn-lg"
+    <a id="login-btn" class="btn btn-default btn-lg"
        role="button" href="{% url 'tracker:login' %}">
       {% trans 'login'|capfirst %}
     </a>
@@ -41,3 +41,12 @@
 <div id="main">
 </div>
 {% endblock content %}
+
+{% block scripts %}
+{{ block.super }}
+<script type="text/javascript">
+  $(document).ready(function() {
+    Tracker.focus('login-btn');
+  });
+</script>
+{% endblock scripts %}
