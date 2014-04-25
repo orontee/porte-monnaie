@@ -79,8 +79,14 @@ a.ribbon {
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg); }
+    -o-transform: rotate(45deg);
+}
 
 a.ribbon:hover {
     box-shadow: none;
-    text-decoration: underline; }
+    text-decoration: underline;
+}
+
+#histogram-container {
+    display: none;
+}

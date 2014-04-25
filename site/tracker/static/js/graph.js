@@ -3,6 +3,7 @@ var amounts = $("td.amount");
 var averages = $("td.average");
 var i, data = [], amount, average;
 var hasAverages = false;
+var container = document.getElementById('histogram-container');
 
 var cleanUp = function (str) {
     return str.replace(',', '.').replace('&nbsp;', '');
@@ -20,97 +21,101 @@ for (i = 0; i < months.length; i++) {
     }
 }
 
-var margin = {top: 30, right: 40, bottom: 60, left: 40},
-    width = 600 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+if (months.length >= 6) {
 
-var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1);
+    var margin = {top: 30, right: 40, bottom: 60, left: 40},
+        width = 600 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
-var y0 = d3.scale.linear().range([height, 0]);
+    var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1);
 
-var xAxis = d3.svg.axis().scale(x).orient("bottom");
+    var y0 = d3.scale.linear().range([height, 0]);
 
-var yAxisLeft = d3.svg.axis().scale(y0).ticks(6).orient("left");
+    var xAxis = d3.svg.axis().scale(x).orient("bottom");
 
-var svg = d3.select("#graph-body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var yAxisLeft = d3.svg.axis().scale(y0).ticks(6).orient("left");
 
-var rawLegendData = [{"class": "bar-amount",
-                      "label": gettext("Your expenditures")}];
-if (hasAverages) {
-    rawLegendData.push({"class": "bar-average",
-                        "label": gettext("Average")});
-}
-var legendData = d3.values(rawLegendData);
+    var svg = d3.select("#graph-body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-x.domain(data.map(function(d) { return d.month; }));
-
-y0.domain([0, d3.max(data, function(d) {
-    if (d.average !== undefined) {
-        return Math.max(d.amount, d.average);
+    var rawLegendData = [{"class": "bar-amount",
+                          "label": gettext("Your expenditures")}];
+    if (hasAverages) {
+        rawLegendData.push({"class": "bar-average",
+                            "label": gettext("Average")});
     }
-    return d.amount;
-})]);
+    var legendData = d3.values(rawLegendData);
 
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis)
-    .selectAll("text")
-    .style("text-anchor", "end")
-    .attr("dx", "-.8em")
-    .attr("dy", ".15em")
-    .attr("transform", function(d) {
-        return "rotate(-65)";
-    });
+    x.domain(data.map(function(d) { return d.month; }));
 
-svg.append("g")
-    .attr("class", "y axis axisLeft")
-    .call(yAxisLeft)
-    .append("text")
-    .attr("y", 6)
-    .attr("dy", "-2em")
-    .style("text-anchor", "end")
-    .style("text-anchor", "end")
-    .text("€");
+    y0.domain([0, d3.max(data, function(d) {
+        if (d.average !== undefined) {
+            return Math.max(d.amount, d.average);
+        }
+        return d.amount;
+    })]);
 
-bars = svg.selectAll(".bar").data(data).enter();
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", function(d) {
+            return "rotate(-65)";
+        });
 
-bars.append("rect")
-    .attr("class", "bar-amount")
-    .attr("x", function(d) { return x(d.month); })
-    .attr("width", x.rangeBand() / (hasAverages ? 2 : 1))
-    .attr("y", function(d) { return y0(d.amount); })
-    .attr("height", function(d,i,j) { return height - y0(d.amount); });
+    svg.append("g")
+        .attr("class", "y axis axisLeft")
+        .call(yAxisLeft)
+        .append("text")
+        .attr("y", 6)
+        .attr("dy", "-2em")
+        .style("text-anchor", "end")
+        .style("text-anchor", "end")
+        .text("€");
 
-if (hasAverages) {
+    bars = svg.selectAll(".bar").data(data).enter();
+
     bars.append("rect")
-        .attr("class", "bar-average")
-        .attr("x", function(d) { return x(d.month) + x.rangeBand()/2; })
-        .attr("width", x.rangeBand() / 2)
-        .attr("y", function(d) { return y0(d.average); })
-        .attr("height", function(d,i,j) { return height - y0(d.average); });
+        .attr("class", "bar-amount")
+        .attr("x", function(d) { return x(d.month); })
+        .attr("width", x.rangeBand() / (hasAverages ? 2 : 1))
+        .attr("y", function(d) { return y0(d.amount); })
+        .attr("height", function(d,i,j) { return height - y0(d.amount); });
+
+    if (hasAverages) {
+        bars.append("rect")
+            .attr("class", "bar-average")
+            .attr("x", function(d) { return x(d.month) + x.rangeBand()/2; })
+            .attr("width", x.rangeBand() / 2)
+            .attr("y", function(d) { return y0(d.average); })
+            .attr("height", function(d,i,j) { return height - y0(d.average); });
+    }
+    legend = svg.selectAll(".legend")
+        .data(legendData.slice())
+        .enter()
+        .append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+        .attr("x", width - 18)
+        .attr("width", 18)
+        .attr("height", 18)
+        .attr("class", function(d) { return d["class"]; });
+
+    legend.append("text")
+        .attr("x", width - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d.label; });
+
+    container.style.display = "inline";
 }
-legend = svg.selectAll(".legend")
-    .data(legendData.slice())
-    .enter()
-    .append("g")
-    .attr("class", "legend")
-    .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-legend.append("rect")
-    .attr("x", width - 18)
-    .attr("width", 18)
-    .attr("height", 18)
-    .attr("class", function(d) { return d["class"]; });
-
-legend.append("text")
-    .attr("x", width - 24)
-    .attr("y", 9)
-    .attr("dy", ".35em")
-    .style("text-anchor", "end")
-    .text(function(d) { return d.label; });
-
