@@ -262,7 +262,14 @@ class ExpenditureAdd(LoginRequiredMixin,
     """
     model = Expenditure
     form_class = ExpenditureForm
-    success_url = reverse_lazy('tracker:list')
+
+    def get_success_url(self):
+        """Redirect to expenditures list or expenditure creation
+        according to request post data.
+        """
+        if 'save_other' in self.request.POST:
+            return reverse_lazy('tracker:add')
+        return reverse_lazy('tracker:list')
 
     def form_valid(self, form):
         """If the form is valid, save the associated model instances.

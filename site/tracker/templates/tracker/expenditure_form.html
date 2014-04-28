@@ -32,6 +32,10 @@
 	 class="btn btn-default">
 	{% trans 'delete'|capfirst %}
       </a>
+      {% else %}
+      <input type="submit" value="{% trans 'continue'|capfirst %}"
+	     name="save_other"
+	     class="btn btn-default">
       {% endif %}
     </div>
   </div>
