@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-18 00:12+0200\n"
+"POT-Creation-Date: 2014-05-18 01:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,10 +62,10 @@ msgstr "clé d'activation"
 msgid "created"
 msgstr "création"
 
-#: models.py:85
+#: models.py:98
 msgid "account registration"
 msgstr "demande de création de compte"
 
-#: models.py:86
+#: models.py:99
 msgid "account registrations"
 msgstr "demandes de création de compte"

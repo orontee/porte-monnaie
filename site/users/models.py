@@ -65,15 +65,28 @@ class Registration(Model):
     def __str__(self):
         return u'Account registration: {0}'.format(self.user)
 
-    def send(self):
+    def _send_email(self, subject_tmpl, msg_tmpl):
         """Send an email to the user.
         """
         var = {'key': self.key,
                'username': self.user.username}
-        subject = render_to_string('users/email_subject.txt', var)
+        subject = render_to_string('users/{0}'.format(subject_tmpl),
+                                   var)
         subject = subject[:-1]
-        msg = render_to_string('users/email_msg.txt', var)
+        msg = render_to_string('users/{0}'.format(msg_tmpl), var)
         self.user.email_user(subject, msg)
+
+    def send_creation_email(self):
+        """Send the creation email.
+        """
+        self._send_email('email_creation_subject.txt',
+                         'email_creation_msg.txt')
+
+    def send_deletion_email(self):
+        """Send the deletion email.
+        """
+        self._send_email('email_deletion_subject.txt',
+                         'email_deletion_msg.txt')
 
     def is_valid(self):
         """Check whether it is a valid exception.

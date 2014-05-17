@@ -54,6 +54,8 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
         self.object.is_active = False
         self.object.save()
+        registration = Registration.objects.create_registration(self.object)
+        registration.send_deletion_email()
         return HttpResponseRedirect(self.get_success_url())
 
 

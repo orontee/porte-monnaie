@@ -60,7 +60,7 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         if commit:
             user.save()
             registration = Registration.objects.create_registration(user)
-            registration.send()
+            registration.send_creation_email()
         return user
 
 

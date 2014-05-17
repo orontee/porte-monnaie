@@ -1,0 +1,2 @@
+{% load i18n %}{% url 'tracker:user_activation' key as the_url %}
+{% blocktrans %}Thank you for trying Porte-monnaie! Your user account has been deactivated. You data will be kept for 30 days from now. Within this period, it is still possible to get your user account back by visiting the following page: http://aimersanscompter.fr{{ the_url }}. Later your data will be definitively lost and your account deleted.{% endblocktrans %}
