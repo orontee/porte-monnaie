@@ -20,7 +20,8 @@
 </form>
 <p>
   {% url 'tracker:password_change' as change_url %}
-  {% blocktrans %}You may also <a href="{{ change_url }}">change your password</a>.{% endblocktrans %}
+  {% url 'tracker:user_deletion' as user_deletion %}
+  {% blocktrans %}You may also <a href="{{ change_url }}">change your password</a> or <a href="{{ user_deletion }}">delete your user account</a>.{% endblocktrans %}
 </p>
 {% endblock %}
 

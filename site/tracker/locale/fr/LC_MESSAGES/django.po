@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-28 15:09+0200\n"
+"POT-Creation-Date: 2014-05-18 00:12+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -178,6 +178,7 @@ msgstr ""
 #: templates/tracker/expenditure_confirm_delete.html:17
 #: templates/tracker/expenditure_form.html:33
 #: templates/tracker/purse_confirm_delete.html:25
+#: templates/users/user_confirm_delete.html:18
 msgid "delete"
 msgstr "supprimer"
 
@@ -329,7 +330,7 @@ msgstr "déconnexion"
 
 #: templates/tracker/purse_confirm_delete.html:5
 msgid "purse deletion"
-msgstr "suppression d'un porte-monnaien"
+msgstr "suppression d'un porte-monnaie"
 
 #: templates/tracker/purse_confirm_delete.html:12
 #, python-format
@@ -344,6 +345,11 @@ msgstr ""
 #, python-format
 msgid "Confirm the deletion of the purse named <q>%(name)s</q>."
 msgstr "Confirmez la suppression du porte-monnaie <q>%(name)s</q>."
+
+#: templates/tracker/purse_confirm_delete.html:30
+#: templates/users/user_confirm_delete.html:23
+msgid "cancel"
+msgstr "abandonner"
 
 #: templates/tracker/purse_form.html:7
 msgid "edit purse"
@@ -457,6 +463,23 @@ msgstr ""
 msgid "Go to the login page"
 msgstr "Aller à la page de connexion"
 
+#: templates/users/user_confirm_delete.html:5
+msgid "user account deletion"
+msgstr "suppression du compte utilisateur"
+
+#: templates/users/user_confirm_delete.html:9
+msgid "Confirm the deletion of your user account."
+msgstr "Confirmez la suppression de votre compte utilisateur."
+
+#: templates/users/user_confirm_delete.html:10
+msgid ""
+"In case you decide to delete your user account, note that your data will "
+"still be kept for 30 days. Just in case you change your mind..."
+msgstr ""
+"Si vous décidez de supprimer votre compte utilisateur, vos données "
+"personnelles seront tout de même conservées pendant 30 jours, au cas où vous "
+"changeriez d'avis..."
+
 #: templates/users/user_creation_done.html:5
 msgid "account created"
 msgstr "compte créé"
@@ -469,12 +492,14 @@ msgstr ""
 "Merci de vous intéresser à Porte-monnaie&nbsp;! Vous recevrez bientôt un "
 "courrier électronique expliquant comment activer votre compte."
 
-#: templates/users/user_form.html:23
+#: templates/users/user_form.html:24
 #, python-format
-msgid "You may also <a href=\"%(change_url)s\">change your password</a>."
+msgid ""
+"You may also <a href=\"%(change_url)s\">change your password</a> or <a href="
+"\"%(user_deletion)s\">delete your user account</a>."
 msgstr ""
 "Vous pouvez également <a href=\"%(change_url)s\">changer votre mot de passe</"
-"a>."
+"a> ou <a href=\"%(user_deletion)s\">supprimer votre compte utilisateur</a>."
 
 #: views/main.py:110
 msgid "First, create a purse..."

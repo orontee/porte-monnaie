@@ -24,7 +24,9 @@ from tracker.views import (ExpenditureAdd,
                            PurseDelete,
                            UserChange)
 from tracker.forms import (AuthenticationForm, PasswordChangeForm)
-from users.views.base import (UserCreation, UserActivation)
+from users.views.base import (UserActivation,
+                              UserCreation,
+                              UserDeletion)
 
 
 urlpatterns = patterns('',
@@ -80,7 +82,12 @@ urlpatterns += patterns('',
                             view=UserCreation.as_view(
                                 success_url=reverse_lazy(
                                     'tracker:user_creation_done')),
-                            name='user_creation'))
+                            name='user_creation'),
+                        url(regex=r'^user_deletion/$',
+                            view=UserDeletion.as_view(
+                                success_url=reverse_lazy(
+                                    'tracker:home')),
+                            name='user_deletion'))
 
 urlpatterns += patterns('',
                         url(r'^login/$', 'django.contrib.auth.views.login',

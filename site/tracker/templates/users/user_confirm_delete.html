@@ -2,20 +2,13 @@
 {% load i18n %}
 
 {% block header_content %}
-<h2>{% trans 'purse deletion'|capfirst %}</h2>
+<h2>{% trans 'user account deletion'|capfirst %}</h2>
 {% endblock header_content %}
 
 {% block content %}
-{% with description=purse.description name=purse.name %}
-<p>
-  {% if description %}
-  {% blocktrans %}Confirm the deletion of the purse named <q>{{ name }}</q> described as follows: <q>{{ description }}</q>.{% endblocktrans %}
-  {% else %}
-  {% blocktrans %}Confirm the deletion of the purse named <q>{{ name }}</q>.{% endblocktrans %}
-  {% endif %}
-</p>
-{% endwith %}
-<form id="purse-form " class="form-horizontal"
+<p>{% trans 'Confirm the deletion of your user account.' %}</p>
+<p class="alert alert-info">{% trans 'In case you decide to delete your user account, note that your data will still be kept for 30 days. Just in case you change your mind...' %}</p>
+<form id="user-form " class="form-horizontal"
       role="form"
       action="" method="post">{% csrf_token %}
   {% include 'tracker/form_errors.html' %}
@@ -25,7 +18,7 @@
 	     value="{% trans 'delete'|capfirst %}"
 	     class="btn btn-primary">
       <a id="cancel-btn" 
-	 href="{% url 'tracker:purse_update' purse.pk %}"
+	 href="{% url 'tracker:user_change' %}"
 	 class="btn btn-default">
 	{% trans 'cancel'|capfirst %}
       </a>

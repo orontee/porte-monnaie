@@ -2,8 +2,9 @@
 """
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import get_user_model
-from django.http import Http404
-from django.views.generic import (CreateView, UpdateView, TemplateView)
+from django.http import (Http404, HttpResponseRedirect)
+from django.views.generic import (CreateView, DeleteView,
+                                  UpdateView, TemplateView)
 from users.forms import (UserChangeForm, UserCreationForm)
 from users.models import Registration
 from users.views.mixins import LoginRequiredMixin
@@ -32,6 +33,28 @@ class UserChange(LoginRequiredMixin, UpdateView):
         """Returns the user account.
         """
         return self.request.user if self.request else None
+
+
+class UserDeletion(LoginRequiredMixin, DeleteView):
+    """View to delete (truly deactivate) the logged user account.
+    """
+    model = User
+    template_name = 'users/user_confirm_delete.html'
+    success_url = reverse_lazy('users:user_delete_done')
+
+    def get_object(self, queryset=None):
+        """Returns the user account.
+        """
+        return self.request.user if self.request else None
+
+    def delete(self, request, *args, **kwargs):
+        """Sets the ``is_active`` flag to ``False`` and then redirects to the
+        success URL.
+        """
+        self.object = self.get_object()
+        self.object.is_active = False
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class UserActivation(TemplateView):
