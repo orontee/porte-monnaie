@@ -494,11 +494,12 @@ msgstr "suppression du compte utilisateur"
 #: templates/users/user_confirm_delete.html:11
 msgid ""
 "In case you decide to delete your user account, note that your data will "
-"still be kept for 30 days. Just in case you change your mind..."
+"still be kept for 30 days. Just in case you change your mind... "
 msgstr ""
 "Si vous décidez de supprimer votre compte utilisateur, vos données "
-"personnelles seront tout de même conservées pendant 30 jours, au cas où vous "
-"changeriez d'avis..."
+"personnelles seront conservées pendant 30 jours, au cas où vous "
+"changeriez d'avis... Au delà de cette période, elles seront définitivement "
+"perdues."
 
 #: templates/users/user_confirm_delete.html:13
 msgid "Confirm the deletion of your user account."
