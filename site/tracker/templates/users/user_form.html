@@ -15,6 +15,11 @@
     <div class="col-sm-offset-2 col-sm-10">
       <input type="submit" value="{% trans 'save'|capfirst %}"
 	     class="btn btn-primary">
+      <a id="cancel-btn"
+	 href="{% url 'tracker:list' %}"
+	 class="btn btn-default">
+	{% trans 'cancel'|capfirst %}
+      </a>
     </div>
   </div>
 </form>

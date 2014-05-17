@@ -6,8 +6,11 @@
 {% endblock header_content %}
 
 {% block content %}
+<div class="alert alert-warning">
+  <strong>{% trans 'Warning!' %}</strong>
+  {% trans 'In case you decide to delete your user account, note that your data will still be kept for 30 days. Just in case you change your mind...' %}
+</div>
 <p>{% trans 'Confirm the deletion of your user account.' %}</p>
-<p class="alert alert-info">{% trans 'In case you decide to delete your user account, note that your data will still be kept for 30 days. Just in case you change your mind...' %}</p>
 <form id="user-form " class="form-horizontal"
       role="form"
       action="" method="post">{% csrf_token %}

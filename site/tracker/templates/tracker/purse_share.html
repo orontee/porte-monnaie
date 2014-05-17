@@ -19,6 +19,11 @@
     <div class="col-sm-offset-2 col-sm-10">
       <input type="submit" value="{% trans 'share'|capfirst %}"
 	     class="btn btn-primary">
+      <a id="cancel-btn"
+	 href="{% url 'tracker:purse_update' purse.pk %}"
+	 class="btn btn-default">
+	{% trans 'cancel'|capfirst %}
+      </a>
     </div>
   </div>
 </form>
