@@ -55,8 +55,8 @@ class PurseCreation(LoginRequiredMixin,
         Note that the user is added to the created purse after the
         success URL is computed.
         """
-        if (self.request.method == 'POST'
-            and self.request.user.purse_set.count() == 0):
+        user = self.request.user
+        if self.request.method == 'POST' and user.purse_set.count() == 0:
             msg = _('You just created your first purse. Use the <q>Add</q> '
                     'button of the top bar to start adding expenditures to '
                     'that purse.')
@@ -87,6 +87,7 @@ class PurseCreation(LoginRequiredMixin,
                         self.request.user.purse_set.count() > 0})
         return context
 
+
 class PurseUpdate(LoginRequiredMixin,
                   WithCurrentDateMixin,
                   UpdateView):
@@ -108,6 +109,7 @@ class PurseUpdate(LoginRequiredMixin,
         context = super(PurseUpdate, self).get_context_data(**kwargs)
         context.update({'user_has_purse': True})
         return context
+
 
 class DefaultPurseMixin(object):
     """Provides an accessor to the user account default purse.
@@ -247,9 +249,11 @@ class PurseShare(LoginRequiredMixin,
         other = form.cleaned_data['user']
         purse = self.get_object()
         if purse.users.filter(pk=other.pk).exists():
-            msg = _("The purse called <q>{purse}</q> is already shared with {other}.")
+            msg = _("The purse called <q>{purse}</q> is "
+                    "already shared with {other}.")
         else:
-            msg = _("The purse called <q>{purse}</q> is now shared with {other}.")
+            msg = _("The purse called <q>{purse}</q> is "
+                    "now shared with {other}.")
             purse.users.add(other)
         messages.info(self.request, msg.format(other=other.get_full_name(),
                                                purse=purse.name))
