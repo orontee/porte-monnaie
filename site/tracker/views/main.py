@@ -58,6 +58,11 @@ class PurseCreation(LoginRequiredMixin,
         self.object.save()
         return res
 
+    def get_context_data(self, **kwargs):
+        context = super(PurseCreation, self).get_context_data(**kwargs)
+        context.update({'user_has_purse':
+                        self.request.user.purse_set.count() > 0})
+        return context
 
 class PurseUpdate(LoginRequiredMixin,
                   WithCurrentDateMixin,
@@ -76,6 +81,10 @@ class PurseUpdate(LoginRequiredMixin,
             return HttpResponseRedirect(reverse_lazy('tracker:logout'))
         return super(PurseUpdate, self).dispatch(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(PurseUpdate, self).get_context_data(**kwargs)
+        context.update({'user_has_purse': True})
+        return context
 
 class DefaultPurseMixin(object):
     """Provides an accessor to the user account default purse.
