@@ -492,7 +492,6 @@ msgid "user account deletion"
 msgstr "suppression du compte utilisateur"
 
 #: templates/users/user_confirm_delete.html:11
-#, fuzzy
 msgid ""
 "In case you decide to delete your user account, note that your data will "
 "still be kept for 30 days. Just in case you change your mind..."
