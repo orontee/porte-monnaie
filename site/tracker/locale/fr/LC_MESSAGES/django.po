@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-18 01:22+0200\n"
+"POT-Creation-Date: 2014-05-18 14:32+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -347,7 +347,7 @@ msgid "Confirm the deletion of the purse named <q>%(name)s</q>."
 msgstr "Confirmez la suppression du porte-monnaie <q>%(name)s</q>."
 
 #: templates/tracker/purse_confirm_delete.html:30
-#: templates/tracker/purse_form.html:27 templates/tracker/purse_share.html:25
+#: templates/tracker/purse_form.html:28 templates/tracker/purse_share.html:25
 #: templates/users/password_change_form.html:27
 #: templates/users/user_confirm_delete.html:26
 #: templates/users/user_form.html:21
@@ -362,7 +362,7 @@ msgstr "éditer un porte-monnaie"
 msgid "add purse"
 msgstr "ajouter un porte-monnaie"
 
-#: templates/tracker/purse_form.html:36
+#: templates/tracker/purse_form.html:38
 #, python-format
 msgid ""
 "You may also <a href=\"%(delete_url)s\">delete</a> or <a href=\"%(share_url)s"
@@ -492,14 +492,14 @@ msgid "user account deletion"
 msgstr "suppression du compte utilisateur"
 
 #: templates/users/user_confirm_delete.html:11
+#, fuzzy
 msgid ""
 "In case you decide to delete your user account, note that your data will "
-"still be kept for 30 days. Just in case you change your mind... "
+"still be kept for 30 days. Just in case you change your mind..."
 msgstr ""
 "Si vous décidez de supprimer votre compte utilisateur, vos données "
-"personnelles seront conservées pendant 30 jours, au cas où vous "
-"changeriez d'avis... Au delà de cette période, elles seront définitivement "
-"perdues."
+"personnelles seront conservées pendant 30 jours, au cas où vous changeriez "
+"d'avis... Au delà de cette période, elles seront définitivement perdues."
 
 #: templates/users/user_confirm_delete.html:13
 msgid "Confirm the deletion of your user account."
@@ -526,26 +526,35 @@ msgstr ""
 "Vous pouvez également <a href=\"%(change_url)s\">changer votre mot de passe</"
 "a> ou <a href=\"%(user_deletion)s\">supprimer votre compte utilisateur</a>."
 
-#: views/main.py:110
+#: views/main.py:60
+msgid ""
+"You just created your first purse. Use the <q>Add</q> button of the top bar "
+"to start adding expenditures to that purse."
+msgstr ""
+"Vous venez de créer votre premier porte-monnaie. Utiliser le bouton "
+"<q>Ajouter</q> de la barre de navigation pour commencer la saisie de "
+"dépenses."
+
+#: views/main.py:142
 msgid "First, create a purse..."
 msgstr "Commencez par créer un porte-monnaie..."
 
-#: views/main.py:117
+#: views/main.py:149
 #, python-brace-format
 msgid "Your default purse is now <q>{name}</q>."
 msgstr "Votre porte-monnaie par défaut est maintenant <q>{name}</q>."
 
-#: views/main.py:218
+#: views/main.py:250
 #, python-brace-format
 msgid "The purse called <q>{purse}</q> is already shared with {other}."
 msgstr "Le porte-monnaie <q>{purse}</q> est déjà partagé avec {other}."
 
-#: views/main.py:220
+#: views/main.py:252
 #, python-brace-format
 msgid "The purse called <q>{purse}</q> is now shared with {other}."
 msgstr "Le porte-monnaie <q>{purse}</q> est maintenant partagé avec {other}."
 
-#: views/main.py:331 views/main.py:372
+#: views/main.py:363 views/main.py:404
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 

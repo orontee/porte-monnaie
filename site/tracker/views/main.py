@@ -4,10 +4,11 @@
 import datetime
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import (reverse_lazy, reverse)
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import (HttpResponseRedirect, Http404)
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import (CreateView,
                                   DeleteView,
@@ -48,14 +49,36 @@ class PurseCreation(LoginRequiredMixin,
     success_url = reverse_lazy('tracker:purse_list')
     is_active = None
 
+    def get_success_url(self):
+        """Determine the success URL depending on purses count.
+
+        Note that the user is added to the created purse after the
+        success URL is computed.
+        """
+        if (self.request.method == 'POST'
+            and self.request.user.purse_set.count() == 0):
+            msg = _('You just created your first purse. Use the <q>Add</q> '
+                    'button of the top bar to start adding expenditures to '
+                    'that purse.')
+            messages.info(self.request, msg)
+            url = reverse('tracker:list')
+        else:
+            url = force_text(self.success_url)
+        return url
+
     def form_valid(self, form):
         """Process a valid form.
 
-        The user is added to the purse users.
+        The user is added to the purse users and its default purse is
+        set.
         """
         res = super(PurseCreation, self).form_valid(form)
         self.object.users.add(self.request.user)
         self.object.save()
+
+        user = self.request.user
+        user.default_purse = self.object
+        user.save()
         return res
 
     def get_context_data(self, **kwargs):
