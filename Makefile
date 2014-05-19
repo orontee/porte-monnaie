@@ -81,6 +81,10 @@ collect:
 	cd $(projdir); \
 	$(manager) collectstatic --noinput --pythonpath=.
 
+test:
+	cd $(projdir); \
+	$(manager) test --settings=purse.settings.tests --pythonpath=.
+
 $(publicdir):
 	[ -x $@ ] || mkdir $@
 
