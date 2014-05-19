@@ -1,8 +1,11 @@
 """Tests for models of the users application.
 """
 
+from datetime import timedelta
 from django.contrib.auth import get_user_model
-from django.utils.unittest import TestCase
+from django.core import mail
+from django.test import TestCase
+from django.utils.timezone import now
 from users.models import Registration
 
 User = get_user_model()
@@ -10,13 +13,60 @@ User = get_user_model()
 
 class RegistrationTest(TestCase):
     def setUp(self):
-        self.u = User.objects.create_user(username='username',
-                                          password='password')
+        self.u = User.objects.create(username='username',
+                                     password='password',
+                                     is_active=False)
         self.u.save()
 
     def test_creation(self):
-        """
-        Check that key and user are set.
+        """Test registration creation.
         """
         r = Registration.objects.create_registration(self.u)
         self.assertEqual(r.user, self.u)
+
+    def test_activate_user(self):
+        """Test account activation.
+        """
+        self.assertEqual(self.u.is_active, False)
+
+        # Missing registration
+        with self.assertRaises(Registration.DoesNotExist):
+            Registration.objects.activate_user('key')
+
+        # Successful activation
+        reg = Registration.objects.create(user=self.u, key='key')
+        reg.save()
+        user = Registration.objects.activate_user('key')
+        self.assertEqual(Registration.objects.count(), 0)
+        self.assertEqual(user, self.u)
+        self.assertEqual(user.is_active, True)
+
+        # Expired registration
+        reg = Registration.objects.create(user=self.u, key='key')
+        reg.save()
+        reg.created = now() - timedelta(days=31)
+        reg.save()
+        user = Registration.objects.activate_user('key')
+        self.assertEqual(Registration.objects.count(), 0)
+        self.assertEqual(user, None)
+        
+    def test_expired_registration(self):
+        reg = Registration.objects.create(user=self.u, key='key')
+        reg.save()
+        self.assertEqual(Registration.expired_objects.count(), 0)
+        
+        reg.created = now() - timedelta(days=31)
+        reg.save()
+        self.assertEqual(Registration.expired_objects.count(), 1)
+
+    def test_send_creation_email(self):
+        reg = Registration.objects.create(user=self.u, key='key')
+        reg.save()
+        reg.send_creation_email()
+        self.assertEqual(len(mail.outbox), 1)
+
+    def test_send_deletion_email(self):
+        reg = Registration.objects.create(user=self.u, key='key')
+        reg.save()
+        reg.send_deletion_email()
+        self.assertEqual(len(mail.outbox), 1)
