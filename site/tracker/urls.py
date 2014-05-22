@@ -87,7 +87,14 @@ urlpatterns += patterns('',
                             view=UserDeletion.as_view(
                                 success_url=reverse_lazy(
                                     'tracker:home')),
-                            name='user_deletion'))
+                            name='user_deletion'),
+                        url(regex=r'^user_creation_done',
+                            view=TemplateView.as_view(
+                                template_name='users/user_creation_done.html'),
+                            name='user_creation_done'),
+                        url(regex=r'^user_activation/(?P<key>\w+)/$',
+                            view=UserActivation.as_view(),
+                            name='user_activation'))
 
 urlpatterns += patterns('',
                         url(r'^login/$', 'django.contrib.auth.views.login',
@@ -105,14 +112,7 @@ urlpatterns += patterns('',
                              'post_change_redirect':
                              reverse_lazy('tracker:home'),
                              'extra_context': {'now': now()}},
-                            name='password_change'),
-                        url(regex=r'^user_creation_done',
-                            view=TemplateView.as_view(
-                                template_name='users/user_creation_done.html'),
-                            name='user_creation_done'),
-                        url(regex=r'^user_activation/(?P<key>\w+)/$',
-                            view=UserActivation.as_view(),
-                            name='user_activation'))
+                            name='password_change'))
 
 if settings.DEBUG:
     urlpatterns += patterns('',

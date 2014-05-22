@@ -51,6 +51,8 @@ class RegistrationTest(TestCase):
         self.assertEqual(user, None)
         
     def test_expired_registration(self):
+        """Test registration expiration.
+        """
         reg = Registration.objects.create(user=self.u, key='key')
         reg.save()
         self.assertEqual(Registration.expired_objects.count(), 0)
@@ -60,12 +62,16 @@ class RegistrationTest(TestCase):
         self.assertEqual(Registration.expired_objects.count(), 1)
 
     def test_send_creation_email(self):
+        """Test creation email.
+        """
         reg = Registration.objects.create(user=self.u, key='key')
         reg.save()
         reg.send_creation_email()
         self.assertEqual(len(mail.outbox), 1)
 
     def test_send_deletion_email(self):
+        """Test deletion email.
+        """
         reg = Registration.objects.create(user=self.u, key='key')
         reg.save()
         reg.send_deletion_email()
