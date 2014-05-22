@@ -5,7 +5,7 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils.timezone import now
-from tracker.models import (Purse, Expenditure)
+from tracker.models import (Expenditure, Purse, Tag)
 
 User = get_user_model()
 
@@ -40,11 +40,8 @@ class ExpenditureTest(TestCase):
         self.u = User.objects.create(username='test',
                                      password='password',
                                      is_active=False)
-        self.u.save()
         self.p = Purse.objects.create(name='test')
-        self.p.save()
         self.p.created -= timedelta(days=5)
-        self.p.save()
         self.p.users.add(self.u)
 
     def test_is_editable(self):
@@ -55,7 +52,6 @@ class ExpenditureTest(TestCase):
                                        description='test',
                                        author=self.u,
                                        purse=self.p)        
-        e.save()
         self.assertTrue(e.is_editable())
 
         e.created -= timedelta(days=3)
@@ -63,3 +59,56 @@ class ExpenditureTest(TestCase):
         self.assertFalse(e.is_editable())
         
         
+class TagManagerTest(TestCase):
+    """Test tag manager.
+    """
+    def setUp(self):
+        self.u = User.objects.create(username='test',
+                                     password='password',
+                                     is_active=False)
+        self.p = Purse.objects.create(name='test')
+        self.p.users.add(self.u)
+
+    def test_update_from(self):
+        """Test tag update. 
+        """
+        description = "one two two   three a e i"
+        e = Expenditure(amount=100,
+                        date=now(),
+                        description=description,
+                        author=self.u,
+                        purse=self.p)
+        e.save()
+        qs = self.p.tag_set.order_by('id')
+        tags = [d for d in qs.values('name', 'weight')]
+        expecting = [{'name': u'one', 'weight': 1},
+                     {'name': u'two', 'weight': 1},
+                     {'name': u'three', 'weight': 1}]
+        self.assertEqual(tags, expecting)
+
+        e = Expenditure(amount=100,
+                        date=now(),
+                        description='two',
+                        author=self.u,
+                        purse=self.p)
+        e.save()
+        qs = self.p.tag_set.order_by('id')
+        tags = [d for d in qs.values('name', 'weight')]
+        expecting = [{'name': u'one', 'weight': 1},
+                     {'name': u'two', 'weight': 2},
+                     {'name': u'three', 'weight': 1}]
+        self.assertEqual(tags, expecting)
+
+        p = Purse.objects.create(name='other')
+        p.users.add(self.u)
+        e = Expenditure(amount=100,
+                        date=now(),
+                        description='four five',
+                        author=self.u,
+                        purse=p)
+        e.save()
+        qs = self.p.tag_set.order_by('id')
+        self.assertEqual(qs.count(), 3)
+        
+        
+    
