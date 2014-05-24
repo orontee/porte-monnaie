@@ -292,7 +292,6 @@ class TagNamesMixin(object):
 class ExpenditureAdd(LoginRequiredMixin,
                      DefaultPurseMixin,
                      WithCurrentDateMixin,
-                     TagNamesMixin,
                      CreateView):
     """View to add expenditures.
     """

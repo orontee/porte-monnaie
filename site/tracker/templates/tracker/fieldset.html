@@ -18,17 +18,4 @@
     {% endif %}
   </div>
 </div>
-
-{% if tagnames and field.name == "description" and tagnames|length > 10 %}
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-4">
-    {% for name in tagnames %}
-    <a href="#" class="tag">
-	{{ name }}
-    </a>
-    {% endfor %}
-  </div>
-</div>
-{% endif %}
-
 {% endfor %}
