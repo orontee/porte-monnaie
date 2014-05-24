@@ -5,7 +5,7 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils.timezone import now
-from tracker.models import (Expenditure, Purse, Tag)
+from tracker.models import (Expenditure, Purse)
 
 User = get_user_model()
 
