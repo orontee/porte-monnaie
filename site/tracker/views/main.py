@@ -130,12 +130,10 @@ class DefaultPurseMixin(object):
                                        'LoginRequiredMixin')
         else:
             try:
-                purse = user.default_purse
+                return user.default_purse
             except AttributeError:
                 raise ImproperlyConfigured('User model does not define a '
                                            'purse_default attribute')
-            else:
-                return purse
 
     def dispatch(self, *args, **kwargs):
         user = self.request.user
