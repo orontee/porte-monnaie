@@ -53,7 +53,7 @@ class ExpenditureAddTest(TestCase):
         """
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/'
+        url = 'http://testserver/tracker/login?next=/tracker/expenditures/add/'
         self.assertEqual(response.url, url)
         
     def test_get_authentified_without_purse(self):
@@ -64,9 +64,8 @@ class ExpenditureAddTest(TestCase):
         create_user(**credentials)
         self.client.login(**credentials)
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/purses/create/'
-        self.assertEqual(response.url, url)
+        expected_url = 'http://testserver/tracker/purses/create/'
+        self.assertRedirects(response, expected_url)
 
     def test_get_authentified_without_default_purse(self):
         """Get page while user is authentified but has no default 
