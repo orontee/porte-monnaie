@@ -78,6 +78,7 @@ class ExpenditureAddTest(TestCase):
         create_purse(u)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
+        import pdb; pdb.set_trace() 
         # self.assertEqual(u.default_purse, p)
         # Check messages
 
