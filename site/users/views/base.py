@@ -1,4 +1,5 @@
-"""Module defining the views.
+"""Module defining views related to users.
+
 """
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import get_user_model
@@ -14,6 +15,7 @@ User = get_user_model()
 
 class UserCreation(CreateView):
     """View to create a user account.
+
     """
     model = User
     template_name = 'users/user_creation.html'
@@ -23,6 +25,7 @@ class UserCreation(CreateView):
 
 class UserChange(LoginRequiredMixin, UpdateView):
     """View to modify the logged user account.
+
     """
     model = User
     form_class = UserChangeForm
@@ -31,12 +34,14 @@ class UserChange(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         """Returns the user account.
+
         """
         return self.request.user if self.request else None
 
 
 class UserDeletion(LoginRequiredMixin, DeleteView):
     """View to delete (truly deactivate) the logged user account.
+
     """
     model = User
     template_name = 'users/user_confirm_delete.html'
@@ -44,12 +49,14 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
 
     def get_object(self, queryset=None):
         """Returns the user account.
+
         """
         return self.request.user if self.request else None
 
     def delete(self, request, *args, **kwargs):
         """Sets the ``is_active`` flag to ``False`` and then redirects to the
         success URL.
+
         """
         self.object = self.get_object()
         self.object.is_active = False
@@ -61,11 +68,13 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
 
 class UserActivation(TemplateView):
     """View to activate a user account.
+
     """
     template_name = 'users/user_activation_done.html'
 
     def get_context_data(self, **kwargs):
         """Tries to activate the user account associated to key.
+
         """
         context = super(UserActivation, self).get_context_data(**kwargs)
         try:

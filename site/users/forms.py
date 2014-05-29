@@ -1,3 +1,6 @@
+"""User forms.
+
+"""
 from django.contrib.auth import get_user_model
 from django.forms import (ModelForm, CharField, RegexField,
                           PasswordInput, ValidationError)
@@ -13,6 +16,7 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
     username, password and email.
 
     The implementation is copied from django.contrib.auth.forms
+
     """
     error_messages = {
         'duplicate_username': _("A user with that username already exists."),
@@ -66,6 +70,7 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
 
 class UserChangeForm(BootstrapWidgetMixin, ModelForm):
     """Form to change a user account.
+
     """
     class Meta:
         model = User

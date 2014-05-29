@@ -1,4 +1,5 @@
 """Tests for models of the users application.
+
 """
 
 from datetime import timedelta
@@ -19,12 +20,14 @@ class RegistrationTest(TestCase):
 
     def test_creation(self):
         """Test registration creation.
+
         """
         r = Registration.objects.create_registration(self.u)
         self.assertEqual(r.user, self.u)
 
     def test_activate_user(self):
         """Test account activation.
+
         """
         self.assertEqual(self.u.is_active, False)
 
@@ -49,6 +52,7 @@ class RegistrationTest(TestCase):
         
     def test_expired_registration(self):
         """Test registration expiration.
+
         """
         reg = Registration.objects.create(user=self.u, key='key')
         self.assertEqual(Registration.expired_objects.count(), 0)
@@ -59,6 +63,7 @@ class RegistrationTest(TestCase):
 
     def test_send_creation_email(self):
         """Test creation email.
+
         """
         reg = Registration.objects.create(user=self.u, key='key')
         reg.send_creation_email()
@@ -66,6 +71,7 @@ class RegistrationTest(TestCase):
 
     def test_send_deletion_email(self):
         """Test deletion email.
+
         """
         reg = Registration.objects.create(user=self.u, key='key')
         reg.send_deletion_email()
