@@ -142,6 +142,32 @@ class ExpenditureAddTest(TestCase):
         self.assertEqual(u.expenditure_set.count(), 1)
 
 
+    def test_post_with_multiple_occurence(self):
+        """Get page then post to create multiple expenditures.
+
+        """
+        credentials = {'username': 'username',
+                       'password': 'password'}
+        u = create_user(**credentials)
+        self.client.login(**credentials)
+        p = create_purse(u)
+        u.default_purse = p
+        u.save()
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        token = response.cookies['csrftoken'].value
+        data = {'amount': 100,
+                'date': '24/05/2014',
+                'description': 'expenditure description',
+                'occurrences': '3',
+                'csrftoken': token}
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 302)
+        url = 'http://testserver/tracker/expenditures/'
+        self.assertEqual(response.url, url)
+        self.assertEqual(u.expenditure_set.count(), 3)
+
+
 class ExpenditureDeleteTest(TestCase):
     """Test expenditure delete view.
 
