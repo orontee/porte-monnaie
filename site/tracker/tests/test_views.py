@@ -207,3 +207,56 @@ class ExpenditureDeleteTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Expenditure.objects.count(), 0)
         self.assertEqual(response.url, 'http://testserver/tracker/expenditures/')
+
+
+class ExpenditureUpdateTest(TestCase):
+    """Test expenditure update view.
+
+    """
+    def setUp(self):
+        credentials = {'username': 'username',
+                       'password': 'password'}
+        self.u = create_user(**credentials)
+        p = create_purse(self.u)
+        self.u.default_purse = p
+        self.u.save()
+        e = Expenditure.objects.create(amount=199,
+                                       author=self.u,
+                                       purse=p)
+        self.url = reverse('tracker:update', kwargs={'pk': e.pk})
+
+    def test_get_non_authentified(self):
+        """Get page while no user is authentified.
+
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        expected_url = 'http://testserver/tracker/login?next='
+        expected_url += self.url
+        self.assertEqual(response.url, expected_url)
+
+    def test_get_authentified(self):
+        """Get page then update resource while user is authentified.
+
+        """
+        credentials = {'username': 'username',
+                       'password': 'password'}
+        self.client.login(**credentials)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        token = response.cookies['csrftoken'].value
+        data = {'amount': 100,
+                'date': '24/05/2014',
+                'description': 'expenditure description',
+                'occurrences': '1',
+                'csrftoken': token}
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 302)
+        url = 'http://testserver/tracker/expenditures/'
+        self.assertEqual(response.url, url)
+        self.assertEqual(self.u.expenditure_set.count(), 1)
+        e = self.u.expenditure_set.all()[0]
+        self.assertEqual(e.amount, 100)
+        self.assertEqual(e.description, 'expenditure description')
+
+        

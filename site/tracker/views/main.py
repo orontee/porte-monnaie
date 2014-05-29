@@ -313,8 +313,10 @@ class ExpenditureAdd(LoginRequiredMixin,
     form_class = ExpenditureForm
 
     def get_success_url(self):
-        """Redirect to expenditures list or expenditure creation according to
-        request post data.
+        """Handles redirection target.
+
+        Redirection goes to the expenditures list or the expenditure
+        creation page according to request post data.
 
         """
         if 'save_other' in self.request.POST:
@@ -322,7 +324,7 @@ class ExpenditureAdd(LoginRequiredMixin,
         return reverse_lazy('tracker:list')
 
     def form_valid(self, form):
-        """If the form is valid, save the associated model instances.
+        """If the form is valid, completes then saves it.
 
         """
         form.instance.author = self.request.user
