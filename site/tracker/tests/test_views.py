@@ -1,6 +1,4 @@
-"""Tests for views of tracker application.
-
-"""
+"""Tests for views of tracker application."""
 
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
@@ -11,24 +9,18 @@ User = get_user_model()
 
 
 class HomeTest(TestCase):
-    """Test home view.
-
-    """
+    """Test home view."""
     def setUp(self):
         self.url = reverse('tracker:home')
 
     def test_get(self):
-        """Get home view.
-
-        """
+        """Get home view."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
 
 def create_user(**kwargs):
-    """Create a user.
-
-    """
+    """Create a user."""
     u = User.objects.create_user(**kwargs)
     u.save()
     return u
@@ -45,24 +37,20 @@ def create_purse(user=None, **kwargs):
     if user is not None:
         p.users.add(user)
     return p
-    
+
 
 class ExpenditureAddTest(TestCase):
-    """Test expenditure add view.
-
-    """
+    """Test expenditure add view."""
     def setUp(self):
         self.url = reverse('tracker:add')
 
     def test_get_non_authentified(self):
-        """Get page while no user is authentified.
-
-        """
+        """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
         url = 'http://testserver/tracker/login?next=/tracker/expenditures/add/'
         self.assertEqual(response.url, url)
-        
+
     def test_get_authentified_without_purse(self):
         """Get page while user is authentified but has no purse.
 
@@ -76,9 +64,7 @@ class ExpenditureAddTest(TestCase):
         self.assertRedirects(response, expected_url)
 
     def test_get_authentified_without_default_purse(self):
-        """Get page while user is authentified but has no default purse.
-
-        """
+        """Get page while user is authentified but has no default purse."""
         credentials = {'username': 'username',
                        'password': 'password'}
         u = create_user(**credentials)
@@ -90,9 +76,7 @@ class ExpenditureAddTest(TestCase):
         # Check messages
 
     def test_post(self):
-        """Get page then post.
-
-        """
+        """Get page then post."""
         credentials = {'username': 'username',
                        'password': 'password'}
         u = create_user(**credentials)
@@ -115,9 +99,7 @@ class ExpenditureAddTest(TestCase):
         self.assertEqual(u.expenditure_set.count(), 1)
 
     def test_post_and_save_other(self):
-        """Get page then post and save other.
-
-        """
+        """Get page then post and save other."""
         credentials = {'username': 'username',
                        'password': 'password'}
         u = create_user(**credentials)
@@ -141,11 +123,8 @@ class ExpenditureAddTest(TestCase):
         self.assertEqual(response.url, url)
         self.assertEqual(u.expenditure_set.count(), 1)
 
-
     def test_post_with_multiple_occurence(self):
-        """Get page then post to create multiple expenditures.
-
-        """
+        """Get page then post to create multiple expenditures."""
         credentials = {'username': 'username',
                        'password': 'password'}
         u = create_user(**credentials)
@@ -169,9 +148,7 @@ class ExpenditureAddTest(TestCase):
 
 
 class ExpenditureDeleteTest(TestCase):
-    """Test expenditure delete view.
-
-    """
+    """Test expenditure delete view."""
     def setUp(self):
         credentials = {'username': 'username',
                        'password': 'password'}
@@ -185,9 +162,7 @@ class ExpenditureDeleteTest(TestCase):
         self.url = reverse('tracker:delete', kwargs={'pk': e.pk})
 
     def test_get_non_authentified(self):
-        """Get page while no user is authentified.
-
-        """
+        """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
         expected_url = 'http://testserver/tracker/login?next='
@@ -195,9 +170,7 @@ class ExpenditureDeleteTest(TestCase):
         self.assertEqual(response.url, expected_url)
 
     def test_get_authentified(self):
-        """Get page then delete resource while user is authentified.
-
-        """
+        """Get page then delete resource while user is authentified."""
         credentials = {'username': 'username',
                        'password': 'password'}
         self.client.login(**credentials)
@@ -206,13 +179,12 @@ class ExpenditureDeleteTest(TestCase):
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Expenditure.objects.count(), 0)
-        self.assertEqual(response.url, 'http://testserver/tracker/expenditures/')
+        self.assertEqual(response.url,
+                         'http://testserver/tracker/expenditures/')
 
 
 class ExpenditureUpdateTest(TestCase):
-    """Test expenditure update view.
-
-    """
+    """Test expenditure update view."""
     def setUp(self):
         credentials = {'username': 'username',
                        'password': 'password'}
@@ -226,9 +198,7 @@ class ExpenditureUpdateTest(TestCase):
         self.url = reverse('tracker:update', kwargs={'pk': e.pk})
 
     def test_get_non_authentified(self):
-        """Get page while no user is authentified.
-
-        """
+        """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
         expected_url = 'http://testserver/tracker/login?next='
@@ -236,9 +206,7 @@ class ExpenditureUpdateTest(TestCase):
         self.assertEqual(response.url, expected_url)
 
     def test_get_authentified(self):
-        """Get page then update resource while user is authentified.
-
-        """
+        """Get page then update resource while user is authentified."""
         credentials = {'username': 'username',
                        'password': 'password'}
         self.client.login(**credentials)
@@ -258,5 +226,3 @@ class ExpenditureUpdateTest(TestCase):
         e = self.u.expenditure_set.all()[0]
         self.assertEqual(e.amount, 100)
         self.assertEqual(e.description, 'expenditure description')
-
-        

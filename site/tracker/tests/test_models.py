@@ -1,6 +1,4 @@
-"""Tests for models of tracker application.
-
-"""
+"""Tests for models of tracker application."""
 
 from datetime import timedelta
 from django.contrib.auth import get_user_model
@@ -12,13 +10,9 @@ User = get_user_model()
 
 
 class PurseTest(TestCase):
-    """Test purses.
-
-    """
+    """Test purses."""
     def test_usernames(self):
-        """Test usernames.
-
-        """        
+        """Test usernames."""
         u1 = User.objects.create(username='first',
                                  password='password',
                                  is_active=False)
@@ -37,9 +31,7 @@ class PurseTest(TestCase):
 
 
 class ExpenditureTest(TestCase):
-    """Test expenditures.
-
-    """
+    """Test expenditures."""
     def setUp(self):
         self.u = User.objects.create(username='test',
                                      password='password',
@@ -49,25 +41,21 @@ class ExpenditureTest(TestCase):
         self.p.users.add(self.u)
 
     def test_is_editable(self):
-        """Test expenditure edition.
-
-        """
+        """Test expenditure edition."""
         e = Expenditure.objects.create(amount=100,
                                        date=now(),
                                        description='test',
                                        author=self.u,
-                                       purse=self.p)        
+                                       purse=self.p)
         self.assertTrue(e.is_editable())
 
         e.created -= timedelta(days=3)
         e.save()
         self.assertFalse(e.is_editable())
-        
-        
-class TagManagerTest(TestCase):
-    """Test tag manager.
 
-    """
+
+class TagManagerTest(TestCase):
+    """Test tag manager."""
     def setUp(self):
         self.u = User.objects.create(username='test',
                                      password='password',
@@ -76,9 +64,7 @@ class TagManagerTest(TestCase):
         self.p.users.add(self.u)
 
     def test_update_from(self):
-        """Test tag update.
-
-        """
+        """Test tag update."""
         description = "one two two   three a e i"
         e = Expenditure(amount=100,
                         date=now(),
@@ -116,6 +102,3 @@ class TagManagerTest(TestCase):
         e.save()
         qs = self.p.tag_set.order_by('id')
         self.assertEqual(qs.count(), 3)
-        
-        
-    

@@ -359,7 +359,7 @@ class ExpenditureFilteredList(LoginRequiredMixin,
 
     This view handles:
 
-    - Query parameters to filter the default query set; 
+    - Query parameters to filter the default query set;
 
     - Pagination.
 
@@ -412,7 +412,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
 
     This view handles:
 
-    - Query parameters to filter the default query set; 
+    - Query parameters to filter the default query set;
 
     - Pagination.
 

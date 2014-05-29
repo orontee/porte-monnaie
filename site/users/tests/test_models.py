@@ -1,6 +1,4 @@
-"""Tests for models of the users application.
-
-"""
+"""Tests for models of the users application."""
 
 from datetime import timedelta
 from django.contrib.auth import get_user_model
@@ -19,16 +17,12 @@ class RegistrationTest(TestCase):
                                      is_active=False)
 
     def test_creation(self):
-        """Test registration creation.
-
-        """
+        """Test registration creation."""
         r = Registration.objects.create_registration(self.u)
         self.assertEqual(r.user, self.u)
 
     def test_activate_user(self):
-        """Test account activation.
-
-        """
+        """Test account activation."""
         self.assertEqual(self.u.is_active, False)
 
         # Missing registration
@@ -49,30 +43,24 @@ class RegistrationTest(TestCase):
         user = Registration.objects.activate_user('key')
         self.assertEqual(Registration.objects.count(), 0)
         self.assertEqual(user, None)
-        
-    def test_expired_registration(self):
-        """Test registration expiration.
 
-        """
+    def test_expired_registration(self):
+        """Test registration expiration."""
         reg = Registration.objects.create(user=self.u, key='key')
         self.assertEqual(Registration.expired_objects.count(), 0)
-        
+
         reg.created = now() - timedelta(days=31)
         reg.save()
         self.assertEqual(Registration.expired_objects.count(), 1)
 
     def test_send_creation_email(self):
-        """Test creation email.
-
-        """
+        """Test creation email."""
         reg = Registration.objects.create(user=self.u, key='key')
         reg.send_creation_email()
         self.assertEqual(len(mail.outbox), 1)
 
     def test_send_deletion_email(self):
-        """Test deletion email.
-
-        """
+        """Test deletion email."""
         reg = Registration.objects.create(user=self.u, key='key')
         reg.send_deletion_email()
         self.assertEqual(len(mail.outbox), 1)
