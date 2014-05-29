@@ -1,4 +1,5 @@
 """Tests for views of tracker application.
+
 """
 
 from django.contrib.auth import get_user_model
@@ -11,12 +12,14 @@ User = get_user_model()
 
 class HomeTest(TestCase):
     """Test home view.
+
     """
     def setUp(self):
         self.url = reverse('tracker:home')
 
     def test_get(self):
         """Get home view.
+
         """
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
@@ -24,6 +27,7 @@ class HomeTest(TestCase):
 
 def create_user(**kwargs):
     """Create a user.
+
     """
     u = User.objects.create_user(**kwargs)
     u.save()
@@ -34,6 +38,7 @@ def create_purse(user=None, **kwargs):
     """Create a purse.
 
     If user is not None, add it to the created purse.
+
     """
     p = Purse.objects.create(**kwargs)
     p.save()
@@ -44,12 +49,14 @@ def create_purse(user=None, **kwargs):
 
 class ExpenditureAddTest(TestCase):
     """Test expenditure add view.
+
     """
     def setUp(self):
         self.url = reverse('tracker:add')
 
     def test_get_non_authentified(self):
         """Get page while no user is authentified.
+
         """
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
@@ -58,6 +65,7 @@ class ExpenditureAddTest(TestCase):
         
     def test_get_authentified_without_purse(self):
         """Get page while user is authentified but has no purse.
+
         """
         credentials = {'username': 'username',
                        'password': 'password'}
@@ -68,8 +76,8 @@ class ExpenditureAddTest(TestCase):
         self.assertRedirects(response, expected_url)
 
     def test_get_authentified_without_default_purse(self):
-        """Get page while user is authentified but has no default 
-        purse.
+        """Get page while user is authentified but has no default purse.
+
         """
         credentials = {'username': 'username',
                        'password': 'password'}
@@ -83,6 +91,7 @@ class ExpenditureAddTest(TestCase):
 
     def test_post(self):
         """Get page then post.
+
         """
         credentials = {'username': 'username',
                        'password': 'password'}
@@ -107,6 +116,7 @@ class ExpenditureAddTest(TestCase):
 
     def test_post_and_save_other(self):
         """Get page then post and save other.
+
         """
         credentials = {'username': 'username',
                        'password': 'password'}
@@ -134,6 +144,7 @@ class ExpenditureAddTest(TestCase):
 
 class ExpenditureDeleteTest(TestCase):
     """Test expenditure delete view.
+
     """
     def setUp(self):
         credentials = {'username': 'username',
@@ -149,6 +160,7 @@ class ExpenditureDeleteTest(TestCase):
 
     def test_get_non_authentified(self):
         """Get page while no user is authentified.
+
         """
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
@@ -158,6 +170,7 @@ class ExpenditureDeleteTest(TestCase):
 
     def test_get_authentified(self):
         """Get page then delete resource while user is authentified.
+
         """
         credentials = {'username': 'username',
                        'password': 'password'}

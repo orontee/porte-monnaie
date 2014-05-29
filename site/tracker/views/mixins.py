@@ -1,4 +1,5 @@
 """Module defining generic view mixins.
+
 """
 
 from django.core.exceptions import ImproperlyConfigured
@@ -9,8 +10,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class WithCurrentDateMixin(object):
-    """
-    Extends a view context with the current datetime.
+    """Extends a view context with the current datetime.
+
     """
     def get_context_data(self, **kwargs):
         context = super(WithCurrentDateMixin, self).get_context_data(**kwargs)
@@ -20,6 +21,7 @@ class WithCurrentDateMixin(object):
 
 class FieldNamesMixin(object):
     """Extends a view context with the ``field_names`` attribute.
+
     """
     def get_context_data(self, **kwargs):
         context = super(FieldNamesMixin, self).get_context_data(**kwargs)
@@ -34,6 +36,7 @@ class FieldNamesMixin(object):
 class QueryPaginationMixin(object):
     """Mixin that read the pagination configuration from the query
     parameters.
+
     """
     paginate_by = 15
 
@@ -42,6 +45,7 @@ class QueryPaginationMixin(object):
         pagination.
 
         Query parameters are search first.
+
         """
         if 'paginate_by' in self.request.GET:
             try:
@@ -55,6 +59,7 @@ class QueryPaginationMixin(object):
 
     def get_context_data(self, **kwargs):
         """Extends the context data with info on the request path.
+
         """
         context = super(QueryPaginationMixin, self).get_context_data(**kwargs)
         context.update({'path_info': self.request.path_info})
@@ -63,6 +68,7 @@ class QueryPaginationMixin(object):
 
 class QueryFilterMixin(object):
     """Mixin that read the filter configuration from the query parameters.
+
     """
     filter_ignore_case = True
     filter_attr = "description"
@@ -70,6 +76,7 @@ class QueryFilterMixin(object):
 
     def has_filter(self):
         """Check whether the query paramater named filter is non empty.
+
         """
         return ((len(self.request.GET['filter']) != 0)
                 if 'filter' in self.request.GET
@@ -77,6 +84,7 @@ class QueryFilterMixin(object):
 
     def get_filter_keywords(self):
         """Return the filter operands found in the query parameters.
+
         """
         return (self.request.GET['filter'].split(' ')
                 if self.has_filter()
@@ -84,6 +92,7 @@ class QueryFilterMixin(object):
 
     def get_context_data(self, **kwargs):
         """Extend the context data with the current filter.
+
         """
         context = super(QueryFilterMixin, self).get_context_data(**kwargs)
         context.update({'filter_description': self.filter_description})
@@ -102,6 +111,7 @@ class QueryFilterMixin(object):
     def get_queryset(self):
         """Return a new queryset containing objects that match the filter
         keywords.
+
         """
         qs = super(QueryFilterMixin, self).get_queryset()
         kw = '{0}__{1}'.format(self.filter_attr,
@@ -117,6 +127,7 @@ class ObjectOwnerMixin(object):
 
     To be used with ``SingleObjectMixin`` or
     ``SingleObjectTemplateResponseMixin``.
+
     """
     owner_field = None
 
@@ -125,6 +136,7 @@ class ObjectOwnerMixin(object):
 
         The check compares the attribute named ``owner_field`` of
         ``obj`` and ``user``.
+
         """
         if self.owner_field is None:
             raise ImproperlyConfigured('ObjectOwnerMixin requires '
@@ -144,6 +156,7 @@ class EditableObjectMixin(object):
 
     To be used with ``SingleObjectMixin`` or
     ``SingleObjectTemplateResponseMixin``.
+
     """
     def dispatch(self, *args, **kwargs):
         obj = self.get_object()

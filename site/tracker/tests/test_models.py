@@ -1,4 +1,5 @@
 """Tests for models of tracker application.
+
 """
 
 from datetime import timedelta
@@ -12,9 +13,11 @@ User = get_user_model()
 
 class PurseTest(TestCase):
     """Test purses.
+
     """
     def test_usernames(self):
         """Test usernames.
+
         """        
         u1 = User.objects.create(username='first',
                                  password='password',
@@ -35,6 +38,7 @@ class PurseTest(TestCase):
 
 class ExpenditureTest(TestCase):
     """Test expenditures.
+
     """
     def setUp(self):
         self.u = User.objects.create(username='test',
@@ -46,6 +50,7 @@ class ExpenditureTest(TestCase):
 
     def test_is_editable(self):
         """Test expenditure edition.
+
         """
         e = Expenditure.objects.create(amount=100,
                                        date=now(),
@@ -61,6 +66,7 @@ class ExpenditureTest(TestCase):
         
 class TagManagerTest(TestCase):
     """Test tag manager.
+
     """
     def setUp(self):
         self.u = User.objects.create(username='test',
@@ -70,7 +76,8 @@ class TagManagerTest(TestCase):
         self.p.users.add(self.u)
 
     def test_update_from(self):
-        """Test tag update. 
+        """Test tag update.
+
         """
         description = "one two two   three a e i"
         e = Expenditure(amount=100,

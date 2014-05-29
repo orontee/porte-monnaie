@@ -1,4 +1,5 @@
 """A module for extra template tags.
+
 """
 
 import datetime
@@ -13,6 +14,7 @@ register = template.Library()
 @register.assignment_tag(name='is_current_month')
 def check_date_month(date):
     """``True`` if and only if the ``date`` belongs to current month.
+
     """
     try:
         return datetime.date.today().month == date.month
@@ -23,6 +25,7 @@ def check_date_month(date):
 @register.assignment_tag(name='is_current_year')
 def check_date_year(date):
     """``True`` if and only if ``date`` belongs to current year.
+
     """
     try:
         return datetime.date.today().year == date.year
@@ -33,12 +36,14 @@ def check_date_year(date):
 @register.assignment_tag(name='current_date')
 def do_current_date():
     """Return the current date.
+
     """
     return datetime.date.today()
 
 
 def add_page_query(url, page=1, paginator=None, filt=None):
     """Add page query to the given url.
+
     """
     template = '{0}?{1}'
     query = {'page': page}
@@ -53,6 +58,7 @@ def add_page_query(url, page=1, paginator=None, filt=None):
                      takes_context=True)
 def do_pagination(context):
     """Build the pagination anchors list.
+
     """
     try:
         is_paginated = context['is_paginated']
@@ -103,6 +109,7 @@ def do_pagination(context):
 @register.simple_tag(takes_context=True)
 def email_admin(context):
     """Insert an anchor to mail to the first site admin.
+
     """
     try:
         name, email = settings.ADMINS[0]

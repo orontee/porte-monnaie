@@ -1,3 +1,7 @@
+"""Tracker forms.
+
+"""
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
     AuthenticationForm as OrigAuthenticationForm,
@@ -22,6 +26,7 @@ OCCURRENCES_CHOICES = (('1', _('unique')),
 
 class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
     """Form to input an expenditure.
+
     """
     occurrences = ChoiceField(choices=OCCURRENCES_CHOICES,
                               label=_('Occurrences'))
@@ -42,6 +47,7 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
         """Amount field cleaning.
 
         It makes sure that the value is non-zero.
+
         """
         data = self.cleaned_data['amount']
         if data == 0:
@@ -55,6 +61,7 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
         The usual cleaning is extended by the generation of dates from
         the field named date by increasing its month as many times as
         specified by the field named occurences.
+
         """
         cleaned_data = super(ExpenditureForm, self).clean()
         count = int(cleaned_data['occurrences']) - 1
@@ -77,6 +84,7 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
 
 class PurseForm(BootstrapWidgetMixin, ModelForm):
     """Form to input a purse.
+
     """
     class Meta(object):
         model = Purse
@@ -85,11 +93,13 @@ class PurseForm(BootstrapWidgetMixin, ModelForm):
 
 class PurseShareForm(BootstrapWidgetMixin, Form):
     """Form to input a user name.
+
     """
     user = CharField(label=_('user name'))
 
     def clean_user(self):
         """Name field cleaning.
+
         """
         data = self.cleaned_data['user']
         try:
@@ -103,6 +113,7 @@ class PurseShareForm(BootstrapWidgetMixin, Form):
 class AuthenticationForm(BootstrapWidgetMixin,
                          OrigAuthenticationForm):
     """Improve default authentication form with Bootstrap aware widgets.
+
     """
     pass
 
@@ -110,5 +121,6 @@ class AuthenticationForm(BootstrapWidgetMixin,
 class PasswordChangeForm(BootstrapWidgetMixin,
                          OrigPasswordChangeForm):
     """Improve default password change form with Bootstrap aware widgets.
+
     """
     pass

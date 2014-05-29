@@ -2,6 +2,7 @@
 
 All the url names defined here are accessible from the tracker
 namespace.
+
 """
 
 from django.conf import settings

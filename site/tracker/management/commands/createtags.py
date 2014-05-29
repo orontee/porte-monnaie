@@ -4,6 +4,7 @@ from tracker.models import (Expenditure, Tag)
 
 class Command(BaseCommand):
     """Create or update tags.
+
     """
     help = 'Create or update tags'
 

@@ -5,6 +5,7 @@ from optparse import make_option
 
 class Command(BaseCommand):
     """Create a user.
+
     """
     args = '<name email password>'
     help = 'Create a user with specified attributes'

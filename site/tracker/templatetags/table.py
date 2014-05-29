@@ -1,4 +1,5 @@
 """A module for table template tags.
+
 """
 
 from django import template
@@ -13,6 +14,7 @@ def do_header(context, field_names):
     """Include a template for a table header build from the given fields.
 
     The columns order is the same as the one in field_names.
+
     """
     datas = []
     model = context['object_list'].model

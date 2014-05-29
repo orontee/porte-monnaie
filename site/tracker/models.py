@@ -1,3 +1,7 @@
+"""Tracker models
+
+"""
+
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -16,6 +20,7 @@ mark_safe_lazy = lazy(mark_safe, six.text_type)
 
 class User(AbstractUser):
     """Extend the ``User`` class with a ``Purse`` field.
+
     """
     default_purse = ForeignKey('Purse', verbose_name=_('default purse'),
                                null=True, default=None,
@@ -24,6 +29,7 @@ class User(AbstractUser):
 
 class Purse(Model):
     """Class representing purses.
+
     """
     name = CharField(_('purse name'), max_length=80)
     users = ManyToManyField(User, verbose_name=_('users'))
@@ -35,6 +41,7 @@ class Purse(Model):
 
     def usernames(self):
         """Return the comma separated list of usernames sorted.
+
         """
         names = [u.first_name or u.username for u in self.users.all()]
         names.sort()
@@ -42,6 +49,7 @@ class Purse(Model):
 
     class Meta(object):
         """Purse metadata.
+
         """
         ordering = ['name', '-created']
         get_latest_by = 'created'
@@ -52,6 +60,7 @@ class Expenditure(Model):
 
     The attribute ``edit_delay`` controls the number of days from an
     expenditure creation to when it won't be editable anymore.
+
     """
     amount = FloatField(_('amount'))
     date = DateField(_('date'), default=timezone.now().date())
@@ -68,11 +77,13 @@ class Expenditure(Model):
 
     def is_editable(self):
         """Check whether it is an editable expenditure or not.
+
         """
         return (timezone.now() - self.created).days <= self.edit_delay
 
     class Meta(object):
         """Expenditure metadata.
+
         """
         ordering = ('-date', '-created', 'author')
         get_latest_by = 'date'
@@ -83,6 +94,7 @@ class TagManager(Manager):
 
     Tags of length less than ``min_len`` are excluded. To allow tags
     of any length, set ``min_len`` to ``None``.
+
     """
     min_len = 2
 
@@ -94,6 +106,7 @@ class TagManager(Manager):
         attributes.
 
         No treatment is done for generated expenditures.
+
         """
         if not e.generated:
             purse = e.purse
@@ -134,6 +147,7 @@ class TagManager(Manager):
 
 class Tag(Model):
     """Class representing tags.
+
     """
     name = CharField(_('name'), max_length=80, db_index=True)
     purse = ForeignKey(Purse, verbose_name=_('purse'))
@@ -146,6 +160,7 @@ class Tag(Model):
 
     class Meta(object):
         """Tag metadata.
+
         """
         ordering = ('-weight',)
 
@@ -153,6 +168,7 @@ class Tag(Model):
 @receiver(post_save, sender=Expenditure)
 def update_tags(sender, instance, created, raw, **kwargs):
     """Update tags from the saved expenditure.
+
     """
     if not raw:
         Tag.objects.update_from(instance)
