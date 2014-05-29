@@ -1,6 +1,4 @@
-"""Tracker views.
-
-"""
+"""Tracker views."""
 
 import datetime
 from django.contrib.auth import get_user_model
@@ -35,18 +33,14 @@ User = get_user_model()
 
 
 class HomeView(TemplateView):
-    """Home view.
-
-    """
+    """Home view."""
     template_name = 'tracker/home.html'
 
 
 class PurseCreation(LoginRequiredMixin,
                     WithCurrentDateMixin,
                     CreateView):
-    """View to create a purse.
-
-    """
+    """View to create a purse."""
     model = Purse
     form_class = PurseForm
     success_url = reverse_lazy('tracker:purse_list')
@@ -96,17 +90,13 @@ class PurseCreation(LoginRequiredMixin,
 class PurseUpdate(LoginRequiredMixin,
                   WithCurrentDateMixin,
                   UpdateView):
-    """View to modify a purse.
-
-    """
+    """View to modify a purse."""
     model = Purse
     form_class = PurseForm
     success_url = reverse_lazy('tracker:purse_list')
 
     def dispatch(self, *args, **kwargs):
-        """Check that the logged in account belongs to the requested purse.
-
-        """
+        """Check that the logged in account belongs to the requested purse."""
         obj = self.get_object()
         if not obj.users.filter(pk=self.request.user.pk).exists():
             return HttpResponseRedirect(reverse_lazy('tracker:logout'))
@@ -170,9 +160,7 @@ class PurseList(LoginRequiredMixin,
                 WithCurrentDateMixin,
                 QueryPaginationMixin,
                 ListView):
-    """List the purses of the logged in account.
-
-    """
+    """List the purses of the logged in account."""
     model = Purse
     context_object_name = 'purses'
     field_names = ['name', 'users', 'description']
@@ -187,9 +175,7 @@ class PurseDelete(LoginRequiredMixin,
                   WithCurrentDateMixin,
                   ObjectOwnerMixin,
                   DeleteView):
-    """View to delete a purse.
-
-    """
+    """View to delete a purse."""
     model = Purse
     context_object_name = 'purse'
     success_url = reverse_lazy('tracker:purse_list')
@@ -237,9 +223,7 @@ class UserChange(UserPurseMixin,
 class PurseShare(LoginRequiredMixin,
                  WithCurrentDateMixin,
                  UpdateView):
-    """View to invite a user to join a purse.
-
-    """
+    """View to invite a user to join a purse."""
     template_name = 'tracker/purse_share.html'
     context_object_name = 'purse'
     model = Purse
@@ -272,7 +256,9 @@ class PurseShare(LoginRequiredMixin,
 
 
 class ObjectPurseMixin(object):
-    """Extend a view with a property referring to the object purse.
+    """Extend a view with a purse attribute.
+
+    The purse instance is taken from an ``object`` attribute.
 
     """
     @property
@@ -287,8 +273,9 @@ class ObjectPurseMixin(object):
 
 
 class TagNamesMixin(object):
-    """Extend a view context with the list of tags associated to a given
-    purse.
+    """Extend a view context with the list of tags.
+
+    The tag list is the one associated to the ``purse`` attribute.
 
     """
     def get_context_data(self, **kwargs):
@@ -306,9 +293,7 @@ class ExpenditureAdd(LoginRequiredMixin,
                      DefaultPurseMixin,
                      WithCurrentDateMixin,
                      CreateView):
-    """View to add expenditures.
-
-    """
+    """View to add expenditures."""
     model = Expenditure
     form_class = ExpenditureForm
 
@@ -324,9 +309,7 @@ class ExpenditureAdd(LoginRequiredMixin,
         return reverse_lazy('tracker:list')
 
     def form_valid(self, form):
-        """If the form is valid, completes then saves it.
-
-        """
+        """Completes then saves a valid form."""
         form.instance.author = self.request.user
         form.instance.purse = self.purse
         response = super(ExpenditureAdd, self).form_valid(form)
@@ -343,9 +326,7 @@ class ExpenditureDelete(LoginRequiredMixin,
                         ObjectOwnerMixin,
                         EditableObjectMixin,
                         DeleteView):
-    """View to delete expenditures.
-
-    """
+    """View to delete expenditures."""
     model = Expenditure
     context_object_name = 'expenditure'
     success_url = reverse_lazy('tracker:list')
@@ -359,9 +340,7 @@ class ExpenditureUpdate(LoginRequiredMixin,
                         EditableObjectMixin,
                         TagNamesMixin,
                         UpdateView):
-    """View to update expenditures.
-
-    """
+    """View to update expenditures."""
     model = Expenditure
     context_object_name = 'expenditure'
     form_class = ExpenditureForm
@@ -376,7 +355,13 @@ class ExpenditureFilteredList(LoginRequiredMixin,
                               QueryFilterMixin,
                               QueryPaginationMixin,
                               ListView):
-    """List of latest expenditures.
+    """Filtered list of expenditures.
+
+    This view handles:
+
+    - Query parameters to filter the default query set; 
+
+    - Pagination.
 
     """
     model = Expenditure
@@ -388,6 +373,12 @@ class ExpenditureFilteredList(LoginRequiredMixin,
     template_name = 'tracker/expenditure_filtered_list.html'
 
     def get_queryset(self):
+        """Filter the default query set.
+
+        The query set is filtered to match expenditures belonging to
+        the default purse of the authenticated user.
+
+        """
         qs = super(ExpenditureFilteredList, self).get_queryset()
         qs = qs.filter(purse=self.purse).select_related('author__username')
         return qs
@@ -418,6 +409,12 @@ class ExpenditureMonthList(LoginRequiredMixin,
                            QueryPaginationMixin,
                            MonthArchiveView):
     """List of expenditures in a month.
+
+    This view handles:
+
+    - Query parameters to filter the default query set; 
+
+    - Pagination.
 
     """
     model = Expenditure
@@ -458,9 +455,7 @@ class ExpenditureYearSummary(LoginRequiredMixin,
                              DefaultPurseMixin,
                              WithCurrentDateMixin,
                              TemplateView):
-    """Summary of expenditures in a year.
-
-    """
+    """Summary of expenditures in a year."""
     template_name = 'tracker/expenditure_year_summary.html'
 
     def get_date(self):
@@ -475,9 +470,7 @@ class ExpenditureYearSummary(LoginRequiredMixin,
         return date
 
     def get_context_data(self, **kwargs):
-        """Extend the view context with dates and amounts.
-
-        """
+        """Extend the view context with dates and amounts."""
         context = super(ExpenditureYearSummary,
                         self).get_context_data(**kwargs)
         date = self.get_date()
@@ -515,9 +508,7 @@ class ExpenditureYearSummary(LoginRequiredMixin,
 
 
 class ExpenditureHome(RedirectView):
-    """Start page when browsing expenditures.
-
-    """
+    """Start page when browsing expenditures."""
     url = reverse_lazy('tracker:archive',
                        kwargs=dict(zip(['month', 'year'],
                                        '{0:%m},{0:%Y}'.format(
