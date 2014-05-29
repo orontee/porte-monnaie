@@ -1,4 +1,5 @@
 """The base settings for the purse project.
+
 """
 
 import os

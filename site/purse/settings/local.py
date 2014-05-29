@@ -1,4 +1,5 @@
 """The settings file used when working on the project locally.
+
 """
 
 import os

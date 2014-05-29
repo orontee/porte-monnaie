@@ -7,6 +7,7 @@ hasher is rather slow.
 
 Email messages are stored in a special attribute of the
 'django.core.mail' module.
+
 """
 
 from purse.settings.base import *
