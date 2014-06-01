@@ -23,6 +23,9 @@ DATABASES = {
 
 ALLOWED_HOSTS = ['*']
 
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'public/static/')
 
 EMAIL_HOST = os.environ['EMAIL_HOST']
