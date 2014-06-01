@@ -24,7 +24,7 @@
 	{% for e in expenditures %}
 	<tr>
 	  <td class="date">
-	    {{ e.date|naturalday:'l j F Y' }}
+	    {{ e.date|naturalday:'l j F Y'|capfirst }}
 	  </td>
 	  <td class="amount">
 	    {{ e.amount|floatformat:2 }}

@@ -26,7 +26,7 @@
 	{% for p in purses %}
 	<tr>
 	  <td>
-	    {{ p.name }}
+	    {{ p.name|capfirst }}
 	  </td>
 	  <td>
 	    {{ p.usernames }}
