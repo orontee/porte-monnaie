@@ -36,13 +36,6 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
         model = Expenditure
         fields = ['amount', 'date', 'description']
 
-    def __init__(self, *args, **kwargs):
-        super(ExpenditureForm, self).__init__(*args, **kwargs)
-        self.fields['amount'].localize = True
-
-        # REMARK Django 1.6 will provide the localized_fields
-        # attribute
-
     def clean_amount(self):
         """Amount field cleaning.
 
