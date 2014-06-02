@@ -1,6 +1,4 @@
-"""Tracker forms.
-
-"""
+"""Tracker forms."""
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
@@ -25,9 +23,7 @@ OCCURRENCES_CHOICES = (('1', _('unique')),
 
 
 class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
-    """Form to input an expenditure.
-
-    """
+    """Form to input an expenditure."""
     occurrences = ChoiceField(choices=OCCURRENCES_CHOICES,
                               label=_('Occurrences'))
     other_dates = []
@@ -76,24 +72,18 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
 
 
 class PurseForm(BootstrapWidgetMixin, ModelForm):
-    """Form to input a purse.
-
-    """
+    """Form to input a purse."""
     class Meta(object):
         model = Purse
         exclude = ['users']
 
 
 class PurseShareForm(BootstrapWidgetMixin, Form):
-    """Form to input a user name.
-
-    """
+    """Form to input a user name."""
     user = CharField(label=_('user name'))
 
     def clean_user(self):
-        """Name field cleaning.
-
-        """
+        """Clean name field."""
         data = self.cleaned_data['user']
         try:
             data = User.objects.get(username=data)
@@ -105,15 +95,11 @@ class PurseShareForm(BootstrapWidgetMixin, Form):
 
 class AuthenticationForm(BootstrapWidgetMixin,
                          OrigAuthenticationForm):
-    """Improve default authentication form with Bootstrap aware widgets.
-
-    """
+    """Improve default form with Bootstrap aware widgets."""
     pass
 
 
 class PasswordChangeForm(BootstrapWidgetMixin,
                          OrigPasswordChangeForm):
-    """Improve default password change form with Bootstrap aware widgets.
-
-    """
+    """Improve default form with Bootstrap aware widgets."""
     pass
