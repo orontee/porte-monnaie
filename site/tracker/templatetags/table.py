@@ -1,6 +1,4 @@
-"""A module for table template tags.
-
-"""
+"""A module for table template tags."""
 
 from django import template
 
