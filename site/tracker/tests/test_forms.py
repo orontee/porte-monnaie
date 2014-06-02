@@ -49,7 +49,7 @@ class MultipleExpenditureFormTest(TestCase):
         form = MultipleExpenditureForm(data)
         self.assertFalse(form.is_valid())
         self.assertTrue('occurrences' in form.errors)
-    
+
     def test_invalid_date(self):
         """Test that a form with invalid computed dates is not valid."""
         data = {'amount': 10,
@@ -59,7 +59,7 @@ class MultipleExpenditureFormTest(TestCase):
         form = MultipleExpenditureForm(data)
         self.assertFalse(form.is_valid())
         self.assertTrue('occurrences' in form.errors)
-        
+
     def test_valid(self):
         """Test a form with valid data."""
         data = {'amount': 10,

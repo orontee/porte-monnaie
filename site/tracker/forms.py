@@ -51,7 +51,7 @@ class MultipleExpenditureForm(ExpenditureForm):
     """
     occurrences = ChoiceField(choices=OCCURRENCES_CHOICES,
                               label=_('Occurrences'), required=True)
-    
+
     def __init__(self, *args, **kwargs):
         """Initialize form."""
         super(MultipleExpenditureForm, self).__init__(*args, **kwargs)

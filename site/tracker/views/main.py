@@ -349,6 +349,7 @@ class ExpenditureUpdate(LoginRequiredMixin,
     success_url = reverse_lazy('tracker:list')
     owner_field = "author"
 
+
 class ExpenditureFilteredList(LoginRequiredMixin,
                               DefaultPurseMixin,
                               FieldNamesMixin,
