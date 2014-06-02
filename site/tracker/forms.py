@@ -24,13 +24,6 @@ OCCURRENCES_CHOICES = (('1', _('unique')),
 
 class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
     """Form to input an expenditure."""
-    occurrences = ChoiceField(choices=OCCURRENCES_CHOICES,
-                              label=_('Occurrences'))
-    other_dates = []
-
-    class Meta(object):
-        model = Expenditure
-        fields = ['amount', 'date', 'description']
 
     def clean_amount(self):
         """Amount field cleaning.
@@ -44,6 +37,26 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
             raise ValidationError(msg)
         return data
 
+    class Meta(object):
+        model = Expenditure
+        fields = ['amount', 'date', 'description']
+
+
+class MultipleExpenditureForm(ExpenditureForm):
+    """Form to input multiple expenditures.
+
+    An occurrences field is added to duplicate expenditure accross
+    months.
+
+    """
+    occurrences = ChoiceField(choices=OCCURRENCES_CHOICES,
+                              label=_('Occurrences'), required=True)
+    
+    def __init__(self, *args, **kwargs):
+        """Initialize form."""
+        super(MultipleExpenditureForm, self).__init__(*args, **kwargs)
+        self.other_dates = []
+
     def clean(self):
         """Form-wide cleaning.
 
@@ -52,34 +65,37 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
         specified by the field named occurences.
 
         """
-        cleaned_data = super(ExpenditureForm, self).clean()
-        count = int(cleaned_data['occurrences']) - 1
-        start = cleaned_data.get('date')
-        if start:
-            for delta in range(count):
-                month = start.month + 1 if start.month < 12 else 1
-                year = start.year + 1 if month == 1 else start.year
-                try:
-                    start = start.replace(month=month, year=year)
-                except ValueError:
-                    msg = _('All expenditures must occur on valid dates.')
-                    self._errors["occurrences"] = self.error_class([msg])
-                    del cleaned_data['occurrences']
-                    break
-                else:
-                    self.other_dates.append(start)
+        cleaned_data = super(MultipleExpenditureForm, self).clean()
+        if 'occurrences' in cleaned_data:
+            count = int(cleaned_data['occurrences']) - 1
+            start = cleaned_data.get('date')
+            if start:
+                for delta in range(count):
+                    month = start.month + 1 if start.month < 12 else 1
+                    year = start.year + 1 if month == 1 else start.year
+                    try:
+                        start = start.replace(month=month, year=year)
+                    except ValueError:
+                        msg = _('All expenditures must occur on valid dates.')
+                        self._errors["occurrences"] = self.error_class([msg])
+                        del cleaned_data['occurrences']
+                        break
+                    else:
+                        self.other_dates.append(start)
         return cleaned_data
 
 
 class PurseForm(BootstrapWidgetMixin, ModelForm):
     """Form to input a purse."""
+
     class Meta(object):
         model = Purse
-        exclude = ['users']
+        fields = ['name', 'description']
 
 
 class PurseShareForm(BootstrapWidgetMixin, Form):
     """Form to input a user name."""
+
     user = CharField(label=_('user name'))
 
     def clean_user(self):

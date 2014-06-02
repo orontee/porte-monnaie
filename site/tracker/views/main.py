@@ -17,7 +17,9 @@ from django.views.generic import (CreateView,
                                   UpdateView,
                                   TemplateView)
 from tracker.models import (Expenditure, Purse, Tag)
-from tracker.forms import (ExpenditureForm, PurseForm,
+from tracker.forms import (ExpenditureForm,
+                           MultipleExpenditureForm,
+                           PurseForm,
                            PurseShareForm)
 from tracker.utils import dictfetchall
 from tracker.views.mixins import (EditableObjectMixin,
@@ -295,7 +297,7 @@ class ExpenditureAdd(LoginRequiredMixin,
                      CreateView):
     """View to add expenditures."""
     model = Expenditure
-    form_class = ExpenditureForm
+    form_class = MultipleExpenditureForm
 
     def get_success_url(self):
         """Handles redirection target.
@@ -346,7 +348,6 @@ class ExpenditureUpdate(LoginRequiredMixin,
     form_class = ExpenditureForm
     success_url = reverse_lazy('tracker:list')
     owner_field = "author"
-
 
 class ExpenditureFilteredList(LoginRequiredMixin,
                               DefaultPurseMixin,
