@@ -21,22 +21,22 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         'duplicate_username': _("A user with that username already exists."),
         'password_mismatch': _("The two password fields didn't match."),
     }
-    username = RegexField(label=_("Username"), max_length=30,
+    username = RegexField(label=_('Username'), max_length=30,
                           regex=r'^[\w.@+-]+$',
                           help_text=_("Required. 30 characters or fewer. Letters, digits and "
                                       "@/./+/-/_ only."),
                           error_messages={
                               'invalid': _("This value may contain only letters, numbers and "
                                            "@/./+/-/_ characters.")})
-    password1 = CharField(label=_("Password"), widget=PasswordInput)
-    password2 = CharField(label=_("Password confirmation"),
+    password1 = CharField(label=_('Password'), widget=PasswordInput)
+    password2 = CharField(label=_('Password confirmation'),
                           widget=PasswordInput,
                           help_text=_("Enter the same password as above, "
                                       "for verification."))
 
     class Meta:
         model = User
-        fields = ("username", "email")
+        fields = ('username', 'email')
 
     def clean_username(self):
         """Check that the username is not already in use.
@@ -45,7 +45,7 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         sets a nicer error message than the ORM. See #13147.
 
         """
-        username = self.cleaned_data["username"]
+        username = self.cleaned_data['username']
         try:
             User._default_manager.get(username=username)
         except User.DoesNotExist:
@@ -54,8 +54,8 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
 
     def clean_password2(self):
         """Check that both passwords match."""
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
             raise ValidationError(
                 self.error_messages['password_mismatch'])
@@ -69,7 +69,7 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
 
         """
         user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
+        user.set_password(self.cleaned_data['password1'])
         user.is_active = False
         if commit:
             user.save()
