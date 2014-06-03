@@ -1,6 +1,5 @@
-"""User forms.
+"""User forms."""
 
-"""
 from django.contrib.auth import get_user_model
 from django.forms import (ModelForm, CharField, RegexField,
                           PasswordInput, ValidationError)
@@ -40,8 +39,12 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         fields = ("username", "email")
 
     def clean_username(self):
-        # Since User.username is unique, this check is redundant,
-        # but it sets a nicer error message than the ORM. See #13147.
+        """Check that the username is not already in use.
+
+        Since User.username is unique, this check is redundant, but it
+        sets a nicer error message than the ORM. See #13147.
+
+        """
         username = self.cleaned_data["username"]
         try:
             User._default_manager.get(username=username)
@@ -50,6 +53,7 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         raise ValidationError(self.error_messages['duplicate_username'])
 
     def clean_password2(self):
+        """Check that both passwords match."""
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
@@ -58,6 +62,12 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         return password2
 
     def save(self, commit=True):
+        """Save inactive user.
+
+        A registration instance is created and sent to the user email
+        address.
+
+        """
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         user.is_active = False
@@ -69,9 +79,8 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
 
 
 class UserChangeForm(BootstrapWidgetMixin, ModelForm):
-    """Form to change a user account.
+    """Form to change a user account."""
 
-    """
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'default_purse')
