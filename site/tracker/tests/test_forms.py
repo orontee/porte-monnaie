@@ -19,6 +19,19 @@ class ExpenditureFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertTrue('amount' in form.errors)
 
+    def test_empty_description(self):
+        """Check that a form with an description made of whitespace characters
+        is not valid.
+
+        """
+        data = {'amount': 330,
+                'date': now(),
+                'description': '  \t',
+                'occurrences': '1'}
+        form = ExpenditureForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue('description' in form.errors)
+
     def test_valid(self):
         """Test a form with valid data."""
         data = {'amount': 10,

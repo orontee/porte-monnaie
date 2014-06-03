@@ -64,7 +64,7 @@ class Expenditure(Model):
     """
     amount = FloatField(_('amount'))
     date = DateField(_('date'), default=timezone.now().date())
-    description = CharField(_('description'), max_length=80, blank=True)
+    description = CharField(_('description'), max_length=80, blank=False)
     author = ForeignKey(User, editable=False, verbose_name=_('author'))
     purse = ForeignKey(Purse, verbose_name=_('purse'))
     generated = BooleanField(_('generated'), default=False, editable=False)

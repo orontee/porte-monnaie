@@ -37,6 +37,19 @@ class ExpenditureForm(BootstrapWidgetMixin, ModelForm):
             raise ValidationError(msg)
         return data
 
+    def clean_description(self):
+        """Description cleaning.
+
+        It makes sure that the value is not made of whitespaces
+        characters only.
+
+        """
+        data = self.cleaned_data['description'].strip()
+        if data == '':
+            msg = _('The description is required.')
+            raise ValidationError(msg)
+        return data
+
     class Meta(object):
         model = Expenditure
         fields = ['amount', 'date', 'description']

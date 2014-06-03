@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-18 14:32+0200\n"
+"POT-Creation-Date: 2014-06-04 00:05+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -18,103 +18,107 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:14
+#: forms.py:16
 msgid "unique"
 msgstr ""
 
-#: forms.py:15
+#: forms.py:17
 msgid "next two months"
 msgstr "deux prochains mois"
 
-#: forms.py:16
+#: forms.py:18
 msgid "next three months"
 msgstr "trois prochains mois"
 
-#: forms.py:17
+#: forms.py:19
 msgid "next four months"
 msgstr "quatre prochains mois"
 
-#: forms.py:18
+#: forms.py:20
 msgid "next five months"
 msgstr "cinq prochains mois"
 
-#: forms.py:19
+#: forms.py:21
 msgid "next six months"
 msgstr "six prochains mois"
 
-#: forms.py:20
+#: forms.py:22
 msgid "forthcoming year"
 msgstr "année à venir"
 
-#: forms.py:27
-msgid "Occurrences"
-msgstr ""
-
-#: forms.py:48
+#: forms.py:36
 msgid "The amount must be non-zero."
 msgstr "Le montant ne peut être nul."
 
-#: forms.py:69
+#: forms.py:49
+msgid "The description is required."
+msgstr "La description est obligatoire."
+
+#: forms.py:66
+msgid "Occurrences"
+msgstr ""
+
+#: forms.py:92
 msgid "All expenditures must occur on valid dates."
 msgstr "Toutes les dates doivent être valides."
 
-#: forms.py:89
+#: forms.py:112
 msgid "user name"
 msgstr "nom d'utilisateur"
 
-#: forms.py:98
+#: forms.py:120
 msgid "This user name is unknown."
 msgstr "Ce nom d'utilisateur est inconnu."
 
-#: models.py:20
+#: models.py:25
 msgid "default purse"
 msgstr "porte-monnaie par défaut"
 
-#: models.py:28
+#: models.py:34
 msgid "purse name"
 msgstr "nom du porte-monnaie"
 
-#: models.py:29
+#: models.py:35
 msgid "users"
 msgstr "utilisateurs"
 
-#: models.py:30 models.py:58
+#: models.py:36 models.py:67
 msgid "description"
 msgstr ""
 
-#: models.py:31 models.py:62
+#: models.py:37 models.py:71
 msgid "created"
 msgstr "crée le"
 
-#: models.py:56 templates/tracker/expenditure_year_summary.html:48
+#: models.py:65 templates/tracker/expenditure_year_summary.html:48
 msgid "amount"
 msgstr "montant"
 
-#: models.py:57
+#: models.py:66
 msgid "date"
 msgstr ""
 
-#: models.py:59
+#: models.py:68
 msgid "author"
 msgstr "auteur"
 
-#: models.py:60 models.py:139
+#: models.py:69 models.py:153
 msgid "purse"
 msgstr "porte-monnaie"
 
-#: models.py:61
+#: models.py:70
 msgid "generated"
 msgstr "généré"
 
-#: models.py:138
+#: models.py:152
 msgid "name"
 msgstr "nom"
 
-#: models.py:140
+#: models.py:154
 msgid "weight"
 msgstr "poids"
 
-#: models.py:141
+#: models.py:155
 msgid "last use"
 msgstr "dernière utilisation"
 
@@ -199,7 +203,7 @@ msgstr[1] "%(count)s dépenses trouvées pour un montant de %(total)s€."
 msgid "You authored %(user)s€."
 msgstr "Dont %(user)s€ sont à votre initiative."
 
-#: templates/tracker/expenditure_filtered_list.html:55
+#: templates/tracker/expenditure_filtered_list.html:24
 msgid "No expenditures found!"
 msgstr "Pas de dépenses trouvées&nbsp;!"
 
@@ -244,7 +248,7 @@ msgid "In %(date)s, the total amount of expenditures was equal to %(total)s€."
 msgstr ""
 "Au mois de %(date)s, le montant total des dépenses a été de %(total)s€."
 
-#: templates/tracker/expenditure_month_list.html:73
+#: templates/tracker/expenditure_month_list.html:42
 #, python-format
 msgid "No expenditures found for %(date)s!"
 msgstr "Pas de dépenses pour le mois de %(date)s&nbsp;!"
@@ -543,7 +547,7 @@ msgstr "Commencez par créer un porte-monnaie..."
 msgid "Your default purse is now <q>{name}</q>."
 msgstr "Votre porte-monnaie par défaut est maintenant <q>{name}</q>."
 
-#: views/main.py:250
+#: views/main.py:249
 #, python-brace-format
 msgid "The purse called <q>{purse}</q> is already shared with {other}."
 msgstr "Le porte-monnaie <q>{purse}</q> est déjà partagé avec {other}."
@@ -553,15 +557,15 @@ msgstr "Le porte-monnaie <q>{purse}</q> est déjà partagé avec {other}."
 msgid "The purse called <q>{purse}</q> is now shared with {other}."
 msgstr "Le porte-monnaie <q>{purse}</q> est maintenant partagé avec {other}."
 
-#: views/main.py:363 views/main.py:404
+#: views/main.py:374 views/main.py:429
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 
-#: views/mixins.py:69
+#: views/mixins.py:77
 msgid "Apply filter"
 msgstr "Appliquer le filtre"
 
-#: views/mixins.py:95
+#: views/mixins.py:100
 #, python-format
 msgid "keyword %(last)s"
 msgid_plural "keywords %(others)s and %(last)s"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-18 14:33+0200\n"
+"POT-Creation-Date: 2014-06-04 00:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,54 +18,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:18
+#: forms.py:21
 msgid "A user with that username already exists."
 msgstr "Un utilisateur avec ce nom existe déjà."
 
-#: forms.py:19
+#: forms.py:22
 msgid "The two password fields didn't match."
 msgstr "Les deux mots de passe ne correspondent pas."
 
-#: forms.py:21
+#: forms.py:24
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: forms.py:23
+#: forms.py:26
 msgid "Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 "Requis. 30 caractères maximum. Uniquement des lettres, nombres et les "
 "caractères « @ », « . », « + », « - » et « _ »."
 
-#: forms.py:26
+#: forms.py:29
 msgid "This value may contain only letters, numbers and @/./+/-/_ characters."
 msgstr ""
 "Cette valeur peut uniquement contenir des lettres, nombres et les caractères "
 "« @ », « . », « + », « - » et « _ »."
 
-#: forms.py:28
+#: forms.py:31
 msgid "Password"
 msgstr "Mot de passe"
 
-#: forms.py:29
+#: forms.py:32
 msgid "Password confirmation"
 msgstr "Confirmation du mot de passe"
 
-#: forms.py:31
+#: forms.py:34
 msgid "Enter the same password as above, for verification."
 msgstr "Saisissez le même mot de passe que précédemment, pour vérification."
 
-#: models.py:58
+#: models.py:67
 msgid "key"
 msgstr "clé d'activation"
 
-#: models.py:59
+#: models.py:68
 msgid "created"
 msgstr "création"
 
-#: models.py:98
+#: models.py:111
 msgid "account registration"
 msgstr "demande de création de compte"
 
-#: models.py:99
+#: models.py:112
 msgid "account registrations"
 msgstr "demandes de création de compte"
