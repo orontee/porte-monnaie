@@ -35,7 +35,7 @@
     {% blocktrans with user=user_amount|floatformat:2 %}You authored {{ user }}€.{% endblocktrans %}
     {% endif %}
   </p>
-  <div class="table-responsive">
+  <div class="table-responsive hidden-xs">
     <table class="table table-hover table table-striped">
       {% table_header field_names %}
       <tbody>
@@ -69,9 +69,9 @@
     {% pagination %}
   </div>
   {% else %}
-  <p>
+  <div class="alert alert-warning">
     {% blocktrans with date=month|date:'YEAR_MONTH_FORMAT' %}No expenditures found for {{ date }}!{% endblocktrans %}
-  </p>
+  </div>
   {% endif %}
 </div>
 {% endblock content %}

@@ -108,9 +108,9 @@
     </div>
   </div>
   {% else %}
-  <p>
+  <div class="alert alert-warning">
     {% blocktrans with date=year|date:'Y' %}No expenditures found in {{ date }}!{% endblocktrans %}
-  </p>
+  </div>
   {% endif %}
 </div>
 {% endblock content %}
