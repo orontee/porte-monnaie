@@ -98,3 +98,11 @@ a.ribbon:hover {
 .list-group-item-text > span.amount {
     font-weight: bold;
 }
+
+div.row > div.col-xs-4.amount {
+    font-weight: bold;
+}
+
+div.row > div.col-xs-4 {
+    text-align: right;
+}

@@ -37,7 +37,7 @@
     {% blocktrans with date=year|date:'Y' %}The following table outlines your expenditures for {{ date }}.{% endblocktrans %}
     {% endif %}
   </p>
-  <div class="table-responsive">
+  <div class="table-responsive hidden-xs">
     <table class="table table-hover table-striped">
       <thead>
 	<tr>
@@ -97,6 +97,40 @@
 	</tr>
       </tbody>
     </table>
+  </div>
+  <div class="list-group visible-xs">
+    {% for a in amounts %}
+    <div class="list-group-item">
+      <h4 class="list-group-heading">{{ a.month|date:'F'|capfirst }}
+	<a class="month-anchor small" 
+	   href="{% url 'tracker:archive' year=year.year month=a.month.month %}">
+	  {% trans 'display'|capfirst %}
+	</a>
+      </h4>
+      <p class="list-group-item-text">
+	{% if shared_purse %}
+	<div class="row">
+	  <div class="col-xs-4">
+	    {% trans 'amount'|capfirst %}
+	  </div>
+	  <div class="col-xs-4">
+	    {% trans 'average'|capfirst %}
+	  </div>
+	  <div class="col-xs-4">
+	    {% trans 'delta'|capfirst %}
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-xs-4 amount">{{ a.amount|floatformat:2 }}</div>
+	  <div class="col-xs-4 amount">{{ a.average|floatformat:2 }}</div>
+	  <div class="col-xs-4 amount">{{ a.delta|floatformat:2 }}</div>
+	</div>
+	{% else %}
+	<span class="pull-right amount">{{ a.amount|floatformat:2 }}</span>
+	{% endif %}
+      </p>
+    </div>
+    {% endfor %}
   </div>
   <div id="histogram-container" class="container">
     <div class="row">
