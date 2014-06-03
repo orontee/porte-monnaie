@@ -16,7 +16,7 @@
       {% endif %}
     </h4>
     <p class="list-group-item-text expenditure-description">
-      {{ e.date|naturalday:'j F Y' }}
+      {{ e.date|date:'d/m/Y' }}
       <span class="pull-right amount">{{ e.amount|floatformat:2 }}</span>
     </p>
   </div>
