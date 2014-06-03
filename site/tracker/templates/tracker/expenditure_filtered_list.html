@@ -17,39 +17,8 @@
     {% endif %}
     {% endif %}
   </div>
-  <div class="table-responsive">
-    <table class="table table-hover table-striped">
-      {% table_header field_names %}
-      <tbody>
-	{% for e in expenditures %}
-	<tr>
-	  <td class="date">
-	    {{ e.date|naturalday:'l j F Y'|capfirst }}
-	  </td>
-	  <td class="amount">
-	    {{ e.amount|floatformat:2 }}
-	  </td>
-	  {% with user=e.author %}
-	  <td class="author">
-	    {% firstof user.first_name user.username %}
-	  </td>
-	  {% endwith %}
-	  <td class="description">
-	    {{ e.description|capfirst }}
-	    {% if user.username == e.author.username and e.is_editable %}
-	    <a href="{% url 'tracker:update' e.pk %}">
-	      <span class="badge pull-right">
-		<span class="glyphicon glyphicon-pencil"></span>
-	      </span>
-	    </a>
-	    {% endif %}
-	  </td>
-	</tr>
-	{% endfor %}
-      </tbody>
-    </table>
-    {% pagination %}
-  </div>
+  {% include 'tracker/snippets/expenditure_table.html' %}
+  {% include 'tracker/snippets/expenditure_list.html' %}
   {% else %}
   <div class="alert alert-warning">
     {% trans 'No expenditures found!' %}

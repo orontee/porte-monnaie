@@ -90,3 +90,11 @@ a.ribbon:hover {
 #histogram-container {
     display: none;
 }
+
+.list-group-item-text.expenditure-description {
+    min-height: 1.5em;
+}
+
+.list-group-item-text > span.amount {
+    font-weight: bold;
+}

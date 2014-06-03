@@ -1,0 +1,25 @@
+{% load i18n tracker_extras humanize %}
+<div class="list-group visible-xs">
+  {% for e in expenditures %}
+  <div class="list-group-item">
+    <h4 class="list-group-heading">
+      {{ e.description|capfirst|truncatechars:15 }}
+      {% with user=e.author %}
+      <small>{% firstof user.first_name user.username %}</small>
+      {% endwith %}
+      {% if user.username == e.author.username and e.is_editable %}
+      <a href="{% url 'tracker:update' e.pk %}">
+	<span class="badge pull-right">
+	  <span class="glyphicon glyphicon-pencil"></span>
+	</span>
+      </a>
+      {% endif %}
+    </h4>
+    <p class="list-group-item-text expenditure-description">
+      {{ e.date|naturalday:'l j F Y'|capfirst}}
+      <span class="pull-right amount">{{ e.amount|floatformat:2 }}</span>
+    </p>
+  </div>
+  {% endfor %}
+  {% pagination %}
+</div>
