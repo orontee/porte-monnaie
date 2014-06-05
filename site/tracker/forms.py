@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
     AuthenticationForm as OrigAuthenticationForm,
     PasswordChangeForm as OrigPasswordChangeForm)
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.forms import (Form, ModelForm,
                           ChoiceField, CharField)
@@ -77,24 +78,35 @@ class MultipleExpenditureForm(ExpenditureForm):
         the field named date by increasing its month as many times as
         specified by the field named occurences.
 
+        When a build date raises a ``ValueError``, up to four previous
+        days are tried to handle leap years and month with less than
+        31 days.
+
         """
         cleaned_data = super(MultipleExpenditureForm, self).clean()
         if 'occurrences' in cleaned_data:
-            count = int(cleaned_data['occurrences']) - 1
+            count = int(cleaned_data['occurrences'])
             start = cleaned_data.get('date')
             if start:
-                for delta in range(count):
-                    month = start.month + 1 if start.month < 12 else 1
-                    year = start.year + 1 if month == 1 else start.year
-                    try:
-                        start = start.replace(month=month, year=year)
-                    except ValueError:
+                for delta in range(1, count):
+                    total = start.month + delta
+                    year = start.year if total <= 12 else start.year + 1
+                    month =  total if total <= 12 else total - 12
+                    for i in range(4):
+                        try:
+                            next_date = start.replace(day=start.day - i,
+                                                      month=month,
+                                                      year=year)
+                        except ValueError:
+                            next_date = None
+                        else:
+                            self.other_dates.append(next_date)
+                            break
+                    if next_date is None:
                         msg = _('All expenditures must occur on valid dates.')
                         self._errors["occurrences"] = self.error_class([msg])
                         del cleaned_data['occurrences']
                         break
-                    else:
-                        self.other_dates.append(start)
         return cleaned_data
 
 
