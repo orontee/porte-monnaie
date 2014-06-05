@@ -1,6 +1,6 @@
-var months = $("a.month-anchor");
-var amounts = $("td.amount");
-var averages = $("td.average");
+var months = $("tbody a.month-anchor");
+var amounts = $("tbody td.amount");
+var averages = $("tbody td.average");
 var i, data = [], amount, average;
 var hasAverages = false;
 var container = document.getElementById('histogram-container');
