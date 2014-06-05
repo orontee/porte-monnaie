@@ -96,4 +96,4 @@ class MultipleExpenditureFormTest(TestCase):
                         '2015-02-28', '2015-03-31', '2015-04-30',
                         '2015-05-31', '2015-06-30']
         self.assertEquals([d.isoformat() for d in form.other_dates],
-                           date_strings)
+                          date_strings)
