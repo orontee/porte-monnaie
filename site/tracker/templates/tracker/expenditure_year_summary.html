@@ -107,27 +107,9 @@
 	  {% trans 'display'|capfirst %}
 	</a>
       </h4>
-      <p class="list-group-item-text">
-	{% if shared_purse %}
-	<div class="row">
-	  <div class="col-xs-4">
-	    {% trans 'amount'|capfirst %}
-	  </div>
-	  <div class="col-xs-4">
-	    {% trans 'average'|capfirst %}
-	  </div>
-	  <div class="col-xs-4">
-	    {% trans 'delta'|capfirst %}
-	  </div>
-	</div>
-	<div class="row">
-	  <div class="col-xs-4 amount">{{ a.amount|floatformat:2 }}</div>
-	  <div class="col-xs-4 amount">{{ a.average|floatformat:2 }}</div>
-	  <div class="col-xs-4 amount">{{ a.delta|floatformat:2 }}</div>
-	</div>
-	{% else %}
+      <p class="list-group-item-text expenditure-description">
+	{% trans 'delta:'|capfirst %} {{ a.delta|floatformat:2 }}
 	<span class="pull-right amount">{{ a.amount|floatformat:2 }}</span>
-	{% endif %}
       </p>
     </div>
     {% endfor %}
