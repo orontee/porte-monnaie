@@ -5,3 +5,6 @@ site/purse/public
 site/bootstrap/static
 *_flymake*
 site/tracker/static/js/d3.*js
+site/.coverage
+site/htmlcov
+fabfile.py
