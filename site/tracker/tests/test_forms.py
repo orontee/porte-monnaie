@@ -1,9 +1,11 @@
 """Tests for forms of tracker application."""
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils.timezone import now
-from tracker.forms import (ExpenditureForm, MultipleExpenditureForm)
-from tracker.models import Expenditure
+from tracker.forms import (ExpenditureForm,
+                           MultipleExpenditureForm,
+                           PurseShareForm)
 
 
 class ExpenditureFormTest(TestCase):
@@ -97,3 +99,25 @@ class MultipleExpenditureFormTest(TestCase):
                         '2015-05-31', '2015-06-30']
         self.assertEquals([d.isoformat() for d in form.other_dates],
                           date_strings)
+
+
+class PurseShareFormTest(TestCase):
+    """Test purse sharing form."""
+
+    def test_nonexistent_user(self):
+        """Test that a form with a nonexistent user name is not valid."""
+        data = {'user': 'nobody'}
+        form = PurseShareForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue('user' in form.errors)
+
+    def test_valid(self):
+        """Test a valid form."""
+        User = get_user_model()
+        credentials = {'username': 'username',
+                       'password': 'password'}
+        u = User.objects.create_user(**credentials)
+        data = {'user': u.username}
+        form = PurseShareForm(data)
+        self.assertTrue(form.is_valid())
+        self.assertTrue(form.cleaned_data['user'] == u)
