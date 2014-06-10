@@ -91,7 +91,7 @@ class MultipleExpenditureForm(ExpenditureForm):
                 for delta in range(1, count):
                     total = start.month + delta
                     year = start.year if total <= 12 else start.year + 1
-                    month =  total if total <= 12 else total - 12
+                    month = total if total <= 12 else total - 12
                     for i in range(4):
                         try:
                             next_date = start.replace(day=start.day - i,
