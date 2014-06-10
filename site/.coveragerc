@@ -1,2 +1,7 @@
 [run]
 source = tracker,users
+
+[report]
+omit = */tests/*
+exclude_lines =
+	      def __str__
