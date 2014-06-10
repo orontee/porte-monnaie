@@ -1,6 +1,5 @@
-"""Models for users management.
+"""Models for users management."""
 
-"""
 import hashlib
 import random
 from datetime import timedelta
@@ -15,9 +14,7 @@ User = get_user_model()
 
 
 class RegistrationManager(Manager):
-    """Manager of the ``Registration`` model.
-
-    """
+    """Manager of the ``Registration`` model."""
     def activate_user(self, key):
         """Activate the account related to key.
 
@@ -35,9 +32,7 @@ class RegistrationManager(Manager):
         return user
 
     def create_registration(self, user):
-        """Create an account registration.
-
-        """
+        """Create an account registration."""
         key = hashlib.sha1(str(random.random()).encode('utf-8')).hexdigest()
         return self.create(user=user, key=key)
 
@@ -48,9 +43,7 @@ class ExpiredRegistrationManager(Manager):
 
     """
     def get_query_set(self):
-        """Return a query set for expired registrations.
-
-        """
+        """Return a query set for expired registrations."""
         end_date = timezone.now()
         start_date = end_date - timedelta(days=Registration.validity_delay)
         qs = super(ExpiredRegistrationManager, self).get_query_set()
@@ -75,9 +68,7 @@ class Registration(Model):
         return u'Account registration: {0}'.format(self.user)
 
     def _send_email(self, subject_tmpl, msg_tmpl):
-        """Send an email to the user.
-
-        """
+        """Send an email to the user."""
         var = {'key': self.key,
                'username': self.user.username}
         subject = render_to_string('users/{0}'.format(subject_tmpl),
@@ -87,23 +78,17 @@ class Registration(Model):
         self.user.email_user(subject, msg)
 
     def send_creation_email(self):
-        """Send the creation email.
-
-        """
+        """Send the creation email."""
         self._send_email('email_creation_subject.txt',
                          'email_creation_msg.txt')
 
     def send_deletion_email(self):
-        """Send the deletion email.
-
-        """
+        """Send the deletion email."""
         self._send_email('email_deletion_subject.txt',
                          'email_deletion_msg.txt')
 
     def is_valid(self):
-        """Check whether it is a valid exception.
-
-        """
+        """Check whether it is a valid exception."""
         elapsed = (timezone.now() - self.created).days
         return elapsed <= self.validity_delay
 
