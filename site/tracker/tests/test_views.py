@@ -230,7 +230,7 @@ class ExpenditureUpdateTest(TestCase):
 
 class PurseCreationTest(TestCase):
     """Test purse creation view."""
-    
+
     def setUp(self):
         self.url = reverse('tracker:purse_creation')
 
@@ -286,3 +286,53 @@ class PurseCreationTest(TestCase):
         u = User.objects.get(username='username')
         self.assertEqual(u.purse_set.count(), 2)
         self.assertEqual(u.default_purse.name, 'Second purse')
+
+
+class PurseUpdateTest(TestCase):
+    """Test purse update view."""
+
+    def setUp(self):
+        self.credentials = {'username': 'username',
+                            'password': 'password'}
+        u = create_user(**self.credentials)
+        create_purse(u)
+        self.url = reverse('tracker:purse_update', kwargs={'pk': u.pk})
+
+    def test_get_non_authentified(self):
+        """Get page while no user is authentified."""
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        url = 'http://testserver/tracker/logout/'
+        self.assertEqual(response.url, url)
+
+    def test_get_authentified(self):
+        """Get page for authentified user."""
+        self.client.login(**self.credentials)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_authentified_not_in_purse(self):
+        """Get page for authentified user not in purse."""
+        credentials = {'username': 'other',
+                       'password': 'password'}
+        create_user(**credentials)
+        self.client.login(**credentials)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        url = 'http://testserver/tracker/logout/'
+        self.assertEqual(response.url, url)
+
+    def test_post(self):
+        """Post a new purse name."""
+        self.client.login(**self.credentials)
+        response = self.client.get(self.url)
+        token = response.cookies['csrftoken'].value
+        data = {'name': 'New purse name',
+                'csrftoken': token}
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, 302)
+        url = 'http://testserver/tracker/purses/'
+        self.assertEqual(response.url, url)
+        u = User.objects.get(username='username')
+        self.assertTrue(u.purse_set.values_list('name', flat=True),
+                        ['New purse name'])
