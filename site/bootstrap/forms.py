@@ -1,4 +1,4 @@
-from bootstrap.util import update_widgets
+from bootstrap.utils import update_widgets
 
 
 class BootstrapWidgetMixin(object):
