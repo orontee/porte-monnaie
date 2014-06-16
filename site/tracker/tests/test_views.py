@@ -336,3 +336,30 @@ class PurseUpdateTest(TestCase):
         u = User.objects.get(username='username')
         self.assertTrue(u.purse_set.values_list('name', flat=True),
                         ['New purse name'])
+
+class PurseDeletionTest(TestCase):
+    """Test purse deletion view."""
+
+    def setUp(self):
+        self.credentials = {'username': 'username',
+                            'password': 'password'}
+        u = create_user(**self.credentials)
+        p = create_purse(u)
+        self.url = reverse('tracker:purse_delete',
+                           kwargs={'pk': p.pk})
+
+    def test_get_non_authentified(self):
+        """Get page while no user is authentified."""
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        url = 'http://testserver/tracker/login?next=/tracker/purses/delete/1/'
+        self.assertEqual(response.url, url)
+
+    def test_get_authentified(self):
+        """Get page for authentified user."""
+        self.client.login(**self.credentials)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Purse.objects.count(), 0)
