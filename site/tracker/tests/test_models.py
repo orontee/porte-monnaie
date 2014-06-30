@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.test import TestCase
 from django.utils.timezone import now
-from tracker.models import (Expenditure, Purse)
+from tracker.models import (Expenditure, Purse, Tag)
 
 User = get_user_model()
 
@@ -57,23 +57,28 @@ class ExpenditureTest(TestCase):
 
 class TagManagerTest(TestCase):
     """Test tag manager."""
-    def setUp(self):
-        self.u = User.objects.create(username='test',
-                                     password='password',
-                                     is_active=False)
-        self.p = Purse.objects.create(name='test')
-        self.p.users.add(self.u)
+    def test_get_tag_names(self):
+        """Test tag names extraction."""
+        desc = "if HUMAN then ?"
+        names = Tag.objects.get_tag_names(desc)
+        self.assertEquals(names, ['human', 'then'])
+        
 
     def test_update_from(self):
         """Test tag update."""
+        u = User.objects.create(username='test',
+                                     password='password',
+                                     is_active=False)
+        p = Purse.objects.create(name='test')
+        p.users.add(u)
         description = "one two two   three a e i"
         e = Expenditure(amount=100,
                         date=now(),
                         description=description,
-                        author=self.u,
-                        purse=self.p)
+                        author=u,
+                        purse=p)
         e.save()
-        qs = self.p.tag_set.order_by('id')
+        qs = p.tag_set.order_by('id')
         qs = qs.annotate(weight=Count('expenditures'))
         tags = [d for d in qs.values('name', 'weight')]
         expecting = [{'name': u'one', 'weight': 1},
@@ -84,10 +89,10 @@ class TagManagerTest(TestCase):
         e = Expenditure(amount=100,
                         date=now(),
                         description='two',
-                        author=self.u,
-                        purse=self.p)
+                        author=u,
+                        purse=p)
         e.save()
-        qs = self.p.tag_set.order_by('id')
+        qs = p.tag_set.order_by('id')
         qs = qs.annotate(weight=Count('expenditures'))
         tags = [d for d in qs.values('name', 'weight')]
         expecting = [{'name': u'one', 'weight': 1},
@@ -95,13 +100,13 @@ class TagManagerTest(TestCase):
                      {'name': u'three', 'weight': 1}]
         self.assertEqual(tags, expecting)
 
-        p = Purse.objects.create(name='other')
-        p.users.add(self.u)
+        q = Purse.objects.create(name='other')
+        q.users.add(u)
         e = Expenditure(amount=100,
                         date=now(),
                         description='four five',
-                        author=self.u,
-                        purse=p)
+                        author=u,
+                        purse=q)
         e.save()
-        qs = self.p.tag_set.order_by('id')
+        qs = p.tag_set.order_by('id')
         self.assertEqual(qs.count(), 3)
