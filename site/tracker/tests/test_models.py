@@ -2,6 +2,7 @@
 
 from datetime import timedelta
 from django.contrib.auth import get_user_model
+from django.db.models import Count
 from django.test import TestCase
 from django.utils.timezone import now
 from tracker.models import (Expenditure, Purse)
@@ -73,6 +74,7 @@ class TagManagerTest(TestCase):
                         purse=self.p)
         e.save()
         qs = self.p.tag_set.order_by('id')
+        qs = qs.annotate(weight=Count('expenditures'))
         tags = [d for d in qs.values('name', 'weight')]
         expecting = [{'name': u'one', 'weight': 1},
                      {'name': u'two', 'weight': 1},
@@ -86,6 +88,7 @@ class TagManagerTest(TestCase):
                         purse=self.p)
         e.save()
         qs = self.p.tag_set.order_by('id')
+        qs = qs.annotate(weight=Count('expenditures'))
         tags = [d for d in qs.values('name', 'weight')]
         expecting = [{'name': u'one', 'weight': 1},
                      {'name': u'two', 'weight': 2},

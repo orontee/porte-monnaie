@@ -1,10 +1,8 @@
 """Tracker models."""
 
 from django.contrib.auth.models import AbstractUser
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.db.models import (DateField, DateTimeField,
-                              FloatField, ForeignKey, IntegerField,
+from django.db.models import (Count, DateField, DateTimeField,
+                              FloatField, ForeignKey,
                               BooleanField,
                               CharField, ManyToManyField, Model,
                               SET_NULL, Manager)
@@ -68,6 +66,11 @@ class Expenditure(Model):
         """Check whether it is an editable expenditure or not."""
         return (timezone.now() - self.created).days <= self.edit_delay
 
+    def save(self, **kwargs):
+        """Update tags from the saved expenditure."""
+        super(Expenditure, self).save(**kwargs)
+        Tag.objects.update_from(self)
+
     class Meta(object):
         """Expenditure metadata."""
         ordering = ('-date', '-created', 'author')
@@ -82,37 +85,40 @@ class TagManager(Manager):
     """
     min_len = 2
 
-    def update_from(self, e, stats=None):
-        """Update tags from the given expenditure.
+    def get_tag_names(self, desc):
+        """Split description and extract tag names."""
+        return [n.lower() for n in desc.split()
+                if not self.min_len or len(n) > self.min_len]
 
-        Raise an ``AttributeError`` exception in case ``e`` hasn't the
-        needed ``purse``, ``desc``, ``generated`` and ``created``
-        attributes.
+    def update_from(self, e, stats=None):
+        """Update tags after saving the given expenditure.
 
         No treatment is done for generated expenditures.
         """
         if not e.generated:
             purse = e.purse
-            desc = e.description
-            qs = Tag.objects.filter(purse__id__exact=purse.id)\
-                            .order_by('last_use')
-            names = [n.lower() for n in desc.split()
-                     if not self.min_len or len(n) > self.min_len]
+            qs = purse.tag_set.all()
+            names = self.get_tag_names(e.description)
             for n in names:
                 try:
                     t = qs.get(name=n)
                 except Tag.DoesNotExist:
-                    t = Tag(name=n, purse=purse, weight=1,
-                            last_use=e.created)
+                    t = Tag.objects.create(name=n, purse=purse)
+                    t.expenditures.add(e)
                     if stats:
                         stats[0] += 1
                 else:
-                    if t.last_use < e.created:
-                        t.weight += 1
-                        t.last_use = e.created
+                    if e not in t.expenditures.all():
+                        t.expenditures.add(e)
                         if stats:
                             stats[1] += 1
-                t.save()
+                        t.save()
+            for t in e.tag_set.all():
+                if t.name not in names:
+                    t.expenditures.remove(e)
+                    if stats:
+                        stats[1] += 1
+
         return stats
 
     def get_names_for(self, purse, limit=20):
@@ -121,9 +127,13 @@ class TagManager(Manager):
         The tags are ordered by weight. It returns at most ``limit``
         results in case ``limit`` is not ``None``.
         """
-        qs = purse.tag_set.only('name').order_by('-weight')
+        qs = purse.tag_set.all()
+        qs = qs.annotate(count=Count('expenditures'))
+        if qs.exists():
+            qs = qs.order_by('-count')
         if limit is not None:
             qs = qs[:limit]
+        qs.only('name')
         return sorted(qs.values_list('name', flat=True))
 
 
@@ -131,20 +141,10 @@ class Tag(Model):
     """Class representing tags."""
     name = CharField(_('name'), max_length=80, db_index=True)
     purse = ForeignKey(Purse, verbose_name=_('purse'))
-    weight = IntegerField(_('weight'))
-    last_use = DateTimeField(_('last use'))
+    expenditures = ManyToManyField(Expenditure,
+                                   verbose_name=_('expenditures'))
+
     objects = TagManager()
 
     def __str__(self):
         return u'{0}'.format(self.id)
-
-    class Meta(object):
-        """Tag metadata."""
-        ordering = ('-weight',)
-
-
-@receiver(post_save, sender=Expenditure)
-def update_tags(sender, instance, created, raw, **kwargs):
-    """Update tags from the saved expenditure."""
-    if not raw:
-        Tag.objects.update_from(instance)

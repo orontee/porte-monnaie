@@ -226,6 +226,7 @@ class ExpenditureUpdateTest(TestCase):
         e = self.u.expenditure_set.all()[0]
         self.assertEqual(e.amount, 100)
         self.assertEqual(e.description, 'expenditure description')
+        self.assertEqual(len(e.tag_set.all()), 2)
 
 
 class PurseCreationTest(TestCase):
