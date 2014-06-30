@@ -85,6 +85,11 @@ test:
 	cd $(projdir); \
 	$(manager) test --settings=purse.settings.tests --pythonpath=.
 
+coverage:
+	cd $(projdir); \
+	coverage run manage.py test --settings=purse.settings.tests --pythonpath=.; \
+	coverage html
+
 $(publicdir):
 	[ -x $@ ] || mkdir $@
 
