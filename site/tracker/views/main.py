@@ -1,12 +1,13 @@
 """Tracker views."""
 
 import datetime
+import json
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.core.urlresolvers import (reverse_lazy, reverse)
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
-from django.http import (HttpResponseRedirect, Http404)
+from django.http import (HttpResponse, HttpResponseRedirect, Http404)
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import (CreateView,
@@ -14,8 +15,9 @@ from django.views.generic import (CreateView,
                                   ListView,
                                   MonthArchiveView,
                                   RedirectView,
+                                  TemplateView,
                                   UpdateView,
-                                  TemplateView)
+                                  View)
 from tracker.models import (Expenditure, Purse, Tag)
 from tracker.forms import (ExpenditureForm,
                            MultipleExpenditureForm,
@@ -274,23 +276,6 @@ class ObjectPurseMixin(object):
             return purse
 
 
-class TagNamesMixin(object):
-    """Extend a view context with the list of tags.
-
-    The tag list is the one associated to the ``purse`` attribute.
-
-    """
-    def get_context_data(self, **kwargs):
-        context = super(TagNamesMixin, self).get_context_data(**kwargs)
-        try:
-            purse = self.purse
-        except AttributeError:
-            raise ImproperlyConfigured('purse attribute required '
-                                       'by TagNamesMixin')
-        context.update({'tagnames': Tag.objects.get_names_for(purse)})
-        return context
-
-
 class ExpenditureAdd(LoginRequiredMixin,
                      DefaultPurseMixin,
                      WithCurrentDateMixin,
@@ -340,7 +325,6 @@ class ExpenditureUpdate(LoginRequiredMixin,
                         ObjectPurseMixin,
                         ObjectOwnerMixin,
                         EditableObjectMixin,
-                        TagNamesMixin,
                         UpdateView):
     """View to update expenditures."""
     model = Expenditure
@@ -516,3 +500,33 @@ class ExpenditureHome(RedirectView):
                                        '{0:%m},{0:%Y}'.format(
                                            datetime.datetime.today())
                                        .split(','))))
+
+
+class TagView(LoginRequiredMixin,
+              DefaultPurseMixin,
+              View):
+    """List of tags.
+
+    The query parameter `limit` can be used to limit the number of
+    tags in the list.
+    """
+    http_method_names = ['get', 'head', 'options', 'trace']
+
+    def get(self, request, *args, **kwargs):
+        """Return list of tag names."""
+        try:
+            limit = request.GET['limit']
+        except KeyError:
+            limit = None
+        try:
+            ordering = request.GET['ordering']
+        except KeyError:
+            ordering = None
+        purse = self.purse
+        tags = Tag.objects.get_tags_for(purse)
+        if ordering is not None:
+            tags = tags.order_by(ordering)
+        if limit is not None:
+            tags = tags[:limit]
+        data = json.dumps(list(tags.values('name', 'count', 'amount')))
+        return HttpResponse(data, content_type='application/json')

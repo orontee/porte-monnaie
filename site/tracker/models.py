@@ -5,7 +5,8 @@ from django.db.models import (Count, DateField, DateTimeField,
                               FloatField, ForeignKey,
                               BooleanField,
                               CharField, ManyToManyField, Model,
-                              SET_NULL, Manager)
+                              SET_NULL, Sum,
+                              Manager)
 from django.utils import (six, timezone)
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
@@ -121,20 +122,15 @@ class TagManager(Manager):
 
         return stats
 
-    def get_names_for(self, purse, limit=20):
-        """Return the names of the tags associated to ``purse``.
+    def get_tags_for(self, purse):
+        """Return the the tags associated to ``purse``.
 
-        The tags are ordered by weight. It returns at most ``limit``
-        results in case ``limit`` is not ``None``.
-        """
+        The returned tags are extended with the associated
+        expenditures count and amount."""
         qs = purse.tag_set.all()
-        qs = qs.annotate(count=Count('expenditures'))
-        if qs.exists():
-            qs = qs.order_by('-count')
-        if limit is not None:
-            qs = qs[:limit]
-        qs.only('name')
-        return sorted(qs.values_list('name', flat=True))
+        qs = qs.annotate(count=Count('expenditures'),
+                         amount=Sum('expenditures__amount'))
+        return qs
 
 
 class Tag(Model):

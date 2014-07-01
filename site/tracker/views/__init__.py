@@ -11,6 +11,7 @@ from tracker.views.main import (ExpenditureAdd,
                                 PurseUpdate,
                                 PurseShare,
                                 PurseList,
+                                TagView,
                                 UserChange)
 
 __all__ = ('ExpenditureAdd', 'ExpenditureDelete', 'ExpenditureUpdate',
@@ -23,4 +24,5 @@ __all__ = ('ExpenditureAdd', 'ExpenditureDelete', 'ExpenditureUpdate',
            'PurseUpdate',
            'PurseShare',
            'PurseList',
+           'TagView',
            'UserChange')

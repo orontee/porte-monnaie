@@ -23,6 +23,7 @@ from tracker.views import (ExpenditureAdd,
                            PurseUpdate,
                            PurseShare,
                            PurseDelete,
+                           TagView,
                            UserChange)
 from tracker.forms import (AuthenticationForm, PasswordChangeForm)
 from users.views.base import (UserActivation,
@@ -74,6 +75,11 @@ urlpatterns += patterns('',
                         url(regex=r'^purses/delete/(?P<pk>\d+)/$',
                             view=PurseDelete.as_view(),
                             name='purse_delete'))
+
+urlpatterns += patterns('',
+                        url(regex=r'^tags/$',
+                            view=TagView.as_view(),
+                            name='tags'))
 
 urlpatterns += patterns('',
                         url(regex=r'^user_change/$',
