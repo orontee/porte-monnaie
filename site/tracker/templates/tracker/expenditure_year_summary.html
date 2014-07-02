@@ -114,19 +114,15 @@
     </div>
     {% endfor %}
   </div>
-  <div id="histogram-container" class="container">
     <div class="row">
-      <div class="hidden-xs hidden-sm col-md-12 col-lg-6">
+      <div id="histogram-container" 
+	   class="hidden-xs hidden-sm col-md-12 col-lg-6">
 	<h2>{% trans 'histogram'|capfirst %}</h2>
-	<div id="graph-body">
-	</div>
       </div>
-      <div class="hidden-xs hidden-sm col-md-12 col-lg-6">
+      <div id="tags-container"
+	   class="hidden-xs hidden-sm col-md-12 col-lg-6">
 	<h2>{% trans 'tags'|capfirst %}</h2>
-	<div id="tags-body">
-	</div>
       </div>
-    </div>
   </div>
   {% else %}
   <div class="alert alert-warning">
@@ -142,7 +138,6 @@
 <script src="{% static 'js/d3.min.js' %}"></script>
 <script src="{% static 'js/d3-layout.cloud.js' %}"></script>
 <script src="{% static 'js/graph.js' %}"></script>
-<script src="{% static 'js/tags.js' %}"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     Tracker.activateParent('report');

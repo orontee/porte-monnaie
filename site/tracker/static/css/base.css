@@ -87,10 +87,6 @@ a.ribbon:hover {
     text-decoration: underline;
 }
 
-#histogram-container {
-    display: none;
-}
-
 .list-group-item-text.expenditure-description {
     min-height: 1.5em;
 }

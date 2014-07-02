@@ -3,28 +3,15 @@ var amounts = $("tbody td.amount");
 var averages = $("tbody td.average");
 var i, data = [], amount, average;
 var hasAverages = false;
-var container = document.getElementById('histogram-container');
+var histogramThreshold = 6;
 
-var cleanUp = function (str) {
+function cleanUp(str) {
     return str.replace(',', '.').replace('&nbsp;', '');
-};
-for (i = 0; i < months.length; i++) {
-    amount = Number(cleanUp(amounts[i].innerHTML));
-    average = ((averages[i] !== undefined)
-               ? Number(cleanUp(averages[i].innerHTML))
-               : undefined);
-    if (!isNaN(amount)) {
-        data.push({'amount': amount,
-                   'average': average,
-                   'month': months[i].innerHTML});
-        hasAverages |= (average !== undefined);
-    }
 }
 
-if (months.length >= 6) {
-
+function buildHistogram() {
     var margin = {top: 30, right: 40, bottom: 60, left: 40},
-        width = 600 - margin.left - margin.right,
+        width = 550 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.1);
@@ -35,7 +22,7 @@ if (months.length >= 6) {
 
     var yAxisLeft = d3.svg.axis().scale(y0).ticks(6).orient("left");
 
-    var svg = d3.select("#graph-body").append("svg")
+    var svg = d3.select("#histogram-container").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -117,5 +104,72 @@ if (months.length >= 6) {
         .style("text-anchor", "end")
         .text(function(d) { return d.label; });
 
-    container.style.display = "inline";
+    document.getElementById('histogram-container').style.display = "inline";
+}
+
+for (i = 0; i < months.length; i++) {
+    amount = Number(cleanUp(amounts[i].innerHTML));
+    average = ((averages[i] !== undefined)
+               ? Number(cleanUp(averages[i].innerHTML))
+               : undefined);
+    if (!isNaN(amount)) {
+        data.push({'amount': amount,
+                   'average': average,
+                   'month': months[i].innerHTML});
+        hasAverages |= (average !== undefined);
+    }
+}
+if (months.length >= histogramThreshold) {
+    buildHistogram();
+}
+
+var fill = d3.scale.category20(),
+    tagsThreshold = 20;
+
+var margin = {top: 0, right: 20, bottom: 0, left: 20},
+    width = 600 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+function draw(words) {
+    d3.select("#tags-container").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+        .selectAll("text")
+        .data(words)
+        .enter().append("text")
+        .style("font-size", function(d) { return 10 + 2 * d.count + "px"; })
+        .style("font-family", "Impact")
+        .style("fill", function(d, i) { return fill(i); })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.name; })
+        .style("cursor", "pointer")
+        .on("click", function(d) {
+            window.location = "/tracker/expenditures/search/?filter=" + d.name;
+        });
+}
+
+function buildTagCloud(url) {
+    $.ajax({
+        url: url,
+        cache: false
+    }).done(function(words) {
+        if (words.length >= tagsThreshold) {
+            d3.layout.cloud().size([width + margin.left + margin.right,
+                                    height + margin.top + margin.bottom])
+                .words(words)
+                .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                .font("Impact")
+                .fontSize(function(d) {
+                    return 10 + 2 * d.count;
+                })
+                .on("end", draw)
+                .start();
+            document.getElementById('tags-container').style.display = "inline";
+        }
+    });
 }

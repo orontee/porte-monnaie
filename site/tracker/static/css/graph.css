@@ -1,5 +1,8 @@
+#histogram-container, #tags-container {
+    display: none;
+}
 
-#graph-body {
+#histogram-container > svg {
     font: 10px sans-serif;
 }
 
