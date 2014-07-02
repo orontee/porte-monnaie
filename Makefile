@@ -20,11 +20,13 @@ lang = fr
 bootstrap_archive = $(contribdir)/bootstrap-3.1.0-dist.zip
 jquery_src = $(contribdir)/jquery-1.11.0.min.js
 d3_archive = $(contribdir)/d3.zip
+d3-cloud_archive = $(contribdir)/d3-cloud-1.0.5.tar.gz
 
 setup: compile-messages
 setup: $(projdir)/bootstrap/static/js/jquery.min.js
 setup: $(projdir)/bootstrap/static/bootstrap
 setup: $(projdir)/tracker/static/js/d3.js $(projdir)/tracker/static/js/d3.min.js
+setup: $(projdir)/tracker/static/js/d3-layout.cloud.js
 
 install: setup $(publicdir)/django.fcgi $(publicdir)/.htaccess collect syncdb
 
@@ -114,3 +116,6 @@ $(projdir)/tracker/static/js/d3.js: $(d3_archive)
 
 $(projdir)/tracker/static/js/d3.min.js: $(d3_archive)
 	unzip -o $< d3.min.js -d $(projdir)/tracker/static/js
+
+$(projdir)/tracker/static/js/d3-layout.cloud.js: $(d3-cloud_archive)
+	tar -xzf $< d3-cloud-1.0.5/d3.layout.cloud.js -O > $@

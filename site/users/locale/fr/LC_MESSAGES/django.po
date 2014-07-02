@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-05 22:11+0200\n"
+"POT-Creation-Date: 2014-07-02 08:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,18 +54,18 @@ msgstr "Confirmation du mot de passe"
 msgid "Enter the same password as above, for verification."
 msgstr "Saisissez le même mot de passe que précédemment, pour vérification."
 
-#: models.py:67
+#: models.py:60
 msgid "key"
 msgstr "clé d'activation"
 
-#: models.py:68
+#: models.py:61
 msgid "created"
 msgstr "création"
 
-#: models.py:111
+#: models.py:96
 msgid "account registration"
 msgstr "demande de création de compte"
 
-#: models.py:112
+#: models.py:97
 msgid "account registrations"
 msgstr "demandes de création de compte"

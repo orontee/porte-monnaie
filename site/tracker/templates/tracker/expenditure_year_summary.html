@@ -121,6 +121,11 @@
 	<div id="graph-body">
 	</div>
       </div>
+      <div class="hidden-xs col-lg-6">
+	<h2>{% trans 'tags'|capfirst %}</h2>
+	<div id="tags-body">
+	</div>
+      </div>
     </div>
   </div>
   {% else %}
@@ -135,11 +140,14 @@
 {{ block.super }}
 <script src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
 <script src="{% static 'js/d3.min.js' %}"></script>
+<script src="{% static 'js/d3-layout.cloud.js' %}"></script>
 <script src="{% static 'js/graph.js' %}"></script>
+<script src="{% static 'js/tags.js' %}"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     Tracker.activateParent('report');
     Tracker.focus('add-btn');
+    buildTagCloud('{% url 'tracker:tags' %}' + '?limit=50&ordering=-count');
   });
 </script>
 {% endblock scripts %}
