@@ -142,7 +142,7 @@
   $(document).ready(function() {
     Tracker.activateParent('report');
     Tracker.focus('add-btn');
-    buildTagCloud('{% url 'tracker:tags' %}' + '?limit=50&ordering=-count');
+    buildTagCloud('{% url 'tracker:tags' %}' + '?limit=250&ordering=-count');
   });
 </script>
 {% endblock scripts %}

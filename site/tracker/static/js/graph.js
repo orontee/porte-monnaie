@@ -161,13 +161,15 @@ function buildTagCloud(url) {
         if (words.length >= tagsThreshold) {
             d3.layout.cloud().size([width + margin.left + margin.right,
                                     height + margin.top + margin.bottom])
-                .words(words)
-                .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                .timeInterval(10)
+                .rotate(function() { return ~~(Math.random() * 5) * 30 - 60; })
+                .padding(1)
                 .font("Impact")
                 .fontSize(function(d) {
                     return 10 + 2 * d.count;
                 })
                 .on("end", draw)
+                .words(words)
                 .start();
             document.getElementById('tags-container').style.display = "inline";
         }
