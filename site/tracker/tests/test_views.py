@@ -338,6 +338,7 @@ class PurseUpdateTest(TestCase):
         self.assertTrue(u.purse_set.values_list('name', flat=True),
                         ['New purse name'])
 
+
 class PurseDeletionTest(TestCase):
     """Test purse deletion view."""
 

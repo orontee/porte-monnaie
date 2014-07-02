@@ -15,7 +15,8 @@ class DictFetchAllTest(TestCase):
         Purse.objects.create(name='test2', description='desc2')
         Purse.objects.create(name='test3', description='desc3')
         cursor = connection.cursor()
-        cursor = cursor.execute('SELECT * FROM tracker_purse ORDER BY created;')
+        statement = 'SELECT * FROM tracker_purse ORDER BY created;'
+        cursor = cursor.execute(statement)
         self.maxDiff = None
         dct = dictfetchall(cursor)
         self.assertEqual(len(dct), 3)
@@ -23,6 +24,3 @@ class DictFetchAllTest(TestCase):
                          ['description', 'created', 'id', 'name'])
         self.assertEqual(dct[0]['description'], 'desc1')
         self.assertEqual(dct[2]['name'], 'test3')
-        
-        
-    

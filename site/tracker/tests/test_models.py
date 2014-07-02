@@ -62,7 +62,6 @@ class TagManagerTest(TestCase):
         desc = "if HUMAN then ?"
         names = Tag.objects.get_tag_names(desc)
         self.assertEquals(names, ['human', 'then'])
-        
 
     def test_update_from(self):
         """Test tag update."""
