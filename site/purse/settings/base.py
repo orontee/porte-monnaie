@@ -1,6 +1,4 @@
-"""The base settings for the purse project.
-
-"""
+"""The base settings for the purse project."""
 
 import os
 from django.contrib.messages import constants as messages
