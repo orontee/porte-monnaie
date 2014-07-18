@@ -10,6 +10,7 @@ function cleanUp(str) {
 }
 
 function buildHistogram() {
+    var legend, bars;
     var margin = {top: 30, right: 40, bottom: 60, left: 40},
         width = 550 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
@@ -130,48 +131,99 @@ var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-function draw(words) {
-    d3.select("#tags-container").append("svg")
+function buildTagCloud(baseUrl) {
+    var wordsLimit = 250;
+    var graph, countCloudBuilder, amountCloudBuilder,
+        countExtent, amountExtent;
+    
+    function getUrl(ordering) {
+        return baseUrl + '?limit=' +
+            wordsLimit + '&ordering=' + ordering;
+    }
+
+    graph = d3.select("#tags-container").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-        .selectAll("text")
-        .data(words)
-        .enter().append("text")
-        .style("font-size", function(d) { return 10 + 2 * d.count + "px"; })
-        .style("font-family", "Impact")
-        .style("fill", function(d, i) { return fill(i); })
-        .attr("text-anchor", "middle")
-        .attr("transform", function(d) {
-            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-        })
-        .text(function(d) { return d.name; })
-        .style("cursor", "pointer")
-        .on("click", function(d) {
-            window.location = "/tracker/expenditures/search/?filter=" + d.name;
-        });
-}
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-function buildTagCloud(url) {
+    function countSizeFunction(d) { return 10 + 40 * d.count / countExtent[1]; }
+    function amountSizeFunction(d) {
+        if (d.amount > 0) {
+            return 10 + 40 * d.amount / amountExtent[1];
+        }
+    }
+
+    function drawTemplate(data, sizeFunction) {
+        function toPixelSize(d) {
+            return sizeFunction(d) + "px";
+        }
+        
+        function draw(data) {
+            graph.selectAll("text").remove();
+            
+            graph.selectAll("text")
+                .data(data).enter().append("text")
+                .style("font-size", toPixelSize)
+                .style("font-family", "Impact")
+                .style("fill", function(d, i) { return fill(i); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) { return d.name; })
+                .style("cursor", "pointer")
+                .on("click", function(d) {
+                    window.location = "/tracker/expenditures/search/?filter=" + d.name;
+                });            
+        }
+        return function() {
+            d3.layout.cloud().size([width + margin.left + margin.right,
+                                             height + margin.top + margin.bottom])
+                .rotate(function() { return ~~(Math.random() * 4) * 45 - 90; })
+                .padding(2)
+                .font("Impact")
+                .fontSize(sizeFunction)
+                .on("end", draw)
+                .words(data)
+                .start();
+        };
+    }
+    
     $.ajax({
-        url: url,
+        url: getUrl('-count'),
         cache: false
     }).done(function(words) {
         if (words.length >= tagsThreshold) {
-            d3.layout.cloud().size([width + margin.left + margin.right,
-                                    height + margin.top + margin.bottom])
-                .timeInterval(10)
-                .rotate(function() { return ~~(Math.random() * 5) * 30 - 60; })
-                .padding(1)
-                .font("Impact")
-                .fontSize(function(d) {
-                    return 10 + 2 * d.count;
-                })
-                .on("end", draw)
-                .words(words)
-                .start();
+            countExtent = d3.extent(words, function(d) {
+                return d.count;
+            });
+            countCloudBuilder = drawTemplate(words, countSizeFunction);
+            
             document.getElementById('tags-container').style.display = "inline";
+
+            countCloudBuilder();
+
+            $('#amount-sort-btn').click(function () {
+                if (amountCloudBuilder === undefined) {
+                    $.ajax({
+                        url: getUrl('-amount'),
+                        cache: false
+                    }).done(function(words) {
+                        amountExtent = d3.extent(words, function(d) {
+                            return d.amount;
+                        });
+                        amountCloudBuilder = drawTemplate(words, amountSizeFunction);
+                        amountCloudBuilder();
+                    });
+                } else {
+                    amountCloudBuilder();
+                }
+            });
+            $('#count-sort-btn').click(function () {
+                countCloudBuilder();
+            });
+
         }
     });
 }

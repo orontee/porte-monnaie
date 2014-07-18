@@ -121,7 +121,21 @@
       </div>
       <div id="tags-container"
 	   class="hidden-xs hidden-sm col-md-12 col-lg-6">
-	<h2>{% trans 'tags'|capfirst %}</h2>
+	<h2>{% trans 'tags'|capfirst %}
+	  <small>
+	    <div class="btn-group btn-group-xs pull-right"
+		 data-toggle="buttons">
+	      <label id="count-sort-btn" class="btn btn-default active">
+		<input type="radio" name="sort" checked>
+		{% trans 'count'|capfirst %}
+	      </label>
+	      <label id="amount-sort-btn" class="btn btn-default">
+		<input type="radio" name="sort">
+		{% trans 'amount'|capfirst %}
+	      </label>
+	    </div>
+	  </small>
+	</h2>
       </div>
   </div>
   {% else %}
@@ -142,7 +156,7 @@
   $(document).ready(function() {
     Tracker.activateParent('report');
     Tracker.focus('add-btn');
-    buildTagCloud('{% url 'tracker:tags' %}' + '?limit=250&ordering=-count');
+    buildTagCloud('{% url 'tracker:tags' %}');
   });
 </script>
 {% endblock scripts %}
