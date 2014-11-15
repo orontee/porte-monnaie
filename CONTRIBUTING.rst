@@ -9,13 +9,9 @@ Setting up a development environment
 
 2. Create and checkout a new branch.
 
-3. Create a virtual environment satisfying the dependancies listed in
-   the file `requirements.txt`::
+3. Create a virtual environment::
 
      purse_project$ virtualenv2 ~/.virtualenvs/purse
-     purse_project$ source ~/.virtualenvs/purse/bin/activate
-     (purse) purse_project$ pip install -r requirements.txt
-     ...
  
 4. Adapt the script `share/setup_debug_env` to your setup. Then to
    enter the virtual environment, just enter the following command::
@@ -23,6 +19,26 @@ Setting up a development environment
      purse_project$ source share/setup_debug_env
      ...
 
+5. Install the dependencies listed in the file `requirements.txt`::
+
+     (purse) purse_project$ pip install -r requirements.txt
+     ...
+
+Testing
+-------
+
+Just run the following commands from the source directory::
+
+     purse_project$ source share/setup_debug_env
+     ...
+     (purse) purse_project$ make test
+     Creating test database for alias 'default'...
+     .............................................
+     ----------------------------------------------------------------------
+     Ran 45 tests in 1.519s
+     
+     OK
+     Destroying test database for alias 'default'...
 
 Translations
 ------------
