@@ -10,9 +10,3 @@ export DJANGO_SECRET_KEY='public fake key'
 export DJANGO_ADMIN_NAME='Matthias Meulien'
 export DJANGO_ADMIN_EMAIL='matthias.meulien@example.com'
 export PYTHONPATH
-
-echo "To install the required dependencies, use:"
-echo "   pip install -r requirements_dev.txt"
-
-echo "To run the debug server, use:"
-echo "   django-admin.py runserver"
