@@ -391,14 +391,11 @@ class ExpenditureMonthList(LoginRequiredMixin,
                            DefaultPurseMixin,
                            FieldNamesMixin,
                            WithCurrentDateMixin,
-                           QueryFilterMixin,
                            QueryPaginationMixin,
                            MonthArchiveView):
     """List of expenditures in a month.
 
     This view handles:
-
-    - Query parameters to filter the default query set;
 
     - Pagination.
 
@@ -410,7 +407,6 @@ class ExpenditureMonthList(LoginRequiredMixin,
     month_format = '%m'
     allow_empty = True
     allow_future = True
-    filter_description = _('Filter expenditures')
     template_name = 'tracker/expenditure_month_list.html'
 
     def get_queryset(self):
