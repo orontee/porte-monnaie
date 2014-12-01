@@ -68,12 +68,23 @@ class QueryPaginationMixin(object):
 class QueryFilterMixin(object):
     """Mixin that read the filter configuration from the query parameters.
 
-    It supports filtering only on one field, which is read from the
-    ``filter_attr`` attribute.
+    The expected query parameter is named ``filter`` and its value is
+    splitted to get the filter keywords.
 
+    It supports filtering on one field whose name is read from the
+    ``filter_attr`` attribute. The lookup type used to filter is
+    ``contains`` or ``icontains`` depending on the
+    ``filter_ignore_case`` attribute.
+
+    When the attribute ``filter_num_attr`` is set, filtering also
+    applies to the specified field but only for keywords convertible
+    to float.
+
+    All filters are combined using logical AND operations.
     """
     filter_ignore_case = True
-    filter_attr = "description"
+    filter_attr = 'description'
+    filter_num_attr = 'amount'
     filter_description = _('Apply filter')
 
     def has_filter(self):
@@ -84,9 +95,9 @@ class QueryFilterMixin(object):
 
     def get_filter_keywords(self):
         """Returns the filter operands found in the query parameters."""
-        return (self.request.GET['filter'].split(' ')
-                if self.has_filter()
-                else list())
+        kws = (self.request.GET['filter'].split(' ')
+               if self.has_filter() else list())
+        return kws
 
     def get_context_data(self, **kwargs):
         """Extends the context data with the current filter."""
@@ -110,8 +121,20 @@ class QueryFilterMixin(object):
         kw = '{0}__{1}'.format(self.filter_attr,
                                'icontains' if self.filter_ignore_case
                                else 'contains')
+        if self.filter_num_attr is not None:
+            okw = '{0}__{1}'.format(self.filter_num_attr, 'exact')
+
         for f in self.get_filter_keywords():
-            qs = qs.filter(**{kw: f})
+            dct, n = {}, None
+            if self.filter_num_attr is not None:
+                try:
+                    n = float(f)
+                    dct[okw] = n
+                except ValueError:
+                    pass
+            if n is None:
+                dct[kw] = f
+            qs = qs.filter(**dct)
         return qs
 
 

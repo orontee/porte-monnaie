@@ -39,6 +39,13 @@ def create_purse(user=None, **kwargs):
     return p
 
 
+def create_expenditure(**kwargs):
+    """Create an expenditure."""
+    e = Expenditure.objects.create(**kwargs)
+    e.save()
+    return e
+    
+
 class ExpenditureAddTest(TestCase):
     """Test expenditure add view."""
     def setUp(self):
@@ -73,7 +80,7 @@ class ExpenditureAddTest(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         # self.assertEqual(u.default_purse, p)
-        # Check messages
+        # TODO Check messages
 
     def test_post(self):
         """Get page then post."""
@@ -337,6 +344,130 @@ class PurseUpdateTest(TestCase):
         u = User.objects.get(username='username')
         self.assertTrue(u.purse_set.values_list('name', flat=True),
                         ['New purse name'])
+
+
+class ExpenditureFilteredListTest(TestCase):
+    """Test expenditure filtered list."""
+
+    def setUp(self):
+        self.credentials = {'username': 'username',
+                            'password': 'password'}
+        create_user(**self.credentials)
+        self.url = reverse('tracker:expenditure-search')
+
+    def test_get_non_authentified(self):
+        """Get page while no user is authentified."""
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        url = 'http://testserver/tracker/login'
+        url += '?next=/tracker/expenditures/search/'
+        self.assertEqual(response.url, url)
+
+    def test_get_authentified_without_purse(self):
+        """Get page while user is authentified but has no purse."""
+        self.client.login(**self.credentials)
+        response = self.client.get(self.url)
+        expected_url = 'http://testserver/tracker/purses/create/'
+        self.assertRedirects(response, expected_url)
+
+    def test_get_authentified_without_default_purse(self):
+        """Get page while user is authentified but has no default purse."""
+        self.client.login(**self.credentials)
+        u = User.objects.get(username='username')
+        create_purse(u)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        # self.assertEqual(u.default_purse, p)
+        # TODO Check messages
+
+    def test_get(self):
+        """Get page for authentified user with purse."""
+        self.client.login(**self.credentials)
+        u = User.objects.get(username='username')
+        p = create_purse(u)
+        desc = 'Uniquedesc'
+        # REMARK First letter must be in uppercase
+        create_expenditure(**{'amount': 100,
+                              'date': '2014-12-2',
+                              'description': desc,
+                              'author': u,
+                              'purse': p})
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, desc)
+
+    def test_get_single_keyword(self):
+        """Get page for a single filter keyword."""
+        self.client.login(**self.credentials)
+        u = User.objects.get(username='username')
+        p = create_purse(u)
+        create_expenditure(**{'amount': 100,
+                              'date': '2014-12-2',
+                              'description': 'firstdesc uniqueterm',
+                              'author': u,
+                              'purse': p})
+        create_expenditure(**{'amount': 100,
+                              'date': '2014-12-2',
+                              'description': 'otherdesc',
+                              'author': u,
+                              'purse': p})
+        response = self.client.get(self.url + '?filter=firstdesc')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'uniqueterm')
+        self.assertNotContains(response, 'otherterm')
+
+    def test_get_num_keyword(self):
+        """Get page for a single filter keyword convertible to float."""
+        self.client.login(**self.credentials)
+        u = User.objects.get(username='username')
+        p = create_purse(u)
+        create_expenditure(**{'amount': 120.45,
+                              'date': '2014-12-2',
+                              'description': 'firstdesc uniqueterm',
+                              'author': u,
+                              'purse': p})
+        create_expenditure(**{'amount': 100,
+                              'date': '2014-12-2',
+                              'description': 'otherdesc',
+                              'author': u,
+                              'purse': p})
+        create_expenditure(**{'amount': 120.45,
+                              'date': '2014-11-7',
+                              'description': 'lastdesc',
+                              'author': u,
+                              'purse': p})        
+        response = self.client.get(self.url + '?filter=120.45')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'uniqueterm')
+        self.assertNotContains(response, 'otherdesc')
+        self.assertContains(response, 'Lastdesc')
+        # REMARK Note that descriptions are capitalized
+
+    def test_get_multiple_keywords(self):
+        """Get page for multiple filter keywords."""
+        self.client.login(**self.credentials)
+        u = User.objects.get(username='username')
+        p = create_purse(u)
+        create_expenditure(**{'amount': 120.45,
+                              'date': '2014-12-2',
+                              'description': 'firstdesc uniqueterm',
+                              'author': u,
+                              'purse': p})
+        create_expenditure(**{'amount': 100,
+                              'date': '2014-12-2',
+                              'description': 'otherdesc',
+                              'author': u,
+                              'purse': p})
+        create_expenditure(**{'amount': 120.45,
+                              'date': '2014-12-7',
+                              'description': 'lastdesc',
+                              'author': u,
+                              'purse': p})        
+        response = self.client.get(self.url + '?filter=120.45+unique')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'uniqueterm')
+        self.assertNotContains(response, 'otherterm')
+        self.assertNotContains(response, 'lastdesc')
 
 
 class PurseDeletionTest(TestCase):
