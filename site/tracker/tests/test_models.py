@@ -66,8 +66,8 @@ class TagManagerTest(TestCase):
     def test_update_from(self):
         """Test tag update."""
         u = User.objects.create(username='test',
-                                     password='password',
-                                     is_active=False)
+                                password='password',
+                                is_active=False)
         p = Purse.objects.create(name='test')
         p.users.add(u)
         description = "one two two   three a e i"
