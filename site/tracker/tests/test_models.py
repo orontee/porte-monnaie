@@ -109,3 +109,8 @@ class TagManagerTest(TestCase):
         e.save()
         qs = p.tag_set.order_by('id')
         self.assertEqual(qs.count(), 3)
+
+
+# Local Variables:
+# compile-command: "source share/setup_debug_env && make test"
+# End:

@@ -24,3 +24,8 @@ class DictFetchAllTest(TestCase):
                          ['description', 'created', 'id', 'name'])
         self.assertEqual(dct[0]['description'], 'desc1')
         self.assertEqual(dct[2]['name'], 'test3')
+
+
+# Local Variables:
+# compile-command: "source share/setup_debug_env && make test"
+# End:
