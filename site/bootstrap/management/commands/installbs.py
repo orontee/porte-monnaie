@@ -7,8 +7,7 @@ import bootstrap
 
 
 class Command(LabelCommand):
-    """Command to unzip a Bootstrap archive into static directory.
-    """
+    """Command to unzip a Bootstrap archive into static directory."""
     help = 'Install a Bootstrap archive'
 
     def handle_label(self, label, **options):

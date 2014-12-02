@@ -6,8 +6,7 @@ import bootstrap
 
 
 class Command(BaseCommand):
-    """Command to remove a Bootstrap tree from static directory.
-    """
+    """Command to remove a Bootstrap tree from static directory."""
     help = 'Uninstall a Bootstrap tree'
 
     def handle(self, *args, **options):
