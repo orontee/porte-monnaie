@@ -2,6 +2,7 @@
 
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404
+from django.utils import formats
 from django.utils.timezone import now
 from django.utils.translation import ungettext
 from django.utils.translation import ugettext_lazy as _
@@ -128,7 +129,7 @@ class QueryFilterMixin(object):
             dct, n = {}, None
             if self.filter_num_attr is not None:
                 try:
-                    n = float(f)
+                    n = float(formats.sanitize_separators(f))
                     dct[okw] = n
                 except ValueError:
                     pass
