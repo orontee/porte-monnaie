@@ -337,7 +337,6 @@ class ExpenditureUpdate(LoginRequiredMixin,
 class ExpenditureFilteredList(LoginRequiredMixin,
                               DefaultPurseMixin,
                               FieldNamesMixin,
-                              WithCurrentDateMixin,
                               QueryFilterMixin,
                               QueryPaginationMixin,
                               ListView):
