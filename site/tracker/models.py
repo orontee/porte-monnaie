@@ -50,8 +50,8 @@ class Expenditure(Model):
     The attribute ``edit_delay`` controls the number of days from an
     expenditure creation to when it won't be editable anymore.
     """
-    amount = FloatField(_('amount'))
-    date = DateField(_('date'), default=timezone.now().date())
+    amount = FloatField(_('amount'), db_index=True)
+    date = DateField(_('date'), default=timezone.now().date(), db_index=True)
     description = CharField(_('description'), max_length=80, blank=False)
     author = ForeignKey(User, editable=False, verbose_name=_('author'))
     purse = ForeignKey(Purse, verbose_name=_('purse'))
