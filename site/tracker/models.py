@@ -122,12 +122,16 @@ class TagManager(Manager):
 
         return stats
 
-    def get_tags_for(self, purse):
+    def get_tags_for(self, purse, lookup_params=None):
         """Return the the tags associated to ``purse``.
+
+        The default query set may be filtered using ``lookup_params``.
 
         The returned tags are extended with the associated
         expenditures count and amount."""
         qs = purse.tag_set.all()
+        if lookup_params is not None:
+            qs = qs.filter(**lookup_params)
         qs = qs.annotate(count=Count('expenditures'),
                          amount=Sum('expenditures__amount'))
         return qs

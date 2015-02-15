@@ -131,14 +131,14 @@ var margin = {top: 0, right: 20, bottom: 0, left: 20},
     width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-function buildTagCloud(baseUrl) {
+function buildTagCloud(baseUrl, year) {
     var wordsLimit = 100;
     var graph, countCloudBuilder, amountCloudBuilder,
         countExtent, amountExtent;
     
     function getUrl(ordering) {
         return baseUrl + '?limit=' +
-            wordsLimit + '&ordering=' + ordering;
+            wordsLimit + '&ordering=' + ordering + '&year=' + year;
     }
 
     graph = d3.select("#tags-container").append("svg")

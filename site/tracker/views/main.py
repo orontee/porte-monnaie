@@ -517,8 +517,15 @@ class TagView(LoginRequiredMixin,
             ordering = request.GET['ordering']
         except KeyError:
             ordering = None
+        try:
+            year = request.GET['year']
+        except KeyError:
+            year = None
         purse = self.purse
-        tags = Tag.objects.get_tags_for(purse)
+        lookup_params = None
+        if year is not None:
+            lookup_params = {'expenditures__date__year': year}
+        tags = Tag.objects.get_tags_for(purse, lookup_params)
         if ordering is not None:
             tags = tags.order_by(ordering)
         if limit is not None:

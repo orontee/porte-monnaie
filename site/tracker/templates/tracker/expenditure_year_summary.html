@@ -156,7 +156,7 @@
   $(document).ready(function() {
     Tracker.activateParent('report');
     Tracker.focus('add-btn');
-    buildTagCloud('{% url 'tracker:tags' %}');
+    buildTagCloud('{% url 'tracker:tags' %}', {{ year|date:'Y' }});
   });
 </script>
 {% endblock scripts %}
