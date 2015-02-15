@@ -132,7 +132,7 @@ var margin = {top: 0, right: 20, bottom: 0, left: 20},
     height = 400 - margin.top - margin.bottom;
 
 function buildTagCloud(baseUrl) {
-    var wordsLimit = 250;
+    var wordsLimit = 100;
     var graph, countCloudBuilder, amountCloudBuilder,
         countExtent, amountExtent;
     
