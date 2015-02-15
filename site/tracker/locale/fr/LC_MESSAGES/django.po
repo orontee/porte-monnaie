@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 08:12+0200\n"
+"POT-Creation-Date: 2015-02-15 17:46+0100\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -91,6 +91,7 @@ msgid "created"
 msgstr "crée le"
 
 #: models.py:53 templates/tracker/expenditure_year_summary.html:48
+#: templates/tracker/expenditure_year_summary.html:134
 msgid "amount"
 msgstr "montant"
 
@@ -292,11 +293,15 @@ msgstr "écart&nbsp;:"
 msgid "histogram"
 msgstr "histogramme"
 
-#: templates/tracker/expenditure_year_summary.html:125
+#: templates/tracker/expenditure_year_summary.html:124
 msgid "tags"
 msgstr "étiquettes"
 
-#: templates/tracker/expenditure_year_summary.html:133
+#: templates/tracker/expenditure_year_summary.html:130
+msgid "count"
+msgstr "nombre"
+
+#: templates/tracker/expenditure_year_summary.html:143
 #, python-format
 msgid "No expenditures found in %(date)s!"
 msgstr "Pas de dépenses en %(date)s&nbsp;!"
@@ -565,15 +570,15 @@ msgstr "Le porte-monnaie <q>{purse}</q> est déjà partagé avec {other}."
 msgid "The purse called <q>{purse}</q> is now shared with {other}."
 msgstr "Le porte-monnaie <q>{purse}</q> est maintenant partagé avec {other}."
 
-#: views/main.py:358 views/main.py:413
+#: views/main.py:357
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 
-#: views/mixins.py:77
+#: views/mixins.py:89
 msgid "Apply filter"
 msgstr "Appliquer le filtre"
 
-#: views/mixins.py:100
+#: views/mixins.py:112
 #, python-format
 msgid "keyword %(last)s"
 msgid_plural "keywords %(others)s and %(last)s"
@@ -655,9 +660,6 @@ msgstr[1] ""
 
 #~ msgid "share purse"
 #~ msgstr "partager un porte-monnaie"
-
-#~ msgid "account"
-#~ msgstr "compte"
 
 #~ msgid "Create a new purse"
 #~ msgstr "Créer un porte-monnaie"
