@@ -44,7 +44,7 @@ def create_expenditure(**kwargs):
     e = Expenditure.objects.create(**kwargs)
     e.save()
     return e
-    
+
 
 class ExpenditureAddTest(TestCase):
     """Test expenditure add view."""
@@ -435,7 +435,7 @@ class ExpenditureFilteredListTest(TestCase):
                               'date': '2014-11-7',
                               'description': 'lastdesc',
                               'author': u,
-                              'purse': p})        
+                              'purse': p})
         response = self.client.get(self.url + '?filter=120.45')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'uniqueterm')
@@ -462,7 +462,7 @@ class ExpenditureFilteredListTest(TestCase):
                               'date': '2014-12-7',
                               'description': 'lastdesc',
                               'author': u,
-                              'purse': p})        
+                              'purse': p})
         response = self.client.get(self.url + '?filter=120.45+unique')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'uniqueterm')
