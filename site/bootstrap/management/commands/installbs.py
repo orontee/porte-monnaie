@@ -12,17 +12,24 @@ class Command(LabelCommand):
 
     def handle_label(self, label, **options):
         source = str(label)
-        target = os.path.join(os.path.dirname(bootstrap.__file__),
-                              'static', 'bootstrap')
         if not os.path.exists(source):
             raise CommandError('Invalid file path: {0}'.format(source))
         if not is_zipfile(source):
             raise CommandError('Invalid zip file: {0}'.format(source))
+        parent = os.path.join(os.path.dirname(bootstrap.__file__),
+                              'static')
+        tmp = os.path.join(parent,
+                           os.path.splitext(os.path.split(source)[1])
+                           [0])
+        if os.path.exists(tmp):
+            self.stdout.write('Removing tree: {0}\n'.format(tmp))
+            rmtree(tmp)        
+        self.stdout.write('Extracting to: {0}\n'.format(tmp))
+        with ZipFile(source) as z:
+            z.extractall(parent)
+        target = os.path.join(parent, 'bootstrap')
         if os.path.exists(target):
             self.stdout.write('Removing tree: {0}\n'.format(target))
             rmtree(target)
-        self.stdout.write('Creating directory: {0}\n'.format(target))
-        os.mkdir(target)
-        self.stdout.write('Extracting to: {0}\n'.format(target))
-        with ZipFile(source) as z:
-            z.extractall(target)
+        self.stdout.write('Renaming {0} to {1}\n'.format(tmp, target))
+        os.rename(tmp, target)

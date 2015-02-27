@@ -17,7 +17,7 @@ manager = django-admin.py
 
 lang = fr
 
-bootstrap_archive = $(contribdir)/bootstrap-3.3.1-dist.zip
+bootstrap_archive = $(contribdir)/bootstrap-3.3.2-dist.zip
 jquery_src = $(contribdir)/jquery-1.11.0.min.js
 d3_archive = $(contribdir)/d3.zip
 d3-cloud_archive = $(contribdir)/d3-cloud-1.0.5.tar.gz
