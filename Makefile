@@ -33,6 +33,16 @@ install: setup $(publicdir)/django.fcgi $(publicdir)/.htaccess collect syncdb
 uninstall: 
 	-rm -fr $(publicdir)
 
+clean:
+	-rm -rf $(projdir)/htmlcov
+
+distclean: clean
+	-rm -f $(projdir)/tracker/static/js/d3-layout.cloud.js
+	-rm -f $(projdir)/tracker/static/js/d3.min.js
+	-rm -f $(projdir)/tracker/static/js/d3.js
+	-rm -rf $(projdir)/bootstrap/static/bootstrap
+	-rm -rf $(projdir)/bootstrap/static/js
+
 help:
 	@echo "The main targets are:"
 	@echo "  setup      Finalize the project environment"
