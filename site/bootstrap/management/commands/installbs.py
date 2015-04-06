@@ -25,8 +25,9 @@ class Command(LabelCommand):
             self.stdout.write('Removing tree: {0}\n'.format(tmp))
             rmtree(tmp)        
         self.stdout.write('Extracting to: {0}\n'.format(tmp))
-        with ZipFile(source) as z:
-            z.extractall(parent)
+        z = ZipFile(source)
+        z.extractall(parent)
+        z.close()
         target = os.path.join(parent, 'bootstrap')
         if os.path.exists(target):
             self.stdout.write('Removing tree: {0}\n'.format(target))
