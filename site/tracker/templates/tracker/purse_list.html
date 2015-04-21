@@ -16,8 +16,9 @@
   {% if purses %}
   <p>
     {% url 'tracker:purse_creation' as create_url %}
+    {% url 'tracker:user_change' as user_change_url %}
     {% blocktrans count counter=purses|length %}You have access to one purse.{% plural %}You have access to {{ counter }} purses.{% endblocktrans %}
-    {% blocktrans %}You can <a href="{{ create_url }}">create new purses</a>.{% endblocktrans %}
+    {% blocktrans %}You can <a href="{{ create_url }}">create new purses</a> and <a href="{{ user_change_url }}">modify the default purse</a>.{% endblocktrans %}
   </p>
   <div class="table-responsive">
     <table class="table table-hover table-striped">
