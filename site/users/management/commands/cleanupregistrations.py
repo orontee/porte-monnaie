@@ -3,9 +3,7 @@ from users.models import Registration
 
 
 class Command(BaseCommand):
-    """Command to delete registrations which have expired.
-
-    """
+    """Command to delete registrations which have expired."""
     help = 'Delete registrations that have expired'
 
     def handle(self, *args, **options):

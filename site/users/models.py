@@ -38,10 +38,7 @@ class RegistrationManager(Manager):
 
 
 class ExpiredRegistrationManager(Manager):
-    """Manager of the ``Registration`` model handling expired
-    registrations only.
-
-    """
+    """Manager handling expired registrations only."""
     def get_query_set(self):
         """Return a query set for expired registrations."""
         end_date = timezone.now()

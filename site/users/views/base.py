@@ -1,6 +1,5 @@
-"""Module defining views related to users.
+"""Module defining views related to users."""
 
-"""
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.http import (Http404, HttpResponseRedirect)
@@ -14,9 +13,7 @@ User = get_user_model()
 
 
 class UserCreation(CreateView):
-    """View to create a user account.
-
-    """
+    """View to create a user account."""
     model = User
     template_name = 'users/user_creation.html'
     form_class = UserCreationForm
@@ -24,38 +21,31 @@ class UserCreation(CreateView):
 
 
 class UserChange(LoginRequiredMixin, UpdateView):
-    """View to modify the logged user account.
-
-    """
+    """View to modify the logged user account."""
     model = User
     form_class = UserChangeForm
     template_name = 'users/user_form.html'
     success_url = reverse_lazy('users:user_change_done')
 
     def get_object(self, queryset=None):
-        """Returns the user account.
-
-        """
+        """Returns the user account."""
         return self.request.user if self.request else None
 
 
 class UserDeletion(LoginRequiredMixin, DeleteView):
-    """View to delete (truly deactivate) the logged user account.
-
-    """
+    """View to delete (truly deactivate) the logged user account."""
     model = User
     template_name = 'users/user_confirm_delete.html'
     success_url = reverse_lazy('users:user_delete_done')
 
     def get_object(self, queryset=None):
-        """Returns the user account.
-
-        """
+        """Returns the user account."""
         return self.request.user if self.request else None
 
     def delete(self, request, *args, **kwargs):
-        """Sets the ``is_active`` flag to ``False`` and then redirects to the
-        success URL.
+        """Sets the ``is_active`` flag to ``False`` and redirects.
+
+        Redirection is done towards the success URL.
 
         """
         self.object = self.get_object()
@@ -67,15 +57,11 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
 
 
 class UserActivation(TemplateView):
-    """View to activate a user account.
-
-    """
+    """View to activate a user account."""
     template_name = 'users/user_activation_done.html'
 
     def get_context_data(self, **kwargs):
-        """Tries to activate the user account associated to key.
-
-        """
+        """Tries to activate the user account associated to key."""
         context = super(UserActivation, self).get_context_data(**kwargs)
         try:
             user = Registration.objects.activate_user(kwargs['key'])
