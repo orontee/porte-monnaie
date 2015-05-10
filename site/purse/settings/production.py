@@ -18,6 +18,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': os.environ['DJANGO_DATABASE_HOST'],
         'PORT': '',
+        'CONN_MAX_AGE': 600,
     }
 }
 
