@@ -21,6 +21,11 @@ DATABASES = {
     }
 }
 
+TEMPLATE_LOADERS = (('django.template.loaders.cached.Loader', (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',)),
+)
+
 ALLOWED_HOSTS = ['*']
 
 SESSION_COOKIE_SECURE = True

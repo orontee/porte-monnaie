@@ -21,6 +21,11 @@ if DEBUG_TOOLBAR:
 
 INTERNAL_IPS = ('127.0.0.1',)
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+
 LOGGING.update({
     'handlers': {
         'console': {
