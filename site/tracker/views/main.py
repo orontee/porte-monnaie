@@ -249,12 +249,13 @@ class PurseShare(LoginRequiredMixin,
         purse = self.get_object()
         if purse.users.filter(pk=other.pk).exists():
             msg = _("The purse called <q>{purse}</q> is "
-                    "already shared with {other}.")
+                    "already shared with {name}.")
         else:
             msg = _("The purse called <q>{purse}</q> is "
-                    "now shared with {other}.")
+                    "now shared with {name}.")
             purse.users.add(other)
-        messages.info(self.request, msg.format(other=other.get_full_name(),
+        name = other.get_full_name() or other.get_username()
+        messages.info(self.request, msg.format(name=name,
                                                purse=purse.name))
         return HttpResponseRedirect(self.get_success_url())
 
