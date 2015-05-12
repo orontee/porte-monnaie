@@ -7,10 +7,12 @@ from django.contrib.auth.forms import (
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.forms import (Form, ModelForm,
-                          ChoiceField, CharField)
+                          ChoiceField, CharField,
+                          HiddenInput, IntegerField)
 from django.utils.translation import ugettext_lazy as _
+
 from tracker.models import (Expenditure, Purse)
-from bootstrap.forms import BootstrapWidgetMixin
+from bootstrap.forms import (BootstrapWidgetMixin, StaticControl)
 
 User = get_user_model()
 
@@ -118,7 +120,7 @@ class PurseForm(BootstrapWidgetMixin, ModelForm):
         fields = ['name', 'description']
 
 
-class PurseShareForm(BootstrapWidgetMixin, Form):
+class PurseShareForm(BootstrapWidgetMixin, ModelForm):
     """Form to input a user name."""
 
     user = CharField(label=_('user name'))
@@ -132,6 +134,27 @@ class PurseShareForm(BootstrapWidgetMixin, Form):
             msg = _('This user name is unknown.')
             raise ValidationError(msg)
         return data
+
+    def clean(self):
+        """Form-wide cleaning.
+
+        The usual cleaning is extended to check whether the user
+        already owns the purse.
+
+        """
+        cleaned_data = super(PurseShareForm, self).clean()
+        user = cleaned_data.get('user')
+        purse = self.instance
+        if user is not None and purse.users.filter(pk=user.pk).exists():
+            msg = _("This user already own the purse")
+            self._errors["user"] = self.error_class([msg])
+            del cleaned_data['user']
+        return cleaned_data
+
+    class Meta(object):
+        model = Purse
+        fields = ['name']
+        widgets = {'name': StaticControl()}
 
 
 class AuthenticationForm(BootstrapWidgetMixin,

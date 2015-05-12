@@ -234,11 +234,6 @@ class PurseShare(LoginRequiredMixin,
     form_class = PurseShareForm
     success_url = reverse_lazy('tracker:purse_list')
 
-    def get_form_kwargs(self):
-        kwargs = super(PurseShare, self).get_form_kwargs()
-        del kwargs['instance']
-        return kwargs
-
     def form_valid(self, form):
         """Process a valid form.
 
@@ -247,13 +242,9 @@ class PurseShare(LoginRequiredMixin,
         """
         other = form.cleaned_data['user']
         purse = self.get_object()
-        if purse.users.filter(pk=other.pk).exists():
-            msg = _("The purse called <q>{purse}</q> is "
-                    "already shared with {name}.")
-        else:
-            msg = _("The purse called <q>{purse}</q> is "
-                    "now shared with {name}.")
-            purse.users.add(other)
+        purse.users.add(other)        
+        msg = _("The purse called <q>{purse}</q> is "
+                "now shared with {name}.")
         name = other.get_full_name() or other.get_username()
         messages.info(self.request, msg.format(name=name,
                                                purse=purse.name))

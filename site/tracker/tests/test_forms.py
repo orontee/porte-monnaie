@@ -6,6 +6,7 @@ from django.utils.timezone import now
 from tracker.forms import (ExpenditureForm,
                            MultipleExpenditureForm,
                            PurseShareForm)
+from tracker.models import Purse
 
 
 class ExpenditureFormTest(TestCase):
@@ -103,11 +104,26 @@ class MultipleExpenditureFormTest(TestCase):
 
 class PurseShareFormTest(TestCase):
     """Test purse sharing form."""
+    def setUp(self):
+        self.p = Purse.objects.create(name='test')        
 
     def test_nonexistent_user(self):
         """Test that a form with a nonexistent user name is not valid."""
         data = {'user': 'nobody'}
-        form = PurseShareForm(data)
+        form = PurseShareForm(data=data, instance=self.p)
+        self.assertFalse(form.is_valid())
+        self.assertTrue('user' in form.errors)
+
+    def test_user_owning_purse(self):
+        """Test that a form with user owning the purse is not valid."""
+        User = get_user_model()
+        credentials = {'username': 'username',
+                       'password': 'password'}
+        u = User.objects.create_user(**credentials)
+        self.p.users.add(u)
+        data = {'user': u.username,
+                'name': self.p.name}
+        form = PurseShareForm(data, instance=self.p)
         self.assertFalse(form.is_valid())
         self.assertTrue('user' in form.errors)
 
@@ -117,8 +133,9 @@ class PurseShareFormTest(TestCase):
         credentials = {'username': 'username',
                        'password': 'password'}
         u = User.objects.create_user(**credentials)
-        data = {'user': u.username}
-        form = PurseShareForm(data)
+        data = {'user': u.username,
+                'name': self.p.name}
+        form = PurseShareForm(data, instance=self.p)
         self.assertTrue(form.is_valid())
         self.assertTrue(form.cleaned_data['user'] == u)
 
