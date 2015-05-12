@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-22 01:15+0200\n"
+"POT-Creation-Date: 2015-05-12 00:16+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -328,7 +328,7 @@ msgstr "créer un compte"
 msgid "login"
 msgstr "connexion"
 
-#: templates/tracker/nav_parameters.html:4
+#: templates/tracker/nav_parameters.html:5
 msgid "parameters"
 msgstr "paramètres"
 
@@ -337,11 +337,15 @@ msgstr "paramètres"
 msgid "purse list"
 msgstr "liste des porte-monnaies"
 
-#: templates/tracker/nav_parameters.html:15 templates/users/user_form.html:5
+#: templates/tracker/nav_parameters.html:34
+msgid "manage purses"
+msgstr "gestion des porte-monnaies"
+
+#: templates/tracker/nav_parameters.html:39 templates/users/user_form.html:5
 msgid "account parameters"
 msgstr "paramètres du compte"
 
-#: templates/tracker/nav_parameters.html:21
+#: templates/tracker/nav_parameters.html:45
 msgid "log out"
 msgstr "déconnexion"
 
@@ -397,12 +401,10 @@ msgstr[1] "Vous avez accès à %(counter)s porte-monnaies."
 
 #: templates/tracker/purse_list.html:21
 #, python-format
-msgid ""
-"You can <a href=\"%(create_url)s\">create new purses</a> and <a href="
-"\"%(user_change_url)s\">modify the default purse</a>."
+msgid "You can <a href=\"%(create_url)s\">create new purses</a>."
 msgstr ""
-"Vous pouvez <a href=\"%(create_url)s\">créer de nouveaux porte-monnaies</a> et"
-" <a href=\"%(user_change_url)s\">modifier le porte-monnaie par défaut</a>."
+"Vous pouvez <a href=\"%(create_url)s\">ajouter de nouveaux porte-monnaies</"
+"a>."
 
 #: templates/tracker/purse_list.html:58
 msgid "You don't belong to any purse right now!"
@@ -587,10 +589,13 @@ msgid_plural "keywords %(others)s and %(last)s"
 msgstr[0] ""
 msgstr[1] ""
 
-#~ msgid "You can <a href=\"%(create_url)s\">create new purses</a>."
+#~ msgid ""
+#~ "You can <a href=\"%(create_url)s\">create new purses</a> and <a href="
+#~ "\"%(user_change_url)s\">modify the default purse</a>."
 #~ msgstr ""
-#~ "Vous pouvez <a href=\"%(create_url)s\">ajouter de nouveaux porte-"
-#~ "monnaies</a>."
+#~ "Vous pouvez <a href=\"%(create_url)s\">créer de nouveaux porte-monnaies</"
+#~ "a> et <a href=\"%(user_change_url)s\">modifier le porte-monnaie par "
+#~ "défaut</a>."
 
 #~ msgid "weight"
 #~ msgstr "poids"
@@ -685,9 +690,6 @@ msgstr[1] ""
 
 #~ msgid "Purses management"
 #~ msgstr "Gestion des porte-monnaies"
-
-#~ msgid "manage purses"
-#~ msgstr "gestion des porte-monnaies"
 
 #~ msgid "edit user data"
 #~ msgstr "paramètres du compte"
