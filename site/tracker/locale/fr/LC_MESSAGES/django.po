@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-12 23:25+0200\n"
+"POT-Creation-Date: 2015-05-13 02:16+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -18,57 +18,61 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:17
+#: forms.py:19
 msgid "unique"
 msgstr ""
 
-#: forms.py:18
+#: forms.py:20
 msgid "next two months"
 msgstr "deux prochains mois"
 
-#: forms.py:19
+#: forms.py:21
 msgid "next three months"
 msgstr "trois prochains mois"
 
-#: forms.py:20
+#: forms.py:22
 msgid "next four months"
 msgstr "quatre prochains mois"
 
-#: forms.py:21
+#: forms.py:23
 msgid "next five months"
 msgstr "cinq prochains mois"
 
-#: forms.py:22
+#: forms.py:24
 msgid "next six months"
 msgstr "six prochains mois"
 
-#: forms.py:23
+#: forms.py:25
 msgid "forthcoming year"
 msgstr "année à venir"
 
-#: forms.py:37
+#: forms.py:39
 msgid "The amount must be non-zero."
 msgstr "Le montant ne peut être nul."
 
-#: forms.py:50
+#: forms.py:52
 msgid "The description is required."
 msgstr "La description est obligatoire."
 
-#: forms.py:67
+#: forms.py:69
 msgid "Occurrences"
 msgstr ""
 
-#: forms.py:106
+#: forms.py:108
 msgid "All expenditures must occur on valid dates."
 msgstr "Toutes les dates doivent être valides."
 
-#: forms.py:124
+#: forms.py:126
 msgid "user name"
 msgstr "nom d'utilisateur"
 
-#: forms.py:132
+#: forms.py:134
 msgid "This user name is unknown."
 msgstr "Ce nom d'utilisateur est inconnu."
+
+#: forms.py:149
+msgid "This user already own the purse."
+msgstr "Le porte-monnaie est déjà partagé avec cet utilisateur."
 
 #: models.py:20
 msgid "default purse"
@@ -564,17 +568,12 @@ msgstr "Commencez par créer un porte-monnaie..."
 msgid "Your default purse is now <q>{name}</q>."
 msgstr "Votre porte-monnaie par défaut est maintenant <q>{name}</q>."
 
-#: views/main.py:251
-#, python-brace-format
-msgid "The purse called <q>{purse}</q> is already shared with {name}."
-msgstr "Le porte-monnaie <q>{purse}</q> est déjà partagé avec {name}."
-
-#: views/main.py:254
+#: views/main.py:246
 #, python-brace-format
 msgid "The purse called <q>{purse}</q> is now shared with {name}."
 msgstr "Le porte-monnaie <q>{purse}</q> est maintenant partagé avec {name}."
 
-#: views/main.py:358
+#: views/main.py:349
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 
@@ -588,6 +587,9 @@ msgid "keyword %(last)s"
 msgid_plural "keywords %(others)s and %(last)s"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "The purse called <q>{purse}</q> is already shared with {name}."
+#~ msgstr "Le porte-monnaie <q>{purse}</q> est déjà partagé avec {name}."
 
 #~ msgid ""
 #~ "You can <a href=\"%(create_url)s\">create new purses</a> and <a href="

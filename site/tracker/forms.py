@@ -146,7 +146,7 @@ class PurseShareForm(BootstrapWidgetMixin, ModelForm):
         user = cleaned_data.get('user')
         purse = self.instance
         if user is not None and purse.users.filter(pk=user.pk).exists():
-            msg = _("This user already own the purse")
+            msg = _("This user already own the purse.")
             self._errors["user"] = self.error_class([msg])
             del cleaned_data['user']
         return cleaned_data
