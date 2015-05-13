@@ -93,7 +93,7 @@ collect:
 	cd $(projdir); \
 	$(manager) collectstatic --noinput --pythonpath=.
 
-test:
+check:
 	cd $(projdir); \
 	$(manager) test --settings=purse.settings.tests --pythonpath=.
 
