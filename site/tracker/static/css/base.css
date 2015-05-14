@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    overflow-x: hidden;
 }
 
 #wrap {
@@ -62,25 +63,31 @@ tr.total {
     margin-bottom: 2ex;
 }
 
-a.ribbon {
-    top: 3em;
-    right: -3em;
-    color: black;
-    z-index: 5000;
-    padding: 0.4em 2em 0.4em;
-    position: absolute;
-    text-decoration: none;
+.ribbon {
+    overflow: hidden;
+    white-space: nowrap;
     background-color: yellow;
-    box-shadow: 0 0 1em white;
+}
+
+.ribbon a {
+    border: 1px solid gold;
+    color: black;
+    background-color: yellow;
+    display: block;
+    z-index: 5000;
+    margin: 1px 0;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    position: absolute;
+    right: -50px;
+    top: 40px;
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     -o-transform: rotate(45deg);
-}
-
-a.ribbon:hover {
-    box-shadow: none;
-    text-decoration: underline;
+    transform: rotate(45deg);
+    box-shadow: 0 0 10px #888;
 }
 
 .list-group-item-text.expenditure-description {
@@ -114,4 +121,8 @@ div.row > div.col-xs-4 {
     color: #262626;
     text-decoration: none;
     background-color: #f5f5f5;
+}
+
+#histogram-container, #tags-container {
+    overflow-x: auto;
 }

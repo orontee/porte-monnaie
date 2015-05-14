@@ -4,12 +4,15 @@
 {% block button %}
 {% endblock button %}
 
-{% block navbar %}
-<div id="ribbon">
-  <a class="ribbon" href="https://github.com/orontee/porte-monnaie">
+{% block top %}
+<div class="ribbon">
+  <a href="https://github.com/orontee/porte-monnaie">
     {% trans 'Fork me on GitHub!' %}
   </a>
 </div>
+{% endblock top %}
+
+{% block navbar %}
 {% endblock navbar %}
 
 {% block messages %}
