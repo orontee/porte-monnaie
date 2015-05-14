@@ -224,6 +224,21 @@ class UserChange(UserPurseMixin,
     success_url = reverse_lazy('tracker:list')
 
 
+class UserDefaultPurse(UpdateView):
+    """View to set a user default purse.
+
+    This view support only POST and OPTIONS requests.
+
+    """
+    http_method_names = ['post', 'options']
+    model = User
+    fields = ['default_purse']
+    success_url = reverse_lazy('tracker:list')
+
+    def form_valid(self, form):
+        return super(UserDefaultPurse, self).form_valid(form)
+
+
 class PurseShare(LoginRequiredMixin,
                  WithCurrentDateMixin,
                  UpdateView):
@@ -242,7 +257,7 @@ class PurseShare(LoginRequiredMixin,
         """
         other = form.cleaned_data['user']
         purse = self.get_object()
-        purse.users.add(other)        
+        purse.users.add(other)
         msg = _("The purse called <q>{purse}</q> is "
                 "now shared with {name}.")
         name = other.get_full_name() or other.get_username()

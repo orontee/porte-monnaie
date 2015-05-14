@@ -12,16 +12,18 @@
     {% for p in user.purse_set.all %}
     <li class="hidden-xs">
       <form role="form"
-	    action="{% url 'tracker:user_change' %}"
+	    action="{% url 'tracker:user_default_purse' user.pk %}"
 	    method="post">{% csrf_token %}
 	<label>
-	  <input type="submit" name="default_purse"
-		 value="{{ p.pk }}" hidden="true"/>
-	  {{ p.name|capfirst }}
 	  {% if user.default_purse == p %}
+	  {{ p.name|capfirst }}
 	  <span class="pull-right">
 	    <span class="glyphicon glyphicon-ok"></span>
 	  </span>
+	  {% else %}
+	  <input type="submit" name="default_purse"
+		 value="{{ p.pk }}" hidden="true"/>
+	  {{ p.name|capfirst }}
 	  {% endif %}
 	</label>
       </form>

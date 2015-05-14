@@ -24,7 +24,8 @@ from tracker.views import (ExpenditureAdd,
                            PurseShare,
                            PurseDelete,
                            TagView,
-                           UserChange)
+                           UserChange,
+                           UserDefaultPurse)
 from tracker.forms import (AuthenticationForm, PasswordChangeForm)
 from users.views.base import (UserActivation,
                               UserCreation,
@@ -85,6 +86,9 @@ urlpatterns += patterns('',
                         url(regex=r'^user_change/$',
                             view=UserChange.as_view(),
                             name='user_change'),
+                        url(regex=r'^user_default_purse/(?P<pk>\d+)/$',
+                            view=UserDefaultPurse.as_view(),
+                            name='user_default_purse'),
                         url(regex=r'^user_creation/$',
                             view=UserCreation.as_view(
                                 success_url=reverse_lazy(
