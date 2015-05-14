@@ -1,6 +1,7 @@
 *.pyc
 *~
 *.mo
+README.html
 site/purse/public
 site/bootstrap/static
 *_flymake*
