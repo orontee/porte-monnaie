@@ -4,6 +4,9 @@
 
 A web application for people to track and share their expenditures.
 
+.. image:: https://travis-ci.org/orontee/porte-monnaie.svg
+    :target: https://travis-ci.org/orontee/porte-monnaie
+
 Installation
 ------------
 
