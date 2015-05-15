@@ -127,8 +127,8 @@ if (months.length >= histogramThreshold) {
 var fill = d3.scale.category20(),
     tagsThreshold = 20;
 
-var margin = {top: 0, right: 20, bottom: 0, left: 20},
-    width = 600 - margin.left - margin.right,
+var margin = {top: 0, right: 10, bottom: 0, left: 10},
+    width = 550 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 function buildTagCloud(baseUrl, year) {
