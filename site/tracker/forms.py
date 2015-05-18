@@ -4,11 +4,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
     AuthenticationForm as OrigAuthenticationForm,
     PasswordChangeForm as OrigPasswordChangeForm)
-from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.forms import (Form, ModelForm,
-                          ChoiceField, CharField,
-                          HiddenInput, IntegerField)
+from django.forms import (ModelForm, ChoiceField, CharField)
 from django.utils.translation import ugettext_lazy as _
 
 from tracker.models import (Expenditure, Purse)

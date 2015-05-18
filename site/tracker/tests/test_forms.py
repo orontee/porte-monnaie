@@ -105,7 +105,7 @@ class MultipleExpenditureFormTest(TestCase):
 class PurseShareFormTest(TestCase):
     """Test purse sharing form."""
     def setUp(self):
-        self.p = Purse.objects.create(name='test')        
+        self.p = Purse.objects.create(name='test')
 
     def test_nonexistent_user(self):
         """Test that a form with a nonexistent user name is not valid."""

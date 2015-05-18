@@ -23,7 +23,7 @@ class Command(LabelCommand):
                            [0])
         if os.path.exists(tmp):
             self.stdout.write('Removing tree: {0}\n'.format(tmp))
-            rmtree(tmp)        
+            rmtree(tmp)
         self.stdout.write('Extracting to: {0}\n'.format(tmp))
         z = ZipFile(source)
         z.extractall(parent)

@@ -112,9 +112,9 @@ ROOT_URLCONF = 'purse.urls'
 WSGI_APPLICATION = 'purse.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    # Put strings here, like "/home/html/django_templates" or
+    # "C:/www/django/templates". Always use forward slashes, even on
+    # Windows. Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
@@ -144,7 +144,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s:%(lineno)d %(process)d %(thread)d %(message)s'
+            'format': '%(levelname)s %(asctime)s %(module)s:'
+            '%(lineno)d %(process)d %(thread)d %(message)s'
         },
         'simple': {
             'format': '%(levelname)s %(message)s'
