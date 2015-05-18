@@ -138,8 +138,3 @@ class PurseShareFormTest(TestCase):
         form = PurseShareForm(data, instance=self.p)
         self.assertTrue(form.is_valid())
         self.assertTrue(form.cleaned_data['user'] == u)
-
-
-# Local Variables:
-# compile-command: "source share/setup_debug_env && make test"
-# End:

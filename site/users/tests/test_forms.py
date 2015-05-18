@@ -41,8 +41,3 @@ class UserCreationFormTest(TestCase):
         form = UserCreationForm(data)
         self.assertFalse(form.is_valid())
         self.assertTrue('username' in form.errors)
-
-
-# Local Variables:
-# compile-command: "source share/setup_debug_env && make test"
-# End:

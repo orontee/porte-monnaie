@@ -64,8 +64,3 @@ class RegistrationTest(TestCase):
         reg = Registration.objects.create(user=self.u, key='key')
         reg.send_deletion_email()
         self.assertEqual(len(mail.outbox), 1)
-
-
-# Local Variables:
-# compile-command: "source share/setup_debug_env && make test"
-# End:

@@ -496,8 +496,3 @@ class PurseDeletionTest(TestCase):
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Purse.objects.count(), 0)
-
-
-# Local Variables:
-# compile-command: "source share/setup_debug_env && make test"
-# End:
