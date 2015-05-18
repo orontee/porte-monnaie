@@ -13,13 +13,13 @@ Setting up a development environment
 
      purse_project$ virtualenv2 ~/.virtualenvs/purse
  
-4. Adapt the script `share/setup_debug_env` to your setup. Then to
+4. Adapt the script ``share/setup_debug_env`` to your setup. Then to
    enter the virtual environment, just enter the following command::
 
      purse_project$ source share/setup_debug_env
      ...
 
-5. Install the dependencies listed in the file `requirements.txt`::
+5. Install the dependencies listed in the file ``requirements.txt``::
 
      (purse) purse_project$ pip install -r requirements.txt
      ...
@@ -44,6 +44,6 @@ Translations
 ------------
 
 When working on translations, one may use the Makefile targets
-`update-messages` to update the PO files and `compile-messages` to
+``update-messages`` to update the PO files and ``compile-messages`` to
 compile those files.
 

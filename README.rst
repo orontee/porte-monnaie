@@ -15,7 +15,7 @@ aimersanscompter.fr_.
 Installation
 ------------
 
-1. Make sure that the host satisfies the dependancies listed in the
+1. Make sure that the host satisfies the dependencies listed in the
    file ``requirements.txt``.
 
 2. Some Django settings are inherited from the environment: You must
