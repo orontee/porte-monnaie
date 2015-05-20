@@ -3,7 +3,9 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
     AuthenticationForm as OrigAuthenticationForm,
-    PasswordChangeForm as OrigPasswordChangeForm)
+    PasswordChangeForm as OrigPasswordChangeForm,
+    PasswordResetForm as OrigPasswordResetForm,
+    SetPasswordForm as OrigSetPasswordForm)
 from django.core.exceptions import ValidationError
 from django.forms import (ModelForm, ChoiceField, CharField)
 from django.utils.translation import ugettext_lazy as _
@@ -162,5 +164,16 @@ class AuthenticationForm(BootstrapWidgetMixin,
 
 class PasswordChangeForm(BootstrapWidgetMixin,
                          OrigPasswordChangeForm):
+    """Improve default form with Bootstrap aware widgets."""
+    pass
+
+
+class PasswordResetForm(BootstrapWidgetMixin,
+                        OrigPasswordResetForm):
+    """Improve default form with Bootstrap aware widgets."""
+    pass
+
+class SetPasswordForm(BootstrapWidgetMixin,
+                      OrigSetPasswordForm):
     """Improve default form with Bootstrap aware widgets."""
     pass

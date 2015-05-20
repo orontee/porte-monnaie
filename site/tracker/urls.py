@@ -26,7 +26,10 @@ from tracker.views import (ExpenditureAdd,
                            TagView,
                            UserChange,
                            UserDefaultPurse)
-from tracker.forms import (AuthenticationForm, PasswordChangeForm)
+from tracker.forms import (AuthenticationForm,
+                           PasswordChangeForm,
+                           PasswordResetForm,
+                           SetPasswordForm)
 from users.views.base import (UserActivation,
                               UserCreation,
                               UserDeletion)
@@ -124,6 +127,26 @@ urlpatterns += patterns('',
                              reverse_lazy('tracker:home'),
                              'extra_context': {'now': now()}},
                             name='password_change'))
+
+urlpatterns += patterns('',
+                        url(r'^password_reset/$',
+                            'django.contrib.auth.views.password_reset',
+                            {'post_reset_redirect':
+                             reverse_lazy('tracker:password_reset_done'),
+                             'password_reset_form': PasswordResetForm},
+                            name='password_reset'),
+                        url(r'^password_reset_done/$',
+                            'django.contrib.auth.views.password_reset_done',
+                            name='password_reset_done'),
+                        url(r'^password_reset_confirm/(?P<uidb64>\w+)/(?P<token>[\w-]+)/$',
+                            'django.contrib.auth.views.password_reset_confirm',
+                            {'post_reset_redirect':
+                             reverse_lazy('tracker:password_reset_complete'),
+                             'set_password_form': SetPasswordForm},
+                            name='password_reset_confirm'),
+                        url(r'^password_reset_complete/$',
+                            'django.contrib.auth.views.password_reset_complete',
+                            name='password_reset_complete'))
 
 if settings.DEBUG:
     urlpatterns += patterns('',

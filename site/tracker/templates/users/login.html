@@ -18,6 +18,9 @@
     <div class="col-sm-offset-2 col-sm-10">
       <input type="submit" value="{% trans 'log in'|capfirst %}"
 	     class="btn btn-primary">
+      <a href="{% url 'tracker:password_reset' %}">
+	{% trans 'Forgotten password' %}
+      </a>
     </div>
   </div>
 </form>

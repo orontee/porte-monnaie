@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-13 02:16+0200\n"
+"POT-Creation-Date: 2015-05-19 23:30+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -18,59 +18,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: forms.py:19
+#: forms.py:18
 msgid "unique"
 msgstr ""
 
-#: forms.py:20
+#: forms.py:19
 msgid "next two months"
 msgstr "deux prochains mois"
 
-#: forms.py:21
+#: forms.py:20
 msgid "next three months"
 msgstr "trois prochains mois"
 
-#: forms.py:22
+#: forms.py:21
 msgid "next four months"
 msgstr "quatre prochains mois"
 
-#: forms.py:23
+#: forms.py:22
 msgid "next five months"
 msgstr "cinq prochains mois"
 
-#: forms.py:24
+#: forms.py:23
 msgid "next six months"
 msgstr "six prochains mois"
 
-#: forms.py:25
+#: forms.py:24
 msgid "forthcoming year"
 msgstr "année à venir"
 
-#: forms.py:39
+#: forms.py:38
 msgid "The amount must be non-zero."
 msgstr "Le montant ne peut être nul."
 
-#: forms.py:52
+#: forms.py:51
 msgid "The description is required."
 msgstr "La description est obligatoire."
 
-#: forms.py:69
+#: forms.py:68
 msgid "Occurrences"
 msgstr ""
 
-#: forms.py:108
+#: forms.py:107
 msgid "All expenditures must occur on valid dates."
 msgstr "Toutes les dates doivent être valides."
 
-#: forms.py:126
+#: forms.py:125
 msgid "user name"
 msgstr "nom d'utilisateur"
 
-#: forms.py:134
+#: forms.py:133
 msgid "This user name is unknown."
 msgstr "Ce nom d'utilisateur est inconnu."
 
-#: forms.py:149
+#: forms.py:148
 msgid "This user already own the purse."
 msgstr "Le porte-monnaie est déjà partagé avec cet utilisateur."
 
@@ -151,6 +151,67 @@ msgstr ""
 "Une erreur est survenue. L'administrateur du site a été informé et devrait "
 "corriger rapidement. Merci pour votre patience."
 
+#: templates/registration/password_reset_complete.html:8
+msgid "new password set"
+msgstr "mot de passe mis à jour"
+
+#: templates/registration/password_reset_complete.html:13
+msgid "Your password has been changed."
+msgstr "Le mot de passe a bien été changé."
+
+#: templates/registration/password_reset_complete.html:13
+msgid "Go to login page"
+msgstr "Aller à la page de connexion"
+
+#: templates/registration/password_reset_confirm.html:8
+msgid "new password"
+msgstr "nouveau de mot de passe"
+
+#: templates/registration/password_reset_confirm.html:19
+#: templates/registration/password_reset_form.html:19
+#: templates/tracker/expenditure_form.html:28
+#: templates/tracker/purse_form.html:22
+#: templates/users/password_change_form.html:22
+#: templates/users/user_creation.html:19 templates/users/user_form.html:16
+msgid "save"
+msgstr "enregistrer"
+
+#: templates/registration/password_reset_done.html:8
+msgid "password reset done"
+msgstr "réinitialisation du mot de passe"
+
+#: templates/registration/password_reset_done.html:13
+msgid ""
+"You'll soon receive an email with instructions to change your account "
+"password."
+msgstr ""
+"Vous recevrez bientôt un courrier électronique expliquant comment "
+"activer le mot de passe de votre compte."
+
+#: templates/registration/password_reset_email.html:2
+#, python-format
+msgid ""
+"Someone asked for password reset for email %(email)s. Follow the link below "
+"if you're the requester:"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:8
+msgid "reset password"
+msgstr "changement de mot de passe"
+
+#: templates/registration/password_reset_form.html:24
+#: templates/tracker/purse_confirm_delete.html:30
+#: templates/tracker/purse_form.html:28 templates/tracker/purse_share.html:25
+#: templates/users/password_change_form.html:27
+#: templates/users/user_confirm_delete.html:26
+#: templates/users/user_form.html:21
+msgid "cancel"
+msgstr "abandonner"
+
+#: templates/registration/password_reset_subject.txt:1
+msgid "Porte-monnaie: Password reset"
+msgstr "Porte-monnaie : mise à jour d'un compte utilisateur"
+
 #: templates/tracker/base_authentified.html:16
 msgid "add"
 msgstr "ajouter"
@@ -215,13 +276,6 @@ msgstr "édition d'une dépense"
 #: templates/tracker/expenditure_form.html:15
 msgid "add expenditure"
 msgstr "ajouter une dépense"
-
-#: templates/tracker/expenditure_form.html:28
-#: templates/tracker/purse_form.html:22
-#: templates/users/password_change_form.html:22
-#: templates/users/user_creation.html:19 templates/users/user_form.html:16
-msgid "save"
-msgstr "enregistrer"
 
 #: templates/tracker/expenditure_form.html:36
 msgid "continue"
@@ -320,15 +374,15 @@ msgstr[1] "Veuillez corriger les erreurs ci-dessous."
 msgid "Fork me on GitHub!"
 msgstr ""
 
-#: templates/tracker/home.html:27
+#: templates/tracker/home.html:30
 msgid "A web application for people to track and share their expenditures."
 msgstr "Gérer des dépenses à plusieurs."
 
-#: templates/tracker/home.html:32 templates/users/user_creation.html:8
+#: templates/tracker/home.html:35 templates/users/user_creation.html:8
 msgid "create account"
 msgstr "créer un compte"
 
-#: templates/tracker/home.html:36 templates/users/login.html:8
+#: templates/tracker/home.html:39 templates/users/login.html:8
 msgid "login"
 msgstr "connexion"
 
@@ -341,15 +395,15 @@ msgstr "paramètres"
 msgid "purse list"
 msgstr "liste des porte-monnaies"
 
-#: templates/tracker/nav_parameters.html:34
+#: templates/tracker/nav_parameters.html:36
 msgid "manage purses"
 msgstr "gestion des porte-monnaies"
 
-#: templates/tracker/nav_parameters.html:39 templates/users/user_form.html:5
+#: templates/tracker/nav_parameters.html:41 templates/users/user_form.html:5
 msgid "account parameters"
 msgstr "paramètres du compte"
 
-#: templates/tracker/nav_parameters.html:45
+#: templates/tracker/nav_parameters.html:47
 msgid "log out"
 msgstr "déconnexion"
 
@@ -370,14 +424,6 @@ msgstr ""
 #, python-format
 msgid "Confirm the deletion of the purse named <q>%(name)s</q>."
 msgstr "Confirmez la suppression du porte-monnaie <q>%(name)s</q>."
-
-#: templates/tracker/purse_confirm_delete.html:30
-#: templates/tracker/purse_form.html:28 templates/tracker/purse_share.html:25
-#: templates/users/password_change_form.html:27
-#: templates/users/user_confirm_delete.html:26
-#: templates/users/user_form.html:21
-msgid "cancel"
-msgstr "abandonner"
 
 #: templates/tracker/purse_form.html:7
 msgid "edit purse"
@@ -494,6 +540,10 @@ msgstr "se reconnecter"
 msgid "log in"
 msgstr "connecter"
 
+#: templates/users/login.html:22
+msgid "forgotten password"
+msgstr "mot de passe oublié"
+
 #: templates/users/password_change_form.html:11
 msgid "change password"
 msgstr "changer de mot de passe"
@@ -568,12 +618,12 @@ msgstr "Commencez par créer un porte-monnaie..."
 msgid "Your default purse is now <q>{name}</q>."
 msgstr "Votre porte-monnaie par défaut est maintenant <q>{name}</q>."
 
-#: views/main.py:246
+#: views/main.py:261
 #, python-brace-format
 msgid "The purse called <q>{purse}</q> is now shared with {name}."
 msgstr "Le porte-monnaie <q>{purse}</q> est maintenant partagé avec {name}."
 
-#: views/main.py:349
+#: views/main.py:364
 msgid "Filter expenditures"
 msgstr "Filtrer les dépenses"
 
@@ -747,9 +797,6 @@ msgstr[1] ""
 
 #~ msgid "password change successful"
 #~ msgstr "changement de mot de passe réussi"
-
-#~ msgid "Your password was changed."
-#~ msgstr "Le mot de passe a bien été changé."
 
 #~ msgid "Jump to page {0}"
 #~ msgstr "Aller à la page {0}"

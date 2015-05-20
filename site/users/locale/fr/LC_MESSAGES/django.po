@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-13 02:16+0200\n"
+"POT-Creation-Date: 2015-05-19 23:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,15 +42,15 @@ msgstr ""
 "Cette valeur peut uniquement contenir des lettres, nombres et les caractères "
 "« @ », « . », « + », « - » et « _ »."
 
-#: forms.py:31
+#: forms.py:32
 msgid "Password"
 msgstr "Mot de passe"
 
-#: forms.py:32
+#: forms.py:33
 msgid "Password confirmation"
 msgstr "Confirmation du mot de passe"
 
-#: forms.py:34
+#: forms.py:35
 msgid "Enter the same password as above, for verification."
 msgstr "Saisissez le même mot de passe que précédemment, pour vérification."
 
