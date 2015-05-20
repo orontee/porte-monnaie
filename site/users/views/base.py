@@ -2,8 +2,11 @@
 
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
 from django.http import (Http404, HttpResponseRedirect)
-from django.views.generic import (CreateView, DeleteView,
+from django.utils.http import urlsafe_base64_decode
+from django.views.generic import (CreateView, DeleteView, FormView,
                                   UpdateView, TemplateView)
 from users.forms import (UserChangeForm, UserCreationForm)
 from users.models import Registration
@@ -75,3 +78,47 @@ class UserActivation(TemplateView):
         if not context.get('key_user', None):
             raise Http404()
         return self.render_to_response(context)
+
+class PasswordResetConfirm(FormView):
+    """View to confirm a password reset.
+
+    This view replaces the legacy view ``password_reset_confirm``
+    because the former does not return a 404 status when the token and
+    the user id doesn't match.
+
+    """
+    template_name = 'registration/password_reset_confirm.html'
+    success_url = reverse_lazy('users:password_reset_complete')
+    form_class = SetPasswordForm
+    token_generator = default_token_generator
+
+    def get_context_data(self, **kwargs):
+        context = super(PasswordResetConfirm, self).get_context_data(**kwargs)
+        try:
+            uid = urlsafe_base64_decode(self.kwargs['uidb64'])
+            user = User.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        token = self.kwargs['token']
+        if user is not None and self.token_generator.check_token(user, token):
+            validlink = True
+            cls = self.get_form_class()
+            if self.request == 'POST':
+                form = cls(user, self.request.POST)                
+            else:
+                form = cls(None)                
+        else:
+            validlink = False
+            form = None
+        context.update({'form': form,
+                        'validlink': validlink})
+        return context            
+    
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        if not context.get('validlink', False):
+            raise Http404()
+        return self.render_to_response(context)
+
+    def post(self, *args, **kwargs):
+        return super(PasswordResetConfirm, self).post(*args, **kwargs)

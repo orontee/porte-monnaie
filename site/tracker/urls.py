@@ -30,7 +30,8 @@ from tracker.forms import (AuthenticationForm,
                            PasswordChangeForm,
                            PasswordResetForm,
                            SetPasswordForm)
-from users.views.base import (UserActivation,
+from users.views.base import (PasswordResetConfirm,
+                              UserActivation,
                               UserCreation,
                               UserDeletion)
 
@@ -139,10 +140,9 @@ urlpatterns += patterns('',
                             'django.contrib.auth.views.password_reset_done',
                             name='password_reset_done'),
                         url(r'^password_reset_confirm/(?P<uidb64>\w+)/(?P<token>[\w-]+)/$',
-                            'django.contrib.auth.views.password_reset_confirm',
-                            {'post_reset_redirect':
-                             reverse_lazy('tracker:password_reset_complete'),
-                             'set_password_form': SetPasswordForm},
+                            view=PasswordResetConfirm.as_view(
+                                success_url=reverse_lazy(
+                                    'tracker:password_reset_complete')),
                             name='password_reset_confirm'),
                         url(r'^password_reset_complete/$',
                             'django.contrib.auth.views.password_reset_complete',
