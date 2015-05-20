@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 23:30+0200\n"
+"POT-Creation-Date: 2015-05-20 22:44+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -185,8 +185,8 @@ msgid ""
 "You'll soon receive an email with instructions to change your account "
 "password."
 msgstr ""
-"Vous recevrez bientôt un courrier électronique expliquant comment "
-"activer le mot de passe de votre compte."
+"Vous recevrez bientôt un courrier électronique expliquant comment activer le "
+"mot de passe de votre compte."
 
 #: templates/registration/password_reset_email.html:2
 #, python-format
@@ -541,8 +541,8 @@ msgid "log in"
 msgstr "connecter"
 
 #: templates/users/login.html:22
-msgid "forgotten password"
-msgstr "mot de passe oublié"
+msgid "forgotten password?"
+msgstr "mot de passe oublié&nbsp;?"
 
 #: templates/users/password_change_form.html:11
 msgid "change password"
