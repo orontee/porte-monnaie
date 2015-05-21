@@ -173,6 +173,7 @@ class PasswordResetForm(BootstrapWidgetMixin,
     """Improve default form with Bootstrap aware widgets."""
     pass
 
+
 class SetPasswordForm(BootstrapWidgetMixin,
                       OrigSetPasswordForm):
     """Improve default form with Bootstrap aware widgets."""

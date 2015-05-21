@@ -87,6 +87,7 @@ class UserChangeForm(BootstrapWidgetMixin, ModelForm):
         model = User
         fields = ('first_name', 'last_name', 'email', 'default_purse')
 
+
 class SetPasswordForm(BootstrapWidgetMixin,
                       OrigSetPasswordForm):
     """Improve default form with Bootstrap aware widgets."""

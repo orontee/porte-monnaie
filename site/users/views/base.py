@@ -80,6 +80,7 @@ class UserActivation(TemplateView):
             raise Http404()
         return self.render_to_response(context)
 
+
 class PasswordResetConfirm(FormView):
     """View to confirm a password reset.
 
