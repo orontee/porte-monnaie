@@ -2,13 +2,14 @@
 
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.http import (Http404, HttpResponseRedirect)
 from django.utils.http import urlsafe_base64_decode
 from django.views.generic import (CreateView, DeleteView, FormView,
                                   UpdateView, TemplateView)
-from users.forms import (UserChangeForm, UserCreationForm)
+from users.forms import (UserChangeForm,
+                         UserCreationForm,
+                         SetPasswordForm)
 from users.models import Registration
 from users.views.mixins import LoginRequiredMixin
 
@@ -92,8 +93,9 @@ class PasswordResetConfirm(FormView):
     form_class = SetPasswordForm
     token_generator = default_token_generator
 
-    def get_context_data(self, **kwargs):
-        context = super(PasswordResetConfirm, self).get_context_data(**kwargs)
+    def get_form_kwargs(self):
+        """Update keyword args with user queried from request args."""
+        kwargs = super(PasswordResetConfirm, self).get_form_kwargs()
         try:
             uid = urlsafe_base64_decode(self.kwargs['uidb64'])
             user = User.objects.get(pk=uid)
@@ -101,24 +103,12 @@ class PasswordResetConfirm(FormView):
             user = None
         token = self.kwargs['token']
         if user is not None and self.token_generator.check_token(user, token):
-            validlink = True
-            cls = self.get_form_class()
-            if self.request == 'POST':
-                form = cls(user, self.request.POST)                
-            else:
-                form = cls(None)                
+            kwargs['user'] = user if self.request.method == 'POST' else None
         else:
-            validlink = False
-            form = None
-        context.update({'form': form,
-                        'validlink': validlink})
-        return context            
-    
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        if not context.get('validlink', False):
             raise Http404()
-        return self.render_to_response(context)
+        return kwargs
 
-    def post(self, *args, **kwargs):
-        return super(PasswordResetConfirm, self).post(*args, **kwargs)
+    def form_valid(self, form):
+        """If the form is valid, save the assoctiated user."""
+        form.save()
+        return super(PasswordResetConfirm, self).form_valid(form)

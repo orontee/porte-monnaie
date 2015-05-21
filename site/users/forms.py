@@ -1,6 +1,7 @@
 """User forms."""
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import SetPasswordForm as OrigSetPasswordForm
 from django.forms import (ModelForm, CharField, RegexField,
                           PasswordInput, ValidationError)
 from django.utils.translation import ugettext_lazy as _
@@ -85,3 +86,8 @@ class UserChangeForm(BootstrapWidgetMixin, ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'default_purse')
+
+class SetPasswordForm(BootstrapWidgetMixin,
+                      OrigSetPasswordForm):
+    """Improve default form with Bootstrap aware widgets."""
+    pass
