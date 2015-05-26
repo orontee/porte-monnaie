@@ -63,11 +63,6 @@ class Registration(Model):
     def __str__(self):
         return u'Account registration: {0}'.format(self.user)
 
-    def send_deletion_email(self):
-        """Send the deletion email."""
-        self._send_email('email_deletion_subject.txt',
-                         'email_deletion_msg.txt')
-
     def is_valid(self):
         """Check whether it is a valid registration."""
         elapsed = (timezone.now() - self.created).days
