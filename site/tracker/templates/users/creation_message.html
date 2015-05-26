@@ -1,0 +1,3 @@
+{% load i18n %}
+{% blocktrans %}Thanks for your interest in Porte-monnaie! To activate the account `{{ username }}', please visit the following page: {% endblocktrans %}
+{{ protocol }}://{{ domain }}{% url 'tracker:user_activation' key %}.

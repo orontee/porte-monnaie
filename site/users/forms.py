@@ -2,10 +2,14 @@
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import SetPasswordForm as OrigSetPasswordForm
+from django.contrib.sites.models import get_current_site
 from django.forms import (ModelForm, CharField, RegexField,
                           PasswordInput, ValidationError)
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+
 from users.models import Registration
+
 from bootstrap.forms import BootstrapWidgetMixin
 
 User = get_user_model()
@@ -63,7 +67,9 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
                 self.error_messages['password_mismatch'])
         return password2
 
-    def save(self, commit=True):
+    def save(self, commit=True, request=None,
+             subject_template_name='users/creation_subject.html',
+             message_template_name='users/creation_message.html'):
         """Save inactive user.
 
         A registration instance is created and sent to the user email
@@ -76,7 +82,18 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         if commit:
             user.save()
             registration = Registration.objects.create_registration(user)
-            registration.send_creation_email()
+            current_site = get_current_site(request)
+            site_name = current_site.name
+            domain = current_site.domain
+            c = {'domain': domain,
+                 'site_name': site_name,
+                 'key': registration.key,
+                 'username': user.username,
+                 'protocol': 'http'}
+            subject = render_to_string(subject_template_name, c)
+            subject = ''.join(subject.splitlines())
+            message = render_to_string(message_template_name, c)
+            user.email_user(subject, message)
         return user
 
 

@@ -3,10 +3,13 @@
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.models import get_current_site
 from django.http import (Http404, HttpResponseRedirect)
+from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode
 from django.views.generic import (CreateView, DeleteView, FormView,
                                   UpdateView, TemplateView)
+
 from users.forms import (UserChangeForm,
                          UserCreationForm,
                          SetPasswordForm)
@@ -41,6 +44,9 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
     model = User
     template_name = 'users/user_confirm_delete.html'
     success_url = reverse_lazy('users:user_delete_done')
+    subject_template_name = 'users/deletion_subject.html'
+    message_template_name = 'users/deletion_message.html'
+
 
     def get_object(self, queryset=None):
         """Returns the user account."""
@@ -56,7 +62,18 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
         self.object.is_active = False
         self.object.save()
         registration = Registration.objects.create_registration(self.object)
-        registration.send_deletion_email()
+        current_site = get_current_site(request)
+        site_name = current_site.name
+        domain = current_site.domain
+        c = {'domain': domain,
+             'site_name': site_name,
+             'key': registration.key,
+             'username': self.object.username,
+             'protocol': 'http'}
+        subject = render_to_string(self.subject_template_name, c)
+        subject = ''.join(subject.splitlines())
+        message = render_to_string(self.message_template_name, c)
+        self.object.email_user(subject, message)
         return HttpResponseRedirect(self.get_success_url())
 
 

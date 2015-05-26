@@ -2,7 +2,8 @@
 
 from django.core import mail
 from django.test import TestCase
-from users.models import User
+
+from users.models import User, Registration
 from users.forms import UserCreationForm
 
 
@@ -19,6 +20,7 @@ class UserCreationFormTest(TestCase):
         self.assertTrue(form.is_valid())
         form.save()
         self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(Registration.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
     def test_password_missmatch(self):

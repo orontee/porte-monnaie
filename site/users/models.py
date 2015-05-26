@@ -6,7 +6,6 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.db.models import (CharField, DateTimeField,
                               ForeignKey, Manager, Model)
-from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -64,28 +63,13 @@ class Registration(Model):
     def __str__(self):
         return u'Account registration: {0}'.format(self.user)
 
-    def _send_email(self, subject_tmpl, msg_tmpl):
-        """Send an email to the user."""
-        var = {'key': self.key,
-               'username': self.user.username}
-        subject = render_to_string('users/{0}'.format(subject_tmpl),
-                                   var)
-        subject = subject[:-1]
-        msg = render_to_string('users/{0}'.format(msg_tmpl), var)
-        self.user.email_user(subject, msg)
-
-    def send_creation_email(self):
-        """Send the creation email."""
-        self._send_email('email_creation_subject.txt',
-                         'email_creation_msg.txt')
-
     def send_deletion_email(self):
         """Send the deletion email."""
         self._send_email('email_deletion_subject.txt',
                          'email_deletion_msg.txt')
 
     def is_valid(self):
-        """Check whether it is a valid exception."""
+        """Check whether it is a valid registration."""
         elapsed = (timezone.now() - self.created).days
         return elapsed <= self.validity_delay
 

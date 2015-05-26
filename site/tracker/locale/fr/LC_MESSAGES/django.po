@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: purse 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-22 01:55+0200\n"
+"POT-Creation-Date: 2015-05-26 22:49+0200\n"
 "PO-Revision-Date: 2013-05-16 01:08+0200\n"
 "Last-Translator: Matthias Meulien <orontee@gmail.com>\n"
 "Language-Team: fr <fr@li.org>\n"
@@ -492,38 +492,34 @@ msgstr ""
 msgid "share"
 msgstr "partager"
 
-#: templates/users/email_creation_msg.txt:2
+#: templates/users/creation_message.html:2
 #, python-format
 msgid ""
 "Thanks for your interest in Porte-monnaie! To activate the account `"
-"%(username)s', please visit the following page: http://aimersanscompter.fr"
-"%(the_url)s."
+"%(username)s', please visit the following page: "
 msgstr ""
 "Merci de vous intéresser à Porte-monnaie ! Pour activer le compte "
-"«%(username)s», consultez la page suivante : http://aimersanscompter.fr"
-"%(the_url)s."
+"«%(username)s», consultez la page suivante : "
 
-#: templates/users/email_creation_subject.txt:1
+
+#: templates/users/creation_subject.html:1
 msgid "Porte-monnaie: Account activation"
 msgstr "Porte-monnaie : activation d'un compte utilisateur"
 
-#: templates/users/email_deletion_msg.txt:2
-#, python-format
+#: templates/users/deletion_message.html:2
 msgid ""
 "Thank you for trying Porte-monnaie! Your user account has been deactivated. "
-"You data will be kept for 30 days from now. Within this period, it is still "
+"You data will be kept for 30 days from now. Later your data will be "
+"definitively lost and your account deleted. Within this period, it is still "
 "possible to get your user account back by visiting the following page: "
-"http://aimersanscompter.fr%(the_url)s. Later your data will be definitively "
-"lost and your account deleted."
 msgstr ""
 "Merci d'avoir essayé Porte-monnaie ! Votre compte a été désactivé. Vos "
-"données seront conservées pendant 30 jours à partir de maintenant. Pendant "
-"cette période, il vous est possible d'accéder à nouveau à votre compte en "
-"consultant la page suivante : http://aimersanscompter.fr%(the_url)s. Après "
-"vos données seront définitivement perdues et votre compte bel et bien "
-"supprimé."
+"données seront conservées pendant 30 jours à partir de maintenant, puis "
+"elles seront définitivement perdues et votre compte bel et bien "
+"supprimé. Pendant cette période, il vous est possible d'accéder à nouveau "
+"à votre compte en consultant la page suivante : "
 
-#: templates/users/email_deletion_subject.txt:1
+#: templates/users/deletion_subject.html:1
 msgid "Porte-monnaie: Account deletion"
 msgstr "Porte-monnaie : suppression d'un compte utilisateur"
 

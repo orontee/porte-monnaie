@@ -52,15 +52,3 @@ class RegistrationTest(TestCase):
         reg.created = now() - timedelta(days=31)
         reg.save()
         self.assertEqual(Registration.expired_objects.count(), 1)
-
-    def test_send_creation_email(self):
-        """Test creation email."""
-        reg = Registration.objects.create(user=self.u, key='key')
-        reg.send_creation_email()
-        self.assertEqual(len(mail.outbox), 1)
-
-    def test_send_deletion_email(self):
-        """Test deletion email."""
-        reg = Registration.objects.create(user=self.u, key='key')
-        reg.send_deletion_email()
-        self.assertEqual(len(mail.outbox), 1)
