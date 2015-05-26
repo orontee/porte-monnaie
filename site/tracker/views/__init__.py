@@ -1,4 +1,4 @@
-from tracker.views.main import (ExpenditureAdd,
+from tracker.views.base import (ExpenditureAdd,
                                 ExpenditureDelete,
                                 ExpenditureUpdate,
                                 ExpenditureFilteredList,

@@ -185,7 +185,7 @@ msgid ""
 "You'll soon receive an email with instructions to change your account "
 "password."
 msgstr ""
-"Vous recevrez bientôt un courrier électronique expliquant comment activer le "
+"Vous recevrez bientôt un courrier électronique expliquant comment modifier le "
 "mot de passe de votre compte."
 
 #: templates/registration/password_reset_email.html:2
