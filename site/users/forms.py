@@ -68,8 +68,8 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         return password2
 
     def save(self, commit=True, request=None,
-             subject_template_name='users/creation_subject.html',
-             message_template_name='users/creation_message.html'):
+             subject_template_name='users/user_creation_subject.html',
+             message_template_name='users/user_creation_email.html'):
         """Save inactive user.
 
         A registration instance is created and sent to the user email
@@ -92,8 +92,8 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
                  'protocol': 'http'}
             subject = render_to_string(subject_template_name, c)
             subject = ''.join(subject.splitlines())
-            message = render_to_string(message_template_name, c)
-            user.email_user(subject, message)
+            email = render_to_string(message_template_name, c)
+            user.email_user(subject, email)
         return user
 
 

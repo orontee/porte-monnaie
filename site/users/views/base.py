@@ -44,8 +44,8 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
     model = User
     template_name = 'users/user_confirm_delete.html'
     success_url = reverse_lazy('users:user_delete_done')
-    subject_template_name = 'users/deletion_subject.html'
-    message_template_name = 'users/deletion_message.html'
+    subject_template_name = 'users/user_deletion_subject.html'
+    email_template_name = 'users/user_deletion_email.html'
 
     def get_object(self, queryset=None):
         """Returns the user account."""
@@ -71,8 +71,8 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
              'protocol': 'http'}
         subject = render_to_string(self.subject_template_name, c)
         subject = ''.join(subject.splitlines())
-        message = render_to_string(self.message_template_name, c)
-        self.object.email_user(subject, message)
+        email = render_to_string(self.email_template_name, c)
+        self.object.email_user(subject, email)
         return HttpResponseRedirect(self.get_success_url())
 
 
