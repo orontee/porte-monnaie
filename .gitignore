@@ -1,5 +1,7 @@
 *.pyc
 *~
+.#*
+*#
 *.mo
 README.html
 site/purse/public
