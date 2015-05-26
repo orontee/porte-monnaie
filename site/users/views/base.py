@@ -47,7 +47,6 @@ class UserDeletion(LoginRequiredMixin, DeleteView):
     subject_template_name = 'users/deletion_subject.html'
     message_template_name = 'users/deletion_message.html'
 
-
     def get_object(self, queryset=None):
         """Returns the user account."""
         return self.request.user if self.request else None
