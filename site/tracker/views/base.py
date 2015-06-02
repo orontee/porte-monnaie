@@ -2,6 +2,7 @@
 
 import datetime
 import json
+
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.core.urlresolvers import (reverse_lazy, reverse)
@@ -9,6 +10,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Sum
 from django.http import (HttpResponse, HttpResponseRedirect, Http404)
 from django.utils.encoding import force_text
+from django.utils.timezone import utc
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import (CreateView,
                                   DeleteView,
@@ -18,6 +20,7 @@ from django.views.generic import (CreateView,
                                   TemplateView,
                                   UpdateView,
                                   View)
+
 from tracker.models import (Expenditure, Purse, Tag)
 from tracker.forms import (ExpenditureForm,
                            MultipleExpenditureForm,
@@ -291,15 +294,34 @@ class ExpenditureAdd(LoginRequiredMixin,
     model = Expenditure
     form_class = MultipleExpenditureForm
 
+    def get_initial(self):
+        """Initialize date using request parameter."""
+        initial = super(ExpenditureAdd, self).get_initial()
+        try:
+            raw_date = self.request.REQUEST['date']
+            date = datetime.datetime.strptime(raw_date,
+                                              '%Y-%m-%d').replace(tzinfo=utc)
+        except (KeyError, ValueError):
+            date = None
+        if date is not None:
+            initial.update({'date': date})
+        return initial
+
+
     def get_success_url(self):
         """Handles redirection target.
 
         Redirection goes to the expenditures list or the expenditure
         creation page according to request post data.
 
+        When redirecting to the expenditure creation page, the object
+        date is copied to an URL parameter.
+
         """
         if 'save_other' in self.request.POST:
-            return reverse_lazy('tracker:add')
+            date = self.object.date
+            url = reverse_lazy('tracker:add')
+            return url + '?date=' + format(self.object.date, '%Y-%m-%d')
         return reverse_lazy('tracker:list')
 
     def form_valid(self, form):

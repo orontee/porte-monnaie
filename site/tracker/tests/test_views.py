@@ -126,7 +126,7 @@ class ExpenditureAddTest(TestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
         url = 'http://testserver'
-        url += self.url
+        url += self.url + '?date=2014-05-25'
         self.assertEqual(response.url, url)
         self.assertEqual(u.expenditure_set.count(), 1)
 
