@@ -307,7 +307,6 @@ class ExpenditureAdd(LoginRequiredMixin,
             initial.update({'date': date})
         return initial
 
-
     def get_success_url(self):
         """Handles redirection target.
 
