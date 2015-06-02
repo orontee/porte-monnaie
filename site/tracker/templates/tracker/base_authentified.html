@@ -6,10 +6,14 @@
    href="{% url 'tracker:list' %}">
   {{ 'porte-monnaie'|capfirst }}
 </a>
+<a id="" class="visible-xs navbar-brand navbar-left"
+   href="{% url 'tracker:add' %}">
+  <span class="glyphicon glyphicon-plus"></span>
+</a>
 {% endblock brand %}
 
 {% block tools %}
-<form class="navbar-form navbar-left"
+<form class="hidden-xs navbar-form navbar-left"
       action="{% url 'tracker:add' %}">
   <button id="add-btn" 
 	  type="submit" class="btn btn-default">
