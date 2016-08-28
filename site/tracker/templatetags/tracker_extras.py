@@ -5,6 +5,7 @@ from django import template
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.http import urlencode
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -72,7 +73,7 @@ def do_pagination(context):
             return elt.format(url=lnk, number=i)
 
         elements = ['<ul class="pagination">']
-        delta = 2
+        delta = 1
         hidden = min(page.number - delta - 1, delta) + 1
         for i in range(1, hidden):
             elements.append(build_element(i))
@@ -91,7 +92,7 @@ def do_pagination(context):
         for i in range(visible, paginator.num_pages + 1):
             elements.append(build_element(i))
         elements.append('</ul>')
-        return ' '.join(elements)
+        return mark_safe(' '.join(elements))
 
 
 @register.simple_tag(takes_context=True)
@@ -102,4 +103,4 @@ def email_admin(context):
     except KeyError:
         raise ImproperlyConfigured('The email_admin tag expects a non-empty '
                                    'ADMINS setting')
-    return '<a href="mailto:{0}">{1}</a>'.format(email, name)
+    return mark_safe('<a href="mailto:{0}">{1}</a>'.format(email, name))

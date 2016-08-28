@@ -201,9 +201,9 @@ class UserPurseMixin(object):
     """
     purse_field_name = 'purse'
 
-    def get_form(self, form_class):
+    def get_form(self):
         try:
-            form = super(UserPurseMixin, self).get_form(form_class)
+            form = super(UserPurseMixin, self).get_form()
             purses = self.request.user.purse_set.all()
         except AttributeError:
             raise ImproperlyConfigured('UserPurseMixin requires the mixin '
@@ -297,12 +297,19 @@ class ExpenditureAdd(LoginRequiredMixin,
     def get_initial(self):
         """Initialize date using request parameter."""
         initial = super(ExpenditureAdd, self).get_initial()
-        try:
-            raw_date = self.request.REQUEST['date']
-            date = datetime.datetime.strptime(raw_date,
-                                              '%Y-%m-%d').replace(tzinfo=utc)
-        except (KeyError, ValueError):
-            date = None
+        request = None
+        if self.request.GET:
+            request = self.request.GET
+        elif self.request.POST:
+            request = self.request.POST
+        date = None
+        if request:
+            try:
+                raw_date = request['date']
+                dd = datetime.datetime
+                date = dd.strptime(raw_date, '%Y-%m-%d').replace(tzinfo=utc)
+            except (KeyError, ValueError):
+                date = None
         if date is not None:
             initial.update({'date': date})
         return initial
@@ -523,6 +530,7 @@ class ExpenditureHome(RedirectView):
                                        '{0:%m},{0:%Y}'.format(
                                            datetime.datetime.today())
                                        .split(','))))
+    permanent = True
 
 
 class TagView(LoginRequiredMixin,

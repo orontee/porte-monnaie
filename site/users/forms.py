@@ -2,10 +2,11 @@
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import SetPasswordForm as OrigSetPasswordForm
-from django.contrib.sites.models import get_current_site
+from django.contrib.sites.shortcuts import get_current_site
 from django.forms import (ModelForm, CharField, RegexField,
                           PasswordInput, ValidationError)
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from users.models import Registration
@@ -79,6 +80,7 @@ class UserCreationForm(BootstrapWidgetMixin, ModelForm):
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         user.is_active = False
+        user.last_login = timezone.now()
         if commit:
             user.save()
             registration = Registration.objects.create_registration(user)

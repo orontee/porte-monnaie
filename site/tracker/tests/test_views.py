@@ -55,7 +55,7 @@ class ExpenditureAddTest(TestCase):
         """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/login?next=/tracker/expenditures/add/'
+        url = '/tracker/login?next=/tracker/expenditures/add/'
         self.assertEqual(response.url, url)
 
     def test_get_authentified_without_purse(self):
@@ -67,7 +67,7 @@ class ExpenditureAddTest(TestCase):
         create_user(**credentials)
         self.client.login(**credentials)
         response = self.client.get(self.url)
-        expected_url = 'http://testserver/tracker/purses/create/'
+        expected_url = '/tracker/purses/create/'
         self.assertRedirects(response, expected_url)
 
     def test_get_authentified_without_default_purse(self):
@@ -101,7 +101,7 @@ class ExpenditureAddTest(TestCase):
                 'csrftoken': token}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/expenditures/'
+        url = '/tracker/expenditures/'
         self.assertEqual(response.url, url)
         self.assertEqual(u.expenditure_set.count(), 1)
 
@@ -125,8 +125,7 @@ class ExpenditureAddTest(TestCase):
                 'csrftoken': token}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver'
-        url += self.url + '?date=2014-05-25'
+        url = self.url + '?date=2014-05-25'
         self.assertEqual(response.url, url)
         self.assertEqual(u.expenditure_set.count(), 1)
 
@@ -149,7 +148,7 @@ class ExpenditureAddTest(TestCase):
                 'csrftoken': token}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/expenditures/'
+        url = '/tracker/expenditures/'
         self.assertEqual(response.url, url)
         self.assertEqual(u.expenditure_set.count(), 3)
 
@@ -172,7 +171,7 @@ class ExpenditureDeleteTest(TestCase):
         """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        expected_url = 'http://testserver/tracker/login?next='
+        expected_url = '/tracker/login?next='
         expected_url += self.url
         self.assertEqual(response.url, expected_url)
 
@@ -187,7 +186,7 @@ class ExpenditureDeleteTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Expenditure.objects.count(), 0)
         self.assertEqual(response.url,
-                         'http://testserver/tracker/expenditures/')
+                         '/tracker/expenditures/')
 
 
 class ExpenditureUpdateTest(TestCase):
@@ -208,7 +207,7 @@ class ExpenditureUpdateTest(TestCase):
         """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        expected_url = 'http://testserver/tracker/login?next='
+        expected_url = '/tracker/login?next='
         expected_url += self.url
         self.assertEqual(response.url, expected_url)
 
@@ -227,7 +226,7 @@ class ExpenditureUpdateTest(TestCase):
                 'csrftoken': token}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/expenditures/'
+        url = '/tracker/expenditures/'
         self.assertEqual(response.url, url)
         self.assertEqual(self.u.expenditure_set.count(), 1)
         e = self.u.expenditure_set.all()[0]
@@ -246,7 +245,7 @@ class PurseCreationTest(TestCase):
         """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/login?next=/tracker/purses/create/'
+        url = '/tracker/login?next=/tracker/purses/create/'
         self.assertEqual(response.url, url)
 
     def test_get_authentified(self):
@@ -271,7 +270,7 @@ class PurseCreationTest(TestCase):
                 'csrftoken': token}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/expenditures/'
+        url = '/tracker/expenditures/'
         self.assertEqual(response.url, url)
         self.assertEqual(u.purse_set.count(), 1)
 
@@ -289,7 +288,7 @@ class PurseCreationTest(TestCase):
                 'csrftoken': token}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/purses/'
+        url = '/tracker/purses/'
         self.assertEqual(response.url, url)
         u = User.objects.get(username='username')
         self.assertEqual(u.purse_set.count(), 2)
@@ -310,7 +309,7 @@ class PurseUpdateTest(TestCase):
         """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/logout/'
+        url = '/tracker/logout/'
         self.assertEqual(response.url, url)
 
     def test_get_authentified(self):
@@ -327,7 +326,7 @@ class PurseUpdateTest(TestCase):
         self.client.login(**credentials)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/logout/'
+        url = '/tracker/logout/'
         self.assertEqual(response.url, url)
 
     def test_post(self):
@@ -339,7 +338,7 @@ class PurseUpdateTest(TestCase):
                 'csrftoken': token}
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/purses/'
+        url = '/tracker/purses/'
         self.assertEqual(response.url, url)
         u = User.objects.get(username='username')
         self.assertTrue(u.purse_set.values_list('name', flat=True),
@@ -359,7 +358,7 @@ class ExpenditureFilteredListTest(TestCase):
         """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/login'
+        url = '/tracker/login'
         url += '?next=/tracker/expenditures/search/'
         self.assertEqual(response.url, url)
 
@@ -367,7 +366,7 @@ class ExpenditureFilteredListTest(TestCase):
         """Get page while user is authentified but has no purse."""
         self.client.login(**self.credentials)
         response = self.client.get(self.url)
-        expected_url = 'http://testserver/tracker/purses/create/'
+        expected_url = '/tracker/purses/create/'
         self.assertRedirects(response, expected_url)
 
     def test_get_authentified_without_default_purse(self):
@@ -485,7 +484,7 @@ class PurseDeletionTest(TestCase):
         """Get page while no user is authentified."""
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 302)
-        url = 'http://testserver/tracker/login?next=/tracker/purses/delete/1/'
+        url = '/tracker/login?next=/tracker/purses/delete/1/'
         self.assertEqual(response.url, url)
 
     def test_get_authentified(self):

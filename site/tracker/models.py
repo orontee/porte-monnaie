@@ -51,7 +51,7 @@ class Expenditure(Model):
     expenditure creation to when it won't be editable anymore.
     """
     amount = FloatField(_('amount'), db_index=True)
-    date = DateField(_('date'), default=timezone.now().date(), db_index=True)
+    date = DateField(_('date'), default=timezone.now, db_index=True)
     description = CharField(_('description'), max_length=80, blank=False)
     author = ForeignKey(User, editable=False, verbose_name=_('author'))
     purse = ForeignKey(Purse, verbose_name=_('purse'))
