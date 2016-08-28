@@ -28,7 +28,7 @@ setup: $(projdir)/bootstrap/static/bootstrap
 setup: $(projdir)/tracker/static/js/d3.js $(projdir)/tracker/static/js/d3.min.js
 setup: $(projdir)/tracker/static/js/d3-layout.cloud.js
 
-install: setup $(publicdir)/django.fcgi $(publicdir)/.htaccess collect syncdb
+install: setup $(publicdir)/django.fcgi $(publicdir)/.htaccess collect migrate
 
 uninstall: 
 	-rm -fr $(publicdir)
@@ -48,10 +48,11 @@ help:
 	@echo "  setup      Finalize the project environment"
 	@echo "  install    Install the website"
 	@echo "  uninstall  Uninstall the website"
+	@echo "  migrate    Migrate database"
 	@echo "  createdb   Create the site database"
 	@echo "  dropdb 	  Drop the site database"
 
-.PHONY: createdb dropdb syncdb setup \
+.PHONY: createdb dropdb migrate setup \
 	compile-messages update-messages \
 	collect
 
@@ -63,9 +64,9 @@ dropdb:
 	-dropdb $(dbname) -U $(dbuser) -h $(dbhost)
 	-dropuser $(dbuser) -h $(dbhost)
 
-syncdb: 
+migrate: 
 	cd $(projdir); \
-	$(manager) syncdb --noinput --pythonpath=.
+	$(manager) migrate --noinput --pythonpath=.
 
 update-messages:
 	for app in $(apps); do \

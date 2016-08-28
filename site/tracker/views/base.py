@@ -400,7 +400,7 @@ class ExpenditureFilteredList(LoginRequiredMixin,
 
         """
         qs = super(ExpenditureFilteredList, self).get_queryset()
-        qs = qs.filter(purse=self.purse).select_related('author__username')
+        qs = qs.filter(purse=self.purse).select_related('author')
         return qs
 
     def get_context_data(self, **kwargs):
@@ -445,7 +445,7 @@ class ExpenditureMonthList(LoginRequiredMixin,
 
     def get_queryset(self):
         qs = super(ExpenditureMonthList, self).get_queryset()
-        qs = qs.filter(purse=self.purse).select_related('author__username')
+        qs = qs.filter(purse=self.purse).select_related('author')
         return qs
 
     def get_context_data(self, **kwargs):
