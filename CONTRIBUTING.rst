@@ -19,19 +19,27 @@ Setting up a development environment
      purse_project$ source share/setup_debug_env
      ...
 
-5. Install the dependencies listed in the file ``requirements.txt``::
+5. Install the dependencies listed in the file ``requirements_dev.txt``::
 
-     (purse) purse_project$ pip install -r requirements.txt
+     (purse) purse_project$ pip install -r requirements_dev.txt
      ...
+
+6. Create a new role called ``porte-monnaie`` for your local
+   PostgreSQL service and give it access to a database called
+   ``porte-monnaie_data``::
+
+     (purse) purse_project$ make createdb
+
+7. Finalize the project environment::
+
+     (purse) purse_project$ make setup
 
 Testing
 -------
 
 Just run the following commands from the source directory::
 
-     purse_project$ source share/setup_debug_env
-     ...
-     (purse) purse_project$ make test
+     (purse) purse_project$ make check
      Creating test database for alias 'default'...
      .............................................
      ----------------------------------------------------------------------
