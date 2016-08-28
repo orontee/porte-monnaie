@@ -546,8 +546,8 @@ class TagView(LoginRequiredMixin,
     def get(self, request, *args, **kwargs):
         """Return list of tag names."""
         try:
-            limit = request.GET['limit']
-        except KeyError:
+            limit = int(request.GET['limit'])
+        except (KeyError, ValueError):
             limit = None
         try:
             ordering = request.GET['ordering']
