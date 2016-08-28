@@ -1,14 +1,25 @@
+# Compilation files
 *.pyc
-*~
-.#*
-*#
-*.mo
 README.html
 site/purse/public
 site/bootstrap/static
-*_flymake*
 site/tracker/static/js/d3*js
+
+# Editors files
+*~
+.#*
+*#
+*_flymake*
+
+# Translations
+*.mo
+
+# Coverage
 site/.coverage
 site/htmlcov
+
+# Fabric
 fabfile.py
 
+# Archives
+archives/
