@@ -1,10 +1,13 @@
 """Tests for users forms."""
 
+from django.contrib.auth import get_user_model
 from django.core import mail
 from django.test import TestCase
 
-from users.models import User, Registration
+from users.models import Registration
 from users.forms import UserCreationForm
+
+User = get_user_model()
 
 
 class UserCreationFormTest(TestCase):

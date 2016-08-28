@@ -3,13 +3,11 @@
 import hashlib
 import random
 from datetime import timedelta
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db.models import (CharField, DateTimeField,
                               ForeignKey, Manager, Model)
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-
-User = get_user_model()
 
 
 class RegistrationManager(Manager):
@@ -38,11 +36,11 @@ class RegistrationManager(Manager):
 
 class ExpiredRegistrationManager(Manager):
     """Manager handling expired registrations only."""
-    def get_query_set(self):
+    def get_queryset(self):
         """Return a query set for expired registrations."""
         end_date = timezone.now()
         start_date = end_date - timedelta(days=Registration.validity_delay)
-        qs = super(ExpiredRegistrationManager, self).get_query_set()
+        qs = super(ExpiredRegistrationManager, self).get_queryset()
         return qs.exclude(created__range=(start_date, end_date))
 
 
@@ -52,7 +50,7 @@ class Registration(Model):
     It relates a key to a ``User`` model.
 
     """
-    user = ForeignKey(User)
+    user = ForeignKey(settings.AUTH_USER_MODEL)
     key = CharField(_('key'), max_length=40)
     created = DateTimeField(_('created'), auto_now_add=True)
     validity_delay = 30
