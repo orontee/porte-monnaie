@@ -20,6 +20,7 @@ urlpatterns += patterns('',
                          js_info_dict),)
 
 if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += patterns('', url(
-        r'^__debug__/', include(debug_toolbar.urls)),)
+    if settings.DEBUG_TOOLBAR:
+        import debug_toolbar
+        urlpatterns += patterns('', url(
+            r'^__debug__/', include(debug_toolbar.urls)),)
